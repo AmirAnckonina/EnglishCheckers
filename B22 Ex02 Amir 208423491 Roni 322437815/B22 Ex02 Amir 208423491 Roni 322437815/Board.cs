@@ -6,7 +6,7 @@ using System.Text;
 
 namespace B22_Ex02_Amir_208423491_Roni_322437815
 {
-    class Board
+    public class Board
     {
         private Square[,] m_GameBoard;
         private int m_BoardSize;
@@ -31,41 +31,56 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
         public void InitializeBoard()
         {
-            int i;
-            for (i = 0; i < (m_BoardSize / 2) - 1; i++)
+            int m_Row;
+            for (m_Row = 0; m_Row < (m_BoardSize / 2) - 1; m_Row++)
             {
-                InitializeLine(i,'O');
+                InitializeLine(m_Row,'O',false);
             }
 
-            for (i+=3; i < (m_BoardSize / 2) - 1; i++)
+            for (m_Row += 0; m_Row < 3; m_Row++)
             {
-                InitializeLine(i,'X');
+                InitializeLine(m_Row, ' ',true);
+            }
+
+            for (m_Row+=3; m_Row < (m_BoardSize / 2) - 1; m_Row++)
+            {
+                InitializeLine(m_Row,'X',false);
             }
         }
 
-        public void InitializeLine(int i, char i_discType)
+        public void InitializeLine(int m_Row, char i_DiscType, bool i_IsEmptySquare)
         {
-            for (int j = 0; j < m_BoardSize; j++)
+            int m_IsEven;
+
+            for (int m_Column = 0; m_Column < m_BoardSize; m_Column++)
             {
-                if ((i + j) % 2 != 0)
+                m_IsEven = (m_Row + m_Column) % 2;
+                if (m_IsEven != 0)  
                 {
-                    m_GameBoard[i, j].CurrDiscType = i_discType;
-                    m_GameBoard[i, j].ValidSquare = true;
+                    if(!i_IsEmptySquare)
+                    {
+                        m_GameBoard[m_Row, m_Column].CurrDiscType = i_DiscType;
+                    }
+                    m_GameBoard[m_Row, m_Column].ValidSquare = true;
                 }
 
                 else
                 {
-                    // m_GameBoard[i, j].CurrDiscType = '-1';
-                    m_GameBoard[i, j + 1].ValidSquare = false;
+                    if (!i_IsEmptySquare)
+                    {
+                        // m_GameBoard[i, j].CurrDiscType = '-1';
+                    }
+
+                    m_GameBoard[m_Row, m_Column + 1].ValidSquare = false;
                 }
             }
         }
 
         public void PrintBoard(char[,] i_GameBoard)
         {
-            int i,j;
+            int m_Row,m_Column;
             char m_Letter = 'A';
-            for (i = 0; i < m_BoardSize; i++)
+            for (m_Row = 0; m_Row < m_BoardSize; m_Row++)
             {
                 Console.Write("{0}",m_Letter);
                 m_Letter = (char)(m_Letter + 1);
@@ -73,13 +88,13 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
             Console.WriteLine("");
             m_Letter = 'a';
-            for (i = 0; i < m_BoardSize; i++)
+            for (m_Row = 0; m_Row < m_BoardSize; m_Row++)
             {
                 Console.Write("{0}", m_Letter);
                 m_Letter = (char)(m_Letter + 1);
-                for (j = 0; j < m_BoardSize; j++)
+                for (m_Column = 0; m_Column < m_BoardSize; m_Column++)
                 {
-                    Console.Write("| {0} |", i_GameBoard[i, j]);
+                    Console.Write("| {0} |", i_GameBoard[m_Row, m_Column]);
                 }
 
                 Console.WriteLine(" ");
