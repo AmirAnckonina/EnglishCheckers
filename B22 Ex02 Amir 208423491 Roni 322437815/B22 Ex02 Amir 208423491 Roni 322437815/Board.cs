@@ -6,7 +6,7 @@ using System.Text;
 
 namespace B22_Ex02_Amir_208423491_Roni_322437815
 {
-    class Board
+    public class Board
     {
         private Square[,] m_GameBoard;
         private int m_BoardSize;
