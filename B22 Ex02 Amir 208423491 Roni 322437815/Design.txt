@@ -57,3 +57,7 @@ Square:
 
 ServiceClass ?
 
+ <------------------------------------->
+
+1. Check about inheritance and polymorphism
+2. How to make DiscType constant but without using the constructor.

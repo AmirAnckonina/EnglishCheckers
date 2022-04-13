@@ -5,9 +5,9 @@ using System.Text;
 
 namespace B22_Ex02_Amir_208423491_Roni_322437815
 {
-    public enum ePlayerType
+    public enum eGameMode
     {
-        Computer = 1,
-        Human = 2
+        SinglePlayerMode,
+        TwoPlayersMode
     }
 }
