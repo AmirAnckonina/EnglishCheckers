@@ -7,7 +7,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 {
     public class GameMenu
     {
-        public StringBuilder GetName()
+        public StringBuilder GetPlayerName()
         {
             StringBuilder m_Name = new StringBuilder();
 
@@ -22,12 +22,33 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
             Console.WriteLine("Please enter the size of the game board");
             m_BoardSize= int.Parse(Console.ReadLine());
+            while(m_BoardSize != 6 && m_BoardSize != 8 && m_BoardSize != 10)
+            {
+                Console.WriteLine("The input is not valid");
+                Console.WriteLine("Please enter the size of the game board");
+                m_BoardSize = int.Parse(Console.ReadLine());
+            }
             return m_BoardSize;
         }
 
-        public int GetPlayerType()
+        public int GetGameMode()
         {
-            Console.WriteLine("Please choose the type of the player that you will play against");
+            int m_NumOfPlayer;
+
+            Console.WriteLine("Please enter the game mode:/n 1-one player (play vs computer)/n 2-tow player (play vs human)");
+            m_NumOfPlayer = int.Parse(Console.ReadLine());
+            while(m_NumOfPlayer != 1 && m_NumOfPlayer != 2)
+            {
+                Console.WriteLine("The input is not valid");
+                Console.WriteLine("Please enter the game mode:/n 1-one player (play vs computer)/n 2-tow player (play vs human)");
+                m_NumOfPlayer = int.Parse(Console.ReadLine());
+            }
+            return m_NumOfPlayer;
+        }
+
+        public int PrintWhoseTurn()
+        {
+
         }
     }
 }

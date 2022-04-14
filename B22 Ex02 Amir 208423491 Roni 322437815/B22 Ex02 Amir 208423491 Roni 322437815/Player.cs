@@ -53,10 +53,10 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             set { m_DiscType = value; }
         }
 
-        public void SingleMove(ref Board io_Board, )
-        {
+        //public void SingleMove(ref Board io_Board, )
+        //{
 
-        }
+        //}
 
     }
 }
