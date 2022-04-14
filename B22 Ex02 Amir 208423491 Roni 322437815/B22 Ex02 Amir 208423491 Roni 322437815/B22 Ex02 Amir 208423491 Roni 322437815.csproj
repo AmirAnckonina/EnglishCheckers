@@ -34,6 +34,7 @@
   <ItemGroup>
     <Compile Include="Board.cs" />
     <Compile Include="eGameMode.cs" />
+    <Compile Include="ePlayerMovingDirection.cs" />
     <Compile Include="ePlayerType.cs" />
     <Compile Include="InputHandler.cs" />
     <Compile Include="GameMenu.cs" />

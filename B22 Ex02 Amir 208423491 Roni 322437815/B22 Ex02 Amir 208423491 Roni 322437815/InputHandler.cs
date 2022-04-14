@@ -9,8 +9,8 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
     {
         StringBuilder m_RawInput;
         bool m_InputStructureIsValid;
-        int[] m_FromIndex;
-        int[] m_ToIndex;
+        int[] m_SourceIndex; //Structure - > [ rowIndex, ColIndex ]
+        int[] m_DestinationIndex;
 
         /*Square m_FromSquare;
         Square m_ToSquare;*/
@@ -18,8 +18,8 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         public InputHandler()
         {
             m_RawInput = new StringBuilder();
-            m_FromIndex = new int[2];
-            m_ToIndex = new int[2];
+            m_SourceIndex = new int[2];
+            m_DestinationIndex = new int[2];
             m_InputStructureIsValid = false;
         }
 
@@ -27,6 +27,16 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         {
             get { return RawInput; }
             set { m_RawInput = value; }
+        }
+
+        public ref int[] GetSourceIndex()
+        {
+            return ref m_SourceIndex;
+        }
+
+        public ref int[] GetDestinationIndex()
+        {
+            return ref m_DestinationIndex;
         }
 
         public bool InputStructureIsValid()
@@ -48,17 +58,18 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         public void ClearPreviousInput()
         {
             m_RawInput.Clear();
-            m_FromIndex.Initialize();
-            m_ToIndex.Initialize();
+            m_SourceIndex.Initialize();
+            m_DestinationIndex.Initialize();
             m_InputStructureIsValid = false;
         }
 
         public void UpdateIndicies()
         {
-            m_FromIndex[0] = LetterToNumberIndexConverter(m_RawInput[0]);
-            m_FromIndex[1] = LetterToNumberIndexConverter(m_RawInput[1]);
-            m_ToIndex[0] = LetterToNumberIndexConverter(m_RawInput[3]);
-            m_ToIndex[1] = LetterToNumberIndexConverter(m_RawInput[4]);
+            //Structure - > [ rowIndex, ColIndex ]
+            m_SourceIndex[1] = LetterToNumberIndexConverter(m_RawInput[0]); 
+            m_SourceIndex[0] = LetterToNumberIndexConverter(m_RawInput[1]);
+            m_DestinationIndex[1] = LetterToNumberIndexConverter(m_RawInput[3]);
+            m_DestinationIndex[0] = LetterToNumberIndexConverter(m_RawInput[4]);
         }
 
         public void InputStructureValidation()

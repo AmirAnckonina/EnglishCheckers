@@ -10,6 +10,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         private bool m_ValidSquare;
         private char m_CurrDiscType;  //X,O,K,Q,-1
 
+
         public Square(bool i_ValidSquare, char i_CurrDiscType)
         {
             m_ValidSquare = i_ValidSquare;
