@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
+    <Compile Include="eDiscType.cs" />
     <Compile Include="eGameMode.cs" />
     <Compile Include="ePlayerType.cs" />
     <Compile Include="InputHandler.cs" />
