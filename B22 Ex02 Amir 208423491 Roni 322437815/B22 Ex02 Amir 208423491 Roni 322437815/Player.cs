@@ -7,10 +7,10 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 {
     public class Player
     {
-        public static char NoDisc = 'N';
+        //public static char NoDisc = 'N';
         private StringBuilder m_Name;
         private int m_NumOfDiscs;
-        private char m_DiscType;
+        private eDiscType m_DiscType;
         private ePlayerType m_PlayerType;
 
         public Player()
@@ -18,7 +18,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             m_Name = new StringBuilder(0, 20);
             m_NumOfDiscs = 0;
             m_PlayerType = ePlayerType.Human;
-            m_DiscType = NoDisc;
+            m_DiscType = eDiscType.None;
         }
 
         /* public Player(string i_Name, int i_NumOfDiscs, char i_DiscType, ePlayerType i_PlayerType)
@@ -47,7 +47,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             set { m_PlayerType = value; }
         }
 
-        public char DiscType
+        public eDiscType DiscType
         {
             get { return m_DiscType; }
             set { m_DiscType = value; }

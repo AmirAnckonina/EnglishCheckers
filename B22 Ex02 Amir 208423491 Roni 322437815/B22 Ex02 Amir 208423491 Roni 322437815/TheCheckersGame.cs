@@ -32,8 +32,8 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             SetGameMode(gameModePick);
             SetSecondPlayerProcedure(gameModePick);
 
-            m_Players[0].DiscType = 'X';
-            m_Players[1].DiscType = 'O';
+            m_Players[0].DiscType = eDiscType.XDisc;
+            m_Players[1].DiscType = eDiscType.ODisc;
             m_Players[0].NumOfDiscs = m_Board.GetDiscOccurences(m_Players[0].DiscType);
             m_Players[1].NumOfDiscs = m_Board.GetDiscOccurences(m_Players[1].DiscType);
 
