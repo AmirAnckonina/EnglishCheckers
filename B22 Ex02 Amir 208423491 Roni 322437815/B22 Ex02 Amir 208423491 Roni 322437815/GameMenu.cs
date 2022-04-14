@@ -46,9 +46,9 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             return m_NumOfPlayer;
         }
 
-        public int PrintWhoseTurn()
+        public void PrintWhoseTurn(Player i_Player)
         {
-
+            Console.WriteLine("It's {0} turn:", i_Player.Name);
         }
     }
 }
