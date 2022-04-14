@@ -10,7 +10,9 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         private Board m_Board;
         private GameMenu m_GameMenu;
         private Player[] m_Players;
+        InputHandler m_Input;
         private eGameMode m_GameMode;
+        private bool FirstPlayerTurn = true;
 
         public void RunSession()
         {
@@ -70,8 +72,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
         public void RunSingleGame()
         {
-
-            InputHandler input;
+            StringBuilder rawInput = new StringBuilder();
 
             if (m_GameMode == eGameMode.SinglePlayerMode)
             {
@@ -83,9 +84,54 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
             else //if (m_GameMode == eGameMode.TwoPlayersMode)
             {
-
+                RunTwoPlayersMode();
             }
 
+        }
+
+        public void RunTwoPlayersMode()
+        {
+            StringBuilder rawInput = new StringBuilder();
+            bool validMove = false;
+
+            while (!GameOver())
+            {
+                RawInputProcedure(ref rawInput);
+                validMove = checkPlayerMove();
+                while (!validMove)
+                {
+                    RawInputProcedure(ref rawInput);
+                    validMove = CheckPlayerMove();
+                }
+
+                ExecuteMove();
+
+
+            }
+        }
+
+        public bool CheckPlayerMove()
+        {
+            bool validMove;
+
+
+
+            return validMove;
+        }
+
+        public void RawInputProcedure(ref StringBuilder io_RawInput)
+        {
+            io_RawInput.Clear();
+            io_RawInput.Append(Console.ReadLine());
+            m_Input.LoadNewInput(io_RawInput);
+
+            while (!m_Input.InputStructureIsValid())
+            {
+                Console.WriteLine("Sorry, your input structure isn't valid.");
+                io_RawInput.Clear();
+                io_RawInput.Append(Console.ReadLine());
+                m_Input.LoadNewInput(io_RawInput);
+            }
         }
 
         //public static bool IsDiscEaten()
