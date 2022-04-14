@@ -88,15 +88,15 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
         }
 
-        public static bool IsDiscEaten()
-        {
+        //public static bool IsDiscEaten()
+        //{
 
-        }
+        //}
 
-        public static bool GameOver()
-        {
+        //public static bool GameOver()
+        //{
 
-        }
+        //}
 
     }
 
