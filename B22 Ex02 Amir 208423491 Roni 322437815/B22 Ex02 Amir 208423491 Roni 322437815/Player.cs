@@ -12,6 +12,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         private int m_NumOfDiscs;
         private eDiscType m_DiscType;
         private ePlayerType m_PlayerType;
+        private EntryPointNotFoundException m_MovingDirection;
 
         public Player()
         {
@@ -19,6 +20,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             m_NumOfDiscs = 0;
             m_PlayerType = ePlayerType.Human;
             m_DiscType = eDiscType.None;
+            
         }
 
         /* public Player(string i_Name, int i_NumOfDiscs, char i_DiscType, ePlayerType i_PlayerType)
