@@ -32,16 +32,16 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
         public void InitializeBoard()
         {
-            int rowIndex, index; //What did you mean? index is column?
+            int rowIndex, emptyLinesIndex; //What did you mean? index is column?
 
             for (rowIndex = 0; rowIndex < (m_BoardSize / 2) - 1; rowIndex++)
             {
                 InitializeLine(rowIndex, eDiscType.ODisc);
             }
 
-            for (index = 0; index < 2; index++)  
+            for (emptyLinesIndex = 0; emptyLinesIndex < 2; emptyLinesIndex++)  
             {
-                InitializeLine(rowIndex + index, eDiscType.None);
+                InitializeLine(rowIndex + emptyLinesIndex, eDiscType.None);
             }
 
             for (rowIndex += 2; rowIndex < m_BoardSize; rowIndex++) 
@@ -72,28 +72,28 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         public void PrintBoard()
         {
             int row, column, index;
-            char m_Letter = 'A', m_CurrDiscChar;
-            eDiscType m_CurrDisc;
+            char letter = 'A', currDiscChar;
+            eDiscType currDiscType;
 
             for (row = 0; row < m_BoardSize; row++)
             {
-                Console.Write("   {0} ",m_Letter);
-                m_Letter = (char)(m_Letter + 1);
+                Console.Write("   {0} ", letter);
+                letter = (char)(letter + 1);
             }
 
             Console.WriteLine("");
-            m_Letter = 'a';
+            letter = 'a';
             for (row = 0; row < m_BoardSize; row++)
             {
-                Console.Write("{0}|", m_Letter);
-                m_Letter = (char)(m_Letter + 1);
+                Console.Write("{0}|", letter);
+                letter = (char)(letter + 1);
                 for (column = 0; column < m_BoardSize; column++)
                 {
-                    m_CurrDiscChar = GetCharByDiscType(m_GameBoard[row, column].CurrDiscType);
-                    m_CurrDisc = m_GameBoard[row, column].CurrDiscType;
-                    if (m_CurrDisc != eDiscType.None)
+                    currDiscChar = GetCharByDiscType(m_GameBoard[row, column].CurrDiscType);
+                    currDiscType = m_GameBoard[row, column].CurrDiscType;
+                    if (currDiscType != eDiscType.None)
                     {
-                        Console.Write(" {0} | ", m_CurrDiscChar);
+                        Console.Write(" {0} | ", currDiscChar);
                     }
 
                     else
@@ -120,7 +120,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             {
                 for (column = 0; column < BoardSize; column++)
                 {
-                    if(m_GameBoard[row,column].CurrDiscType == i_DiscType)
+                    if (m_GameBoard[row, column].CurrDiscType == i_DiscType) 
                     {
                         counter++;
                     }
