@@ -95,7 +95,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
             while (!GameOver())
             {
-                RawInputProcedure(ref rawInput, ref);
+                RawInputProcedure(ref rawInput);
                 validMove = CheckCurrentPlayerMove();
                 while (!validMove)
                 {
@@ -116,34 +116,33 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
             if (FirstPlayerTurn)
             {
-                validMove = ValidateMove(ref m_Players[0], ref i_SourceIndex, ref i_DestinationIndex);
+                validMove = MoveValidation(ref m_Players[0], ref i_SourceIndex, ref i_DestinationIndex);
             }
 
             else
             {
-                validMove = ValidateMove(ref m_Players[1], ref i_SourceIndex, ref i_DestinationIndex);
+                validMove = MoveValidation(ref m_Players[1], ref i_SourceIndex, ref i_DestinationIndex);
             }
 
             return validMove;
+
         }
 
-        public bool ValidateMove(ref Player i_CurrPlayer, ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
+        public bool MoveValidation(ref Player i_CurrPlayer, ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
         {
             bool moveIsValid;
-            bool sourceIsValid;
-            bool destinationIsVacant;
-            bool indiciesInBoard;
-
-            sourceIsValid = SourceValidation(i_CurrPlayer.DiscType, ref i_SourceIndex);
-            destinationIsVacant = DestinationVacancyAndLegalityValidation(ref i_DestinationIndex);
-            indiciesInBoard = IndiciesInBoardValidation(ref i_SourceIndex, ref i_DestinationIndex);
-            
+            bool srcAndDestBasicallyValid;
+            bool simpleStepIsValid;
+            bool eatOpponentStepIsValid;
 
             // 1. SrcSquare contains the CurrPlayer DiscType && DstSquare is vacant and legal
             // 2. Case 1: If moveDirection is UP and dstRowInd + 1 = srcRowInd && 
-            if (indiciesInBoard && sourceIsValid && destinationIsVacant)
+
+            srcAndDestBasicallyValid = SrcAndDestBasicValidation(i_CurrPlayer.DiscType, ref i_SourceIndex, ref i_DestinationIndex);
+            
+            if (srcAndDestBasicallyValid)
             {
-                moveIsValid = true;
+
             }
 
             else
@@ -151,7 +150,34 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
                 moveIsValid = false;
             }
 
+            
+            
             return moveIsValid;
+        }
+
+        public bool SrcAndDestBasicValidation(eDiscType i_CurrPlayerDiscType, ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
+        {
+            bool srcAndDestBasicallyValid;
+            bool sourceIsValid;
+            bool destinationIsVacant;
+            bool indiciesInBoard;
+
+            sourceIsValid = SourceValidation(i_CurrPlayerDiscType, ref i_SourceIndex);
+            destinationIsVacant = DestinationVacancyAndLegalityValidation(ref i_DestinationIndex);
+            indiciesInBoard = IndiciesInBoardValidation(ref i_SourceIndex, ref i_DestinationIndex);
+
+            if (indiciesInBoard && sourceIsValid && destinationIsVacant)
+            {
+                srcAndDestBasicallyValid = true;
+            }
+
+            else
+            {
+                srcAndDestBasicallyValid = false;
+            }
+
+            return srcAndDestBasicallyValid;
+
         }
 
         public bool IndiciesInBoardValidation(ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
@@ -160,8 +186,8 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             bool sourceIsExist;
             bool destinationIsExist;
             
-            sourceIsExist = SquareExistenceValidation(i_SourceIndex[0], i_SourceIndex[1]);
-            destinationIsExist = SquareExistenceValidation(i_DestinationIndex[0], i_DestinationIndex[1]);
+            sourceIsExist = m_Board.SquareExistenceValidation(i_SourceIndex[0], i_SourceIndex[1]);
+            destinationIsExist = m_Board.SquareExistenceValidation(i_DestinationIndex[0], i_DestinationIndex[1]);
 
             if (sourceIsExist && destinationIsExist)
             {
@@ -183,9 +209,9 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             bool indexIsLegal;
             
             CurrDestinationDiscType = m_Board.GetSquare(i_DestinationIndex[0], i_DestinationIndex[1]).CurrDiscType;
-            indexIsLegal = m_Board.GetSquare(i_DestinationIndex[0], i_DestinationIndex[1]).ValidSquare;
+            indexIsLegal = m_Board.GetSquare(i_DestinationIndex[0], i_DestinationIndex[1]).LegalSquare;
 
-            if (CurrDestinationDiscType == NoDisc && indexIsLegal)
+            if (CurrDestinationDiscType == eDiscType.None && indexIsLegal)
             {
                 destinationIsVacant = true;
             }
@@ -197,7 +223,6 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
             return destinationIsVacant;
         }
-
 
         public bool SourceValidation(eDiscType i_CurrPlayerDiscType, ref int[] i_SourceIndex)
         {
@@ -247,7 +272,9 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
         public static bool GameOver()
         {
+            bool gameOver = true;
 
+            return gameOver;
         }
 
     }
