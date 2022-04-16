@@ -9,8 +9,8 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
     {
         XDisc,
         ODisc,
-        K_XKing,
-        U_OKing,
+        XKing,
+        OKing,
         None
 
     }

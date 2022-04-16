@@ -43,6 +43,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="TheCheckersGame.cs" />
+    <Compile Include="TheCheckersGameCopy.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Ex02.ConsoleUtils">

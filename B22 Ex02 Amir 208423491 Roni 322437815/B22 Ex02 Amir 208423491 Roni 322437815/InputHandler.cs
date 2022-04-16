@@ -9,7 +9,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
     {
         StringBuilder m_RawInput;
         bool m_InputStructureIsValid;
-        int[] m_SourceIndex; //Structure - > [ rowIndex, ColIndex ]
+        int[] m_SourceIndex; //Structure - > [ rowIndex, ColIndex ] // Af>Bi
         int[] m_DestinationIndex;
 
         /*Square m_FromSquare;

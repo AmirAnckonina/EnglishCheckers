@@ -10,9 +10,11 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         //public static char NoDisc = 'N';
         private StringBuilder m_Name;
         private int m_NumOfDiscs;
-        private eDiscType m_DiscType;
+        private eDiscType m_DiscType; //X 
+        private eDiscType m_KingDiscType; //K
         private ePlayerType m_PlayerType;
-        private EntryPointNotFoundException m_MovingDirection;
+        private ePlayerMovingDirection m_MovingDirection;
+        
 
         public Player()
         {
@@ -53,6 +55,12 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         {
             get { return m_DiscType; }
             set { m_DiscType = value; }
+        }
+        
+        public eDiscType KingDiscType
+        {
+            get { return m_KingDiscType; }
+            set { m_KingDiscType = value; }
         }
 
         public void SingleMove(ref Board io_Board)
