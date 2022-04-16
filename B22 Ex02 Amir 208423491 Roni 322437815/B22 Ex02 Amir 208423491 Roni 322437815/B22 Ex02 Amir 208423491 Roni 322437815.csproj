@@ -37,6 +37,7 @@
     <Compile Include="eGameMode.cs" />
     <Compile Include="ePlayerMovingDirection.cs" />
     <Compile Include="ePlayerType.cs" />
+    <Compile Include="eWinnerPlayer.cs" />
     <Compile Include="InputHandler.cs" />
     <Compile Include="GameMenu.cs" />
     <Compile Include="Player.cs" />
