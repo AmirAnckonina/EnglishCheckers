@@ -149,12 +149,12 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
                 discTypeChar = 'O';
             }
 
-           else  if(i_DiscTypeNum == eDiscType.K_XKing)
+           else  if(i_DiscTypeNum == eDiscType.XKing)
             {
                 discTypeChar = 'K';
             }
 
-            else if(i_DiscTypeNum == eDiscType.U_OKing)
+            else if(i_DiscTypeNum == eDiscType.OKing)
             {
                 discTypeChar = 'U';
             }   

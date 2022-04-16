@@ -5,13 +5,14 @@ using System.Text;
 
 namespace B22_Ex02_Amir_208423491_Roni_322437815
 {
-    public class TheCheckersGame
+    public class TheCheckersGameCopy
     {
         private Board m_Board;
         private GameMenu m_GameMenu;
         private Player[] m_Players;
         InputHandler m_Input;
         private eGameMode m_GameMode;
+        private eWinnerPlayer m_WinnerPlayer;
         private bool m_FirstPlayerTurn = true;
 
         public void RunSession()
@@ -270,11 +271,46 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
         }
 
-        public static bool GameOver()
-        {
-            bool gameOver = true;
 
-            return gameOver;
+        public bool GameOver()
+        {
+            bool isGameOver;
+
+            if (m_FirstPlayerTurn && (m_Board.GetDiscOccurences(eDiscType.XDisc) == 0 || !isThereAnyValidMove(m_Players[0])))
+            {
+                isGameOver = true;
+                m_WinnerPlayer = eWinnerPlayer.SecondPlayer;
+            }
+
+            else if (!m_FirstPlayerTurn && (m_Board.GetDiscOccurences(eDiscType.ODisc) == 0 || !isThereAnyValidMove(m_Players[1])))
+            {
+                isGameOver = true;
+                m_WinnerPlayer = eWinnerPlayer.SecondPlayer;
+            }
+
+            else if (m_Board.GetDiscOccurences(eDiscType.XDisc) == m_Board.GetDiscOccurences(eDiscType.ODisc) || (!isThereAnyValidMove(m_Players[0]) && !isThereAnyValidMove(m_Players[1]))) 
+            {
+                isGameOver = true;
+                m_WinnerPlayer = eWinnerPlayer.Draw;
+            }
+
+            // else if (someone quite the game ('Q'))
+
+            else
+            {
+                isGameOver = false;
+            }
+
+            return isGameOver;
+        }
+
+        public bool isThereAnyValidMove(Player i_CurrPlayer)
+        {
+            bool isThereValidMove = true;
+
+
+
+            return isThereValidMove;
         }
 
     }
