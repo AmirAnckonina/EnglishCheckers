@@ -189,6 +189,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             }
 
             return isSquareExist;
+
         }
 
         public bool RowIndexExistenceValidation(int i_RowIndex)

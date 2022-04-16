@@ -42,7 +42,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         }
 
         public void SetGameMode(int i_GameModePick)
-        { 
+        {
             if (i_GameModePick == 1)
             {
                 m_GameMode = eGameMode.SinglePlayerMode;
@@ -55,7 +55,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         }
 
         public void SetSecondPlayerProcedure(int i_GameModePick)
-        { 
+        {
             if (i_GameModePick == 1)
             {
                 m_Players[1].PlayerType = ePlayerType.Computer;
@@ -76,7 +76,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             if (m_GameMode == eGameMode.SinglePlayerMode)
             {
                 //input.GetFromColIndex();
-                
+
                 //m_Board.
                 //
             }
@@ -94,7 +94,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             bool validMove;
 
             while (!GameOver())
-            { 
+            {
 
                 RawInputProcedure(ref rawInput); //Finished with a valid format certainly.
                 validMove = CheckCurrentPlayerMove(ref m_Input.GetSourceIndex(), ref m_Input.GetDestinationIndex());
@@ -140,10 +140,10 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             // 2. Case 1: If moveDirection is UP and dstRowInd + 1 = srcRowInd && 
 
             srcAndDestBasicallyValid = SrcAndDestBasicValidation(i_CurrPlayer.DiscType, ref i_SourceIndex, ref i_DestinationIndex);
-            
+
             if (srcAndDestBasicallyValid)
             {
-                 
+
             }
 
             else
@@ -185,7 +185,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             bool indiciesInBoard;
             bool sourceIsExist;
             bool destinationIsExist;
-            
+
             sourceIsExist = m_Board.SquareExistenceValidation(i_SourceIndex[0], i_SourceIndex[1]);
             destinationIsExist = m_Board.SquareExistenceValidation(i_DestinationIndex[0], i_DestinationIndex[1]);
 
@@ -193,7 +193,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             {
                 indiciesInBoard = true;
             }
-            
+
             else
             {
                 indiciesInBoard = false;
@@ -207,7 +207,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             bool destinationIsVacant;
             eDiscType CurrDestinationDiscType;
             bool indexIsLegal;
-            
+
             CurrDestinationDiscType = m_Board.GetSquare(i_DestinationIndex[0], i_DestinationIndex[1]).CurrDiscType;
             indexIsLegal = m_Board.GetSquare(i_DestinationIndex[0], i_DestinationIndex[1]).LegalSquare;
 
@@ -228,7 +228,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         {
             bool sourceIsValid;
 
-            if(i_CurrPlayerDiscType == m_Board.GetSquare(i_SourceIndex[0], i_SourceIndex[1]).CurrDiscType())
+            if (i_CurrPlayerDiscType == m_Board.GetSquare(i_SourceIndex[0], i_SourceIndex[1]).CurrDiscType())
             {
                 sourceIsValid = true;
             }

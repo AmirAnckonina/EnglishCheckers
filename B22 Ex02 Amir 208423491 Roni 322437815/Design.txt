@@ -59,7 +59,4 @@ ServiceClass ?
 
  <------------------------------------->
 
-1. Check about inheritance and polymorphism
-2. How to make DiscType constant but without using the constructor.
-3. How to handle the returned indicies from input handler.
-4. 
+

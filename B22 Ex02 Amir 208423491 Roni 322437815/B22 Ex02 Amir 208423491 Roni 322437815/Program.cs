@@ -3,6 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+// <====================================================>
+// Tasks:
+// 1. Build GameOver method (Roni)
+// - Check if one of the disc type is 0 (NumOfDiscs == 0)
+// - Check if there any valid moves for opponent player
+// - Check if Quitting option choosed
+// 
+// Decide about the game winner
+// FirstPlayer , SecondPlayer, Draw.
+
+// Amir:
+// 1. Add quiting option in InputHandler
+// 2. Handle the GameFunction according to quitting option.
+
+// Others:
+// Conversion regularr disc to king
+// DoubleTurn check function
+// executeMove
+// <====================================================>
+// <====================================================>
+
+
 namespace B22_Ex02_Amir_208423491_Roni_322437815
 {
     public class Program
