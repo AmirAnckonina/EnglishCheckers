@@ -16,7 +16,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             board1.PrintBoard();
             res= board1.GetDiscOccurences(eDiscType.XDisc);
             Console.WriteLine("number of x: {0}", res);
-            Res= board1.IsIndexValid(2, 8);
+            Res= board1.SquareExistenceValidation(2, 8);
             Console.WriteLine("is index valid? : {0}", Res);
             
         }

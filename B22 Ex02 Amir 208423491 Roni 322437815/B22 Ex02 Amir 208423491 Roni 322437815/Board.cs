@@ -32,39 +32,39 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
         public void InitializeBoard()
         {
-            int row, index;
+            int rowIndex, index; //What did you mean? index is column?
 
-            for (row = 0; row < (m_BoardSize / 2) - 1; row++)
+            for (rowIndex = 0; rowIndex < (m_BoardSize / 2) - 1; rowIndex++)
             {
-                InitializeLine(row, eDiscType.ODisc);
+                InitializeLine(rowIndex, eDiscType.ODisc);
             }
 
             for (index = 0; index < 2; index++)  
             {
-                InitializeLine(row + index, eDiscType.None);
+                InitializeLine(rowIndex + index, eDiscType.None);
             }
 
-            for (row += 2; row < m_BoardSize; row++) 
+            for (rowIndex += 2; rowIndex < m_BoardSize; rowIndex++) 
             {
-                InitializeLine(row,eDiscType.XDisc);
+                InitializeLine(rowIndex,eDiscType.XDisc);
             }
         }
 
-        public void InitializeLine(int m_Row, eDiscType i_DiscType)
+        public void InitializeLine(int i_RowIndex, eDiscType i_DiscType)
         {
             int isEven;
 
-            for (int m_Column = 0; m_Column < m_BoardSize; m_Column++)
+            for (int i_ColumnIndex = 0; i_ColumnIndex < m_BoardSize; i_ColumnIndex++)
             {
-                isEven = (m_Row + m_Column) % 2;
+                isEven = (i_RowIndex + i_ColumnIndex) % 2;
                 if (isEven != 0)  
                 {
-                    m_GameBoard[m_Row, m_Column] = new Square(true, i_DiscType, m_Row, m_Column);
+                    m_GameBoard[i_RowIndex, i_ColumnIndex] = new Square(true, i_DiscType, i_RowIndex, i_ColumnIndex);
                 }
 
                 else
                 {
-                    m_GameBoard[m_Row, m_Column] = new Square(false, eDiscType.None, m_Row, m_Column);
+                    m_GameBoard[i_RowIndex, i_ColumnIndex] = new Square(false, eDiscType.None, i_RowIndex, i_ColumnIndex);
                 }
             }
         }
@@ -166,17 +166,65 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
             return discTypeChar;
         }
-
-        public bool IsIndexValid(int i_Row, int i_Column)
+        
+        // RONI. The function isn't hermetic. What about negative values?
+        // Changed it a little bit, including the name -> because of a name pattern I've already used
+        // Will explain to you when we meet.
+        public bool SquareExistenceValidation(int i_RowIndex, int i_ColumnIndex) 
         {
-            bool isIndexValid = true;
+            bool isSquareExist;
+            bool isRowIndexInBoard;
+            bool isColumnIndexInBoard;
 
-            if (i_Row > m_BoardSize || i_Column > m_BoardSize)
+            isRowIndexInBoard = RowIndexExistenceValidation(i_RowIndex);
+            isColumnIndexInBoard = ColumnIndexExistenceValidation(i_ColumnIndex);
+            if (isRowIndexInBoard && isColumnIndexInBoard)
             {
-                isIndexValid = false;
+                isSquareExist = true;
             }
 
-            return isIndexValid;
+            else
+            {
+                isSquareExist = false;
+            }
+
+            return isSquareExist;
+        }
+
+        public bool RowIndexExistenceValidation(int i_RowIndex)
+        {
+            bool isRowIndexExist;
+
+            if (i_RowIndex >= 0 && i_RowIndex <= BoardSize)
+            {
+                isRowIndexExist = true;
+            }
+
+            else
+            {
+                isRowIndexExist = false;
+            }
+
+            return isRowIndexExist;
+
+        }
+
+        public bool ColumnIndexExistenceValidation(int i_ColumnIndex)
+        {
+            bool isColumnIndexExist;
+
+            if (i_ColumnIndex >= 0 && i_ColumnIndex <= BoardSize)
+            {
+                isColumnIndexExist = true;
+            }
+
+            else
+            {
+                isColumnIndexExist = false;
+            }
+
+            return isColumnIndexExist;
+
         }
     }
 }
