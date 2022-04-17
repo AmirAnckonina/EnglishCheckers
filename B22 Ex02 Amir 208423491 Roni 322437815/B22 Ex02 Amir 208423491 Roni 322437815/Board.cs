@@ -166,11 +166,11 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
             return discTypeChar;
         }
-        
+
         // RONI. The function isn't hermetic. What about negative values?
         // Changed it a little bit, including the name -> because of a name pattern I've already used
         // Will explain to you when we meet.
-        public bool SquareExistenceValidation(int i_RowIndex, int i_ColumnIndex) 
+        /*public bool SquareExistenceValidation(int i_RowIndex, int i_ColumnIndex) 
         {
             bool isSquareExist;
             bool isRowIndexInBoard;
@@ -178,6 +178,28 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
             isRowIndexInBoard = RowIndexExistenceValidation(i_RowIndex);
             isColumnIndexInBoard = ColumnIndexExistenceValidation(i_ColumnIndex);
+            if (isRowIndexInBoard && isColumnIndexInBoard)
+            {
+                isSquareExist = true;
+            }
+
+            else
+            {
+                isSquareExist = false;
+            }
+
+            return isSquareExist;
+
+        }*/
+
+        public bool SquareExistenceValidation(ref int[] i_SquareIndex)
+        {
+            bool isSquareExist;
+            bool isRowIndexInBoard;
+            bool isColumnIndexInBoard;
+
+            isRowIndexInBoard = RowIndexExistenceValidation(i_SquareIndex[0]); 
+            isColumnIndexInBoard = ColumnIndexExistenceValidation(i_SquareIndex[1]);
             if (isRowIndexInBoard && isColumnIndexInBoard)
             {
                 isSquareExist = true;

@@ -11,6 +11,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         private GameMenu m_GameMenu;
         private Player[] m_Players;
         InputHandler m_Input;
+        MoveHandler m_Move;
         private eGameMode m_GameMode;
         private bool m_FirstPlayerTurn = true;
 

@@ -9,6 +9,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
     {
         private bool m_LegalSquare;
         private eDiscType m_CurrDiscType;  //X,O,K,Q,N
+        private int[] m_SqrIndex;
         private int m_RowIndex;
         private int m_ColumnIndex;
 
@@ -16,8 +17,9 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         {
             m_LegalSquare = i_LegalSquare;
             m_CurrDiscType = i_CurrDiscType;
-            m_RowIndex = i_RowIndex;
-            m_ColumnIndex = i_ColumnIndex;
+            m_SqrIndex = new int[2] { i_RowIndex, i_ColumnIndex };
+            /*m_RowIndex = i_RowIndex;
+            m_ColumnIndex = i_ColumnIndex;*/
         }
 
         public bool LegalSquare
@@ -31,6 +33,12 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             get { return m_CurrDiscType; }
             set { m_CurrDiscType = value; }
         }
+        
+        public ref int[] GetSquareIndex()
+        {
+            return ref m_SqrIndex;
+        }
+        
     }
 
     

@@ -40,6 +40,7 @@
     <Compile Include="eWinnerPlayer.cs" />
     <Compile Include="InputHandler.cs" />
     <Compile Include="GameMenu.cs" />
+    <Compile Include="MoveHandler.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Square.cs" />

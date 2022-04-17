@@ -7,14 +7,19 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 {
     public class Player
     {
-        //public static char NoDisc = 'N';
+        private class MoveOption
+        {
+            Square m_SourceIndex;
+            Square m_DestinationIndex;
+        }
+
         private StringBuilder m_Name;
         private int m_NumOfDiscs;
-        private eDiscType m_DiscType; //X 
-        private eDiscType m_KingDiscType; //K
+        private eDiscType m_DiscType; //X, O
+        private eDiscType m_KingDiscType; //K, U
         private ePlayerType m_PlayerType;
         private ePlayerMovingDirection m_MovingDirection;
-        
+        private List<MoveOption> m_PlayerPossibleMoves;
 
         public Player()
         {
@@ -24,14 +29,6 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             m_DiscType = eDiscType.None;
             
         }
-
-        /* public Player(string i_Name, int i_NumOfDiscs, char i_DiscType, ePlayerType i_PlayerType)
-        {
-            m_Name = new StringBuilder(i_Name, 20);
-            m_NumOfDiscs = i_NumOfDiscs;
-            m_PlayerType = i_PlayerType;
-            m_DiscType = i_DiscType;
-        }*/
 
         public StringBuilder Name
         {
@@ -63,7 +60,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             set { m_KingDiscType = value; }
         }
 
-        public void SingleMove(ref Board io_Board)
+        public void SingleMove(ref Board io_Board) //???
         {
 
         }

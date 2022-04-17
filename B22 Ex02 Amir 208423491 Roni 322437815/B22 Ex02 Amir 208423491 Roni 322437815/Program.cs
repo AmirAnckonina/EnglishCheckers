@@ -18,7 +18,7 @@ using System.Text;
 // 2. Handle the GameFunction according to quitting option.
 
 // Others:
-// Conversion regularr disc to king
+// Conversion regular disc to king
 // DoubleTurn check function
 // executeMove
 // <====================================================>

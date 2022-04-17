@@ -11,6 +11,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         private GameMenu m_GameMenu;
         private Player[] m_Players;
         InputHandler m_Input;
+        MoveHandler m_Move;
         private eGameMode m_GameMode;
         private eWinnerPlayer m_WinnerPlayer;
         private bool m_FirstPlayerTurn = true;
@@ -140,7 +141,9 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             // 1. SrcSquare contains the CurrPlayer DiscType && DstSquare is vacant and legal
             // 2. Case 1: If moveDirection is UP and dstRowInd + 1 = srcRowInd && 
 
-            srcAndDestBasicallyValid = SrcAndDestBasicValidation(i_CurrPlayer.DiscType, ref i_SourceIndex, ref i_DestinationIndex);
+            srcAndDestBasicallyValid = m_Move.SrcAndDestBasicValidation(ref m_Board, i_CurrPlayer.DiscType, ref i_SourceIndex, ref i_DestinationIndex);
+
+
 
             if (srcAndDestBasicallyValid)
             {
@@ -154,92 +157,6 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
             return moveIsValid;
 
-        }
-
-        public bool SrcAndDestBasicValidation(eDiscType i_CurrPlayerDiscType, ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
-        {
-            bool srcAndDestBasicallyValid;
-            bool sourceIsValid;
-            bool destinationIsVacant;
-            bool indiciesInBoard;
-
-            sourceIsValid = SourceValidation(i_CurrPlayerDiscType, ref i_SourceIndex);
-            destinationIsVacant = DestinationVacancyAndLegalityValidation(ref i_DestinationIndex);
-            indiciesInBoard = IndiciesInBoardValidation(ref i_SourceIndex, ref i_DestinationIndex);
-
-            if (indiciesInBoard && sourceIsValid && destinationIsVacant)
-            {
-                srcAndDestBasicallyValid = true;
-            }
-
-            else
-            {
-                srcAndDestBasicallyValid = false;
-            }
-
-            return srcAndDestBasicallyValid;
-
-        }
-
-        public bool IndiciesInBoardValidation(ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
-        {
-            bool indiciesInBoard;
-            bool sourceIsExist;
-            bool destinationIsExist;
-
-            sourceIsExist = m_Board.SquareExistenceValidation(i_SourceIndex[0], i_SourceIndex[1]);
-            destinationIsExist = m_Board.SquareExistenceValidation(i_DestinationIndex[0], i_DestinationIndex[1]);
-
-            if (sourceIsExist && destinationIsExist)
-            {
-                indiciesInBoard = true;
-            }
-
-            else
-            {
-                indiciesInBoard = false;
-            }
-
-            return indiciesInBoard;
-        }
-
-        public bool DestinationVacancyAndLegalityValidation(ref int[] i_DestinationIndex)
-        {
-            bool destinationIsVacant;
-            eDiscType CurrDestinationDiscType;
-            bool indexIsLegal;
-
-            CurrDestinationDiscType = m_Board.GetSquare(i_DestinationIndex[0], i_DestinationIndex[1]).CurrDiscType;
-            indexIsLegal = m_Board.GetSquare(i_DestinationIndex[0], i_DestinationIndex[1]).LegalSquare;
-
-            if (CurrDestinationDiscType == eDiscType.None && indexIsLegal)
-            {
-                destinationIsVacant = true;
-            }
-
-            else
-            {
-                destinationIsVacant = false;
-            }
-
-            return destinationIsVacant;
-        }
-
-        public bool SourceValidation(eDiscType i_CurrPlayerDiscType, ref int[] i_SourceIndex)
-        {
-            bool sourceIsValid;
-
-            if (i_CurrPlayerDiscType == m_Board.GetSquare(i_SourceIndex[0], i_SourceIndex[1]).CurrDiscType())
-            {
-                sourceIsValid = true;
-            }
-
-            else
-            {
-                sourceIsValid = false;
-            }
-
-            return sourceIsValid;
         }
 
         public void RawInputProcedure(ref StringBuilder io_RawInput)
@@ -270,7 +187,6 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             }
 
         }
-
 
         public bool GameOver()
         {
