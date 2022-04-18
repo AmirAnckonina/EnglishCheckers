@@ -24,6 +24,20 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             set { m_GameBoard = value; }
         }
 
+        //Use of Indexers!!! could be implemented!
+        //Check id already returned a ref? returning a class return a ref? or a copy of the value?
+        public ref Square GetSquare(int i_Row, int i_Column) 
+        {
+            return ref m_GameBoard[i_Row, i_Column];
+        }
+
+        //Use of Indexers!!! ToCheck!
+        public Square this[SquareIndex i_SquareIndex]
+        {
+            get { return m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex]; }
+            set { m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex] = value; }
+        }
+        
         public int BoardSize
         {
             get { return m_BoardSize; }
@@ -128,11 +142,6 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             }
 
             return counter;
-        }
-
-        public ref Square GetSquare(int i_Row, int i_Column)
-        {
-            return ref m_GameBoard[i_Row, i_Column];
         }
 
         public char GetCharByDiscType(eDiscType i_DiscTypeNum)

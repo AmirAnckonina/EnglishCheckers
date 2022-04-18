@@ -44,6 +44,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Square.cs" />
+    <Compile Include="SquareIndex.cs" />
     <Compile Include="TheCheckersGame.cs" />
     <Compile Include="TheCheckersGameCopy.cs" />
   </ItemGroup>

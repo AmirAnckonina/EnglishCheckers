@@ -119,19 +119,19 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
             if (m_FirstPlayerTurn)
             {
-                validMove = MoveValidation(ref m_Players[0], ref i_SourceIndex, ref i_DestinationIndex);
+                validMove = MovePossibiltyValidation(ref m_Players[0], ref i_SourceIndex, ref i_DestinationIndex);
             }
 
             else
             {
-                validMove = MoveValidation(ref m_Players[1], ref i_SourceIndex, ref i_DestinationIndex);
+                validMove = MovePossibiltyValidation(ref m_Players[1], ref i_SourceIndex, ref i_DestinationIndex);
             }
 
             return validMove;
 
         }
 
-        public bool MoveValidation(ref Player i_CurrPlayer, ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
+        public bool MovePossibiltyValidation(ref Player i_CurrPlayer, ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
         {
             bool moveIsValid;
             bool srcAndDestBasicallyValid;
