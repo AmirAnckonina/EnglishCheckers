@@ -5,13 +5,13 @@ using System.Text;
 
 namespace B22_Ex02_Amir_208423491_Roni_322437815
 {
-    public class TheCheckersGameCopy
+    public class Temp
     {
         private Board m_Board;
         private GameMenu m_GameMenu;
         private Player[] m_Players;
-        InputHandler m_Input;
-        MoveHandler m_Move;
+        InputManager m_Input;
+        MoveManager m_Move;
         private eGameMode m_GameMode;
         private eWinnerPlayer m_WinnerPlayer;
         private bool m_FirstPlayerTurn = true;

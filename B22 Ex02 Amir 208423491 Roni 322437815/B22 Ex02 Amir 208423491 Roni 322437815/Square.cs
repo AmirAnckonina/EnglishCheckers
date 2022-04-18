@@ -11,6 +11,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         private bool m_LegalSquare;
         private eDiscType m_CurrDiscType;  //X,O,K,Q,N
         private SquareIndex m_SquareIndex;
+        private ePlayer m_SquareHolder;
 
         // private int[] m_SqrIndex;
         /*private int m_RowIndex;
@@ -21,6 +22,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             m_LegalSquare = i_LegalSquare;
             m_CurrDiscType = i_CurrDiscType;
             m_SquareIndex = new SquareIndex(i_RowIndex, i_ColumnIndex);
+
 
            // m_SqrIndex = new int[2] { i_RowIndex, i_ColumnIndex };
             /*m_RowIndex = i_RowIndex;

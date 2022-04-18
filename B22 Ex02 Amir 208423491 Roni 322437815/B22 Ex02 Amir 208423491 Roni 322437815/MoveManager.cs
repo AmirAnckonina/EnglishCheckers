@@ -5,16 +5,48 @@ using System.Text;
 
 namespace B22_Ex02_Amir_208423491_Roni_322437815
 {
-    public class MoveHandler
+    public class MoveManager
     {
-        public bool SrcAndDestBasicValidation(ref Board i_Board, eDiscType i_CurrPlayerDiscType, ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
+        //MoveValidation Params:
+        // 1. SquareIndex srcIndex
+        // 2. SquareIndex DestIndex
+        // 3. ref Board m_Board
+        // 4. ref Player m_CurrPlayer
+
+        public bool MoveValidation(ref Board i_Board, ref Player i_Player, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
+        {
+            bool moveIsValid;
+            bool srcAndDestBasicallyValid;
+            bool simpleStepIsValid; //No eating step.
+            bool eatOpponentStepIsValid;
+
+            // 1. SrcSquare contains the CurrPlayer DiscType && DstSquare is vacant and legal
+            // 2. Case 1: If moveDirection is UP and dstRowInd + 1 = srcRowInd && 
+
+            srcAndDestBasicallyValid = SrcAndDestBasicValidation(i_CurrPlayer.DiscType, ref i_SourceIndex, ref i_DestinationIndex);
+
+            if (srcAndDestBasicallyValid)
+            {
+
+            }
+
+            else
+            {
+                moveIsValid = false;
+            }
+
+            return moveIsValid;
+
+        }
+
+        public bool SrcAndDestBasicValidation(ref Board i_Board, eDiscType i_CurrPlayerDiscType, SquareIndex srcIndex, ref int[] i_DestinationIndex)
         {
             bool srcAndDestBasicallyValid;
             bool sourceIsValid;
             bool destinationIsVacant;
             bool indiciesInBoard;
 
-            sourceIsValid = SourceValidation(ref i_Board, i_CurrPlayerDiscType, ref i_SourceIndex);
+            sourceIsValid = SourceValidation(i_Board[srcIndex.RowIndex, srcIndex.ColumnIndex], i_CurrPlayerDiscType, ref i_SourceIndex);
             destinationIsVacant = DestinationVacancyAndLegalityValidation(ref i_Board, ref i_DestinationIndex);
             indiciesInBoard = IndiciesInBoardValidation(ref i_Board, ref i_SourceIndex, ref i_DestinationIndex);
 
@@ -97,5 +129,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         {
             return true;
         }
+
+
     }
 }

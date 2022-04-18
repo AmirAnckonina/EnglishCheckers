@@ -10,8 +10,8 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         private Board m_Board;
         private GameMenu m_GameMenu;
         private Player[] m_Players;
-        InputHandler m_Input;
-        MoveHandler m_Move;
+        InputManager m_Input;
+        MoveManager m_Move;
         private eGameMode m_GameMode;
         private bool m_FirstPlayerTurn = true;
 
@@ -98,7 +98,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             { 
 
                 RawInputProcedure(ref rawInput); //Finished with a valid format certainly.
-                validMove = CheckCurrentPlayerMove(ref m_Input.GetSourceIndex(), ref m_Input.GetDestinationIndex());
+                validMove = CheckCurrentPlayerMove(); //Get SquareIndex
                 while (!validMove)
                 {
                     RawInputProcedure(ref rawInput);
@@ -118,7 +118,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
             if (m_FirstPlayerTurn)
             {
-                validMove = MoveValidation(ref m_Players[0], ref i_SourceIndex, ref i_DestinationIndex);
+                validMove = m_Move.MoveValidation(ref m_Players[0], ref i_SourceIndex, ref i_DestinationIndex);
             }
 
             else
@@ -129,8 +129,15 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             return validMove;
 
         }
+        //MoveValidation Params:
+        // 1. SquareIndex srcIndex
+        // 2. SquareIndex DestIndex
+        // 3. ref Board m_Board
+        // 4. ref Player m_CurrPlayer
 
-        public bool MoveValidation(ref Player i_CurrPlayer, ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
+
+
+      /*  public bool MoveValidation(ref Player i_CurrPlayer, SquareIndex i_SourceIndex, ref int[] i_DestinationIndex)
         {
             bool moveIsValid;
             bool srcAndDestBasicallyValid;
@@ -154,9 +161,9 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
             return moveIsValid;
 
-        }
+        }*/
 
-        public bool SrcAndDestBasicValidation(eDiscType i_CurrPlayerDiscType, ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
+/*        public bool SrcAndDestBasicValidation(eDiscType i_CurrPlayerDiscType, ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
         {
             bool srcAndDestBasicallyValid;
             bool sourceIsValid;
@@ -229,7 +236,8 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         {
             bool sourceIsValid;
 
-            if(i_CurrPlayerDiscType == m_Board.GetSquare(i_SourceIndex[0], i_SourceIndex[1]).CurrDiscType())
+           // if(i_CurrPlayerDiscType == m_Board.GetSquare(i_SourceIndex[0], i_SourceIndex[1]).CurrDiscType())
+            if(i_CurrPlayerDiscType == m_Board[5,5].CurrDiscType
             {
                 sourceIsValid = true;
             }
@@ -255,7 +263,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
                 io_RawInput.Append(Console.ReadLine());
                 m_Input.LoadNewInput(io_RawInput);
             }
-        }
+        }*/
 
         public void SwitchTurn()
         {

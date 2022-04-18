@@ -5,21 +5,23 @@ using System.Text;
 
 namespace B22_Ex02_Amir_208423491_Roni_322437815
 {
-    public class InputHandler
+    public class InputManager
     {
         StringBuilder m_RawInput;
         bool m_InputStructureIsValid;
-        int[] m_SourceIndex; //Structure - > [ rowIndex, ColIndex ] // Af>Bi
-        int[] m_DestinationIndex;
+        SquareIndex m_SourceIndex;
+        SquareIndex m_DestinationIndex;
 
+       /* int[] m_SourceIndex; //Structure - > [ rowIndex, ColIndex ] // Af>Bi
+        int[] m_DestinationIndex;*/
         /*Square m_FromSquare;
         Square m_ToSquare;*/
 
-        public InputHandler()
+        public InputManager()
         {
             m_RawInput = new StringBuilder();
-            m_SourceIndex = new int[2];
-            m_DestinationIndex = new int[2];
+            m_SourceIndex = new SquareIndex();
+            m_DestinationIndex = new SquareIndex();
             m_InputStructureIsValid = false;
         }
 
@@ -29,19 +31,14 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             set { m_RawInput = value; }
         }
 
-        public ref int[] GetSourceIndex()
+        public SquareIndex SrcIndex
         {
-            return ref m_SourceIndex;
+            get { return m_SourceIndex; }
         }
-
-        public ref int[] GetDestinationIndex()
+        
+        public SquareIndex DestIndex
         {
-            return ref m_DestinationIndex;
-        }
-
-        public bool InputStructureIsValid()
-        {
-            return m_InputStructureIsValid;
+            get { return m_DestinationIndex; }
         }
 
         public void LoadNewInput(StringBuilder i_RawInput)
@@ -58,8 +55,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         public void ClearPreviousInput()
         {
             m_RawInput.Clear();
-            m_SourceIndex.Initialize();
-            m_DestinationIndex.Initialize();
+            //Init the SquareIndicies
             m_InputStructureIsValid = false;
         }
 
