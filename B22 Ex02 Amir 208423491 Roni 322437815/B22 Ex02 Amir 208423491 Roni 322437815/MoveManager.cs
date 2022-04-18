@@ -23,7 +23,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             // 1. SrcSquare contains the CurrPlayer DiscType && DstSquare is vacant and legal
             // 2. Case 1: If moveDirection is UP and dstRowInd + 1 = srcRowInd && 
 
-            srcAndDestBasicallyValid = SrcAndDestBasicValidation(i_CurrPlayer.DiscType, ref i_SourceIndex, ref i_DestinationIndex);
+            srcAndDestBasicallyValid = SrcAndDestBasicValidation(ref i_Board,i_Player.m_PlayerSerial ref i_SourceIndex, ref i_DestinationIndex);
 
             if (srcAndDestBasicallyValid)
             {
@@ -39,14 +39,14 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
         }
 
-        public bool SrcAndDestBasicValidation(ref Board i_Board, eDiscType i_CurrPlayerDiscType, SquareIndex srcIndex, ref int[] i_DestinationIndex)
+        public bool SrcAndDestBasicValidation(ref Board i_Board, ePlayer i_SquareHolder, SquareIndex i_srcIndex, SquareIndex i_destIndex)
         {
             bool srcAndDestBasicallyValid;
             bool sourceIsValid;
             bool destinationIsVacant;
             bool indiciesInBoard;
 
-            sourceIsValid = SourceValidation(i_Board[srcIndex.RowIndex, srcIndex.ColumnIndex], i_CurrPlayerDiscType, ref i_SourceIndex);
+            sourceIsValid = SourceValidation(i_Board[i_srcIndex], i_SquareHolder);
             destinationIsVacant = DestinationVacancyAndLegalityValidation(ref i_Board, ref i_DestinationIndex);
             indiciesInBoard = IndiciesInBoardValidation(ref i_Board, ref i_SourceIndex, ref i_DestinationIndex);
 
@@ -108,11 +108,11 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             return destinationIsVacant;
         }
 
-        public bool SourceValidation(ref Board i_Board, eDiscType i_CurrPlayerDiscType, ref int[] i_SourceIndex)
+        public bool SourceValidation(Square i_CurrSqeuare, ePlayer i_SquareHolder)
         {
             bool sourceIsValid;
 
-            if (i_CurrPlayerDiscType == i_Board.GetSquare(i_SourceIndex[0], i_SourceIndex[1]).CurrDiscType())
+            if (i_SquareHolder == i_CurrSqeuare.m_SquareHolder)
             {
                 sourceIsValid = true;
             }
