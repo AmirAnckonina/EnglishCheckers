@@ -9,17 +9,18 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
     {
         /*private class MoveOption
         {
-            Square m_SourceIndex;
-            Square m_DestinationIndex;
-        }
-*/
+            SquareIndex m_SourceIndex;
+            SquareIndex m_DestinationIndex;
+        } */
+
         private StringBuilder m_Name;
         private int m_NumOfDiscs;
         private eDiscType m_DiscType; //X, O
         private eDiscType m_KingDiscType; //K, U
         private ePlayerType m_PlayerType;
         private ePlayerMovingDirection m_MovingDirection;
-        private List<SquareIndex> m_AllSourceSquareIndicies;
+        private ePlayer m_PlayerSerial;
+        private List<SquareIndex> m_AllSourceSquareIndicies; 
 
         //private List<MoveOption> m_PlayerPossibleMoves;
 
@@ -66,11 +67,11 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
         }
 
-        public bool AnyMovePossibilyValidation(ref Board i_Board, ref MoveHandler i_MoveHandler)
+        public bool AnyMovePossibilyValidation(ref Board i_Board, ref MoveManager i_MoveManager)
         {
             foreach (SquareIndex sqrIndex in m_AllSourceSquareIndicies)
             {
-                i_MoveHandler.MoveFromOptionValiidation(m_DiscType, m_KingDiscType, i_Board[sqrIndex]); //How to pass *this* object by ref?
+                i_MoveManager.MoveFromOptionValiidation(m_DiscType, m_KingDiscType, i_Board[sqrIndex]); //How to pass *this* object by ref?
             }
         }
 

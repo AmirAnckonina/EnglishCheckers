@@ -32,10 +32,10 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         }
 
         //Use of Indexers!!! ToCheck!
-        public Square this[SquareIndex i_SquareIndex]
+        public ref Square this[SquareIndex i_SquareIndex]
         {
-            get { return m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex]; }
-            set { m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex] = value; }
+            get { return ref m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex]; }
+            // set { m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex] = value; }
         }
         
         public int BoardSize

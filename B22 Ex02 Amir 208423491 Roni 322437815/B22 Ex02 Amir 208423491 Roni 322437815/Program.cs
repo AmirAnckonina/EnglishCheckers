@@ -4,23 +4,36 @@ using System.Linq;
 using System.Text;
 
 // <====================================================>
+//
 // Tasks:
-// 1. Build GameOver method (Roni)
+
+// Roni -> MoveManager
+// 1. Re-Design for MoveValidation inside MoveManager Class
+// 2. Fix all the basic validation methods
+// 3. Start builiding Moving without and with eating
+
+// Amir -> Player & MoveManagerCopy 
+// 1. Build MoveFromOptionPossibilityValidation
+// 2. Re-organized TheCheckersGame runGame flow
+// 3 Re-Build GameOver main method.
+// 4. Add E-Num of PlayerSerial - VVVVVVVV
+// 5. Add this E-num in Square as a "squareHolder" - VVVVVVVVVV
+// 6. Handle constructor in Square and Player.
+// 7. Check about set Square using indexers.
+
+// Others:
+// Add Quitting option (input handler)
+// Build random choose for computer player
+// AI -> smart moves by computer
+// DoubleTurn option (after eating)
+// Conversion regular disc to king
+
+//GameOver ideas
 // - Check if one of the disc type is 0 (NumOfDiscs == 0)
 // - Check if there any valid moves for opponent player
 // - Check if Quitting option choosed
 // 
-// Decide about the game winner
-// FirstPlayer , SecondPlayer, Draw.
 
-// Amir:
-// 1. Add quiting option in InputHandler
-// 2. Handle the GameFunction according to quitting option.
-
-// Others:
-// Conversion regular disc to king
-// DoubleTurn check function
-// executeMove
 // <====================================================>
 // <====================================================>
 

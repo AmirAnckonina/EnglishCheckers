@@ -20,7 +20,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             m_RowIndex = i_RowIndex;
             m_ColumnIndex = i_ColumnIndex;
         }
-
+        
         public int RowIndex
         {
             get { return m_RowIndex; }
