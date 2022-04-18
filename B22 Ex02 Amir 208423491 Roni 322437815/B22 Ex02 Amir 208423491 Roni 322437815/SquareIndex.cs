@@ -33,5 +33,11 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             set { m_ColumnIndex = value; }
         }
 
+        public void SetSquareIndex(int i_RowIndex, int i_ColumnIndex)
+        {
+            m_RowIndex = i_RowIndex;
+            m_ColumnIndex = i_ColumnIndex;
+        }
+
     }
 }

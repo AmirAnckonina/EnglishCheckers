@@ -92,7 +92,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             eDiscType CurrDestinationDiscType;
             bool indexIsLegal;
 
-            CurrDestinationDiscType = i_Board.GetSquare(i_DestinationIndex[0], i_DestinationIndex[1]).CurrDiscType;
+            CurrDestinationDiscType = i_Board.GetSquare(i_DestinationIndex[0], i_DestinationIndex[1]).DiscType;
             indexIsLegal = i_Board.GetSquare(i_DestinationIndex[0], i_DestinationIndex[1]).LegalSquare;
 
             if (CurrDestinationDiscType == eDiscType.None && indexIsLegal)

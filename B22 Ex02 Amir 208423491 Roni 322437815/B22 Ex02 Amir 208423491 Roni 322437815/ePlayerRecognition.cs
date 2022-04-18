@@ -5,10 +5,10 @@ using System.Text;
 
 namespace B22_Ex02_Amir_208423491_Roni_322437815
 {
-    public enum ePlayer
+    public enum ePlayerRecognition
     {
-        FirstPlayer,
-        SecondPlayer,
-        None
+        FirstPlayer = 1,
+        SecondPlayer = 2,
+        None = -1
     }
 }

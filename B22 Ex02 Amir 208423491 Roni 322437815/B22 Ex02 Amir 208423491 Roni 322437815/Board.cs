@@ -18,10 +18,10 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             m_GameBoard = new Square[m_BoardSize, m_BoardSize];
         }
         
-        public Square[,] GameBoard
+        public ref Square[,] GameBoard
         {
-            get { return m_GameBoard; }
-            set { m_GameBoard = value; }
+            get { return ref m_GameBoard; }
+            //set { m_GameBoard = value; }
         }
 
         //Use of Indexers!!! could be implemented!
@@ -103,8 +103,8 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
                 letter = (char)(letter + 1);
                 for (column = 0; column < m_BoardSize; column++)
                 {
-                    currDiscChar = GetCharByDiscType(m_GameBoard[row, column].CurrDiscType);
-                    currDiscType = m_GameBoard[row, column].CurrDiscType;
+                    currDiscChar = GetCharByDiscType(m_GameBoard[row, column].DiscType);
+                    currDiscType = m_GameBoard[row, column].DiscType;
                     if (currDiscType != eDiscType.None)
                     {
                         Console.Write(" {0} | ", currDiscChar);
@@ -134,7 +134,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             {
                 for (column = 0; column < BoardSize; column++)
                 {
-                    if (m_GameBoard[row, column].CurrDiscType == i_DiscType) 
+                    if (m_GameBoard[row, column].DiscType == i_DiscType) 
                     {
                         counter++;
                     }
@@ -201,14 +201,14 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
         }*/
 
-        public bool SquareExistenceValidation(ref int[] i_SquareIndex)
+        public bool SquareExistenceValidation(SquareIndex i_SquareIndex)
         {
             bool isSquareExist;
             bool isRowIndexInBoard;
             bool isColumnIndexInBoard;
 
-            isRowIndexInBoard = RowIndexExistenceValidation(i_SquareIndex[0]); 
-            isColumnIndexInBoard = ColumnIndexExistenceValidation(i_SquareIndex[1]);
+            isRowIndexInBoard = RowIndexExistenceValidation(i_SquareIndex.RowIndex); 
+            isColumnIndexInBoard = ColumnIndexExistenceValidation(i_SquareIndex.ColumnIndex);
             if (isRowIndexInBoard && isColumnIndexInBoard)
             {
                 isSquareExist = true;

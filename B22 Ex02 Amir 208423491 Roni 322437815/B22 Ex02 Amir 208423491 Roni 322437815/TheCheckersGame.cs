@@ -8,12 +8,18 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
     public class TheCheckersGame
     {
         private Board m_Board;
-        private GameMenu m_GameMenu;
+        private ConsoleUI m_GameMenu;
         private Player[] m_Players;
         InputManager m_Input;
         MoveManager m_Move;
         private eGameMode m_GameMode;
-        private bool m_FirstPlayerTurn = true;
+        private bool m_FirstPlayerTurn;
+
+        /*public TheCheckersGame()
+        {
+            m_GameMode = eGameMode.SinglePlayerMode;
+            m_FirstPlayerTurn = true;
+        }*/
 
         public void RunSession()
         {
@@ -23,81 +29,102 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
         public void InitSingleGame()
         {
-            int gameModePick = 0;
-
-            //GameMenu -> run Welcome function
-            //GameMenu -> ask for first player's name
-            m_Players[0].Name.Append("name");
-            //GameMenu -> ask for boardDimensions
-            // m_Board.BoardSize = returnedValue from Menu
-            m_Board.InitializeBoard();
-            //gameModePick = //GameMenu -> ask whether to play against computer or another player
-            SetGameMode(gameModePick);
-            SetSecondPlayerProcedure(gameModePick);
-
-            m_Players[0].DiscType = eDiscType.XDisc;
-            m_Players[1].DiscType = eDiscType.ODisc;
-            m_Players[0].NumOfDiscs = m_Board.GetDiscOccurences(m_Players[0].DiscType);
-            m_Players[1].NumOfDiscs = m_Board.GetDiscOccurences(m_Players[1].DiscType);
-
+            m_GameMenu.Welcome();
+            m_Players[0].Name = m_GameMenu.GetPlayerName();
+            SetGameMode();
+            SetBoard();
+            SetPlayers();
         }
 
-        public void SetGameMode(int i_GameModePick)
-        { 
-            if (i_GameModePick == 1)
+        public void SetBoard()
+        {
+            m_Board.BoardSize = m_GameMenu.GetSizeOfBoard();
+            m_Board.InitializeBoard();
+        }
+
+        public void SetPlayers()
+        {
+            SetSecondPlayersName();
+            SetPlayersType();
+            m_Players[0].PlayerRecognition = ePlayerRecognition.FirstPlayer;
+            m_Players[1].PlayerRecognition = ePlayerRecognition.SecondPlayer;
+            m_Players[0].DiscType = eDiscType.ODisc;
+            m_Players[1].DiscType = eDiscType.XDisc;
+            m_Players[0].KingDiscType = eDiscType.OKingDisc;
+            m_Players[1].KingDiscType = eDiscType.XKingDisc;
+            m_Players[0].MovingDirection = ePlayerMovingDirection.Down;
+            m_Players[1].MovingDirection = ePlayerMovingDirection.Up;
+            m_Players[0].NumOfDiscs = m_Board.GetDiscOccurences(m_Players[0].DiscType);
+            m_Players[1].NumOfDiscs = m_Board.GetDiscOccurences(m_Players[1].DiscType);
+        }
+
+        public void SetSecondPlayersName()
+        {
+            if (m_GameMode == eGameMode.TwoPlayersMode)
+            {
+                m_Players[1].Name = m_GameMenu.GetPlayerName();
+            }
+
+            else // (m_GameMode == eGameMode.SinglePlayerMode)
+            {
+                //Validate the constructor to Player knows to leavr the name dMember as ""
+            }
+        } 
+
+        public void SetPlayersType()
+        {
+            m_Players[0].PlayerType = ePlayerType.Human;
+            if (m_GameMode == eGameMode.TwoPlayersMode)
+            {
+                m_Players[1].PlayerType = ePlayerType.Human;
+            }
+
+            else // (m_GameMode == eGameMode.SinglePlayerMode)
+            {
+                m_Players[1].PlayerType = ePlayerType.Computer;
+            }
+        }
+
+        public void SetGameMode()
+        {
+            int gameModeChoice;
+
+            gameModeChoice = m_GameMenu.GetGameMode();
+            if (gameModeChoice == 1)
             {
                 m_GameMode = eGameMode.SinglePlayerMode;
             }
 
-            else //i_GameModePick == 2 
+            else //gameModePick == 2 
             {
                 m_GameMode = eGameMode.TwoPlayersMode;
             }
         }
 
-        public void SetSecondPlayerProcedure(int i_GameModePick)
-        { 
-            if (i_GameModePick == 1)
-            {
-                m_Players[1].PlayerType = ePlayerType.Computer;
-            }
-
-            else //numOfPlayers == 2 // -> if so, ask for the second player name
-            {
-                m_Players[1].PlayerType = ePlayerType.Human;
-                //GameMenu -> ask for the second player name
-                m_Players[1].Name.Append("name2");
-            }
-        }
-
         public void RunSingleGame()
         {
-            StringBuilder rawInput = new StringBuilder();
+            Player currPlayer;
 
-            if (m_GameMode == eGameMode.SinglePlayerMode)
+            currPlayer = m_Players[0];
+            while (!GameOver())
             {
-                //input.GetFromColIndex();
-                
-                //m_Board.
-                //
-            }
+                m_GameMenu.PrintWhoseTurn(currPlayer);
 
-            else //if (m_GameMode == eGameMode.TwoPlayersMode)
-            {
-                RunTwoPlayersMode();
-            }
 
+
+                SwitchTurn(currPlayer);
+            }
         }
 
-        public void RunTwoPlayersMode()
+       /* public void RunTwoPlayersMode()
         {
-            StringBuilder rawInput = new StringBuilder();
+           
             bool validMove;
 
             while (!GameOver())
             { 
 
-                RawInputProcedure(ref rawInput); //Finished with a valid format certainly.
+                RawInputProcedure(); //Finished with a valid format certainly.
                 validMove = CheckCurrentPlayerMove(); //Get SquareIndex
                 while (!validMove)
                 {
@@ -111,8 +138,43 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
             }
         }
+*/
+        public void RawInputProcedure()
+        {
+            m_Input.LoadNewInput();
 
-        public bool CheckCurrentPlayerMove(ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
+            while (!m_Input.InputStructureIsValid)
+            {
+                Console.WriteLine("Sorry, your input structure isn't valid.");
+                m_Input.LoadNewInput();
+            }
+        }
+
+        public void SwitchTurn(Player io_CurrPlayer)
+        {
+            if (m_FirstPlayerTurn)
+            {
+                m_FirstPlayerTurn = false;
+                io_CurrPlayer = m_Players[1];
+
+            }
+
+            else //Currently, it's the second player turn
+            {
+                m_FirstPlayerTurn = true;
+                io_CurrPlayer = m_Players[0];
+            }
+
+        }
+
+        public static bool GameOver()
+        {
+            bool gameOver = true;
+
+            return gameOver;
+        }
+
+       /* public bool CheckCurrentPlayerMove(ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
         {
             bool validMove;
 
@@ -137,33 +199,33 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
 
 
-      /*  public bool MoveValidation(ref Player i_CurrPlayer, SquareIndex i_SourceIndex, ref int[] i_DestinationIndex)
-        {
-            bool moveIsValid;
-            bool srcAndDestBasicallyValid;
-            bool simpleStepIsValid; //No eating step.
-            bool eatOpponentStepIsValid;
+        *//*  public bool MoveValidation(ref Player i_CurrPlayer, SquareIndex i_SourceIndex, ref int[] i_DestinationIndex)
+          {
+              bool moveIsValid;
+              bool srcAndDestBasicallyValid;
+              bool simpleStepIsValid; //No eating step.
+              bool eatOpponentStepIsValid;
 
-            // 1. SrcSquare contains the CurrPlayer DiscType && DstSquare is vacant and legal
-            // 2. Case 1: If moveDirection is UP and dstRowInd + 1 = srcRowInd && 
+              // 1. SrcSquare contains the CurrPlayer DiscType && DstSquare is vacant and legal
+              // 2. Case 1: If moveDirection is UP and dstRowInd + 1 = srcRowInd && 
 
-            srcAndDestBasicallyValid = SrcAndDestBasicValidation(i_CurrPlayer.DiscType, ref i_SourceIndex, ref i_DestinationIndex);
-            
-            if (srcAndDestBasicallyValid)
-            {
-                 
-            }
+              srcAndDestBasicallyValid = SrcAndDestBasicValidation(i_CurrPlayer.DiscType, ref i_SourceIndex, ref i_DestinationIndex);
 
-            else
-            {
-                moveIsValid = false;
-            }
+              if (srcAndDestBasicallyValid)
+              {
 
-            return moveIsValid;
+              }
 
-        }*/
+              else
+              {
+                  moveIsValid = false;
+              }
 
-/*        public bool SrcAndDestBasicValidation(eDiscType i_CurrPlayerDiscType, ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
+              return moveIsValid;
+
+          }*//*
+
+        public bool SrcAndDestBasicValidation(eDiscType i_CurrPlayerDiscType, ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
         {
             bool srcAndDestBasicallyValid;
             bool sourceIsValid;
@@ -193,7 +255,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             bool indiciesInBoard;
             bool sourceIsExist;
             bool destinationIsExist;
-            
+
             sourceIsExist = m_Board.SquareExistenceValidation(i_SourceIndex[0], i_SourceIndex[1]);
             destinationIsExist = m_Board.SquareExistenceValidation(i_DestinationIndex[0], i_DestinationIndex[1]);
 
@@ -201,7 +263,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             {
                 indiciesInBoard = true;
             }
-            
+
             else
             {
                 indiciesInBoard = false;
@@ -215,7 +277,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             bool destinationIsVacant;
             eDiscType CurrDestinationDiscType;
             bool indexIsLegal;
-            
+
             CurrDestinationDiscType = m_Board.GetSquare(i_DestinationIndex[0], i_DestinationIndex[1]).CurrDiscType;
             indexIsLegal = m_Board.GetSquare(i_DestinationIndex[0], i_DestinationIndex[1]).LegalSquare;
 
@@ -236,8 +298,8 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         {
             bool sourceIsValid;
 
-           // if(i_CurrPlayerDiscType == m_Board.GetSquare(i_SourceIndex[0], i_SourceIndex[1]).CurrDiscType())
-            if(i_CurrPlayerDiscType == m_Board[5,5].CurrDiscType
+            // if(i_CurrPlayerDiscType == m_Board.GetSquare(i_SourceIndex[0], i_SourceIndex[1]).CurrDiscType())
+            if (i_CurrPlayerDiscType == m_Board[5, 5].CurrDiscType
             {
                 sourceIsValid = true;
             }
@@ -248,43 +310,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             }
 
             return sourceIsValid;
-        }
-
-        public void RawInputProcedure(ref StringBuilder io_RawInput)
-        {
-            io_RawInput.Clear();
-            io_RawInput.Append(Console.ReadLine());
-            m_Input.LoadNewInput(io_RawInput);
-
-            while (!m_Input.InputStructureIsValid())
-            {
-                Console.WriteLine("Sorry, your input structure isn't valid.");
-                io_RawInput.Clear();
-                io_RawInput.Append(Console.ReadLine());
-                m_Input.LoadNewInput(io_RawInput);
-            }
         }*/
-
-        public void SwitchTurn()
-        {
-            if (m_FirstPlayerTurn)
-            {
-                m_FirstPlayerTurn = false;
-            }
-
-            else //Currently, it's the second player turn
-            {
-                m_FirstPlayerTurn = true;
-            }
-
-        }
-
-        public static bool GameOver()
-        {
-            bool gameOver = true;
-
-            return gameOver;
-        }
 
     }
 
