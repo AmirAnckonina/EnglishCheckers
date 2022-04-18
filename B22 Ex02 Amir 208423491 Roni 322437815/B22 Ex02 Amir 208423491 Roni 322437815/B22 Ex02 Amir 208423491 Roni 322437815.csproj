@@ -35,12 +35,12 @@
     <Compile Include="Board.cs" />
     <Compile Include="eDiscType.cs" />
     <Compile Include="eGameMode.cs" />
-    <Compile Include="ePlayer.cs" />
+    <Compile Include="ePlayerRecognition.cs" />
     <Compile Include="ePlayerMovingDirection.cs" />
     <Compile Include="ePlayerType.cs" />
     <Compile Include="eWinnerPlayer.cs" />
     <Compile Include="InputManager.cs" />
-    <Compile Include="GameMenu.cs" />
+    <Compile Include="ConsoleUI.cs" />
     <Compile Include="MoveManager.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />

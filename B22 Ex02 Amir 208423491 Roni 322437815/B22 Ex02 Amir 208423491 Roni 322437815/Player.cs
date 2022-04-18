@@ -19,8 +19,8 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         private eDiscType m_KingDiscType; //K, U
         private ePlayerType m_PlayerType;
         private ePlayerMovingDirection m_MovingDirection;
-        private ePlayer m_PlayerSerial;
-        private List<SquareIndex> m_AllSourceSquareIndicies; 
+        private ePlayerRecognition m_PlayerRecognition;
+        private List<SquareIndex> m_CurrentHoldingSquareIndices; 
 
         //private List<MoveOption> m_PlayerPossibleMoves;
 
@@ -62,18 +62,36 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             set { m_KingDiscType = value; }
         }
 
-        public void SingleMove(ref Board io_Board) //???
+        public ePlayerMovingDirection MovingDirection
         {
-
+            get { return m_MovingDirection; }
+            set { m_MovingDirection = value; }
         }
 
-        public bool AnyMovePossibilyValidation(ref Board i_Board, ref MoveManager i_MoveManager)
+        public ePlayerRecognition PlayerRecognition
         {
-            foreach (SquareIndex sqrIndex in m_AllSourceSquareIndicies)
+            get { return m_PlayerRecognition; }
+            set { m_PlayerRecognition = value; }
+        }
+
+        public void InitializeCurrentHoldingIndices(ref Board i_Board)
+        {
+            foreach (Square sqr in i_Board.GameBoard)
+            {
+                if (sqr.SquareHolder == m_PlayerRecognition)
+                {
+                    m_CurrentHoldingSquareIndices.Add(sqr.SqrIndex);
+                }
+            }
+        }
+
+       /* public bool AnyMovePossibilyValidation(ref Board i_Board, ref MoveManager i_MoveManager)
+        {
+            foreach (SquareIndex sqrIndex in m_CurrentHoldingIndices)
             {
                 i_MoveManager.MoveFromOptionValiidation(m_DiscType, m_KingDiscType, i_Board[sqrIndex]); //How to pass *this* object by ref?
             }
-        }
+        }*/
 
     }
 }

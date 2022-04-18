@@ -8,7 +8,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
     public class Temp
     {
         private Board m_Board;
-        private GameMenu m_GameMenu;
+        private ConsoleUI m_GameMenu;
         private Player[] m_Players;
         InputManager m_Input;
         MoveManager m_Move;

@@ -41,14 +41,19 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             get { return m_DestinationIndex; }
         }
 
-        public void LoadNewInput(StringBuilder i_RawInput)
+        public bool InputStructureIsValid
+        {
+            get { return m_InputStructureIsValid; }
+        }
+
+        public void LoadNewInput()
         {
             ClearPreviousInput();
-            m_RawInput = i_RawInput;
+            m_RawInput.Append(Console.ReadLine());
             InputStructureValidation();
             if (m_InputStructureIsValid)
             {
-                UpdateIndicies();
+                UpdateIndices();
             }
         }
 
@@ -59,7 +64,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             m_InputStructureIsValid = false;
         }
 
-        public void UpdateIndicies()
+        public void UpdateIndices()
         {
             //Structure - > [ rowIndex, ColIndex ]
             m_SourceIndex[1] = LetterToNumberIndexConverter(m_RawInput[0]); 
