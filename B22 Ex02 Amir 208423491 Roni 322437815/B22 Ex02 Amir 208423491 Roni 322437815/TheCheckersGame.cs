@@ -8,18 +8,19 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
     public class TheCheckersGame
     {
         private Board m_Board;
-        private ConsoleUI m_GameMenu;
+        private ConsoleUI m_UI;
         private Player[] m_Players;
-        InputManager m_Input;
+        //InputManager m_Input;
         MoveManager m_Move;
         private eGameMode m_GameMode;
         private bool m_FirstPlayerTurn;
 
-        /*public TheCheckersGame()
+        public TheCheckersGame()
         {
             m_GameMode = eGameMode.SinglePlayerMode;
             m_FirstPlayerTurn = true;
-        }*/
+
+        }
 
         public void RunSession()
         {
@@ -29,8 +30,8 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
         public void InitSingleGame()
         {
-            m_GameMenu.Welcome();
-            m_Players[0].Name = m_GameMenu.GetPlayerName();
+            m_UI.Welcome();
+            m_Players[0].Name = m_UI.GetPlayerName();
             SetGameMode();
             SetBoard();
             SetPlayers();
@@ -38,7 +39,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
         public void SetBoard()
         {
-            m_Board.BoardSize = m_GameMenu.GetSizeOfBoard();
+            m_Board.BoardSize = m_UI.GetSizeOfBoard();
             m_Board.InitializeBoard();
         }
 
@@ -62,7 +63,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         {
             if (m_GameMode == eGameMode.TwoPlayersMode)
             {
-                m_Players[1].Name = m_GameMenu.GetPlayerName();
+                m_Players[1].Name = m_UI.GetPlayerName();
             }
 
             else // (m_GameMode == eGameMode.SinglePlayerMode)
@@ -89,7 +90,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         {
             int gameModeChoice;
 
-            gameModeChoice = m_GameMenu.GetGameMode();
+            gameModeChoice = m_UI.GetGameMode();
             if (gameModeChoice == 1)
             {
                 m_GameMode = eGameMode.SinglePlayerMode;
@@ -108,45 +109,37 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             currPlayer = m_Players[0];
             while (!GameOver())
             {
-                m_GameMenu.PrintWhoseTurn(currPlayer);
-
-
-
+                m_UI.PrintWhoseTurn(currPlayer);
+                RawInputProcedure();
+                MoveProcedure(currPlayer);
+                //
+                //
                 SwitchTurn(currPlayer);
             }
         }
 
-       /* public void RunTwoPlayersMode()
+        public void MoveProcedure(Player i_CurrPlayer)
         {
-           
             bool validMove;
 
-            while (!GameOver())
-            { 
-
-                RawInputProcedure(); //Finished with a valid format certainly.
-                validMove = CheckCurrentPlayerMove(); //Get SquareIndex
-                while (!validMove)
-                {
-                    RawInputProcedure(ref rawInput);
-                    validMove = CheckCurrentPlayerMove(ref m_Input.GetSourceIndex(), ref m_Input.GetDestinationIndex());
-                }
-
-                ExecuteCurrentPlayerMove();
-
-                SwitchTurn();
-
+            validMove = m_Move.MoveValidation(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);
+            while (!validMove)
+            {
+                m_UI.PrintInvalidInputMoveOption();
+                validMove = m_Move.MoveValidation(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);
             }
+
+            //Update movement on board.
         }
-*/
+
         public void RawInputProcedure()
         {
-            m_Input.LoadNewInput();
+            m_UI.Input.LoadNewInput();
 
-            while (!m_Input.InputStructureIsValid)
+            while (!m_UI.Input.InputStructureIsValid)
             {
-                Console.WriteLine("Sorry, your input structure isn't valid.");
-                m_Input.LoadNewInput();
+                m_UI.PrintInvalidInputStructure();
+                m_UI.Input.LoadNewInput();
             }
         }
 
@@ -156,7 +149,6 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             {
                 m_FirstPlayerTurn = false;
                 io_CurrPlayer = m_Players[1];
-
             }
 
             else //Currently, it's the second player turn
@@ -173,144 +165,6 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
             return gameOver;
         }
-
-       /* public bool CheckCurrentPlayerMove(ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
-        {
-            bool validMove;
-
-            if (m_FirstPlayerTurn)
-            {
-                validMove = m_Move.MoveValidation(ref m_Players[0], ref i_SourceIndex, ref i_DestinationIndex);
-            }
-
-            else
-            {
-                validMove = MoveValidation(ref m_Players[1], ref i_SourceIndex, ref i_DestinationIndex);
-            }
-
-            return validMove;
-
-        }
-        //MoveValidation Params:
-        // 1. SquareIndex srcIndex
-        // 2. SquareIndex DestIndex
-        // 3. ref Board m_Board
-        // 4. ref Player m_CurrPlayer
-
-
-
-        *//*  public bool MoveValidation(ref Player i_CurrPlayer, SquareIndex i_SourceIndex, ref int[] i_DestinationIndex)
-          {
-              bool moveIsValid;
-              bool srcAndDestBasicallyValid;
-              bool simpleStepIsValid; //No eating step.
-              bool eatOpponentStepIsValid;
-
-              // 1. SrcSquare contains the CurrPlayer DiscType && DstSquare is vacant and legal
-              // 2. Case 1: If moveDirection is UP and dstRowInd + 1 = srcRowInd && 
-
-              srcAndDestBasicallyValid = SrcAndDestBasicValidation(i_CurrPlayer.DiscType, ref i_SourceIndex, ref i_DestinationIndex);
-
-              if (srcAndDestBasicallyValid)
-              {
-
-              }
-
-              else
-              {
-                  moveIsValid = false;
-              }
-
-              return moveIsValid;
-
-          }*//*
-
-        public bool SrcAndDestBasicValidation(eDiscType i_CurrPlayerDiscType, ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
-        {
-            bool srcAndDestBasicallyValid;
-            bool sourceIsValid;
-            bool destinationIsVacant;
-            bool indiciesInBoard;
-
-            sourceIsValid = SourceValidation(i_CurrPlayerDiscType, ref i_SourceIndex);
-            destinationIsVacant = DestinationVacancyAndLegalityValidation(ref i_DestinationIndex);
-            indiciesInBoard = IndiciesInBoardValidation(ref i_SourceIndex, ref i_DestinationIndex);
-
-            if (indiciesInBoard && sourceIsValid && destinationIsVacant)
-            {
-                srcAndDestBasicallyValid = true;
-            }
-
-            else
-            {
-                srcAndDestBasicallyValid = false;
-            }
-
-            return srcAndDestBasicallyValid;
-
-        }
-
-        public bool IndiciesInBoardValidation(ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
-        {
-            bool indiciesInBoard;
-            bool sourceIsExist;
-            bool destinationIsExist;
-
-            sourceIsExist = m_Board.SquareExistenceValidation(i_SourceIndex[0], i_SourceIndex[1]);
-            destinationIsExist = m_Board.SquareExistenceValidation(i_DestinationIndex[0], i_DestinationIndex[1]);
-
-            if (sourceIsExist && destinationIsExist)
-            {
-                indiciesInBoard = true;
-            }
-
-            else
-            {
-                indiciesInBoard = false;
-            }
-
-            return indiciesInBoard;
-        }
-
-        public bool DestinationVacancyAndLegalityValidation(ref int[] i_DestinationIndex)
-        {
-            bool destinationIsVacant;
-            eDiscType CurrDestinationDiscType;
-            bool indexIsLegal;
-
-            CurrDestinationDiscType = m_Board.GetSquare(i_DestinationIndex[0], i_DestinationIndex[1]).CurrDiscType;
-            indexIsLegal = m_Board.GetSquare(i_DestinationIndex[0], i_DestinationIndex[1]).LegalSquare;
-
-            if (CurrDestinationDiscType == eDiscType.None && indexIsLegal)
-            {
-                destinationIsVacant = true;
-            }
-
-            else
-            {
-                destinationIsVacant = false;
-            }
-
-            return destinationIsVacant;
-        }
-
-        public bool SourceValidation(eDiscType i_CurrPlayerDiscType, ref int[] i_SourceIndex)
-        {
-            bool sourceIsValid;
-
-            // if(i_CurrPlayerDiscType == m_Board.GetSquare(i_SourceIndex[0], i_SourceIndex[1]).CurrDiscType())
-            if (i_CurrPlayerDiscType == m_Board[5, 5].CurrDiscType
-            {
-                sourceIsValid = true;
-            }
-
-            else
-            {
-                sourceIsValid = false;
-            }
-
-            return sourceIsValid;
-        }*/
 
     }
 

@@ -12,16 +12,19 @@ using System.Text;
 // 2. Fix all the basic validation methods
 // 3. Start builiding Moving without and with eating
 
+
+
 // Amir -> Player & MoveManagerCopy 
 // 1. Build MoveFromOptionPossibilityValidation
 // 2. Re-organized TheCheckersGame runGame flow
 // 3 Re-Build GameOver main method.
-// 4. Add E-Num of PlayerSerial - VVVVVVVV
+// 4. Add E-Num of PlayerRecognition - VVVVVVVV
 // 5. Add this E-num in Square as a "squareHolder" - VVVVVVVVVV
-// 6. Handle constructor in Square and Player.
-// 7. Check about set Square using indexers.
+// 6. Handle constructor in Square and Player. ---- Important.
+// 7. Check about set Square using indices
 
 // Others:
+// Fix all ref occurences to regular paramaetr (i.e. ref Board.....)
 // Add Quitting option (input handler)
 // Build random choose for computer player
 // AI -> smart moves by computer

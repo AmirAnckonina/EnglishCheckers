@@ -7,6 +7,12 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 {
     public class ConsoleUI
     {
+        private InputManager m_Input;
+
+        public InputManager Input
+        {
+            get { return m_Input; }
+        }
 
         public void Welcome()
         {
@@ -68,6 +74,18 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         public void PrintWhoseTurn(Player i_CurrPlayer)
         {
             Console.WriteLine("It's {0} turn, Go Ahead! : ", i_CurrPlayer.Name);
+        }
+
+        public void PrintInvalidInputStructure()
+        {
+            Console.WriteLine("Sorry, your input structure isn't valid.");
+            Console.Write("Please enter a new move: ");
+        }
+
+        public void PrintInvalidInputMoveOption()
+        {
+            Console.WriteLine("Sorry, your move choice isn't valid!");
+            Console.Write("Please enter a new move: ");
         }
     }
 }
