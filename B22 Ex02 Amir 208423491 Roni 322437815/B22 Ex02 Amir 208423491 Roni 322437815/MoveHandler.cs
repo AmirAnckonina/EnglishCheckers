@@ -93,6 +93,9 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             return sourceIsValid;
         }
 
-        public bool 
+        public bool MoveFromOptionValiidation(ref Player i_CurrPlayer, ref Board i_Board)
+        {
+            return true;
+        }
     }
 }
