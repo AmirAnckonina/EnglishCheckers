@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
+
 // <====================================================>
-//
-// Tasks:
+// Current Tasks -> 19Apr night
+// 
+// 1. Build Game flow in CheckersGameManager Class. Separated logic and UI completly.
 
 // Roni -> MoveManager
 // 1. Re-Design for MoveValidation inside MoveManager Class
@@ -31,7 +34,7 @@ using System.Text;
 // DoubleTurn option (after eating)
 // Conversion regular disc to king
 
-//GameOver ideas
+//   GameOver ideas
 // - Check if one of the disc type is 0 (NumOfDiscs == 0)
 // - Check if there any valid moves for opponent player
 // - Check if Quitting option choosed
@@ -47,7 +50,13 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
     {
         public static void Main()
         {
-            int res;
+            CheckersGameManager gameManager = new CheckersGameManager();
+
+            gameManager.Run();
+
+
+
+            /*int res;
             bool Res;
             Board board1 = new Board(8);
             board1.InitializeBoard();
@@ -55,7 +64,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             res= board1.GetDiscOccurences(eDiscType.XDisc);
             Console.WriteLine("number of x: {0}", res);
             Res= board1.SquareExistenceValidation(2, 8);
-            Console.WriteLine("is index valid? : {0}", Res);
+            Console.WriteLine("is index valid? : {0}", Res);*/
             
         }
     }

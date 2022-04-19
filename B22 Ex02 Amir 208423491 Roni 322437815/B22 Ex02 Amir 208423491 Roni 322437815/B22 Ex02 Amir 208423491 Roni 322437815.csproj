@@ -32,28 +32,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Board.cs" />
-    <Compile Include="eDiscType.cs" />
-    <Compile Include="eGameMode.cs" />
-    <Compile Include="eMoveType.cs" />
-    <Compile Include="ePlayerRecognition.cs" />
-    <Compile Include="ePlayerMovingDirection.cs" />
-    <Compile Include="ePlayerType.cs" />
-    <Compile Include="eWinnerPlayer.cs" />
-    <Compile Include="InputManager.cs" />
-    <Compile Include="ConsoleUI.cs" />
-    <Compile Include="MoveManager.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="CheckersGameManager.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Square.cs" />
-    <Compile Include="SquareIndex.cs" />
-    <Compile Include="TheCheckersGame.cs" />
-    <Compile Include="Temp.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Ex02.ConsoleUtils">
       <HintPath>..\..\..\..\..\..\..\..\Temp\Ex02.ConsoleUtils.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CheckersGame\CheckersGame.csproj">
+      <Project>{c43ef4df-5bb5-41ef-a101-7310b9e7045d}</Project>
+      <Name>CheckersGame</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CheckersUI\CheckersUI.csproj">
+      <Project>{1ea04d01-af9e-4498-b89d-86c04df28b94}</Project>
+      <Name>CheckersUI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

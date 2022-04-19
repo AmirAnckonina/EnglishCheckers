@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace B22_Ex02_Amir_208423491_Roni_322437815
+namespace CheckersGame
 {
     public class Player
     {
@@ -15,12 +15,13 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
         private StringBuilder m_Name;
         private int m_NumOfDiscs;
+        private int m_Score;
         private eDiscType m_DiscType; //X, O
         private eDiscType m_KingDiscType; //K, U
         private ePlayerType m_PlayerType;
         private ePlayerMovingDirection m_MovingDirection;
         private ePlayerRecognition m_PlayerRecognition;
-        private List<SquareIndex> m_CurrentHoldingSquareIndices; 
+        private List<SquareIndex> m_CurrentHoldingSquareIndices;
 
         //private List<MoveOption> m_PlayerPossibleMoves;
 
@@ -55,7 +56,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             get { return m_DiscType; }
             set { m_DiscType = value; }
         }
-        
+
         public eDiscType KingDiscType
         {
             get { return m_KingDiscType; }
@@ -85,13 +86,13 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             }
         }
 
-       /* public bool AnyMovePossibilyValidation(ref Board i_Board, ref MoveManager i_MoveManager)
-        {
-            foreach (SquareIndex sqrIndex in m_CurrentHoldingIndices)
-            {
-                i_MoveManager.MoveFromOptionValiidation(m_DiscType, m_KingDiscType, i_Board[sqrIndex]); //How to pass *this* object by ref?
-            }
-        }*/
+        /* public bool AnyMovePossibilyValidation(ref Board i_Board, ref MoveManager i_MoveManager)
+         {
+             foreach (SquareIndex sqrIndex in m_CurrentHoldingIndices)
+             {
+                 i_MoveManager.MoveFromOptionValiidation(m_DiscType, m_KingDiscType, i_Board[sqrIndex]); //How to pass *this* object by ref?
+             }
+         }*/
 
     }
 }

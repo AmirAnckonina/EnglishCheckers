@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 
-namespace B22_Ex02_Amir_208423491_Roni_322437815
+namespace CheckersGame
 {
     public class Board
     {
@@ -17,7 +17,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             m_BoardSize = i_BoardSize;
             m_GameBoard = new Square[m_BoardSize, m_BoardSize];
         }
-        
+
         public Square[,] GameBoard
         {
             get { return m_GameBoard; }
@@ -26,7 +26,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
         //Use of Indexers!!! could be implemented!
         //Check id already returned a ref? returning a class return a ref? or a copy of the value?
-        public Square GetSquare(int i_Row, int i_Column) 
+        public Square GetSquare(int i_Row, int i_Column)
         {
             return m_GameBoard[i_Row, i_Column];
         }
@@ -59,14 +59,14 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
                 InitializeLine(rowIndex, eDiscType.ODisc);
             }
 
-            for (emptyLinesIndex = 0; emptyLinesIndex < 2; emptyLinesIndex++)  
+            for (emptyLinesIndex = 0; emptyLinesIndex < 2; emptyLinesIndex++)
             {
                 InitializeLine(rowIndex + emptyLinesIndex, eDiscType.None);
             }
 
-            for (rowIndex += 2; rowIndex < m_BoardSize; rowIndex++) 
+            for (rowIndex += 2; rowIndex < m_BoardSize; rowIndex++)
             {
-                InitializeLine(rowIndex,eDiscType.XDisc);
+                InitializeLine(rowIndex, eDiscType.XDisc);
             }
         }
 
@@ -77,7 +77,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             for (int i_ColumnIndex = 0; i_ColumnIndex < m_BoardSize; i_ColumnIndex++)
             {
                 isEven = (i_RowIndex + i_ColumnIndex) % 2;
-                if (isEven != 0)  
+                if (isEven != 0)
                 {
                     m_GameBoard[i_RowIndex, i_ColumnIndex] = new Square(true, i_DiscType, i_RowIndex, i_ColumnIndex);
                 }
@@ -140,7 +140,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             {
                 for (column = 0; column < BoardSize; column++)
                 {
-                    if (m_GameBoard[row, column].DiscType == i_DiscType) 
+                    if (m_GameBoard[row, column].DiscType == i_DiscType)
                     {
                         counter++;
                     }
@@ -154,26 +154,26 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         {
             char discTypeChar;
 
-            if(i_DiscTypeNum == eDiscType.XDisc)
+            if (i_DiscTypeNum == eDiscType.XDisc)
             {
                 discTypeChar = 'X';
             }
 
-            else if(i_DiscTypeNum == eDiscType.ODisc)
+            else if (i_DiscTypeNum == eDiscType.ODisc)
             {
                 discTypeChar = 'O';
             }
 
-           else  if(i_DiscTypeNum == eDiscType.XKing)
+            else if (i_DiscTypeNum == eDiscType.XKingDisc)
             {
                 discTypeChar = 'K';
             }
 
-            else if(i_DiscTypeNum == eDiscType.OKing)
+            else if (i_DiscTypeNum == eDiscType.OKingDisc)
             {
                 discTypeChar = 'U';
-            }   
-            
+            }
+
             else
             {
                 discTypeChar = 'N';
@@ -213,7 +213,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             bool isRowIndexInBoard;
             bool isColumnIndexInBoard;
 
-            isRowIndexInBoard = RowIndexExistenceValidation(i_SquareIndex.RowIndex); 
+            isRowIndexInBoard = RowIndexExistenceValidation(i_SquareIndex.RowIndex);
             isColumnIndexInBoard = ColumnIndexExistenceValidation(i_SquareIndex.ColumnIndex);
             if (isRowIndexInBoard && isColumnIndexInBoard)
             {

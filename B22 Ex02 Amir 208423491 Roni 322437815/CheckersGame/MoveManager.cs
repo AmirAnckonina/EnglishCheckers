@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace B22_Ex02_Amir_208423491_Roni_322437815
-{
+namespace CheckersGame
 
     public class MoveManager
     {
@@ -93,7 +92,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             return indicesDifferencesAreValid;
 
         }
-        
+
         public int CalculateRowIndicesDifference(SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
         {
             int rowIndicesDifferenceResult;
@@ -102,7 +101,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
             return rowIndicesDifferenceResult;
         }
-        
+
         public int CalculateColumnIndicesDifference(SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
         {
             int columnIndicesDifferenceResult;
@@ -136,7 +135,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             }
 
             return simpleMoveIsValid;
-       
+
         }
 
         public bool SimpleMoveForwardValidation(Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
@@ -193,10 +192,10 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
             //SquareIndex potentialNewSquareIndex; new SquareIndex(i_SourceIndex.RowIndex -1, i_SourceIndex.ColumnIndex + 1);
             //How to Use operator????
-           /* if (potentialNewSquareIndex. == i_DestinationIndex)
-            {
+            /* if (potentialNewSquareIndex. == i_DestinationIndex)
+             {
 
-            }*/
+             }*/
         }
 
         public bool SimpleNorthWestMoveValidation(SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
@@ -399,10 +398,10 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             // 3. If eating occured -> update also the square we passed above
             // 
             //
-            io_Board[i_DestinationIndex].DiscType = io_Board[i_SourceIndex].DiscType; 
+            io_Board[i_DestinationIndex].DiscType = io_Board[i_SourceIndex].DiscType;
         }
 
-       // public bool MoveFromOptionValiidation(Player i_CurrPlayer, Board i_Board)
+        // public bool MoveFromOptionValiidation(Player i_CurrPlayer, Board i_Board)
         /*  {
               return true;
           }*/

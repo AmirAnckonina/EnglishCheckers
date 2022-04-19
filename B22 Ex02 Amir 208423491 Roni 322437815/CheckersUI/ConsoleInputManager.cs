@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace B22_Ex02_Amir_208423491_Roni_322437815
+namespace CheckersUI
 {
-    public class InputManager
+    public class ConsoleInputManager
     {
         StringBuilder m_RawInput;
         bool m_InputStructureIsValid;
         SquareIndex m_SourceIndex;
         SquareIndex m_DestinationIndex;
 
-       /* int[] m_SourceIndex; //Structure - > [ rowIndex, ColIndex ] // Af>Bi
-        int[] m_DestinationIndex;*/
+        /* int[] m_SourceIndex; //Structure - > [ rowIndex, ColIndex ] // Af>Bi
+         int[] m_DestinationIndex;*/
         /*Square m_FromSquare;
         Square m_ToSquare;*/
 
-        public InputManager()
+        public ConsoleInputManager()
         {
             m_RawInput = new StringBuilder();
             m_SourceIndex = new SquareIndex();
@@ -35,7 +35,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         {
             get { return m_SourceIndex; }
         }
-        
+
         public SquareIndex DestIndex
         {
             get { return m_DestinationIndex; }
@@ -89,7 +89,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         public bool MovingFromValidation()
         {
             bool movingFromIndexIsValid;
-            
+
             if (Char.IsUpper(m_RawInput[0]) && Char.IsLower(m_RawInput[1]))
             {
                 movingFromIndexIsValid = true;

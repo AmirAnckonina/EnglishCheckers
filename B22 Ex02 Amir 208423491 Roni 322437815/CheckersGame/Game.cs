@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace B22_Ex02_Amir_208423491_Roni_322437815
+namespace CheckersGame
 {
-    public class TheCheckersGame
+    public class Game
     {
         private Board m_Board;
         private ConsoleUI m_UI;
@@ -15,7 +15,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         private eGameMode m_GameMode;
         private bool m_FirstPlayerTurn;
 
-        public TheCheckersGame()
+        public Game()
         {
             m_GameMode = eGameMode.SinglePlayerMode;
             m_FirstPlayerTurn = true;
@@ -70,7 +70,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             {
                 //Validate the constructor to Player knows to leavr the name dMember as ""
             }
-        } 
+        }
 
         public void SetPlayersType()
         {
