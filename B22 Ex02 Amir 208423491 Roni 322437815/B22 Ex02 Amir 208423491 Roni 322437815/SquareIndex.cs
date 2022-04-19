@@ -39,5 +39,15 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             m_ColumnIndex = i_ColumnIndex;
         }
 
+        /*public bool Indices == (SquareIndex i_OtherSqrIndex)
+        {
+            bool indicesAreEquals;
+
+            if ()
+
+            return indicesAreEquals;
+
+        }*/
+
     }
 }

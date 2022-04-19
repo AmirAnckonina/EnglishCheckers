@@ -37,7 +37,13 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             get { return m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex]; }
             set { m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex] = value; }
         }
-        
+
+        public Square this[int i_RowIndex, int i_ColumnIndex]
+        {
+            get { return m_GameBoard[i_RowIndex, i_ColumnIndex]; }
+            set { m_GameBoard[i_RowIndex, i_ColumnIndex] = value; }
+        }
+
         public int BoardSize
         {
             get { return m_BoardSize; }

@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B22 Ex02 Amir 208423491 Roni 322437815", "B22 Ex02 Amir 208423491 Roni 322437815\B22 Ex02 Amir 208423491 Roni 322437815.csproj", "{541C6D3D-3BDD-4AC2-BA09-C3CFE7A21D63}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckersUI", "CheckersUI\CheckersUI.csproj", "{1EA04D01-AF9E-4498-B89D-86C04DF28B94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckersGame", "CheckersGame\CheckersGame.csproj", "{C43EF4DF-5BB5-41EF-A101-7310B9E7045D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{541C6D3D-3BDD-4AC2-BA09-C3CFE7A21D63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{541C6D3D-3BDD-4AC2-BA09-C3CFE7A21D63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{541C6D3D-3BDD-4AC2-BA09-C3CFE7A21D63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EA04D01-AF9E-4498-B89D-86C04DF28B94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EA04D01-AF9E-4498-B89D-86C04DF28B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EA04D01-AF9E-4498-B89D-86C04DF28B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EA04D01-AF9E-4498-B89D-86C04DF28B94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C43EF4DF-5BB5-41EF-A101-7310B9E7045D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C43EF4DF-5BB5-41EF-A101-7310B9E7045D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C43EF4DF-5BB5-41EF-A101-7310B9E7045D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C43EF4DF-5BB5-41EF-A101-7310B9E7045D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
