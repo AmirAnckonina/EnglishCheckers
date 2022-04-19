@@ -35,6 +35,7 @@
     <Compile Include="Board.cs" />
     <Compile Include="eDiscType.cs" />
     <Compile Include="eGameMode.cs" />
+    <Compile Include="eMoveType.cs" />
     <Compile Include="ePlayerRecognition.cs" />
     <Compile Include="ePlayerMovingDirection.cs" />
     <Compile Include="ePlayerType.cs" />

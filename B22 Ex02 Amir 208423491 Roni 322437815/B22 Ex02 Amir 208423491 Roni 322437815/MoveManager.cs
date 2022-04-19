@@ -21,19 +21,23 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         {
             bool moveIsValid;
             bool srcAndDestBasicallyValid;
-            bool basicMoveIsValid; //No eating step.
+            bool simpleMoveIsValid; //No eating step.
             bool eatingMoveIsValid;
+            int rowIndicesGap;
 
             // 1. IndicesInBoard
             // 2. SrcSquare contains the CurrPlayer DiscType
             // 3. DstSquare is vacant and legal
-            // 4. If moveDirection is UP and dstRowInd + 1 = srcRowInd && 
+            // 4. RowIndicesDiffernce
+            // 5. SimpleMoveIs Valid
+            // 6. EatingMove Is Valid
 
             srcAndDestBasicallyValid = SrcAndDestBasicValidation(i_Board, i_CurrPlayer, i_SourceIndex, i_DestinationIndex);
 
             if (srcAndDestBasicallyValid)
             {
-                basicMoveIsValid = 
+                
+                simpleMoveIsValid = 
             }
 
             else
@@ -42,6 +46,16 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             }
 
             return moveIsValid;
+
+        }
+
+        public bool SimpleMoveValidation(Board i_Board, Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
+        {
+
+        }
+        
+        public bool EatingMoveValidation(Board i_Board, Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
+        {
 
         }
 
