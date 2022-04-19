@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace B22_Ex02_Amir_208423491_Roni_322437815
+namespace CheckersUI
 {
     public class ConsoleUI
     {
-        private InputManager m_Input;
+        private ConsoleInputManager m_Input;
 
-        public InputManager Input
+        public ConsoleInputManager Input
         {
             get { return m_Input; }
         }
@@ -36,9 +36,9 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             int m_BoardSize;
 
             Console.WriteLine("Please enter the size of the game board");
-            m_BoardSize= int.Parse(Console.ReadLine());
+            m_BoardSize = int.Parse(Console.ReadLine());
 
-            while(m_BoardSize != 6 && m_BoardSize != 8 && m_BoardSize != 10) //-> Create method to this condition
+            while (m_BoardSize != 6 && m_BoardSize != 8 && m_BoardSize != 10) //-> Create method to this condition
             {
                 Console.WriteLine("The input is not valid");
                 Console.WriteLine("Please enter the size of the game board");

@@ -1,0 +1,55 @@
+Tasks 19Apr Night :
+
+// <====================================================>
+ 
+1. 	*CheckersGameManager* 
+	-Build Game flow in CheckersGameManager Class.
+	-Separated logic and UI completly.
+	-Split the parts in old "TheCheckersGame" to initGame and Run.
+	-Build function that initialize the relevant values/object bewteen singleGameSession
+	-Build c'tor 
+	-Build RunSingleSession function
+	
+2.	*MoveManager* 
+	-Complete EatingMoveValidation functions
+	-Build ExecuteMove functions
+	
+3.	*Game*
+	-Build GameOver function. 
+		*check if the nextPlayer can move (running on m_CurrentHoldingSquareIndices)
+		*check numOfDiscs?
+		*Quitting option choosed by one of the player.
+	-Build GameWinner function
+	-PostSingleGameSession function 
+		*calculating score to the winnerPlayer
+	-Build function to generate a move for computer
+		*consider use IF computer 
+			-> generate random source index from player m_CurrentHoldingSquareIndices?
+		*ELSE 
+			-> RawInputProcedure
+			
+4. *ConsoleInputManager*
+	-Separate sourceIndex and DestinationIndex from the class
+	-Handle Quitting option (key Q)
+		*Update the data memebers
+		* return a flag or something.
+		
+5.	*SquareIndex*
+	-investigate how to use operator == 
+		-> for better comparing in the moveValidation functions.
+	-Build the above function...
+
+6.	*Board*
+	-See if there something to fix or to change
+		*using foreach?
+		*intilaizeBoard? 
+
+5.	***General***
+	-Check enum structure
+	-Re-order all get-set according to coding rules...
+	-Constructors review and updates
+	-DoubleTurn ?
+	-Converting to king?
+	-AI
+		
+		

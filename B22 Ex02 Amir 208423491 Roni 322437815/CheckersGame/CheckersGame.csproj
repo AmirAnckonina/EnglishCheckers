@@ -31,5 +31,20 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Board.cs" />
+    <Compile Include="eGameMode.cs" />
+    <Compile Include="eWinnerPlayer.cs" />
+    <Compile Include="eDiscType.cs" />
+    <Compile Include="eMoveType.cs" />
+    <Compile Include="ePlayerMovingDirection.cs" />
+    <Compile Include="ePlayerRecognition.cs" />
+    <Compile Include="ePlayerType.cs" />
+    <Compile Include="MoveManager.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Square.cs" />
+    <Compile Include="SquareIndex.cs" />
+    <Compile Include="Game.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

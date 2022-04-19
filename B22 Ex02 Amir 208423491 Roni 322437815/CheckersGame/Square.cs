@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace B22_Ex02_Amir_208423491_Roni_322437815
+namespace CheckersGame
 {
     public class Square
     {
-
         private bool m_LegalSquare;
-        private eDiscType m_DiscType; 
-        private SquareIndex m_SquareIndex;
+        private eDiscType m_DiscType;
         private ePlayerRecognition m_SquareHolder;
+        private SquareIndex m_SquareIndex;
 
         public Square(bool i_LegalSquare, eDiscType i_CurrDiscType, int i_RowIndex, int i_ColumnIndex)
         {
@@ -32,7 +31,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             get { return m_DiscType; }
             set { m_DiscType = value; }
         }
-       
+
         public SquareIndex SqrIndex
         {
             get { return m_SquareIndex; }
@@ -47,5 +46,5 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
     }
 
-    
+
 }
