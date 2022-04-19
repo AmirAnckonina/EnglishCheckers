@@ -5,29 +5,35 @@ using System.Text;
 
 namespace B22_Ex02_Amir_208423491_Roni_322437815
 {
+
     public class MoveManager
     {
+        private eMoveType m_MoveType;
+        private bool m_ReachedLastLine;
+
         //MoveValidation Params:
         // 1. SquareIndex srcIndex
         // 2. SquareIndex DestIndex
         // 3. ref Board m_Board
         // 4. ref Player m_CurrPlayer
 
-        public bool MoveValidation(ref Board i_Board, ref Player i_Player, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
+        public bool MoveValidation(Board i_Board, Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
         {
             bool moveIsValid;
             bool srcAndDestBasicallyValid;
-            bool simpleStepIsValid; //No eating step.
-            bool eatOpponentStepIsValid;
+            bool basicMoveIsValid; //No eating step.
+            bool eatingMoveIsValid;
 
-            // 1. SrcSquare contains the CurrPlayer DiscType && DstSquare is vacant and legal
-            // 2. Case 1: If moveDirection is UP and dstRowInd + 1 = srcRowInd && 
+            // 1. IndicesInBoard
+            // 2. SrcSquare contains the CurrPlayer DiscType
+            // 3. DstSquare is vacant and legal
+            // 4. If moveDirection is UP and dstRowInd + 1 = srcRowInd && 
 
-            srcAndDestBasicallyValid = SrcAndDestBasicValidation(ref i_Board,i_Player.m_PlayerSerial ref i_SourceIndex, ref i_DestinationIndex);
+            srcAndDestBasicallyValid = SrcAndDestBasicValidation(i_Board, i_CurrPlayer, i_SourceIndex, i_DestinationIndex);
 
             if (srcAndDestBasicallyValid)
             {
-
+                basicMoveIsValid = 
             }
 
             else
@@ -39,20 +45,27 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
         }
 
-        public bool SrcAndDestBasicValidation(ref Board i_Board, ePlayer i_SquareHolder, SquareIndex i_srcIndex, SquareIndex i_destIndex)
+        public bool SrcAndDestBasicValidation(Board i_Board, Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
         {
             bool srcAndDestBasicallyValid;
             bool sourceIsValid;
-            bool destinationIsVacant;
+            bool destinationIsVacantAndLegal;
             bool indiciesInBoard;
 
-            sourceIsValid = SourceValidation(i_Board[i_srcIndex], i_SquareHolder);
-            destinationIsVacant = DestinationVacancyAndLegalityValidation(ref i_Board, ref i_DestinationIndex);
-            indiciesInBoard = IndiciesInBoardValidation(ref i_Board, ref i_SourceIndex, ref i_DestinationIndex);
-
-            if (indiciesInBoard && sourceIsValid && destinationIsVacant)
+            indiciesInBoard = IndiciesInBoardValidation(i_Board, i_SourceIndex, i_DestinationIndex);
+            if (indiciesInBoard)
             {
-                srcAndDestBasicallyValid = true;
+                sourceIsValid = SourceValidation(i_Board[i_SourceIndex], i_CurrPlayer);
+                destinationIsVacantAndLegal = DestinationVacancyAndLegalityValidation(i_Board[i_DestinationIndex]);
+                if (sourceIsValid && destinationIsVacantAndLegal)
+                {
+                    srcAndDestBasicallyValid = true;
+                }
+
+                else
+                {
+                    srcAndDestBasicallyValid = false;
+                }
             }
 
             else
@@ -64,14 +77,14 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 
         }
 
-        public bool IndiciesInBoardValidation(ref Board i_Board, ref int[] i_SourceIndex, ref int[] i_DestinationIndex)
+        public bool IndiciesInBoardValidation(Board i_Board, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
         {
             bool indiciesInBoard;
             bool sourceIsExist;
             bool destinationIsExist;
 
-            sourceIsExist = i_Board.SquareExistenceValidation(ref i_SourceIndex);
-            destinationIsExist = i_Board.SquareExistenceValidation(ref i_DestinationIndex);
+            sourceIsExist = i_Board.SquareExistenceValidation(i_SourceIndex);
+            destinationIsExist = i_Board.SquareExistenceValidation(i_DestinationIndex);
 
             if (sourceIsExist && destinationIsExist)
             {
@@ -86,16 +99,16 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             return indiciesInBoard;
         }
 
-        public bool DestinationVacancyAndLegalityValidation(ref Board i_Board, ref int[] i_DestinationIndex)
+        public bool DestinationVacancyAndLegalityValidation(Square i_DestinationSquare)
         {
             bool destinationIsVacant;
-            eDiscType CurrDestinationDiscType;
+            eDiscType currDestinationDiscType;
             bool indexIsLegal;
 
-            CurrDestinationDiscType = i_Board.GetSquare(i_DestinationIndex[0], i_DestinationIndex[1]).DiscType;
-            indexIsLegal = i_Board.GetSquare(i_DestinationIndex[0], i_DestinationIndex[1]).LegalSquare;
+            currDestinationDiscType = i_DestinationSquare.DiscType;
+            indexIsLegal = i_DestinationSquare.LegalSquare;
 
-            if (CurrDestinationDiscType == eDiscType.None && indexIsLegal)
+            if (currDestinationDiscType == eDiscType.None && indexIsLegal)
             {
                 destinationIsVacant = true;
             }
@@ -108,11 +121,11 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             return destinationIsVacant;
         }
 
-        public bool SourceValidation(Square i_CurrSqeuare, ePlayer i_SquareHolder)
+        public bool SourceValidation(Square i_SourceSquare, Player i_CurrPlayer)
         {
             bool sourceIsValid;
 
-            if (i_SquareHolder == i_CurrSqeuare.m_SquareHolder)
+            if (i_CurrPlayer.PlayerRecognition == i_SourceSquare.SquareHolder)
             {
                 sourceIsValid = true;
             }
@@ -125,10 +138,21 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             return sourceIsValid;
         }
 
-        public bool MoveFromOptionValiidation(ref Player i_CurrPlayer, ref Board i_Board)
+        public void ExecuteMove(Board io_Board, Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
         {
-            return true;
+            // We need:
+            // 1. Update the destinationSquare DiscType of the source.
+            // 2. Update the sourceSquare DiscType to None.
+            // 3. If eating occured -> update also the square we passed above
+            // 
+            //
+            io_Board[i_DestinationIndex].DiscType = io_Board[i_SourceIndex].DiscType; 
         }
+
+       // public bool MoveFromOptionValiidation(Player i_CurrPlayer, Board i_Board)
+        /*  {
+              return true;
+          }*/
 
 
     }

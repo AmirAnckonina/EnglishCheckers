@@ -130,6 +130,7 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             }
 
             //Update movement on board.
+            m_Move.ExecuteMove(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);
         }
 
         public void RawInputProcedure()
