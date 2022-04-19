@@ -7,10 +7,10 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
 {
     public enum eMoveType
     {
-        BasicNorthEastMove,
-        BasicNorthWestMove,
-        BasicSouthEastMove,
-        BasicSouthWestMove,
+        SimpleNorthEastMove,
+        SimpleNorthWestMove,
+        SimpleSouthEastMove,
+        SimpleSouthWestMove,
         EatingNorthEastMove,
         EatingNorthWestMove,
         EatingSouthEastMove,
