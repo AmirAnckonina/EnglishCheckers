@@ -60,17 +60,16 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
         public void ClearPreviousInput()
         {
             m_RawInput.Clear();
-            //Init the SquareIndicies
+            //Init indices
             m_InputStructureIsValid = false;
         }
 
         public void UpdateIndices()
         {
-            //Structure - > [ rowIndex, ColIndex ]
-            m_SourceIndex[1] = LetterToNumberIndexConverter(m_RawInput[0]); 
-            m_SourceIndex[0] = LetterToNumberIndexConverter(m_RawInput[1]);
-            m_DestinationIndex[1] = LetterToNumberIndexConverter(m_RawInput[3]);
-            m_DestinationIndex[0] = LetterToNumberIndexConverter(m_RawInput[4]);
+            m_SourceIndex.ColumnIndex = LetterToNumberIndexConverter(m_RawInput[0]);
+            m_SourceIndex.RowIndex = LetterToNumberIndexConverter(m_RawInput[1]);
+            m_DestinationIndex.ColumnIndex = LetterToNumberIndexConverter(m_RawInput[3]);
+            m_DestinationIndex.RowIndex = LetterToNumberIndexConverter(m_RawInput[4]);
         }
 
         public void InputStructureValidation()
