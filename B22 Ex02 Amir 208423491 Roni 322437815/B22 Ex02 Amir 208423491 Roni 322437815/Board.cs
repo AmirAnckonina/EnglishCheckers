@@ -18,24 +18,24 @@ namespace B22_Ex02_Amir_208423491_Roni_322437815
             m_GameBoard = new Square[m_BoardSize, m_BoardSize];
         }
         
-        public ref Square[,] GameBoard
+        public Square[,] GameBoard
         {
-            get { return ref m_GameBoard; }
+            get { return m_GameBoard; }
             //set { m_GameBoard = value; }
         }
 
         //Use of Indexers!!! could be implemented!
         //Check id already returned a ref? returning a class return a ref? or a copy of the value?
-        public ref Square GetSquare(int i_Row, int i_Column) 
+        public Square GetSquare(int i_Row, int i_Column) 
         {
-            return ref m_GameBoard[i_Row, i_Column];
+            return m_GameBoard[i_Row, i_Column];
         }
 
         //Use of Indexers!!! ToCheck!
-        public ref Square this[SquareIndex i_SquareIndex]
+        public Square this[SquareIndex i_SquareIndex]
         {
-            get { return ref m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex]; }
-            // set { m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex] = value; }
+            get { return m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex]; }
+            set { m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex] = value; }
         }
         
         public int BoardSize
