@@ -22,26 +22,53 @@ namespace CheckersGame
 
         public bool LegalSquare
         {
-            get { return m_LegalSquare; }
-            set { m_LegalSquare = value; }
+            get
+            {
+                return m_LegalSquare; 
+            }
+
+            set 
+            {
+                m_LegalSquare = value;
+            }
         }
 
         public eDiscType DiscType
         {
-            get { return m_DiscType; }
-            set { m_DiscType = value; }
+            get 
+            { 
+                return m_DiscType; 
+            }
+
+            set
+            {
+                m_DiscType = value; 
+            }
         }
 
         public SquareIndex SqrIndex
         {
-            get { return m_SquareIndex; }
-            set { m_SquareIndex = value; }
+            get
+            {
+                return m_SquareIndex;
+            }
+
+            set
+            {
+                m_SquareIndex = value; 
+            }
         }
 
         public ePlayerRecognition SquareHolder
         {
-            get { return m_SquareHolder; }
-            set { m_SquareHolder = value; }
+            get 
+            {
+                return m_SquareHolder; 
+            }
+            set 
+            {
+                m_SquareHolder = value; 
+            }
         }
 
     }
