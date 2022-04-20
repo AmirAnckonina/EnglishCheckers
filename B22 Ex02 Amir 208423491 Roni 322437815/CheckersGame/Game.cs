@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using CheckersUI;
+
 namespace CheckersGame
 {
     public class Game
     {
         private Board m_Board;
-        private ConsoleUI m_UI;
         private Player[] m_Players;
-        //InputManager m_Input;
         MoveManager m_Move;
-        private eGameMode m_GameMode;
+        private eGameMode m_GameMode; // Consider if necessary ??
         private bool m_FirstPlayerTurn;
 
         public Game()
@@ -22,31 +22,37 @@ namespace CheckersGame
 
         }
 
-        public void RunSession()
+        public Player FirstPlayer
         {
-            InitSingleGame();
-            RunSingleGame();
+            get
+            {
+                return m_Players[0];
+            }
+            set
+            {
+                m_Players[0] = value;
+            }
         }
 
-        public void InitSingleGame()
+        public Player SecondPlayer
         {
-            m_UI.Welcome();
-            m_Players[0].Name = m_UI.GetPlayerName();
-            SetGameMode();
-            SetBoard();
-            SetPlayers();
+            get
+            {
+                return m_Players[1];
+            }
+            set
+            {
+                m_Players[1] = value;
+            }
         }
 
-        public void SetBoard()
+        public void InitalizeGameObjects(CheckersUI.GameDetails i_GameDetails)
         {
-            m_Board.BoardSize = m_UI.GetSizeOfBoard();
+            m_GameMode = i_GameDetails.GameMode;
+            m_Board.BoardSize = i_GameDetails.BoardSize;
             m_Board.InitializeBoard();
-        }
-
-        public void SetPlayers()
-        {
-            SetSecondPlayersName();
-            SetPlayersType();
+            m_Players[0].Name = i_GameDetails.NameOfFirstPlayer;
+            m_Players[1].Name = i_GameDetails.NameOfSecondPlayer;
             m_Players[0].PlayerRecognition = ePlayerRecognition.FirstPlayer;
             m_Players[1].PlayerRecognition = ePlayerRecognition.SecondPlayer;
             m_Players[0].DiscType = eDiscType.ODisc;
@@ -57,23 +63,6 @@ namespace CheckersGame
             m_Players[1].MovingDirection = ePlayerMovingDirection.Up;
             m_Players[0].NumOfDiscs = m_Board.GetDiscOccurences(m_Players[0].DiscType);
             m_Players[1].NumOfDiscs = m_Board.GetDiscOccurences(m_Players[1].DiscType);
-        }
-
-        public void SetSecondPlayersName()
-        {
-            if (m_GameMode == eGameMode.TwoPlayersMode)
-            {
-                m_Players[1].Name = m_UI.GetPlayerName();
-            }
-
-            else // (m_GameMode == eGameMode.SinglePlayerMode)
-            {
-                //Validate the constructor to Player knows to leavr the name dMember as ""
-            }
-        }
-
-        public void SetPlayersType()
-        {
             m_Players[0].PlayerType = ePlayerType.Human;
             if (m_GameMode == eGameMode.TwoPlayersMode)
             {
@@ -84,39 +73,12 @@ namespace CheckersGame
             {
                 m_Players[1].PlayerType = ePlayerType.Computer;
             }
+
         }
 
-        public void SetGameMode()
-        {
-            int gameModeChoice;
-
-            gameModeChoice = m_UI.GetGameMode();
-            if (gameModeChoice == 1)
-            {
-                m_GameMode = eGameMode.SinglePlayerMode;
-            }
-
-            else //gameModePick == 2 
-            {
-                m_GameMode = eGameMode.TwoPlayersMode;
-            }
-        }
-
-        public void RunSingleGame()
-        {
-            Player currPlayer;
-
-            currPlayer = m_Players[0];
-            while (!GameOver())
-            {
-                m_UI.PrintWhoseTurn(currPlayer);
-                RawInputProcedure();
-                MoveProcedure(currPlayer);
-                //
-                //
-                SwitchTurn(currPlayer);
-            }
-        }
+        /// <------------------------------------------------------>
+        /// Old design code below!
+        /// <------------------------------------------------------>
 
         public void MoveProcedure(Player i_CurrPlayer)
         {
@@ -160,7 +122,7 @@ namespace CheckersGame
 
         }
 
-        public static bool GameOver()
+        public bool GameOver()
         {
             bool gameOver = true;
 

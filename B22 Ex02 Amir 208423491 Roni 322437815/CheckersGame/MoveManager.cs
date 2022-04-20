@@ -195,6 +195,7 @@ namespace CheckersGame
             if (i_SourceIndex.RowIndex - 1 == i_DestinationIndex.RowIndex && i_SourceIndex.ColumnIndex + 1 == i_DestinationIndex.ColumnIndex)
             {
                 simpleNorthEastMoveIsValid = true;
+                m_MoveType = eMoveType.SimpleNorthEastMove;
             }
 
             else
@@ -219,6 +220,7 @@ namespace CheckersGame
             if (i_SourceIndex.RowIndex - 1 == i_DestinationIndex.RowIndex && i_SourceIndex.ColumnIndex - 1 == i_DestinationIndex.ColumnIndex)
             {
                 simpleNorthWestMoveIsValid = true;
+                m_MoveType = eMoveType.SimpleNorthWestMove;
             }
 
             else
@@ -237,6 +239,7 @@ namespace CheckersGame
             if (i_SourceIndex.RowIndex + 1 == i_DestinationIndex.RowIndex && i_SourceIndex.ColumnIndex + 1 == i_DestinationIndex.ColumnIndex)
             {
                 simpleSouthEastMoveIsValid = true;
+                m_MoveType = eMoveType.SimpleSouthEastMove;
             }
 
             else
@@ -255,6 +258,7 @@ namespace CheckersGame
             if (i_SourceIndex.RowIndex + 1 == i_DestinationIndex.RowIndex && i_SourceIndex.ColumnIndex - 1 == i_DestinationIndex.ColumnIndex)
             {
                 simpleSouthWestMoveIsValid = true;
+                m_MoveType = eMoveType.SimpleSouthWestMove;
             }
 
             else
@@ -293,22 +297,149 @@ namespace CheckersGame
 
         }
 
-        public bool EatingMoveForwardValidationBoard(Board i_Board, Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
+        public bool EatingMoveForwardValidation(Board i_Board, Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
         {
             bool eatingMoveForwardIsValid;
 
             if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up)
             {
-                //eatingMoveForwardIsValid = 
+                eatingMoveForwardIsValid = EatingNorthEastMoveValidation(i_Board, i_CurrPlayer, i_SourceIndex, i_DestinationIndex) || EatingNorthWestMoveValidation(i_Board, i_CurrPlayer, i_SourceIndex, i_DestinationIndex);
             }
 
             else //(i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
             {
-                //eatingMoveForwardIsValid = 
+                eatingMoveForwardIsValid = EatingSouthEastMoveValidation(i_Board, i_CurrPlayer, i_SourceIndex, i_DestinationIndex) || EatingSouthWestMoveValidation(i_Board, i_CurrPlayer, i_SourceIndex, i_DestinationIndex);
             }
 
             return eatingMoveForwardIsValid;
 
+        }
+
+        public bool EatingMoveBackwardsValidation(Board i_Board, Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
+        {
+            bool eatingMoveBackwardsIsValid;
+
+            if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up)
+            {
+                eatingMoveBackwardsIsValid = EatingSouthEastMoveValidation(i_Board, i_CurrPlayer, i_SourceIndex, i_DestinationIndex) || EatingSouthWestMoveValidation(i_Board, i_CurrPlayer, i_SourceIndex, i_DestinationIndex);
+            }
+
+            else //(i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
+            {
+                eatingMoveBackwardsIsValid = EatingNorthEastMoveValidation(i_Board, i_CurrPlayer, i_SourceIndex, i_DestinationIndex) || EatingNorthWestMoveValidation(i_Board, i_CurrPlayer, i_SourceIndex, i_DestinationIndex);
+            }
+
+            return eatingMoveBackwardsIsValid;
+
+        }
+
+        public bool EatingNorthEastMoveValidation(Board i_Board, Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
+        {
+            bool eatingNorthEastMoveIsValid;
+            //Two Validation. 1. Indices are matching 2. Rival is in between
+            if (i_SourceIndex.RowIndex - 2 == i_DestinationIndex.RowIndex && i_SourceIndex.ColumnIndex + 2 == i_DestinationIndex.ColumnIndex)
+            {
+                if (i_Board[i_SourceIndex.RowIndex - 1, i_SourceIndex.ColumnIndex + 1].RivalInSquareValidation(i_CurrPlayer))
+                {
+                    eatingNorthEastMoveIsValid = true;
+                    m_MoveType = eMoveType.EatingNorthEastMove;
+                }
+                
+                else
+                {
+                    eatingNorthEastMoveIsValid = false;
+                }
+            }
+
+            else
+            {
+                eatingNorthEastMoveIsValid = false;
+            }
+
+
+            return eatingNorthEastMoveIsValid;
+
+        }
+
+        public bool EatingNorthWestMoveValidation(Board i_Board, Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
+        {
+            bool eatingNorthWestMoveIsValid;
+            //Two Validation. 1. Indices are matching 2. Rival is in between
+            if (i_SourceIndex.RowIndex - 2 == i_DestinationIndex.RowIndex && i_SourceIndex.ColumnIndex - 2 == i_DestinationIndex.ColumnIndex)
+            {
+                if (i_Board[i_SourceIndex.RowIndex - 1, i_SourceIndex.ColumnIndex - 1].RivalInSquareValidation(i_CurrPlayer))
+                {
+                    eatingNorthWestMoveIsValid = true;
+                    m_MoveType = eMoveType.EatingNorthWestMove;
+                }
+
+                else
+                {
+                    eatingNorthWestMoveIsValid = false;
+                }
+            }
+
+            else
+            {
+                eatingNorthWestMoveIsValid = false;
+            }
+
+
+            return eatingNorthWestMoveIsValid;
+        }
+
+        public bool EatingSouthEastMoveValidation(Board i_Board, Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
+        {
+            bool eatingSouthEastMoveIsValid;
+            //Two Validation. 1. Indices are matching 2. Rival is in between
+            if (i_SourceIndex.RowIndex + 2 == i_DestinationIndex.RowIndex && i_SourceIndex.ColumnIndex + 2 == i_DestinationIndex.ColumnIndex)
+            {
+                if (i_Board[i_SourceIndex.RowIndex + 1, i_SourceIndex.ColumnIndex + 1].RivalInSquareValidation(i_CurrPlayer))
+                {
+                    eatingSouthEastMoveIsValid = true;
+                    m_MoveType = eMoveType.EatingSouthEastMove;
+                }
+
+                else
+                {
+                    eatingSouthEastMoveIsValid = false;
+                }
+            }
+
+            else
+            {
+                eatingSouthEastMoveIsValid = false;
+            }
+
+
+            return eatingSouthEastMoveIsValid;
+        }
+
+        public bool EatingSouthWestMoveValidation(Board i_Board, Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
+        {
+            bool eatingSouthWestMoveIsValid;
+            //Two Validation. 1. Indices are matching 2. Rival is in between
+            if (i_SourceIndex.RowIndex + 2 == i_DestinationIndex.RowIndex && i_SourceIndex.ColumnIndex - 2 == i_DestinationIndex.ColumnIndex)
+            {
+                if (i_Board[i_SourceIndex.RowIndex + 1, i_SourceIndex.ColumnIndex - 1].RivalInSquareValidation(i_CurrPlayer))
+                {
+                    eatingSouthWestMoveIsValid = true;
+                    m_MoveType = eMoveType.EatingSouthWestMove;
+                }
+
+                else
+                {
+                    eatingSouthWestMoveIsValid = false;
+                }
+            }
+
+            else
+            {
+                eatingSouthWestMoveIsValid = false;
+            }
+
+
+            return eatingSouthWestMoveIsValid;
         }
 
         public bool SrcAndDestBasicValidation(Board i_Board, Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)

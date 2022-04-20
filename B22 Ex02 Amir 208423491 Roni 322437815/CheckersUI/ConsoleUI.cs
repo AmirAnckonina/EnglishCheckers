@@ -3,11 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
+using CheckersGame; 
+
 namespace CheckersUI
 {
     public class ConsoleUI
     {
         private ConsoleInputManager m_Input;
+        private GameDetails m_GameDetails;
+
+        public GameDetails GameDetails
+        {
+            get
+            {
+                return m_GameDetails;
+            }
+        }
 
         public ConsoleInputManager Input
         {
@@ -24,6 +36,47 @@ namespace CheckersUI
             // Add rules? Game description?
         }
 
+        public  void RequestGameDetails()
+        {
+            int gameModeChoice;
+
+            m_GameDetails.NameOfFirstPlayer = GetPlayerName();
+            m_GameDetails.BoardSize = GetSizeOfBoard();
+            gameModeChoice = GetGameMode();
+
+            if (gameModeChoice == 1)
+            {
+                m_GameDetails.GameMode = CheckersGame.eGameMode.SinglePlayerMode;
+            }
+
+            else //gameModeChoice == 2
+            {
+                m_GameDetails.GameMode = CheckersGame.eGameMode.TwoPlayersMode;
+                m_GameDetails.NameOfSecondPlayer = GetPlayerName();
+            }
+        }
+
+        /*
+        public void RequestGameDetails()
+        {
+            int gameModeChoice;
+
+            m_GameDetails.NameOfFirstPlayer = GetPlayerName();
+            m_GameDetails.BoardSize = GetSizeOfBoard();
+            gameModeChoice = GetGameMode();
+
+            if (gameModeChoice == 1)
+            {
+                m_GameDetails.GameMode = CheckersGame.eGameMode.SinglePlayerMode;
+            }
+
+            else //gameModeChoice == 2
+            {
+                m_GameDetails.GameMode = CheckersGame.eGameMode.TwoPlayersMode;
+                m_GameDetails.NameOfSecondPlayer = GetPlayerName();
+            }
+        }
+*/
         public StringBuilder GetPlayerName()
         {
             StringBuilder m_Name = new StringBuilder();
