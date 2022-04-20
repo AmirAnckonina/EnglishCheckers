@@ -34,6 +34,7 @@
   <ItemGroup>
     <Compile Include="ConsoleInputManager.cs" />
     <Compile Include="ConsoleUI.cs" />
+    <Compile Include="GameDetails.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

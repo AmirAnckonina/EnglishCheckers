@@ -108,5 +108,48 @@ namespace CheckersUI
             return isBoardSizeValid;
         }
 
+        //public void PrintBoard(ref )
+        //{
+        //    int row, column, index;
+        //    char letter = 'A', currDiscChar;
+        //    eDiscType currDiscType;
+
+        //    for (row = 0; row < m_BoardSize; row++)
+        //    {
+        //        Console.Write("   {0} ", letter);
+        //        letter = (char)(letter + 1);
+        //    }
+
+        //    Console.WriteLine("");
+        //    letter = 'a';
+        //    for (row = 0; row < m_BoardSize; row++)
+        //    {
+        //        Console.Write("{0}|", letter);
+        //        letter = (char)(letter + 1);
+        //        for (column = 0; column < m_BoardSize; column++)
+        //        {
+        //            currDiscChar = GetCharByDiscType(m_GameBoard[row, column].DiscType);
+        //            currDiscType = m_GameBoard[row, column].DiscType;
+        //            if (currDiscType != eDiscType.None)
+        //            {
+        //                Console.Write(" {0} | ", currDiscChar);
+        //            }
+
+        //            else
+        //            {
+        //                Console.Write("   | ");
+        //            }
+        //        }
+
+        //        Console.WriteLine(" ");
+        //        for (index = 0; index < m_BoardSize; index++)
+        //        {
+        //            Console.Write("=====");
+        //        }
+
+        //        Console.WriteLine(" ");
+        //    }
+        //}
+
     }
 }

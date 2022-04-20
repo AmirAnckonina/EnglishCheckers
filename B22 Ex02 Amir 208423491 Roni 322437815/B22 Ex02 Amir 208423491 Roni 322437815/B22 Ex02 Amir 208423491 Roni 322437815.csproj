@@ -33,7 +33,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CheckersGameManager.cs" />
-    <Compile Include="GameDetails.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
