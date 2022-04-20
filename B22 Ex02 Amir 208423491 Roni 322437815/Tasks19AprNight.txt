@@ -11,7 +11,6 @@ Tasks 19Apr Night :
 	-Build RunSingleSession function
 	
 2.	*MoveManager* 
-	-Complete EatingMoveValidation functions
 	-Build ExecuteMove functions
 	
 3.	*Game*
@@ -54,3 +53,5 @@ Tasks 19Apr Night :
 	-using namespaces correctly
 		
 		
+Recently done:
+	*VVVVVV* -Complete EatingMoveValidation functions *VVVVVV*
