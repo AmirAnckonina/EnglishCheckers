@@ -9,7 +9,7 @@ namespace CheckersUI
     {
         private StringBuilder m_FirstPlayerName;
         private StringBuilder m_SecondtPlayerName;
-        private int m_EGameMode;
+        private CheckersGame.eGameMode m_GameMode;
         private int m_BoardSize;
 
         public StringBuilder NameOfFirstPlayer
@@ -38,16 +38,15 @@ namespace CheckersUI
             }
         }
 
-        public int GameMode
+        public CheckersGame.eGameMode GameMode
         {
             get
             {
-                return m_EGameMode;
+                return m_GameMode;
             }
-
             set
             {
-                m_EGameMode = value;
+                m_GameMode = value;
             }
         }
 
@@ -63,5 +62,6 @@ namespace CheckersUI
                 m_BoardSize = value;
             }
         }
+
     }
 }

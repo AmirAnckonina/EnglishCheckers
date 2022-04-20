@@ -36,5 +36,11 @@
     <Compile Include="ConsoleUI.cs" />
     <Compile Include="GameDetails.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CheckersGame\CheckersGame.csproj">
+      <Project>{c43ef4df-5bb5-41ef-a101-7310b9e7045d}</Project>
+      <Name>CheckersGame</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

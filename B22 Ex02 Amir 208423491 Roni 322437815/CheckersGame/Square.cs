@@ -24,10 +24,10 @@ namespace CheckersGame
         {
             get
             {
-                return m_LegalSquare; 
+                return m_LegalSquare;
             }
 
-            set 
+            set
             {
                 m_LegalSquare = value;
             }
@@ -35,14 +35,14 @@ namespace CheckersGame
 
         public eDiscType DiscType
         {
-            get 
-            { 
-                return m_DiscType; 
+            get
+            {
+                return m_DiscType;
             }
 
             set
             {
-                m_DiscType = value; 
+                m_DiscType = value;
             }
         }
 
@@ -55,20 +55,38 @@ namespace CheckersGame
 
             set
             {
-                m_SquareIndex = value; 
+                m_SquareIndex = value;
             }
         }
 
         public ePlayerRecognition SquareHolder
         {
-            get 
+            get
             {
-                return m_SquareHolder; 
+                return m_SquareHolder;
             }
-            set 
+            set
             {
-                m_SquareHolder = value; 
+                m_SquareHolder = value;
             }
+        }
+
+        public bool RivalInSquareValidation(Player i_CurrPlayer)
+        {
+            bool rivalInSqaure;
+
+            //IF the current swaure holder isn't the currPlayer and isn't vacant so the rival is there.
+            if (m_SquareHolder != i_CurrPlayer.PlayerRecognition && m_SquareHolder != ePlayerRecognition.None)
+            {
+                rivalInSqaure = true;
+            }
+
+            else
+            {
+                rivalInSqaure = false;
+            }
+
+            return rivalInSqaure;
         }
 
     }
