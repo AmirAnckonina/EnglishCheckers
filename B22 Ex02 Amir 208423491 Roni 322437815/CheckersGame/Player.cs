@@ -35,44 +35,94 @@ namespace CheckersGame
 
         public StringBuilder Name
         {
-            get { return m_Name; }
-            set { m_Name = value; }
+            get 
+            {
+                return m_Name;
+            }
+
+            set
+            {
+                m_Name = value; 
+            }
         }
 
         public int NumOfDiscs
         {
-            get { return m_NumOfDiscs; }
-            set { m_NumOfDiscs = value; }
+            get 
+            {
+                return m_NumOfDiscs;
+            }
+
+            set
+            { 
+                m_NumOfDiscs = value; 
+            }
         }
+
 
         public ePlayerType PlayerType
         {
-            get { return m_PlayerType; }
-            set { m_PlayerType = value; }
+            get
+            { 
+                return m_PlayerType;
+            }
+
+            set
+            {
+                m_PlayerType = value; 
+            }
         }
 
         public eDiscType DiscType
         {
-            get { return m_DiscType; }
-            set { m_DiscType = value; }
+            get
+            {
+                return m_DiscType; 
+            }
+
+            set 
+            {
+                m_DiscType = value; 
+            }
         }
 
         public eDiscType KingDiscType
         {
-            get { return m_KingDiscType; }
-            set { m_KingDiscType = value; }
+            get 
+            { 
+                return m_KingDiscType; 
+            }
+
+            set
+            {
+                m_KingDiscType = value;
+            }
         }
 
         public ePlayerMovingDirection MovingDirection
         {
-            get { return m_MovingDirection; }
-            set { m_MovingDirection = value; }
+            get
+            {
+                return m_MovingDirection;
+            }
+
+            set 
+            {
+                m_MovingDirection = value; 
+            }
         }
 
         public ePlayerRecognition PlayerRecognition
         {
-            get { return m_PlayerRecognition; }
-            set { m_PlayerRecognition = value; }
+            get 
+            {
+                return m_PlayerRecognition; 
+            }
+
+            set
+            {
+                m_PlayerRecognition = value; 
+            }
         }
 
         public void InitializeCurrentHoldingIndices(ref Board i_Board)

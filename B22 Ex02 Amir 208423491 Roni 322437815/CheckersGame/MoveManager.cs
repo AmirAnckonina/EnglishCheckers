@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace CheckersGame
+{
 
     public class MoveManager
     {
@@ -16,6 +17,19 @@ namespace CheckersGame
         // 2. SquareIndex DestIndex
         // 3. ref Board m_Board
         // 4. ref Player m_CurrPlayer
+
+        public bool ReachedLastLine
+        {
+            get
+            {
+               return m_ReachedLastLine;
+            }
+
+            set
+            {
+                m_ReachedLastLine = value;
+            }
+        }
 
         public bool MoveValidation(Board i_Board, Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
         {
@@ -396,9 +410,11 @@ namespace CheckersGame
             // 1. Update the destinationSquare DiscType of the source.
             // 2. Update the sourceSquare DiscType to None.
             // 3. If eating occured -> update also the square we passed above
-            // 
-            //
+
             io_Board[i_DestinationIndex].DiscType = io_Board[i_SourceIndex].DiscType;
+            io_Board[i_SourceIndex].DiscType = eDiscType.None;
+
+
         }
 
         // public bool MoveFromOptionValiidation(Player i_CurrPlayer, Board i_Board)
@@ -406,6 +422,44 @@ namespace CheckersGame
               return true;
           }*/
 
+        public void updateIfReachedToLastLine(Player i_CurrPlayer, SquareIndex i_SourceIndex, int i_BoardSize)
+        {
+            if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up)
+            {
+                if (i_SourceIndex.RowIndex == 0)
+                {
+                    m_ReachedLastLine = true;
+                }
+
+                else
+                {
+                    m_ReachedLastLine = false;
+                }
+            }
+
+            else if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
+            {
+                if (i_SourceIndex.RowIndex == i_BoardSize)
+                {
+                    m_ReachedLastLine = true;
+                }
+
+                else
+                {
+                    m_ReachedLastLine = false;
+                }
+            }
+
+            //else if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.None)
+            //??
+        }
+
 
     }
+
+
 }
+
+
+
+

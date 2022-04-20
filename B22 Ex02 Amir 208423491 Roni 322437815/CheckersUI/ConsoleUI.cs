@@ -11,7 +11,10 @@ namespace CheckersUI
 
         public ConsoleInputManager Input
         {
-            get { return m_Input; }
+            get 
+            {
+                return m_Input; 
+            }
         }
 
         public void Welcome()
@@ -38,7 +41,7 @@ namespace CheckersUI
             Console.WriteLine("Please enter the size of the game board");
             m_BoardSize = int.Parse(Console.ReadLine());
 
-            while (m_BoardSize != 6 && m_BoardSize != 8 && m_BoardSize != 10) //-> Create method to this condition
+            while (!IsBoardSizeValid(m_BoardSize)) 
             {
                 Console.WriteLine("The input is not valid");
                 Console.WriteLine("Please enter the size of the game board");
@@ -87,5 +90,23 @@ namespace CheckersUI
             Console.WriteLine("Sorry, your move choice isn't valid!");
             Console.Write("Please enter a new move: ");
         }
+
+        public bool IsBoardSizeValid(int i_BoardSize)
+        {
+            bool isBoardSizeValid;
+
+            if (i_BoardSize == 6 || i_BoardSize == 8 || i_BoardSize == 10) 
+            {
+                isBoardSizeValid = true;
+            }
+
+            else
+            {
+                isBoardSizeValid = false;
+            }
+
+            return isBoardSizeValid;
+        }
+
     }
 }

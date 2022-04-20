@@ -34,25 +34,46 @@ namespace CheckersGame
         //Use of Indexers!!! ToCheck!
         public Square this[SquareIndex i_SquareIndex]
         {
-            get { return m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex]; }
-            set { m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex] = value; }
+            get 
+            { 
+                return m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex]; 
+            }
+
+            set 
+            {
+                m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex] = value;
+            }
         }
 
         public Square this[int i_RowIndex, int i_ColumnIndex]
         {
-            get { return m_GameBoard[i_RowIndex, i_ColumnIndex]; }
-            set { m_GameBoard[i_RowIndex, i_ColumnIndex] = value; }
+            get 
+            { 
+                return m_GameBoard[i_RowIndex, i_ColumnIndex]; 
+            }
+
+            set
+            {
+                m_GameBoard[i_RowIndex, i_ColumnIndex] = value; 
+            }
         }
 
         public int BoardSize
         {
-            get { return m_BoardSize; }
-            set { m_BoardSize = value; }
+            get 
+            { 
+                return m_BoardSize;
+            }
+
+            set 
+            { 
+                m_BoardSize = value; 
+            }
         }
 
         public void InitializeBoard()
         {
-            int rowIndex, emptyLinesIndex; //What did you mean? index is column?
+            int rowIndex, emptyLinesIndex; 
 
             for (rowIndex = 0; rowIndex < (m_BoardSize / 2) - 1; rowIndex++)
             {
@@ -134,16 +155,13 @@ namespace CheckersGame
 
         public int GetDiscOccurences(eDiscType i_DiscType)
         {
-            int row, column, counter = 0;
+            int counter = 0;
 
-            for (row = 0; row < BoardSize; row++)
+            foreach(Square currSquare in m_GameBoard)
             {
-                for (column = 0; column < BoardSize; column++)
+               if(currSquare.DiscType == i_DiscType)
                 {
-                    if (m_GameBoard[row, column].DiscType == i_DiscType)
-                    {
-                        counter++;
-                    }
+                    counter++;
                 }
             }
 
@@ -185,7 +203,7 @@ namespace CheckersGame
         // RONI. The function isn't hermetic. What about negative values?
         // Changed it a little bit, including the name -> because of a name pattern I've already used
         // Will explain to you when we meet.
-        /*public bool SquareExistenceValidation(int i_RowIndex, int i_ColumnIndex) 
+        public bool SquareExistenceValidation(int i_RowIndex, int i_ColumnIndex) 
         {
             bool isSquareExist;
             bool isRowIndexInBoard;
@@ -205,7 +223,7 @@ namespace CheckersGame
 
             return isSquareExist;
 
-        }*/
+        }
 
         public bool SquareExistenceValidation(SquareIndex i_SquareIndex)
         {

@@ -27,23 +27,39 @@ namespace CheckersUI
 
         public StringBuilder RawInput
         {
-            get { return RawInput; }
-            set { m_RawInput = value; }
+            get
+            {
+                return RawInput; 
+            }
+
+            set 
+            {
+                m_RawInput = value; 
+            }
         }
 
         public SquareIndex SrcIndex
         {
-            get { return m_SourceIndex; }
+            get
+            {
+                return m_SourceIndex;
+            }
         }
 
         public SquareIndex DestIndex
         {
-            get { return m_DestinationIndex; }
+            get 
+            {
+                return m_DestinationIndex; 
+            }
         }
 
         public bool InputStructureIsValid
         {
-            get { return m_InputStructureIsValid; }
+            get
+            {
+                return m_InputStructureIsValid; 
+            }
         }
 
         public void LoadNewInput()
