@@ -22,7 +22,7 @@ namespace CheckersGame
         {
             get
             {
-               return m_ReachedLastLine;
+                return m_ReachedLastLine;
             }
 
             set
@@ -422,7 +422,7 @@ namespace CheckersGame
               return true;
           }*/
 
-        public void updateIfReachedToLastLine(Player i_CurrPlayer, SquareIndex i_SourceIndex, int i_BoardSize)
+        public void UpdateIfReachedToLastLine(Player i_CurrPlayer, SquareIndex i_SourceIndex, int i_BoardSize)
         {
             if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up)
             {
@@ -454,9 +454,101 @@ namespace CheckersGame
             //??
         }
 
+        public bool DoubleTurnValidation(Board i_Board, Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
+        {
+            bool isDoubleTurnValid;
+            SquareIndex newSourceIndex = i_DestinationIndex; ;
+            SquareIndex newDestinationIndex = new SquareIndex();
+
+            newDestinationIndex.RowIndex = SetNewDestinationRow(i_CurrPlayer, i_DestinationIndex);
+            newDestinationIndex.RowIndex = SetNewDestinationColumn(i_CurrPlayer, i_DestinationIndex);
+
+            if (DoubleTurnWithSpecificDst(i_Board, i_CurrPlayer, newSourceIndex, newDestinationIndex))
+            {
+                isDoubleTurnValid = true;
+            }
+
+            else
+            {
+                newDestinationIndex.ColumnIndex = i_DestinationIndex.ColumnIndex - 2;
+                if (DoubleTurnWithSpecificDst(i_Board, i_CurrPlayer, newSourceIndex, newDestinationIndex))
+                {
+                    isDoubleTurnValid = true;
+                }
+
+                else
+                {
+                    isDoubleTurnValid = false;
+                }
+            }
+
+            return isDoubleTurnValid;
+        }
+
+        public bool DoubleTurnWithSpecificDst(Board i_Board, Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
+        {
+            bool isDoubleTurnValid;
+            bool indicesDifferencesAreValid;
+            bool srcAndDestBasicallyValid;
+            bool isEatenValid;
+
+            srcAndDestBasicallyValid = SrcAndDestBasicValidation(i_Board, i_CurrPlayer, i_SourceIndex, i_DestinationIndex);
+            indicesDifferencesAreValid = IndicesDifferencesValidationAndSetup(i_SourceIndex, i_DestinationIndex, out int o_IndicesDifference);
+            isEatenValid = EatingMoveValidation(i_Board, i_CurrPlayer, i_SourceIndex, i_DestinationIndex);
+
+            if (srcAndDestBasicallyValid && indicesDifferencesAreValid && isEatenValid)
+            {
+                isDoubleTurnValid = true;
+            }
+
+            else
+            {
+                isDoubleTurnValid = false;
+            }
+
+            return isDoubleTurnValid;
+
+        }
+
+        public int SetNewDestinationRow(Player i_CurrPlayer, SquareIndex i_DestinationIndex)
+        {
+            int newRowResult = -1;
+
+            if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up) //Forward
+            {
+                newRowResult = (i_DestinationIndex.RowIndex) - 2;
+            }
+
+            else if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
+            {
+                newRowResult = (i_DestinationIndex.RowIndex) + 2;
+            }
+
+            return newRowResult;
+        }
+
+        public int SetNewDestinationColumn(Player i_CurrPlayer, SquareIndex i_DestinationIndex)
+        {
+            return i_DestinationIndex.RowIndex + 2;
+        }
+
+        public bool AnyPosabbilityToMove(Board i_Board, Player i_CurrPlayer, SquareIndex i_SourceIndex, SquareIndex i_destinationIndex)
+        {
+            bool anyPosabbilityToMove = false; 
+
+            foreach (SquareIndex currSquare in i_CurrPlayer.CurrentHoldingSquareIndices)
+            {
+                if(SimpleMoveBackwardsValidation(i_CurrPlayer,i_SourceIndex,i_destinationIndex) || EatingMoveForwardValidationBoard(i_Board,i_CurrPlayer,i_SourceIndex,i_destinationIndex))
+                {
+                    anyPosabbilityToMove = true;
+                }
+            }
+
+            return anyPosabbilityToMove;
+        }
+  
 
     }
-
 
 }
 

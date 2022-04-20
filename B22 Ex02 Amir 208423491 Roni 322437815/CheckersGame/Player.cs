@@ -59,7 +59,6 @@ namespace CheckersGame
             }
         }
 
-
         public ePlayerType PlayerType
         {
             get
@@ -122,6 +121,19 @@ namespace CheckersGame
             set
             {
                 m_PlayerRecognition = value; 
+            }
+        }
+
+        public List<SquareIndex> CurrentHoldingSquareIndices
+        {
+            get
+            {
+                return CurrentHoldingSquareIndices;
+            }
+
+            set
+            {
+                CurrentHoldingSquareIndices = value;
             }
         }
 
