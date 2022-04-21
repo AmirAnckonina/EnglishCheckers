@@ -8,6 +8,8 @@ namespace CheckersGame
 
     public class MoveManager
     {
+        private SquareIndex m_SourceIndex;
+        private SquareIndex m_DestinationIndex;
         private static readonly int InvalidIndicesDifferences = -1; // Check how to set it.
         private eMoveType m_MoveType;
         private bool m_ReachedLastLine;
@@ -17,6 +19,30 @@ namespace CheckersGame
         // 2. SquareIndex DestIndex
         // 3. ref Board m_Board
         // 4. ref Player m_CurrPlayer
+
+        public SquareIndex SourceIndex
+        {
+            get
+            {
+                return m_SourceIndex;
+            }
+            set
+            {
+                m_SourceIndex = value;
+            }
+        } 
+        
+        public SquareIndex DestinationIndex
+        {
+            get
+            {
+                return m_DestinationIndex;
+            }
+            set
+            {
+                m_DestinationIndex = value;
+            }
+        }
 
         public bool ReachedLastLine
         {
