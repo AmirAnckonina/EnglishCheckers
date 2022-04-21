@@ -1,6 +1,31 @@
-Tasks 19Apr Night :
+Tasks 22Apr Morning :
 
-// <====================================================>
+
+		
+<---------------RONI------------------->
+
+
+1. Try to get rid of the SquareIndex data member inside square.
+	- update InitializeSquare signiture
+	- update the paramters which sent from initilaizeLineInBoard as well
+	- Implement IsEquals function to compare between two SquareIndex objects (Under SquareIndex Class, Instead of the operator implementaion)
+
+2. In Continueous to 1, In MoveManager inside all moveValidation direction function (EastWest, etc...) ,
+	change the if condtion to use the IsEqual function in SquareIndex.
+
+3. In ConsoleUI, update GetPlayerName function to specify if it's the first Player or second.
+
+3. In ConsoleUI, fix PrintBoard function to be more organized and readable.
+	Also, fix the spaces so the matrix will be more organized.
+	+ Add ------------------- between the first line and and the columns letters
+
+5. In all moveValidation function , in every case "false" returned, update m_MoveType = NONE.
+
+4. Testing of MoveManager. 
+
+
+
+// <===================AMIR=================================>
  
 1. 	*CheckersGameManager* 
 	
@@ -8,7 +33,9 @@ Tasks 19Apr Night :
 	-Build function that initialize the relevant values/object bewteen singleGameSession
 
 2.	*MoveManager* 
-	-Build ExecuteMove functions
+	-RecurringTurn method
+	- Continue build al the 4 directions cases
+	-Converting to king functions
 	
 3.	*Game*
 	-Build GameOver function. 
@@ -18,6 +45,7 @@ Tasks 19Apr Night :
 	-Build GameWinner function
 	-PostSingleGameSession function 
 		*calculating score to the winnerPlayer
+		*Setting the board again?
 	-Build function to generate a move for computer
 		*consider use IF computer 
 			-> generate random source index from player m_CurrentHoldingSquareIndices?
@@ -42,10 +70,6 @@ Tasks 19Apr Night :
 
 5.	***General***
 	-Check enum structure
-	-Re-order all get-set according to coding rules...
-	-Constructors review and updates
-	-DoubleTurn ?
-	-Converting to king?
 	-AI
 	-using namespaces correctly
 		
@@ -54,22 +78,6 @@ Recently done:
 	*VVVVVV* -Complete EatingMoveValidation functions *VVVVVV*
 	`-Build Game flow in CheckersGameManager Class.
 		-Separated logic and UI completly.
+			-Re-order all get-set according to coding rules...
+	-Constructors review and updates
 		
-		
-<---------------RONI------------------->
-1. Try to get rid of the SquareIndex data member inside square.
-	- update InitializeSquare signiture
-	- update the paramters which sent from initilaizeLineInBoard as well
-	- Implement IsEquals function to compare between two SquareIndex objects (Under SquareIndex Class, Instead of the operator implementaion)
-2. Continueous to 1, In MoveManager inside all moveValidation direction function (EastWest, etc...) ,
-	change the if condtion to use the IsEqual function in SquareIndex.
-
-3. In ConsoleUI, update GetPlayerName function to specify if it's the first Player or second.
-
-3. In ConsoleUI, fix PrintBoard function to be more organized and readable.
-	Also, fix the spaces so the matrix will be more organized.
-	+ Add ------------------- in the first line, or something similar 
-
-5. In all moveValidation function , in every case "false" returned, update m_MoveType = NONE.
-
-4. Full Testing of MoveManager. 
