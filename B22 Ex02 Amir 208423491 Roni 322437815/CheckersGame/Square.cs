@@ -12,6 +12,11 @@ namespace CheckersGame
         private ePlayerRecognition m_SquareHolder;
         private SquareIndex m_SquareIndex;
 
+        public Square()
+        {
+            m_SquareIndex = new SquareIndex();
+        }
+
         public Square(bool i_LegalSquare, eDiscType i_CurrDiscType, int i_RowIndex, int i_ColumnIndex)
         {
             m_LegalSquare = i_LegalSquare;
@@ -69,6 +74,15 @@ namespace CheckersGame
             {
                 m_SquareHolder = value;
             }
+        }
+
+        public void InitializeSquare(bool i_LegalSquare, eDiscType i_DiscType, ePlayerRecognition i_SquareHolder, int i_RowIndex, int i_ColumnIndex)
+        {
+            m_LegalSquare = i_LegalSquare;
+            m_DiscType = i_DiscType;
+            m_SquareHolder = i_SquareHolder;
+            m_SquareIndex.RowIndex = i_RowIndex;
+            m_SquareIndex.ColumnIndex = i_ColumnIndex;
         }
 
         public bool RivalInSquareValidation(Player i_CurrPlayer)
