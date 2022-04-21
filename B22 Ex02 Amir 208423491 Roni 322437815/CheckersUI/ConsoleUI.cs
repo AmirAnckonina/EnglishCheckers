@@ -4,14 +4,21 @@ using System.Linq;
 using System.Text;
 
 
-using CheckersGame; 
+using CheckersGame;
 
 namespace CheckersUI
 {
     public class ConsoleUI
     {
         private ConsoleInputManager m_Input;
+
         private GameDetails m_GameDetails;
+
+        public ConsoleUI()
+        {
+            m_Input = new ConsoleInputManager();
+            m_GameDetails = new GameDetails();
+        }
 
         public GameDetails GameDetails
         {
@@ -23,16 +30,16 @@ namespace CheckersUI
 
         public ConsoleInputManager Input
         {
-            get 
+            get
             {
-                return m_Input; 
+                return m_Input;
             }
         }
 
         public void Welcome()
         {
             Console.WriteLine("Welcome to English Checkers Game!");
-            System.Threading.Thread.Sleep(3000);
+            //System.Threading.Thread.Sleep(3000);
             // Add rules? Game description?
         }
 
@@ -40,7 +47,7 @@ namespace CheckersUI
         {
             int gameModeChoice;
 
-            m_GameDetails.NameOfFirstPlayer = GetPlayerName();
+            m_GameDetails.FirstPlayerName = GetPlayerName();
             m_GameDetails.BoardSize = GetSizeOfBoard();
             gameModeChoice = GetGameMode();
 
@@ -52,7 +59,7 @@ namespace CheckersUI
             else //gameModeChoice == 2
             {
                 m_GameDetails.GameMode = CheckersGame.eGameMode.TwoPlayersMode;
-                m_GameDetails.NameOfSecondPlayer = GetPlayerName();
+                m_GameDetails.SecondPlayerName = GetPlayerName();
             }
         }
 
@@ -68,32 +75,36 @@ namespace CheckersUI
 
         public int GetSizeOfBoard()
         {
-            int m_BoardSize;
+            int boardSize;
+            bool boardSizeInputTypeIsValid;
 
-            Console.WriteLine("Please enter the size of the game board");
-            m_BoardSize = int.Parse(Console.ReadLine());
+            Console.WriteLine("Please enter the game board size: ");
+            boardSizeInputTypeIsValid = int.TryParse(Console.ReadLine(), out boardSize);
 
-            while (!IsBoardSizeValid(m_BoardSize)) 
+            while (!boardSizeInputTypeIsValid || !BoardSizeInputValueValidation(boardSize))
             {
                 Console.WriteLine("The input is not valid");
                 Console.WriteLine("Please enter the size of the game board");
-                m_BoardSize = int.Parse(Console.ReadLine());
+                boardSizeInputTypeIsValid = int.TryParse(Console.ReadLine(), out boardSize);
             }
-            return m_BoardSize;
+
+            return boardSize;
         }
 
         public int GetGameMode()
         {
             int numOfPlayers;
+            bool gameModeInputTypeIsValid;
 
             PrintGameModeChoosingRequest();
-            numOfPlayers = int.Parse(Console.ReadLine());
+            gameModeInputTypeIsValid = int.TryParse(Console.ReadLine(), out numOfPlayers);
+            //numOfPlayers = int.Parse(Console.ReadLine());
 
-            while (numOfPlayers != 1 && numOfPlayers != 2)
+            while (!gameModeInputTypeIsValid || (numOfPlayers != 1 && numOfPlayers != 2))
             {
                 Console.WriteLine("Invalid choice!");
                 PrintGameModeChoosingRequest();
-                numOfPlayers = int.Parse(Console.ReadLine());
+                gameModeInputTypeIsValid = int.TryParse(Console.ReadLine(), out numOfPlayers);
             }
 
             return numOfPlayers;
@@ -108,7 +119,7 @@ namespace CheckersUI
 
         public void PrintWhoseTurn(Player i_CurrPlayer)
         {
-            Console.WriteLine("It's {0} turn, Go Ahead! : ", i_CurrPlayer.Name);
+            Console.WriteLine("- It's {0} turn, Go Ahead! : ", i_CurrPlayer.Name);
         }
 
         public void PrintInvalidInputStructure()
@@ -120,32 +131,77 @@ namespace CheckersUI
         public void PrintInvalidInputMoveOption()
         {
             Console.WriteLine("Sorry, your move choice isn't valid!");
-            Console.Write("Please enter a new move: ");
+            Console.Write("Please enter a new valid move: ");
         }
 
-        public bool IsBoardSizeValid(int i_BoardSize)
+        public bool BoardSizeInputValueValidation(int i_BoardSize)
         {
-            bool isBoardSizeValid;
+            bool boardSizeIsValid;
 
-            if (i_BoardSize == 6 || i_BoardSize == 8 || i_BoardSize == 10) 
+            if (i_BoardSize == 6 || i_BoardSize == 8 || i_BoardSize == 10)
             {
-                isBoardSizeValid = true;
+                boardSizeIsValid = true;
             }
 
             else
             {
-                isBoardSizeValid = false;
+                boardSizeIsValid = false;
             }
 
-            return isBoardSizeValid;
+            return boardSizeIsValid;
         }
 
-        /*public void PrintBoard(Board i_Board)
+        public char GetCharByDiscType(eDiscType i_DiscTypeNum)
         {
+            char discTypeChar;
+
+            if (i_DiscTypeNum == eDiscType.XDisc)
+            {
+                discTypeChar = 'X';
+            }
+
+            else if (i_DiscTypeNum == eDiscType.ODisc)
+            {
+                discTypeChar = 'O';
+            }
+
+            else if (i_DiscTypeNum == eDiscType.XKingDisc)
+            {
+                discTypeChar = 'K';
+            }
+
+            else if (i_DiscTypeNum == eDiscType.OKingDisc)
+            {
+                discTypeChar = 'U';
+            }
+
+            else
+            {
+                discTypeChar = 'N';
+            }
+
+            return discTypeChar;
+        }
+
+        public void PrintBoard(Board i_Board)
+        {
+            /*foreach (Square sqr in i_Board.GameBoard)
+            {
+                if (sqr.DiscType != eDiscType.None)
+                {
+                    Console.Write(" {0} | ", GetCharByDiscType(sqr.DiscType));
+                }
+
+                else
+                {
+                    Console.Write("   | ");
+                }
+            }*/
+
             int row, column, index;
             char letter = 'A', currDiscChar;
             eDiscType currDiscType;
-                    
+
             for (row = 0; row < i_Board.BoardSize; row++)
             {
                 Console.Write("   {0} ", letter);
@@ -160,7 +216,7 @@ namespace CheckersUI
                 letter = (char)(letter + 1);
                 for (column = 0; column < i_Board.BoardSize; column++)
                 {
-                    currDiscChar = i_Board.GetCharByDiscType(i_Board[row, column].DiscType));
+                    currDiscChar = GetCharByDiscType(i_Board[row, column].DiscType);
                     currDiscType = i_Board[row, column].DiscType;
                     if (currDiscType != eDiscType.None)
                     {
@@ -174,14 +230,13 @@ namespace CheckersUI
                 }
 
                 Console.WriteLine(" ");
-                for (index = 0; index < m_BoardSize; index++)
+                for (index = 0; index < i_Board.BoardSize; index++)
                 {
                     Console.Write("=====");
                 }
-                
-                 Console.WriteLine(" ");
-            }
-        }*/
 
+                Console.WriteLine(" ");
+            }
+        }
     }
 }

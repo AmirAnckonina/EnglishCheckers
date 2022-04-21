@@ -3,13 +3,10 @@ Tasks 19Apr Night :
 // <====================================================>
  
 1. 	*CheckersGameManager* 
-	-Build Game flow in CheckersGameManager Class.
-	-Separated logic and UI completly.
+	
 	-Split the parts in old "TheCheckersGame" to initGame and Run.
 	-Build function that initialize the relevant values/object bewteen singleGameSession
-	-Build c'tor 
-	-Build RunSingleSession function
-	
+
 2.	*MoveManager* 
 	-Build ExecuteMove functions
 	
@@ -55,3 +52,24 @@ Tasks 19Apr Night :
 		
 Recently done:
 	*VVVVVV* -Complete EatingMoveValidation functions *VVVVVV*
+	`-Build Game flow in CheckersGameManager Class.
+		-Separated logic and UI completly.
+		
+		
+<---------------RONI------------------->
+1. Try to get rid of the SquareIndex data member inside square.
+	- update InitializeSquare signiture
+	- update the paramters which sent from initilaizeLineInBoard as well
+	- Implement IsEquals function to compare between two SquareIndex objects (Under SquareIndex Class, Instead of the operator implementaion)
+2. Continueous to 1, In MoveManager inside all moveValidation direction function (EastWest, etc...) ,
+	change the if condtion to use the IsEqual function in SquareIndex.
+
+3. In ConsoleUI, update GetPlayerName function to specify if it's the first Player or second.
+
+3. In ConsoleUI, fix PrintBoard function to be more organized and readable.
+	Also, fix the spaces so the matrix will be more organized.
+	+ Add ------------------- in the first line, or something similar 
+
+5. In all moveValidation function , in every case "false" returned, update m_MoveType = NONE.
+
+4. Full Testing of MoveManager. 

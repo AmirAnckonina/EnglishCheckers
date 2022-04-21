@@ -35,6 +35,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BackupMoveManager.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="eGameMode.cs" />
     <Compile Include="eWinnerPlayer.cs" />

@@ -14,12 +14,26 @@ namespace CheckersGame
         MoveManager m_MoveManager;
         private eGameMode m_GameMode; // Consider if necessary ??
         private bool m_FirstPlayerTurn;
+        private bool m_IsRecurringTurn;
 
         public Game()
         {
+            //m_Board = new Board();
+            m_FirstPlayer = new Player();
+            m_SecondPlayer = new Player();
+            m_MoveManager = new MoveManager();
+
             m_GameMode = eGameMode.SinglePlayerMode;
             m_FirstPlayerTurn = true;
 
+        }
+
+        public MoveManager MoveManager
+        {
+            get
+            {
+                return m_MoveManager;
+            }
         }
 
         public Player CurrentPlayer
@@ -34,13 +48,6 @@ namespace CheckersGame
             }
         }
 
-        public MoveManager MoveManager
-        {
-            get
-            {
-                return m_MoveManager;
-            }
-        }
         public Player FirstPlayer
         {
             get
@@ -89,21 +96,35 @@ namespace CheckersGame
             }
         }
 
+        public bool IsRecurringTurn
+        {
+            get
+            {
+                return m_IsRecurringTurn;
+            }
+
+            set
+            {
+                m_IsRecurringTurn = value;
+            }
+        }
+
         public void SetBoard(int i_BoardSize)
         {
-            m_Board.BoardSize = i_BoardSize;
+            m_Board = new Board(i_BoardSize);
             m_Board.InitializeBoard();
         }
+
         public void SetGamePlayers(StringBuilder i_FirstPlayerName, StringBuilder i_SecondPlayerName)
         {
             m_FirstPlayer.Name = i_FirstPlayerName;
             m_SecondPlayer.Name = i_SecondPlayerName;
             m_FirstPlayer.PlayerRecognition = ePlayerRecognition.FirstPlayer;
             m_SecondPlayer.PlayerRecognition = ePlayerRecognition.SecondPlayer;
-            m_FirstPlayer.DiscType = eDiscType.ODisc;
-            m_SecondPlayer.DiscType = eDiscType.XDisc;
-            m_FirstPlayer.KingDiscType = eDiscType.OKingDisc;
-            m_SecondPlayer.KingDiscType = eDiscType.XKingDisc;
+            m_FirstPlayer.DiscType = eDiscType.XDisc;
+            m_SecondPlayer.DiscType = eDiscType.ODisc;
+            m_FirstPlayer.KingDiscType = eDiscType.XKingDisc;
+            m_SecondPlayer.KingDiscType = eDiscType.OKingDisc;
             m_FirstPlayer.MovingDirection = ePlayerMovingDirection.Down;
             m_SecondPlayer.MovingDirection = ePlayerMovingDirection.Up;
             m_FirstPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_FirstPlayer.DiscType);
@@ -121,11 +142,6 @@ namespace CheckersGame
 
         }
 
-        /// <------------------------------------------------------>
-        /// Old design code below!
-        /// <------------------------------------------------------>
-
-
         public void LoadNewPotentialMove(SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
         {
             m_MoveManager.SourceIndex = i_SourceIndex;
@@ -135,53 +151,39 @@ namespace CheckersGame
         public void GenerateRandomPotentialMove()
         {
             /// generate for computer player a valid source index for potential move.
-            /// 
-        }
-        public void MoveProcedure()
-        {
-          /*  bool validMove;
+            /// If Double Turn -> Take the prev Destination and set it as a new source
+            /// Note to separate if it's recurring turn or not. 
 
-            validMove = m_Move.MoveValidation(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);
-            while (!validMove)
-            {
-                // m_UI.PrintInvalidInputMoveOption();
-                validMove = m_Move.MoveValidation(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);
-            }
-
-            //Update movement on board.
-            m_Move.ExecuteMove(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);*/
-        }
-
-        public void RawInputProcedure()
-        {
-            /*m_UI.Input.LoadNewInput();
-
-            while (!m_UI.Input.InputStructureIsValid)
-            {
-                m_UI.PrintInvalidInputStructure();
-                m_UI.Input.LoadNewInput();
-            }*/
         }
 
         public void SwitchTurn()
         {
-            if (m_CurrentPlayer == FirstPlayer)
+            if(m_MoveManager.EatingMoveOccurred() && m_MoveManager.RecurringTurnEatingMovePossibiltyValidation())
             {
-                m_FirstPlayerTurn = false;
-                m_CurrentPlayer = m_SecondPlayer;
+                /// Do Not switch turn.
+                m_IsRecurringTurn = true;
             }
 
-            else //Currently, it's the second player turn
+            else
             {
-                m_FirstPlayerTurn = true;
-                m_CurrentPlayer = m_FirstPlayer;
-            }
+                m_IsRecurringTurn = false;
+                if (m_CurrentPlayer == FirstPlayer)
+                {
+                    m_FirstPlayerTurn = false;
+                    m_CurrentPlayer = m_SecondPlayer;
+                }
 
+                else //Currently, it's the second player turn
+                {
+                    m_FirstPlayerTurn = true;
+                    m_CurrentPlayer = m_FirstPlayer;
+                }
+            }
         }
 
         public bool GameOver()
         {
-            bool gameOver = true;
+            bool gameOver = false;
 
             return gameOver;
         }

@@ -8,11 +8,17 @@ namespace CheckersUI
     public class GameDetails
     {
         private StringBuilder m_FirstPlayerName;
-        private StringBuilder m_SecondtPlayerName;
+        private StringBuilder m_SecondPlayerName;
         private CheckersGame.eGameMode m_GameMode;
         private int m_BoardSize;
 
-        public StringBuilder NameOfFirstPlayer
+        public GameDetails()
+        {
+            m_FirstPlayerName = new StringBuilder();
+            m_SecondPlayerName = new StringBuilder();
+        }
+
+        public StringBuilder FirstPlayerName
         {
             get
             {
@@ -25,16 +31,16 @@ namespace CheckersUI
             }
         }
 
-        public StringBuilder NameOfSecondPlayer
+        public StringBuilder SecondPlayerName
         {
             get
             {
-                return NameOfSecondPlayer;
+                return m_SecondPlayerName;
             }
 
             set
             {
-                NameOfSecondPlayer = value;
+                m_SecondPlayerName = value;
             }
         }
 
