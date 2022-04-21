@@ -25,6 +25,7 @@ namespace GameManagement
 
             m_UI.Welcome();
             GameInitialization();
+            //Test
 
             do
             {
