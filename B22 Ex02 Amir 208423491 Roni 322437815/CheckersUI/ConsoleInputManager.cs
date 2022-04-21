@@ -41,7 +41,7 @@ namespace CheckersUI
             }
         }
 
-        public SquareIndex SrcIndex
+        public SquareIndex SourceIndex
         {
             get
             {
@@ -49,7 +49,7 @@ namespace CheckersUI
             }
         }
 
-        public SquareIndex DestIndex
+        public SquareIndex DestinationIndex
         {
             get 
             {

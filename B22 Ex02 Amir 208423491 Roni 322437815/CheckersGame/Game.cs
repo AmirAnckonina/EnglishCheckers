@@ -8,8 +8,10 @@ namespace CheckersGame
     public class Game
     {
         private Board m_Board;
-        private Player[] m_Players;
-        MoveManager m_Move;
+        private Player m_FirstPlayer;
+        private Player m_SecondPlayer;
+        private Player m_CurrentPlayer;
+        MoveManager m_MoveManager;
         private eGameMode m_GameMode; // Consider if necessary ??
         private bool m_FirstPlayerTurn;
 
@@ -20,15 +22,34 @@ namespace CheckersGame
 
         }
 
+        public Player CurrentPlayer
+        {
+            get
+            {
+                return m_CurrentPlayer;
+            }
+            set
+            {
+                m_CurrentPlayer = value;
+            }
+        }
+
+        public MoveManager MoveManager
+        {
+            get
+            {
+                return m_MoveManager;
+            }
+        }
         public Player FirstPlayer
         {
             get
             {
-                return m_Players[0];
+                return m_FirstPlayer;
             }
             set
             {
-                m_Players[0] = value;
+                m_FirstPlayer = value;
             }
         }
 
@@ -36,61 +57,99 @@ namespace CheckersGame
         {
             get
             {
-                return m_Players[1];
+                return m_SecondPlayer;
             }
             set
             {
-                m_Players[1] = value;
+                m_SecondPlayer = value;
             }
         }
 
-       /* public void InitalizeGameObjects(CheckersUI.GameDetails i_GameDetails)
+        public Board Board
         {
-            m_GameMode = i_GameDetails.GameMode;
-            m_Board.BoardSize = i_GameDetails.BoardSize;
+            get
+            {
+                return m_Board;
+            }
+            set
+            {
+                m_Board = value;
+            }
+        }
+
+        public eGameMode GameMode
+        {
+            get
+            {
+                return m_GameMode;
+            }
+            set
+            {
+                m_GameMode = value;
+            }
+        }
+
+        public void SetBoard(int i_BoardSize)
+        {
+            m_Board.BoardSize = i_BoardSize;
             m_Board.InitializeBoard();
-            m_Players[0].Name = i_GameDetails.NameOfFirstPlayer;
-            m_Players[1].Name = i_GameDetails.NameOfSecondPlayer;
-            m_Players[0].PlayerRecognition = ePlayerRecognition.FirstPlayer;
-            m_Players[1].PlayerRecognition = ePlayerRecognition.SecondPlayer;
-            m_Players[0].DiscType = eDiscType.ODisc;
-            m_Players[1].DiscType = eDiscType.XDisc;
-            m_Players[0].KingDiscType = eDiscType.OKingDisc;
-            m_Players[1].KingDiscType = eDiscType.XKingDisc;
-            m_Players[0].MovingDirection = ePlayerMovingDirection.Down;
-            m_Players[1].MovingDirection = ePlayerMovingDirection.Up;
-            m_Players[0].NumOfDiscs = m_Board.GetDiscOccurences(m_Players[0].DiscType);
-            m_Players[1].NumOfDiscs = m_Board.GetDiscOccurences(m_Players[1].DiscType);
-            m_Players[0].PlayerType = ePlayerType.Human;
+        }
+        public void SetGamePlayers(StringBuilder i_FirstPlayerName, StringBuilder i_SecondPlayerName)
+        {
+            m_FirstPlayer.Name = i_FirstPlayerName;
+            m_SecondPlayer.Name = i_SecondPlayerName;
+            m_FirstPlayer.PlayerRecognition = ePlayerRecognition.FirstPlayer;
+            m_SecondPlayer.PlayerRecognition = ePlayerRecognition.SecondPlayer;
+            m_FirstPlayer.DiscType = eDiscType.ODisc;
+            m_SecondPlayer.DiscType = eDiscType.XDisc;
+            m_FirstPlayer.KingDiscType = eDiscType.OKingDisc;
+            m_SecondPlayer.KingDiscType = eDiscType.XKingDisc;
+            m_FirstPlayer.MovingDirection = ePlayerMovingDirection.Down;
+            m_SecondPlayer.MovingDirection = ePlayerMovingDirection.Up;
+            m_FirstPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_FirstPlayer.DiscType);
+            m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
+            m_FirstPlayer.PlayerType = ePlayerType.Human;
             if (m_GameMode == eGameMode.TwoPlayersMode)
             {
-                m_Players[1].PlayerType = ePlayerType.Human;
+                m_FirstPlayer.PlayerType = ePlayerType.Human;
             }
 
             else // (m_GameMode == eGameMode.SinglePlayerMode)
             {
-                m_Players[1].PlayerType = ePlayerType.Computer;
+                m_SecondPlayer.PlayerType = ePlayerType.Computer;
             }
 
-        }*/
+        }
 
         /// <------------------------------------------------------>
         /// Old design code below!
         /// <------------------------------------------------------>
 
-        public void MoveProcedure(Player i_CurrPlayer)
+
+        public void LoadNewPotentialMove(SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
         {
-           /* bool validMove;
+            m_MoveManager.SourceIndex = i_SourceIndex;
+            m_MoveManager.DestinationIndex = i_DestinationIndex;
+        }
+
+        public void GenerateRandomPotentialMove()
+        {
+            /// generate for computer player a valid source index for potential move.
+            /// 
+        }
+        public void MoveProcedure()
+        {
+            bool validMove;
 
             validMove = m_Move.MoveValidation(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);
             while (!validMove)
             {
-               // m_UI.PrintInvalidInputMoveOption();
+                // m_UI.PrintInvalidInputMoveOption();
                 validMove = m_Move.MoveValidation(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);
             }
 
             //Update movement on board.
-            m_Move.ExecuteMove(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);*/
+            m_Move.ExecuteMove(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);
         }
 
         public void RawInputProcedure()
@@ -104,18 +163,18 @@ namespace CheckersGame
             }*/
         }
 
-        public void SwitchTurn(Player io_CurrPlayer)
+        public void SwitchTurn()
         {
-            if (m_FirstPlayerTurn)
+            if (m_CurrentPlayer == FirstPlayer)
             {
                 m_FirstPlayerTurn = false;
-                io_CurrPlayer = m_Players[1];
+                m_CurrentPlayer = m_SecondPlayer;
             }
 
             else //Currently, it's the second player turn
             {
                 m_FirstPlayerTurn = true;
-                io_CurrPlayer = m_Players[0];
+                m_CurrentPlayer = m_FirstPlayer;
             }
 
         }

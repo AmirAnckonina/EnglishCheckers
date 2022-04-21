@@ -71,6 +71,12 @@ namespace CheckersGame
             }
         }
 
+        public void SetBoard(int i_BoardSize)
+        {
+            m_BoardSize = i_BoardSize;
+            InitializeBoard();
+        }
+
         public void InitializeBoard()
         {
             int rowIndex, emptyLinesIndex; 

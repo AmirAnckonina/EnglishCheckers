@@ -36,27 +36,6 @@ namespace CheckersUI
             // Add rules? Game description?
         }
 
-        public  void RequestGameDetails()
-        {
-            int gameModeChoice;
-
-            m_GameDetails.NameOfFirstPlayer = GetPlayerName();
-            m_GameDetails.BoardSize = GetSizeOfBoard();
-            gameModeChoice = GetGameMode();
-
-            if (gameModeChoice == 1)
-            {
-                m_GameDetails.GameMode = CheckersGame.eGameMode.SinglePlayerMode;
-            }
-
-            else //gameModeChoice == 2
-            {
-                m_GameDetails.GameMode = CheckersGame.eGameMode.TwoPlayersMode;
-                m_GameDetails.NameOfSecondPlayer = GetPlayerName();
-            }
-        }
-
-        /*
         public void RequestGameDetails()
         {
             int gameModeChoice;
@@ -76,7 +55,7 @@ namespace CheckersUI
                 m_GameDetails.NameOfSecondPlayer = GetPlayerName();
             }
         }
-*/
+
         public StringBuilder GetPlayerName()
         {
             StringBuilder m_Name = new StringBuilder();
@@ -161,48 +140,48 @@ namespace CheckersUI
             return isBoardSizeValid;
         }
 
-        //public void PrintBoard(ref )
-        //{
-        //    int row, column, index;
-        //    char letter = 'A', currDiscChar;
-        //    eDiscType currDiscType;
+        public void PrintBoard(Board i_Board)
+        {
+            int row, column, index;
+            char letter = 'A', currDiscChar;
+            eDiscType currDiscType;
+                    
+            for (row = 0; row < i_Board.BoardSize; row++)
+            {
+                Console.Write("   {0} ", letter);
+                letter = (char)(letter + 1);
+            }
 
-        //    for (row = 0; row < m_BoardSize; row++)
-        //    {
-        //        Console.Write("   {0} ", letter);
-        //        letter = (char)(letter + 1);
-        //    }
+            Console.WriteLine("");
+            letter = 'a';
+            for (row = 0; row < i_Board.BoardSize; row++)
+            {
+                Console.Write("{0}|", letter);
+                letter = (char)(letter + 1);
+                for (column = 0; column < i_Board.BoardSize; column++)
+                {
+                    currDiscChar = i_Board.GetCharByDiscType(i_Board[row, column].DiscType));
+                    currDiscType = i_Board[row, column].DiscType;
+                    if (currDiscType != eDiscType.None)
+                    {
+                        Console.Write(" {0} | ", currDiscChar);
+                    }
 
-        //    Console.WriteLine("");
-        //    letter = 'a';
-        //    for (row = 0; row < m_BoardSize; row++)
-        //    {
-        //        Console.Write("{0}|", letter);
-        //        letter = (char)(letter + 1);
-        //        for (column = 0; column < m_BoardSize; column++)
-        //        {
-        //            currDiscChar = GetCharByDiscType(m_GameBoard[row, column].DiscType);
-        //            currDiscType = m_GameBoard[row, column].DiscType;
-        //            if (currDiscType != eDiscType.None)
-        //            {
-        //                Console.Write(" {0} | ", currDiscChar);
-        //            }
+                    else
+                    {
+                        Console.Write("   | ");
+                    }
+                }
 
-        //            else
-        //            {
-        //                Console.Write("   | ");
-        //            }
-        //        }
-
-        //        Console.WriteLine(" ");
-        //        for (index = 0; index < m_BoardSize; index++)
-        //        {
-        //            Console.Write("=====");
-        //        }
-
-        //        Console.WriteLine(" ");
-        //    }
-        //}
+                Console.WriteLine(" ");
+                for (index = 0; index < m_BoardSize; index++)
+                {
+                    Console.Write("=====");
+                }
+                
+                 Console.WriteLine(" ");
+            }
+        }
 
     }
 }
