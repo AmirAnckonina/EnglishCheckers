@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using CheckersGameManagement;
+using CheckersUI;
 using CheckersGame;
 
-namespace CheckersGameManagement
+namespace GameManagement
 {
     public class CheckersGameManager
     {
@@ -40,9 +40,9 @@ namespace CheckersGameManagement
         public void GameInitialization()
         {
             m_UI.RequestGameDetails();
-            m_Game.InitalizeGameObjects();
+            //m_Game.InitalizeGameObjects();
         }
-    
+
 
         public void RunSingleGameSession()
         {

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using CheckersUI;
-
 namespace CheckersGame
 {
     public class Game
@@ -46,7 +44,7 @@ namespace CheckersGame
             }
         }
 
-        public void InitalizeGameObjects(CheckersUI.GameDetails i_GameDetails)
+       /* public void InitalizeGameObjects(CheckersUI.GameDetails i_GameDetails)
         {
             m_GameMode = i_GameDetails.GameMode;
             m_Board.BoardSize = i_GameDetails.BoardSize;
@@ -74,7 +72,7 @@ namespace CheckersGame
                 m_Players[1].PlayerType = ePlayerType.Computer;
             }
 
-        }
+        }*/
 
         /// <------------------------------------------------------>
         /// Old design code below!
@@ -82,28 +80,28 @@ namespace CheckersGame
 
         public void MoveProcedure(Player i_CurrPlayer)
         {
-            bool validMove;
+           /* bool validMove;
 
             validMove = m_Move.MoveValidation(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);
             while (!validMove)
             {
-                m_UI.PrintInvalidInputMoveOption();
+               // m_UI.PrintInvalidInputMoveOption();
                 validMove = m_Move.MoveValidation(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);
             }
 
             //Update movement on board.
-            m_Move.ExecuteMove(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);
+            m_Move.ExecuteMove(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);*/
         }
 
         public void RawInputProcedure()
         {
-            m_UI.Input.LoadNewInput();
+            /*m_UI.Input.LoadNewInput();
 
             while (!m_UI.Input.InputStructureIsValid)
             {
                 m_UI.PrintInvalidInputStructure();
                 m_UI.Input.LoadNewInput();
-            }
+            }*/
         }
 
         public void SwitchTurn(Player io_CurrPlayer)
@@ -132,3 +130,4 @@ namespace CheckersGame
     }
 
 }
+

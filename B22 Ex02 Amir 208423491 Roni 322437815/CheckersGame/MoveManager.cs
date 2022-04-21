@@ -669,7 +669,7 @@ namespace CheckersGame
 
             foreach (SquareIndex currSquare in i_CurrPlayer.CurrentHoldingSquareIndices)
             {
-                if(SimpleMoveBackwardsValidation(i_CurrPlayer,i_SourceIndex,i_destinationIndex) || EatingMoveForwardValidationBoard(i_Board,i_CurrPlayer,i_SourceIndex,i_destinationIndex))
+                if(SimpleMoveBackwardsValidation(i_CurrPlayer,i_SourceIndex,i_destinationIndex) || EatingMoveForwardValidation(i_Board,i_CurrPlayer,i_SourceIndex,i_destinationIndex))
                 {
                     anyPosabbilityToMove = true;
                 }

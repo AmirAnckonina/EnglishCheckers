@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{541C6D3D-3BDD-4AC2-BA09-C3CFE7A21D63}</ProjectGuid>
+    <ProjectGuid>{FDB04B55-84C7-4136-98C8-F507277D4A18}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>B22_Ex02_Amir_208423491_Roni_322437815</RootNamespace>
-    <AssemblyName>B22 Ex02 Amir 208423491 Roni 322437815</AssemblyName>
+    <RootNamespace>GameManagement</RootNamespace>
+    <AssemblyName>GameManagement</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,14 +31,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="CheckersGameManager.cs" />
     <Compile Include="Program.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Ex02.ConsoleUtils">
-      <HintPath>..\..\..\..\..\..\..\..\Temp\Ex02.ConsoleUtils.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CheckersGame\CheckersGame.csproj">
@@ -49,9 +47,6 @@
       <Project>{1ea04d01-af9e-4498-b89d-86c04df28b94}</Project>
       <Name>CheckersUI</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
