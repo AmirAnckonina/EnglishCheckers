@@ -57,7 +57,7 @@ namespace GameManagement
                 ///
                 /// 
                 m_Game.SwitchTurn();
-                m_UI.PrintBoard(m_Game.Board);
+                //m_UI.PrintBoard(m_Game.Board);
 
             }
         }
@@ -68,7 +68,7 @@ namespace GameManagement
             {
                 RawInputProcedure();
                 m_Game.LoadNewPotentialMove(m_UI.Input.SourceIndex, m_UI.Input.DestinationIndex);
-                m_Game.MoveManager.
+                //m_Game.MoveManager.
             }
 
             else /// (i_CurrentPlayer.PlayerType == ePlayerType.Computer)
@@ -91,7 +91,7 @@ namespace GameManagement
 
         public void MoveProcedure()
         {
-            bool validMove;
+           /* bool validMove;
 
             validMove = m_Game.MoveManager.MoveValidation();
             while (!validMove)
@@ -101,7 +101,7 @@ namespace GameManagement
             }
 
             //Update movement on board.
-            m_Move.ExecuteMove(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);
+            m_Move.ExecuteMove(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);*/
         }
 
     }

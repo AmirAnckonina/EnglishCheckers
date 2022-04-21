@@ -139,7 +139,7 @@ namespace CheckersGame
         }
         public void MoveProcedure()
         {
-            bool validMove;
+          /*  bool validMove;
 
             validMove = m_Move.MoveValidation(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);
             while (!validMove)
@@ -149,7 +149,7 @@ namespace CheckersGame
             }
 
             //Update movement on board.
-            m_Move.ExecuteMove(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);
+            m_Move.ExecuteMove(m_Board, i_CurrPlayer, m_UI.Input.SrcIndex, m_UI.Input.DestIndex);*/
         }
 
         public void RawInputProcedure()

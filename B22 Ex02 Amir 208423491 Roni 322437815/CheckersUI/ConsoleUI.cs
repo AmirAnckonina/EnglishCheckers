@@ -140,7 +140,7 @@ namespace CheckersUI
             return isBoardSizeValid;
         }
 
-        public void PrintBoard(Board i_Board)
+        /*public void PrintBoard(Board i_Board)
         {
             int row, column, index;
             char letter = 'A', currDiscChar;
@@ -181,7 +181,7 @@ namespace CheckersUI
                 
                  Console.WriteLine(" ");
             }
-        }
+        }*/
 
     }
 }
