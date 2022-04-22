@@ -59,9 +59,8 @@ namespace GameManagement
             while (!m_Game.GameOver())
             {
                 m_UI.PrintWhoseTurn(m_Game.CurrentPlayer);
-                MoveProcedure();
+                MoveProcedure(); /// m_UI.PrintBoard(m_Game.Board);
                 m_Game.SwitchTurn();
-                m_UI.PrintBoard(m_Game.Board);
             }
         }
 
@@ -96,7 +95,32 @@ namespace GameManagement
             NewPotentialMoveProcedure();
             MoveValidationProcedure();
             m_Game.MoveManager.ExecuteMove(m_Game.Board, m_Game.CurrentPlayer);
-            m_UI.PrintBoard(m_Game.Board);
+            PostMoveProcedure();
+            /// At this point we should check if ->
+            /// 1. EatingMoveOccurred && there's another possibilty for another eating ->
+            /// If so -> update IsRecurringTurn = true;
+            /// Run  m_Game.MoveManager.RecurringTurnMoveValidation();
+            /// 
+            RecurringTurnProcedure();
+        }
+
+        public void RecurringTurnProcedure()
+        {
+            bool recurringTurnIsPossible;
+
+            recurringTurnIsPossible = m_Game.RecurringTurnPossibilityValidation();
+            while (recurringTurnIsPossible)
+            {
+                m_Game.IsRecurringTurn = true;
+                m_UI.PrintWhoseTurn(m_Game.CurrentPlayer);
+                NewPotentialMoveProcedure();
+                //m_Game.MoveManager.RecurringTurnMoveValidation();
+                m_Game.MoveManager.ExecuteMove(m_Game.Board, m_Game.CurrentPlayer);
+                PostMoveProcedure();
+                recurringTurnIsPossible = m_Game.RecurringTurnPossibilityValidation();
+            }
+
+            m_Game.IsRecurringTurn = false;
         }
 
         public void MoveValidationProcedure()
@@ -124,6 +148,16 @@ namespace GameManagement
                     validMove = m_Game.MoveManager.MoveValidation(m_Game.Board, m_Game.CurrentPlayer);
                 }
             }
+        }
+
+        public void PostMoveProcedure()
+        {
+            /// Has recachedLastLine
+            /// Reduce numOfdiscs of rival
+            /// Update the new DestinationIndex to be on CurrentHoldingIndices
+            /// Remove the SourceIndex from the CurrentHoldingIndices.
+            /// 
+            /// m_UI.PrintBoard(m_Game.Board);
         }
 
     }

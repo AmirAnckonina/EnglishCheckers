@@ -11,6 +11,7 @@ namespace CheckersGame
         private static readonly int InvalidIndicesDifferences = -1; // Check how to set it.
         private SquareIndex m_SourceIndex;
         private SquareIndex m_DestinationIndex;
+        private SquareIndex m_NewSourceIndexPostEating;
         private eMoveType m_MoveType;
         private bool m_ReachedLastLine;
        // private bool m_EatingMove;
@@ -378,7 +379,10 @@ namespace CheckersGame
         public bool EatingNorthEastMoveValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingNorthEastMoveIsValid;
-            //Two Validation. 1. Indices are matching 2. Rival is in between
+            SquareIndex northEastSquareIndex = new SquareIndex(m_SourceIndex.RowIndex - 2, m_SourceIndex.ColumnIndex + 2);
+            /// Two Validation. 1. Indices are matching 2. Rival is in between
+            /// RONI -> Create in SquareIndex class IsEqualFunction
+            /// Take the northEastSquareIndex and use IsEqual Function -> m_SourceIndex.IsEqual(northEastSquareIndex);
             if (m_SourceIndex.RowIndex - 2 == m_DestinationIndex.RowIndex && m_SourceIndex.ColumnIndex + 2 == m_DestinationIndex.ColumnIndex)
             {
                 if (i_Board[m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex + 1].RivalInSquareValidation(i_CurrPlayer))
@@ -588,10 +592,7 @@ namespace CheckersGame
             if (EatingMoveOccurred())
             {
                 EatingMoveProcedure(io_Board);
-            }
-
-            /// Add Here reachedLastLine.
-            
+            }  
         }
 
         public bool EatingMoveOccurred()
@@ -656,41 +657,25 @@ namespace CheckersGame
             }
         }
 
-        public bool RecurringTurnEatingMovePossibiltyValidation()
+        public bool RecurringTurnEatingMovePossibiltyValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool anotherEatingIsPossible = true;
+            /// Should be placed outside this method. -> m_NewSourceIndexPostEating = m_DestinationIndex;
+            /// 
             m_SourceIndex = m_DestinationIndex;
-            /// SquareIndex newSourceIndex = m_DestinationIndex;
 
             /// Should check for newSourceIndex if there any possibilty for another eating.
             /// CAREFUL!!! handle the data memebrs with extra caution.
             /// 
-            /// Will know to ask only for switch case 2 because we sending only + 2 Indicies.
-            /// Or send directly to  Basic Validation and EatingMoveValidation directions
-            ///
-            
-            /*if ()
-            {
-
-            }
-
-            else if ()
-            {
-
-            }
-
-            else if ()
-            {
-
-            }
-
-            else */
+            /// Will know to ask only for switch case 2 because we sending only + 2,2 Indicies.
+            /// Or send directly to Basic Validation and EatingMoveValidation directions
 
             /// NorthEast
+            /// Use SetSquareIndices -> m_DesitinationIndex.SetSqaureIndices(m_SourceIndex.RowIndex - 2,  m_SourceIndex.ColumnIndex + 2)
             m_DestinationIndex.RowIndex = m_SourceIndex.RowIndex - 2;
             m_DestinationIndex.ColumnIndex = m_SourceIndex.ColumnIndex + 2;
+            /// Check SrcAndDestBasicValidation + EatingMoveNotrhEastValidation + Player Direction + PlayerDiscType - Important!!!!!
             
-
             /// NorthWest
             m_DestinationIndex.RowIndex = m_SourceIndex.RowIndex - 2;
             m_DestinationIndex.ColumnIndex = m_SourceIndex.ColumnIndex - 2;
@@ -702,10 +687,6 @@ namespace CheckersGame
             /// SouthWest
             m_DestinationIndex.RowIndex = m_SourceIndex.RowIndex - 2;
             m_DestinationIndex.ColumnIndex = m_SourceIndex.ColumnIndex - 2;
-
-
-
-
 
             return anotherEatingIsPossible;
         }
