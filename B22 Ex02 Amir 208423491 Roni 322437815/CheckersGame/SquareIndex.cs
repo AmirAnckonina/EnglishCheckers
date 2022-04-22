@@ -53,11 +53,11 @@ namespace CheckersGame
             m_ColumnIndex = i_ColumnIndex;  
         }
 
-        public static bool operator == (SquareIndex i_SquareIndex1, SquareIndex i_SquareIndex2)
+        public bool IsEqual(SquareIndex i_SquareIndex)
         {
             bool isEqual;
 
-            if(i_SquareIndex1.m_RowIndex == i_SquareIndex2.RowIndex && i_SquareIndex1.ColumnIndex == i_SquareIndex2.ColumnIndex)
+            if (this.m_RowIndex == i_SquareIndex.RowIndex && this.ColumnIndex == i_SquareIndex.ColumnIndex)
             {
                 isEqual = true;
             }
@@ -68,26 +68,12 @@ namespace CheckersGame
             }
 
             return isEqual;
-           
         }
 
-        public static bool operator !=(SquareIndex i_SquareIndex1, SquareIndex i_SquareIndex2)
+        public void SetSquareIndices (int i_NewRow, int i_NewColumn)
         {
-            bool isNotEqual;
-
-            if (i_SquareIndex1.m_RowIndex != i_SquareIndex2.RowIndex && i_SquareIndex1.ColumnIndex != i_SquareIndex2.ColumnIndex)
-            {
-                isNotEqual = true;
-            }
-
-            else
-            {
-                isNotEqual = false;
-            }
-
-            return isNotEqual;
+            m_RowIndex = i_NewRow;
+            m_ColumnIndex = i_NewColumn;
         }
-
-
     }
 }

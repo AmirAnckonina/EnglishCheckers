@@ -111,6 +111,7 @@ namespace CheckersGame
                     //In case abs(rowIndicesDifference) isn't 1 or 2 , so the move isn't valid. 
                     default:
                         moveIsValid = false;
+                        m_MoveType = eMoveType.None;
                         break;
                 }
             }
@@ -118,6 +119,7 @@ namespace CheckersGame
             else
             {
                 moveIsValid = false;
+                m_MoveType = eMoveType.None;
             }
 
             return moveIsValid;
@@ -188,6 +190,7 @@ namespace CheckersGame
             else
             {
                 simpleMoveIsValid = false;
+                m_MoveType = eMoveType.None;
             }
 
             return simpleMoveIsValid;
@@ -233,8 +236,9 @@ namespace CheckersGame
         public bool SimpleNorthEastMoveValidation()
         {
             bool simpleNorthEastMoveIsValid;
+            SquareIndex northEastSquareIndex = new SquareIndex(m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex + 1);
 
-            if (m_SourceIndex.RowIndex - 1 == m_DestinationIndex.RowIndex && m_SourceIndex.ColumnIndex + 1 == m_DestinationIndex.ColumnIndex)
+            if (m_DestinationIndex.IsEqual(northEastSquareIndex)) 
             {
                 simpleNorthEastMoveIsValid = true;
                 m_MoveType = eMoveType.SimpleNorthEastMove;
@@ -243,6 +247,7 @@ namespace CheckersGame
             else
             {
                 simpleNorthEastMoveIsValid = false;
+                m_MoveType = eMoveType.None;
             }
 
             return simpleNorthEastMoveIsValid;
@@ -258,8 +263,9 @@ namespace CheckersGame
         public bool SimpleNorthWestMoveValidation()
         {
             bool simpleNorthWestMoveIsValid;
+            SquareIndex northWestSquareIndex = new SquareIndex(m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex - 1);
 
-            if (m_SourceIndex.RowIndex - 1 == m_DestinationIndex.RowIndex && m_SourceIndex.ColumnIndex - 1 == m_DestinationIndex.ColumnIndex)
+            if (m_DestinationIndex.IsEqual(northWestSquareIndex))
             {
                 simpleNorthWestMoveIsValid = true;
                 m_MoveType = eMoveType.SimpleNorthWestMove;
@@ -268,6 +274,7 @@ namespace CheckersGame
             else
             {
                 simpleNorthWestMoveIsValid = false;
+                m_MoveType = eMoveType.None;
             }
 
             return simpleNorthWestMoveIsValid;
@@ -277,8 +284,9 @@ namespace CheckersGame
         public bool SimpleSouthEastMoveValidation()
         {
             bool simpleSouthEastMoveIsValid;
+            SquareIndex southEastSquareIndex = new SquareIndex(m_SourceIndex.RowIndex + 1, m_SourceIndex.ColumnIndex + 1);
 
-            if (m_SourceIndex.RowIndex + 1 == m_DestinationIndex.RowIndex && m_SourceIndex.ColumnIndex + 1 == m_DestinationIndex.ColumnIndex)
+            if (m_DestinationIndex.IsEqual(southEastSquareIndex))
             {
                 simpleSouthEastMoveIsValid = true;
                 m_MoveType = eMoveType.SimpleSouthEastMove;
@@ -287,6 +295,7 @@ namespace CheckersGame
             else
             {
                 simpleSouthEastMoveIsValid = false;
+                m_MoveType = eMoveType.None;
             }
 
             return simpleSouthEastMoveIsValid;
@@ -296,8 +305,9 @@ namespace CheckersGame
         public bool SimpleSouthWestMoveValidation()
         {
             bool simpleSouthWestMoveIsValid;
+            SquareIndex southWestSquareIndex = new SquareIndex(m_SourceIndex.RowIndex + 1, m_SourceIndex.ColumnIndex - 1);
 
-            if (m_SourceIndex.RowIndex + 1 == m_DestinationIndex.RowIndex && m_SourceIndex.ColumnIndex - 1 == m_DestinationIndex.ColumnIndex)
+            if (m_DestinationIndex.IsEqual(southWestSquareIndex))
             {
                 simpleSouthWestMoveIsValid = true;
                 m_MoveType = eMoveType.SimpleSouthWestMove;
@@ -306,6 +316,7 @@ namespace CheckersGame
             else
             {
                 simpleSouthWestMoveIsValid = false;
+                m_MoveType = eMoveType.None;
             }
 
             return simpleSouthWestMoveIsValid;
@@ -334,6 +345,7 @@ namespace CheckersGame
             else
             {
                 eatingMoveIsValid = false;
+                m_MoveType = eMoveType.None;
             }
 
             return eatingMoveIsValid;
@@ -380,10 +392,8 @@ namespace CheckersGame
         {
             bool eatingNorthEastMoveIsValid;
             SquareIndex northEastSquareIndex = new SquareIndex(m_SourceIndex.RowIndex - 2, m_SourceIndex.ColumnIndex + 2);
-            /// Two Validation. 1. Indices are matching 2. Rival is in between
-            /// RONI -> Create in SquareIndex class IsEqualFunction
-            /// Take the northEastSquareIndex and use IsEqual Function -> m_SourceIndex.IsEqual(northEastSquareIndex);
-            if (m_SourceIndex.RowIndex - 2 == m_DestinationIndex.RowIndex && m_SourceIndex.ColumnIndex + 2 == m_DestinationIndex.ColumnIndex)
+          
+            if (m_DestinationIndex.IsEqual(northEastSquareIndex))
             {
                 if (i_Board[m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex + 1].RivalInSquareValidation(i_CurrPlayer))
                 {
@@ -394,24 +404,27 @@ namespace CheckersGame
                 else
                 {
                     eatingNorthEastMoveIsValid = false;
+                    m_MoveType = eMoveType.None;
                 }
             }
 
             else
             {
                 eatingNorthEastMoveIsValid = false;
+                m_MoveType = eMoveType.None;
             }
 
 
             return eatingNorthEastMoveIsValid;
-
         }
 
         public bool EatingNorthWestMoveValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingNorthWestMoveIsValid;
+            SquareIndex northWestSquareIndex = new SquareIndex(m_SourceIndex.RowIndex - 2, m_SourceIndex.ColumnIndex - 2);
             //Two Validation. 1. Indices are matching 2. Rival is in between
-            if (m_SourceIndex.RowIndex - 2 == m_DestinationIndex.RowIndex && m_SourceIndex.ColumnIndex - 2 == m_DestinationIndex.ColumnIndex)
+
+            if (m_DestinationIndex.IsEqual(northWestSquareIndex))
             {
                 if (i_Board[m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex - 1].RivalInSquareValidation(i_CurrPlayer))
                 {
@@ -422,12 +435,14 @@ namespace CheckersGame
                 else
                 {
                     eatingNorthWestMoveIsValid = false;
+                    m_MoveType = eMoveType.None;
                 }
             }
 
             else
             {
                 eatingNorthWestMoveIsValid = false;
+                m_MoveType = eMoveType.None;
             }
 
 
@@ -437,8 +452,9 @@ namespace CheckersGame
         public bool EatingSouthEastMoveValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingSouthEastMoveIsValid;
-            //Two Validation. 1. Indices are matching 2. Rival is in between
-            if (m_SourceIndex.RowIndex + 2 == m_DestinationIndex.RowIndex && m_SourceIndex.ColumnIndex + 2 == m_DestinationIndex.ColumnIndex)
+            SquareIndex southEastSquareIndex = new SquareIndex(m_SourceIndex.RowIndex + 2, m_SourceIndex.ColumnIndex + 2);
+
+            if (m_DestinationIndex.IsEqual(southEastSquareIndex))
             {
                 if (i_Board[m_SourceIndex.RowIndex + 1, m_SourceIndex.ColumnIndex + 1].RivalInSquareValidation(i_CurrPlayer))
                 {
@@ -449,12 +465,14 @@ namespace CheckersGame
                 else
                 {
                     eatingSouthEastMoveIsValid = false;
+                    m_MoveType = eMoveType.None;
                 }
             }
 
             else
             {
                 eatingSouthEastMoveIsValid = false;
+                m_MoveType = eMoveType.None;
             }
 
 
@@ -464,8 +482,9 @@ namespace CheckersGame
         public bool EatingSouthWestMoveValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingSouthWestMoveIsValid;
-            //Two Validation. 1. Indices are matching 2. Rival is in between
-            if (m_SourceIndex.RowIndex + 2 == m_DestinationIndex.RowIndex && m_SourceIndex.ColumnIndex - 2 == m_DestinationIndex.ColumnIndex)
+            SquareIndex southWestSquareIndex = new SquareIndex(m_SourceIndex.RowIndex + 2, m_SourceIndex.ColumnIndex - 2);
+
+            if (m_DestinationIndex.IsEqual(southWestSquareIndex))
             {
                 if (i_Board[m_SourceIndex.RowIndex + 1, m_SourceIndex.ColumnIndex - 1].RivalInSquareValidation(i_CurrPlayer))
                 {
@@ -476,12 +495,14 @@ namespace CheckersGame
                 else
                 {
                     eatingSouthWestMoveIsValid = false;
+                    m_MoveType = eMoveType.None;
                 }
             }
 
             else
             {
                 eatingSouthWestMoveIsValid = false;
+                m_MoveType = eMoveType.None;
             }
 
 
@@ -508,12 +529,14 @@ namespace CheckersGame
                 else
                 {
                     srcAndDestBasicallyValid = false;
+                    m_MoveType = eMoveType.None;
                 }
             }
 
             else
             {
                 srcAndDestBasicallyValid = false;
+                m_MoveType = eMoveType.None;
             }
 
             return srcAndDestBasicallyValid;
@@ -576,6 +599,7 @@ namespace CheckersGame
             else
             {
                 sourceIsValid = false;
+                m_MoveType = eMoveType.None;
             }
 
             return sourceIsValid;

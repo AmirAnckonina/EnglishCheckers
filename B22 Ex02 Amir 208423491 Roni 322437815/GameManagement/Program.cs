@@ -11,19 +11,17 @@ namespace GameManagement
         {
             CheckersGameManager gameManager = new CheckersGameManager();
 
-            gameManager.Run();
+           // gameManager.Run();
 
-
-
-            /*int res;
-            bool Res;
-            Board board1 = new Board(8);
-            board1.InitializeBoard();
-            board1.PrintBoard();
-            res= board1.GetDiscOccurences(eDiscType.XDisc);
-            Console.WriteLine("number of x: {0}", res);
-            Res= board1.SquareExistenceValidation(2, 8);
-            Console.WriteLine("is index valid? : {0}", Res);*/
+            //int res;
+            //bool Res;
+            //Board board1 = new Board(8);
+            //board1.InitializeBoard();
+            //board1.PrintBoard();
+            //res = board1.GetDiscOccurences(eDiscType.XDisc);
+            //Console.WriteLine("number of x: {0}", res);
+            //Res = board1.SquareExistenceValidation(2, 8);
+            //Console.WriteLine("is index valid? : {0}", Res);
 
         }
     }
