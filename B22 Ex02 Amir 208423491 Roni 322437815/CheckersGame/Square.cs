@@ -76,13 +76,20 @@ namespace CheckersGame
             }
         }
 
-        public void InitializeSquare(bool i_LegalSquare, eDiscType i_DiscType, ePlayerRecognition i_SquareHolder, int i_RowIndex, int i_ColumnIndex)
+        public void SetSquare(bool i_LegalSquare, eDiscType i_DiscType, ePlayerRecognition i_SquareHolder, int i_RowIndex, int i_ColumnIndex)
         {
             m_LegalSquare = i_LegalSquare;
             m_DiscType = i_DiscType;
             m_SquareHolder = i_SquareHolder;
             m_SquareIndex.RowIndex = i_RowIndex;
             m_SquareIndex.ColumnIndex = i_ColumnIndex;
+        }
+
+        public void CopySquareContent(Square i_CopyFromSquare)
+        {
+            m_LegalSquare = i_CopyFromSquare.LegalSquare;
+            m_DiscType = i_CopyFromSquare.DiscType;
+            m_SquareHolder = i_CopyFromSquare.SquareHolder;
         }
 
         public bool RivalInSquareValidation(Player i_CurrPlayer)

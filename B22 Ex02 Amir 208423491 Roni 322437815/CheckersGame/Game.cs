@@ -151,33 +151,40 @@ namespace CheckersGame
         public void GenerateRandomPotentialMove()
         {
             /// generate for computer player a valid source index for potential move.
-            /// If Double Turn -> Take the prev Destination and set it as a new source
+            /// If RecurringTurn -> Take the prev Destination and set it as a new source
             /// Note to separate if it's recurring turn or not. 
 
         }
 
-        public void SwitchTurn()
+        public bool RecurringTurnPossibilityValidation()
         {
-            if(m_MoveManager.EatingMoveOccurred() && m_MoveManager.RecurringTurnEatingMovePossibiltyValidation())
+            bool recurringTurnIsPossible;
+
+            if (m_MoveManager.EatingMoveOccurred() && m_MoveManager.RecurringTurnEatingMovePossibiltyValidation(m_Board, m_CurrentPlayer))
             {
-                /// Do Not switch turn.
-                m_IsRecurringTurn = true;
+                recurringTurnIsPossible = true;
             }
 
             else
             {
-                m_IsRecurringTurn = false;
-                if (m_CurrentPlayer == FirstPlayer)
-                {
-                    m_FirstPlayerTurn = false;
-                    m_CurrentPlayer = m_SecondPlayer;
-                }
+                recurringTurnIsPossible = false;
+            }
 
-                else //Currently, it's the second player turn
-                {
-                    m_FirstPlayerTurn = true;
-                    m_CurrentPlayer = m_FirstPlayer;
-                }
+            return recurringTurnIsPossible;
+        }
+
+        public void SwitchTurn()
+        {
+            if (m_CurrentPlayer == FirstPlayer)
+            {
+                m_FirstPlayerTurn = false;
+                m_CurrentPlayer = m_SecondPlayer;
+            }
+
+            else //Currently, it's the second player turn
+            {
+                m_FirstPlayerTurn = true;
+                m_CurrentPlayer = m_FirstPlayer;
             }
         }
 
