@@ -7,7 +7,7 @@ namespace CheckersGame
 {
     public enum ePlayerType
     {
-        Computer = 1,
-        Human = 2
+        Computer,
+        Human
     }
 }

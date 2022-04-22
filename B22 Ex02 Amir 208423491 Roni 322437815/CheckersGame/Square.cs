@@ -17,12 +17,23 @@ namespace CheckersGame
             m_SquareIndex = new SquareIndex();
         }
 
-        public Square(bool i_LegalSquare, eDiscType i_CurrDiscType, int i_RowIndex, int i_ColumnIndex)
+        public Square(bool i_LegalSquare, eDiscType i_CurrDiscType)
         {
             m_LegalSquare = i_LegalSquare;
             m_DiscType = i_CurrDiscType;
-            m_SquareIndex = new SquareIndex(i_RowIndex, i_ColumnIndex);
+        }
 
+        public SquareIndex SquareIndex
+        {
+            get
+            {
+                return m_SquareIndex;
+            }
+
+            set
+            {
+                m_SquareIndex = value;
+            }
         }
 
         public bool LegalSquare
@@ -51,19 +62,6 @@ namespace CheckersGame
             }
         }
 
-        public SquareIndex SqrIndex
-        {
-            get
-            {
-                return m_SquareIndex;
-            }
-
-            set
-            {
-                m_SquareIndex = value;
-            }
-        }
-
         public ePlayerRecognition SquareHolder
         {
             get
@@ -76,11 +74,13 @@ namespace CheckersGame
             }
         }
 
-        public void SetSquare(bool i_LegalSquare, eDiscType i_DiscType, ePlayerRecognition i_SquareHolder)
+        public void SetSquare(bool i_LegalSquare, eDiscType i_DiscType, ePlayerRecognition i_SquareHolder, int i_RowIndex, int i_ColumnIndex)
         {
             m_LegalSquare = i_LegalSquare;
             m_DiscType = i_DiscType;
             m_SquareHolder = i_SquareHolder;
+            m_SquareIndex.RowIndex = i_RowIndex;
+            m_SquareIndex.ColumnIndex = i_ColumnIndex;
         }
 
         public void CopySquareContent(Square i_CopyFromSquare)
@@ -94,7 +94,7 @@ namespace CheckersGame
         {
             bool rivalInSqaure;
 
-            //IF the current swaure holder isn't the currPlayer and isn't vacant so the rival is there.
+            /// If the current sqaure holder isn't the currPlayer and isn't vacant so the rival is there.
             if (m_SquareHolder != i_CurrPlayer.PlayerRecognition && m_SquareHolder != ePlayerRecognition.None)
             {
                 rivalInSqaure = true;

@@ -125,13 +125,13 @@ namespace CheckersGame
                 squareIndicesParityCalculationResult = (i_RowIndex + i_ColumnIndex) % 2;
                 if (squareIndicesParityCalculationResult == 1)
                 {
-                    m_GameBoard[i_RowIndex, i_ColumnIndex].SetSquare(true, i_DiscType, i_CurrLineSquaresHolder);
+                    m_GameBoard[i_RowIndex, i_ColumnIndex].SetSquare(true, i_DiscType, i_CurrLineSquaresHolder, i_RowIndex, i_ColumnIndex);
 
                 }
 
                 else //(squareIndicesParityCalculationResult == 0)
                 {
-                    m_GameBoard[i_RowIndex, i_ColumnIndex].SetSquare(false, eDiscType.None, ePlayerRecognition.None);
+                    m_GameBoard[i_RowIndex, i_ColumnIndex].SetSquare(false, eDiscType.None, ePlayerRecognition.None, i_RowIndex, i_ColumnIndex);
                 }
                
             }

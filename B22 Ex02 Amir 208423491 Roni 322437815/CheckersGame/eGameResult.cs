@@ -5,10 +5,10 @@ using System.Text;
 
 namespace CheckersGame
 {
-    public enum eWinnerPlayer //For what use???? check if necessary
+    public enum eGameResult //For what use???? check if necessary
     {
-        FirstPlayer,
-        SecondPlayer,
+        FirstPlayerWon,
+        SecondPlayerWon,
         Draw
     }
 }

@@ -263,7 +263,7 @@ namespace CheckersUI
             Console.Write("{0}|", letter);
             letter = (char)(letter + 1);
 
-            foreach(Square currSquare in i_Board.GameBoard)
+            foreach (Square currSquare in i_Board.GameBoard)
             {
                 currDiscChar = GetCharByDiscType(currSquare.DiscType);
                 currDiscType = currSquare.DiscType;
