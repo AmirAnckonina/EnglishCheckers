@@ -12,6 +12,5 @@ namespace CheckersGame
         XKingDisc,
         OKingDisc,
         None
-
     }
 }

@@ -137,15 +137,21 @@ namespace CheckersGame
             }
         }
 
-        public void InitializeCurrentHoldingIndices(ref Board i_Board)
+        public void InitializeCurrentHoldingIndices(Board i_Board)
         {
-            foreach (Square sqr in i_Board.GameBoard)
+            foreach (Square currSquare in i_Board.GameBoard)
             {
-                if (sqr.SquareHolder == m_PlayerRecognition)
+                if (currSquare.SquareHolder == m_PlayerRecognition)
                 {
-                    m_CurrentHoldingSquareIndices.Add(sqr.SqrIndex);
+                    m_CurrentHoldingSquareIndices.Add(currSquare.SquareIndex);
                 }
             }
+        }
+
+        public void UpdateCurrentHoldingSquareIndices(SquareIndex i_MovedFromSquareIndex, SquareIndex i_NewHoldingSquareIndex)
+        {
+            m_CurrentHoldingSquareIndices.Remove(i_MovedFromSquareIndex);
+            m_CurrentHoldingSquareIndices.Add(i_NewHoldingSquareIndex);
         }
 
         /* public bool AnyMovePossibilyValidation(ref Board i_Board, ref MoveManager i_MoveManager)

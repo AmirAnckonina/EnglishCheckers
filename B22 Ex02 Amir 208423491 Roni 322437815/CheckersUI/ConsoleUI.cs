@@ -241,7 +241,8 @@ namespace CheckersUI
 
         public void PrintBoard(Board i_Board)
         {
-            int row, column, index;
+            Ex02.ConsoleUtils.Screen.Clear();
+            int row, counter = 0, index;
             char letter = 'A', currDiscChar;
             eDiscType currDiscType;
 
@@ -251,15 +252,36 @@ namespace CheckersUI
                 letter = (char)(letter + 1);
             }
 
+            Console.WriteLine(" ");
+            for (index = 0; index < i_Board.BoardSize; index++)
+            {
+                Console.Write("-----");
+            }
+
             Console.WriteLine("");
             letter = 'a';
             Console.Write("{0}|", letter);
             letter = (char)(letter + 1);
 
-            foreach(Square currSquare in i_Board.GameBoard)
+            foreach (Square currSquare in i_Board.GameBoard)
             {
                 currDiscChar = GetCharByDiscType(currSquare.DiscType);
                 currDiscType = currSquare.DiscType;
+
+                if (counter == i_Board.BoardSize)
+                {
+                    Console.WriteLine(" ");
+                    for (index = 0; index < i_Board.BoardSize; index++)
+                    {
+                        Console.Write("=====");
+                    }
+
+                    Console.WriteLine(" ");
+                    Console.Write("{0}|", letter);
+                    letter = (char)(letter + 1);
+                    counter = 0;
+                }
+
                 if (currDiscType != eDiscType.None)
                 {
                     Console.Write(" {0} | ", currDiscChar);
@@ -270,21 +292,11 @@ namespace CheckersUI
                     Console.Write("   | ");
                 }
 
-                if(currSquare.SqrIndex.ColumnIndex == i_Board.BoardSize)
-                {
-                    Console.WriteLine("");
-                    Console.Write("{0}|", letter);
-                    letter = (char)(letter + 1);
-                }
+                counter++;
             }
 
             Console.WriteLine(" ");
-            for (index = 0; index < i_Board.BoardSize; index++)
-            {
-                 Console.Write("=====");
-            }
-
-            Console.WriteLine(" ");   
+            Console.WriteLine(" ");
         }
 
         public StringBuilder GetPlayerName(Player i_CurrPlayer)

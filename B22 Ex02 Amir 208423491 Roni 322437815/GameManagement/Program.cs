@@ -11,7 +11,7 @@ namespace GameManagement
         {
             CheckersGameManager gameManager = new CheckersGameManager();
 
-           // gameManager.Run();
+           gameManager.Run();
 
             //int res;
             //bool Res;

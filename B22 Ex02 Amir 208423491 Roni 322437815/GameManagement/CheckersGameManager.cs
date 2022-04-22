@@ -10,12 +10,14 @@ namespace GameManagement
 {
     public class CheckersGameManager
     {
+        private GameDetails m_GameDetails;
         private readonly Game m_Game;
         private readonly ConsoleUI m_UI;
 
 
         public CheckersGameManager()
         {
+            m_GameDetails = new GameDetails();
             m_Game = new Game();
             m_UI = new ConsoleUI();
         }
@@ -47,6 +49,7 @@ namespace GameManagement
         public void GameInitialization()
         {
             m_UI.RequestGameDetails();
+            /// m_GameDetails = m_UI.GameDetails; /// set via m_GameDetails /// CHANGE!
             m_Game.GameMode = m_UI.GameDetails.GameMode;
             m_Game.SetBoard(m_UI.GameDetails.BoardSize);
             m_Game.SetGamePlayers(m_UI.GameDetails.FirstPlayerName, m_UI.GameDetails.SecondPlayerName);
@@ -56,6 +59,7 @@ namespace GameManagement
         {
             m_Game.CurrentPlayer = m_Game.FirstPlayer;
             m_UI.PrintBoard(m_Game.Board);
+
             while (!m_Game.GameOver())
             {
                 m_UI.PrintWhoseTurn(m_Game.CurrentPlayer);
@@ -95,7 +99,8 @@ namespace GameManagement
             NewPotentialMoveProcedure();
             MoveValidationProcedure();
             m_Game.MoveManager.ExecuteMove(m_Game.Board, m_Game.CurrentPlayer);
-            PostMoveProcedure();
+            m_Game.PostMoveProcedure();
+            m_UI.PrintBoard(m_Game.Board);
             /// At this point we should check if ->
             /// 1. EatingMoveOccurred && there's another possibilty for another eating ->
             /// If so -> update IsRecurringTurn = true;
@@ -114,9 +119,9 @@ namespace GameManagement
                 m_Game.IsRecurringTurn = true;
                 m_UI.PrintWhoseTurn(m_Game.CurrentPlayer);
                 NewPotentialMoveProcedure();
-                //m_Game.MoveManager.RecurringTurnMoveValidation();
+                /// m_Game.MoveManager.RecurringTurnMoveValidation();
                 m_Game.MoveManager.ExecuteMove(m_Game.Board, m_Game.CurrentPlayer);
-                PostMoveProcedure();
+                m_Game.PostMoveProcedure();
                 recurringTurnIsPossible = m_Game.RecurringTurnPossibilityValidation();
             }
 
@@ -148,16 +153,6 @@ namespace GameManagement
                     validMove = m_Game.MoveManager.MoveValidation(m_Game.Board, m_Game.CurrentPlayer);
                 }
             }
-        }
-
-        public void PostMoveProcedure()
-        {
-            /// Has recachedLastLine
-            /// Reduce numOfdiscs of rival
-            /// Update the new DestinationIndex to be on CurrentHoldingIndices
-            /// Remove the SourceIndex from the CurrentHoldingIndices.
-            /// 
-            /// m_UI.PrintBoard(m_Game.Board);
         }
 
     }

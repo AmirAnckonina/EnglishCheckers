@@ -11,6 +11,7 @@ namespace CheckersGame
         private Player m_FirstPlayer;
         private Player m_SecondPlayer;
         private Player m_CurrentPlayer;
+        private Player m_RivalPlayer;
         MoveManager m_MoveManager;
         private eGameMode m_GameMode; // Consider if necessary ??
         private bool m_FirstPlayerTurn;
@@ -139,7 +140,6 @@ namespace CheckersGame
             {
                 m_SecondPlayer.PlayerType = ePlayerType.Computer;
             }
-
         }
 
         public void LoadNewPotentialMove(SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
@@ -156,12 +156,27 @@ namespace CheckersGame
 
         }
 
+        public void PostMoveProcedure()
+        {
+            /// Has recachedLastLine
+            m_MoveManager.ReachedLastLineValidationAndUpdate(m_Board, m_CurrentPlayer);
+            /// Reduce numOfdiscs of rival
+            if (m_MoveManager.EatingMoveOccurred())
+            {
+                m_RivalPlayer.NumOfDiscs--;
+            }
+            /// Update the new DestinationIndex to be on CurrentHoldingIndices
+            /// Remove the SourceIndex from the CurrentHoldingIndices.
+            m_CurrentPlayer.UpdateCurrentHoldingSquareIndices(m_MoveManager.SourceIndex, m_MoveManager.DestinationIndex);
+        }
+
         public bool RecurringTurnPossibilityValidation()
         {
             bool recurringTurnIsPossible;
 
-            if (m_MoveManager.EatingMoveOccurred() && m_MoveManager.RecurringTurnEatingMovePossibiltyValidation(m_Board, m_CurrentPlayer))
+            if (m_MoveManager.EatingMoveOccurred() && m_MoveManager.RecurringTurnEatingMovePossibilty(m_Board, m_CurrentPlayer))
             {
+                /// IMPORTANT! -> Update here the m_NewSourceIndexPostEating variable under MoveManager.
                 recurringTurnIsPossible = true;
             }
 
@@ -175,16 +190,19 @@ namespace CheckersGame
 
         public void SwitchTurn()
         {
-            if (m_CurrentPlayer == FirstPlayer)
+            //if (m_CurrentPlayer.Equals(FirstPlayer)) /// ReferenceEquals(FirstPlayer, CurrentPlayer)
+            if (FirstPlayer == CurrentPlayer) // CHECK!!
             {
                 m_FirstPlayerTurn = false;
                 m_CurrentPlayer = m_SecondPlayer;
+                m_RivalPlayer = m_FirstPlayer;
             }
 
             else //Currently, it's the second player turn
             {
                 m_FirstPlayerTurn = true;
                 m_CurrentPlayer = m_FirstPlayer;
+                m_RivalPlayer = m_SecondPlayer;
             }
         }
 

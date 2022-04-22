@@ -73,6 +73,11 @@ namespace CheckersGame
             }
         }
 
+        public void clearPreviousValues()
+        {
+            /// ?
+        }
+
         public bool MoveValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool moveIsValid;
@@ -92,7 +97,7 @@ namespace CheckersGame
             // 5. SimpleMoveIsValid
             // 6. EatingMoveIsValid
 
-            srcAndDestBasicallyValid = SrcAndDestBasicValidation(i_Board, i_CurrPlayer);
+            srcAndDestBasicallyValid = SourceAndDestinationBasicValidation(i_Board, i_CurrPlayer);
             indicesDifferencesAreValid = IndicesDifferencesValidationAndSetup(out indicesDifferences);
             if (srcAndDestBasicallyValid && indicesDifferencesAreValid)
             {
@@ -183,8 +188,8 @@ namespace CheckersGame
 
             else if (i_Board[m_SourceIndex].DiscType == i_CurrPlayer.KingDiscType) //The sourceIndex contain a KingDiscType.
             {
-                simpleMoveBackwardsIsValid = SimpleMoveBackwardsValidation(i_CurrPlayer);
-                simpleMoveIsValid = simpleMoveBackwardsIsValid;
+                simpleMoveIsValid  = simpleMoveBackwardsIsValid = SimpleMoveBackwardsValidation(i_CurrPlayer);
+                /// simpleMoveIsValid = simpleMoveBackwardsIsValid;
             }
 
             else
@@ -338,8 +343,8 @@ namespace CheckersGame
 
             else if (i_Board[m_SourceIndex].DiscType == i_CurrPlayer.KingDiscType) //The sourceIndex contain a KingDiscType.
             {
-                eatingMoveBackwardsIsValid = EatingMoveBackwardsValidation(i_Board, i_CurrPlayer);
-                eatingMoveIsValid = eatingMoveBackwardsIsValid;
+                eatingMoveIsValid = eatingMoveBackwardsIsValid = EatingMoveBackwardsValidation(i_Board, i_CurrPlayer);
+                /// eatingMoveIsValid = eatingMoveBackwardsIsValid;
             }
 
             else
@@ -392,10 +397,12 @@ namespace CheckersGame
         {
             bool eatingNorthEastMoveIsValid;
             SquareIndex northEastSquareIndex = new SquareIndex(m_SourceIndex.RowIndex - 2, m_SourceIndex.ColumnIndex + 2);
-          
+            SquareIndex northEastPotentialEatedSquareIndex;
+
             if (m_DestinationIndex.IsEqual(northEastSquareIndex))
             {
-                if (i_Board[m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex + 1].RivalInSquareValidation(i_CurrPlayer))
+                northEastPotentialEatedSquareIndex = new SquareIndex(m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex + 1);
+                if (i_Board[northEastPotentialEatedSquareIndex].RivalInSquareValidation(i_CurrPlayer))
                 {
                     eatingNorthEastMoveIsValid = true;
                     m_MoveType = eMoveType.EatingNorthEastMove;
@@ -422,11 +429,14 @@ namespace CheckersGame
         {
             bool eatingNorthWestMoveIsValid;
             SquareIndex northWestSquareIndex = new SquareIndex(m_SourceIndex.RowIndex - 2, m_SourceIndex.ColumnIndex - 2);
+            SquareIndex northWestPotentialEatedSquareIndex;
+
             //Two Validation. 1. Indices are matching 2. Rival is in between
 
             if (m_DestinationIndex.IsEqual(northWestSquareIndex))
             {
-                if (i_Board[m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex - 1].RivalInSquareValidation(i_CurrPlayer))
+                northWestPotentialEatedSquareIndex = new SquareIndex(m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex - 1);
+                if (i_Board[northWestPotentialEatedSquareIndex].RivalInSquareValidation(i_CurrPlayer))
                 {
                     eatingNorthWestMoveIsValid = true;
                     m_MoveType = eMoveType.EatingNorthWestMove;
@@ -453,10 +463,12 @@ namespace CheckersGame
         {
             bool eatingSouthEastMoveIsValid;
             SquareIndex southEastSquareIndex = new SquareIndex(m_SourceIndex.RowIndex + 2, m_SourceIndex.ColumnIndex + 2);
+            SquareIndex southEastPotentialEatedSquareIndex;
 
             if (m_DestinationIndex.IsEqual(southEastSquareIndex))
             {
-                if (i_Board[m_SourceIndex.RowIndex + 1, m_SourceIndex.ColumnIndex + 1].RivalInSquareValidation(i_CurrPlayer))
+                southEastPotentialEatedSquareIndex = new SquareIndex(m_SourceIndex.RowIndex + 1, m_SourceIndex.ColumnIndex + 1);
+                if (i_Board[southEastPotentialEatedSquareIndex].RivalInSquareValidation(i_CurrPlayer))
                 {
                     eatingSouthEastMoveIsValid = true;
                     m_MoveType = eMoveType.EatingSouthEastMove;
@@ -483,10 +495,12 @@ namespace CheckersGame
         {
             bool eatingSouthWestMoveIsValid;
             SquareIndex southWestSquareIndex = new SquareIndex(m_SourceIndex.RowIndex + 2, m_SourceIndex.ColumnIndex - 2);
+            SquareIndex southWestPotentialEatedSquareIndex;
 
             if (m_DestinationIndex.IsEqual(southWestSquareIndex))
             {
-                if (i_Board[m_SourceIndex.RowIndex + 1, m_SourceIndex.ColumnIndex - 1].RivalInSquareValidation(i_CurrPlayer))
+                southWestPotentialEatedSquareIndex = new SquareIndex(m_SourceIndex.RowIndex + 1, m_SourceIndex.ColumnIndex - 1);
+                if (i_Board[southWestPotentialEatedSquareIndex].RivalInSquareValidation(i_CurrPlayer))
                 {
                     eatingSouthWestMoveIsValid = true;
                     m_MoveType = eMoveType.EatingSouthWestMove;
@@ -509,7 +523,7 @@ namespace CheckersGame
             return eatingSouthWestMoveIsValid;
         }
 
-        public bool SrcAndDestBasicValidation(Board i_Board, Player i_CurrPlayer)
+        public bool SourceAndDestinationBasicValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool srcAndDestBasicallyValid;
             bool sourceIsValid;
@@ -681,172 +695,203 @@ namespace CheckersGame
             }
         }
 
-        public bool RecurringTurnEatingMovePossibiltyValidation(Board i_Board, Player i_CurrPlayer)
+        public void ReachedLastLineValidationAndUpdate(Board io_Board, Player i_CurrPlayer)
         {
-            bool anotherEatingIsPossible = true;
-            /// Should be placed outside this method. -> m_NewSourceIndexPostEating = m_DestinationIndex;
-            /// 
-            m_SourceIndex = m_DestinationIndex;
+            bool firstPlayerReachedLastLine;
+            bool secondPlayerReachedLastLine;
 
+            firstPlayerReachedLastLine = FirstPlayerReachedLastLineValidation(i_CurrPlayer);
+            secondPlayerReachedLastLine = SecondPlayerReachedLastLineValidation(i_CurrPlayer, io_Board);
+            if (firstPlayerReachedLastLine || secondPlayerReachedLastLine)
+            {
+                io_Board[m_DestinationIndex].DiscType = i_CurrPlayer.KingDiscType;
+            }
+        }
+
+        public bool FirstPlayerReachedLastLineValidation(Player i_CurrPlayer)
+        {
+            bool firstPlayerReachedLastLine;
+
+            if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up && m_DestinationIndex.RowIndex == 0)
+            {
+                firstPlayerReachedLastLine = true;
+            }
+            
+            else
+            {
+                firstPlayerReachedLastLine = false;
+            }
+
+            return firstPlayerReachedLastLine; 
+        }
+
+        public bool SecondPlayerReachedLastLineValidation(Player i_CurrPlayer, Board i_Board)
+        {
+            bool secondPlayerReachedLastLine;
+            
+            if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down && m_DestinationIndex.RowIndex == i_Board.BoardSize)
+            {
+                secondPlayerReachedLastLine = true;
+            }
+
+            else
+            {
+                secondPlayerReachedLastLine = false;
+            }
+            
+            return secondPlayerReachedLastLine;
+        }
+        
+        public bool RecurringTurnEatingMovePossibilty(Board i_Board, Player i_CurrPlayer)
+        {
+            bool anotherEatingIsPossible;
+            bool recurringTurnEatingNorthEastIsPossible;
+            bool recurringTurnEatingNorthWestIsPossible;
+            bool recurringTurnEatingSouthEastIsPossible;
+            bool recurringTurnEatingSouthWestIsPossible;
+
+            /// Should be placed outside this method. -> m_NewSourceIndexPostEating = m_DestinationIndex;
             /// Should check for newSourceIndex if there any possibilty for another eating.
             /// CAREFUL!!! handle the data memebrs with extra caution.
             /// 
             /// Will know to ask only for switch case 2 because we sending only + 2,2 Indicies.
             /// Or send directly to Basic Validation and EatingMoveValidation directions
-
-            /// NorthEast
-            /// Use SetSquareIndices -> m_DesitinationIndex.SetSqaureIndices(m_SourceIndex.RowIndex - 2,  m_SourceIndex.ColumnIndex + 2)
-            m_DestinationIndex.RowIndex = m_SourceIndex.RowIndex - 2;
-            m_DestinationIndex.ColumnIndex = m_SourceIndex.ColumnIndex + 2;
             /// Check SrcAndDestBasicValidation + EatingMoveNotrhEastValidation + Player Direction + PlayerDiscType - Important!!!!!
-            
-            /// NorthWest
-            m_DestinationIndex.RowIndex = m_SourceIndex.RowIndex - 2;
-            m_DestinationIndex.ColumnIndex = m_SourceIndex.ColumnIndex - 2;
+            /// 
 
-            /// SouthEast
-            m_DestinationIndex.RowIndex = m_SourceIndex.RowIndex + 2;
-            m_DestinationIndex.ColumnIndex = m_SourceIndex.ColumnIndex + 2;
+            m_SourceIndex = m_DestinationIndex;
 
-            /// SouthWest
-            m_DestinationIndex.RowIndex = m_SourceIndex.RowIndex - 2;
-            m_DestinationIndex.ColumnIndex = m_SourceIndex.ColumnIndex - 2;
+            if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up)
+            {
+                recurringTurnEatingNorthEastIsPossible = RecurringTurnEatingNorthEastPossibilty(i_Board, i_CurrPlayer);
+                recurringTurnEatingNorthWestIsPossible = RecurringTurnEatingNorthWestPossibilty(i_Board, i_CurrPlayer);
+                if (recurringTurnEatingNorthEastIsPossible || recurringTurnEatingNorthWestIsPossible)
+                {
+                    anotherEatingIsPossible = true;
+                }
+
+                else if (i_Board[m_SourceIndex].DiscType == i_CurrPlayer.KingDiscType) /// Check If KingDiscType
+                {
+                    recurringTurnEatingSouthEastIsPossible = RecurringTurnEatingSouthEastPossibilty(i_Board, i_CurrPlayer);
+                    recurringTurnEatingSouthWestIsPossible = RecurringTurnEatingSouthWestPossibilty(i_Board, i_CurrPlayer);
+                    anotherEatingIsPossible = recurringTurnEatingSouthEastIsPossible || recurringTurnEatingSouthWestIsPossible;
+                }
+
+                else
+                {
+                    anotherEatingIsPossible = false;
+                }
+
+            }
+
+            else //(i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
+            {
+                recurringTurnEatingSouthEastIsPossible = RecurringTurnEatingSouthEastPossibilty(i_Board, i_CurrPlayer);
+                recurringTurnEatingSouthWestIsPossible = RecurringTurnEatingSouthWestPossibilty(i_Board, i_CurrPlayer);
+                if (recurringTurnEatingSouthEastIsPossible || recurringTurnEatingSouthWestIsPossible)
+                {
+                    anotherEatingIsPossible = true;
+                }
+
+                else if (i_Board[m_SourceIndex].DiscType == i_CurrPlayer.KingDiscType)
+                {
+                    recurringTurnEatingNorthEastIsPossible = RecurringTurnEatingNorthEastPossibilty(i_Board, i_CurrPlayer);
+                    recurringTurnEatingNorthWestIsPossible = RecurringTurnEatingNorthWestPossibilty(i_Board, i_CurrPlayer);
+                    anotherEatingIsPossible = recurringTurnEatingNorthEastIsPossible || recurringTurnEatingNorthWestIsPossible;
+                }
+
+                else
+                {
+                    anotherEatingIsPossible = false;
+                }
+            }
 
             return anotherEatingIsPossible;
         }
 
-        // public bool MoveFromOptionValiidation(Player i_CurrPlayer, Board i_Board)
-        /*  {
-              return true;
-          }*/
-        /*
-                public void UpdateIfReachedToLastLine(Player i_CurrPlayer, SquareIndex m_SourceIndex, int i_BoardSize)
-                {
-                    if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up)
-                    {
-                        if (m_SourceIndex.RowIndex == 0)
-                        {
-                            m_ReachedLastLine = true;
-                        }
+        public bool RecurringTurnEatingNorthEastPossibilty(Board i_Board, Player i_CurrPlayer)
+        {
+            bool recurringTurnEatingNorthEastIsPossible;
+            bool srcAndDestAreBasicallyValid;
 
-                        else
-                        {
-                            m_ReachedLastLine = false;
-                        }
-                    }
+            m_DestinationIndex.SetSquareIndices(m_SourceIndex.RowIndex - 2, m_SourceIndex.ColumnIndex + 2);
+            srcAndDestAreBasicallyValid = SourceAndDestinationBasicValidation(i_Board, i_CurrPlayer);
+            if (srcAndDestAreBasicallyValid)
+            {
+                recurringTurnEatingNorthEastIsPossible = EatingNorthEastMoveValidation(i_Board, i_CurrPlayer);
 
-                    else if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
-                    {
-                        if (m_SourceIndex.RowIndex == i_BoardSize)
-                        {
-                            m_ReachedLastLine = true;
-                        }
+            }
 
-                        else
-                        {
-                            m_ReachedLastLine = false;
-                        }
-                    }
+            else
+            {
+                recurringTurnEatingNorthEastIsPossible = false;
+            }
 
-                    //else if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.None)
-                    //??
-                }
+            return recurringTurnEatingNorthEastIsPossible;
+        }
+       
+        public bool RecurringTurnEatingNorthWestPossibilty(Board i_Board, Player i_CurrPlayer)
+        {
+            bool recurringTurnEatingNorthWestIsPossible;
+            bool srcAndDestAreBasicallyValid;
 
-                public bool DoubleTurnValidation(Board i_Board, Player i_CurrPlayer, SquareIndex m_SourceIndex, SquareIndex m_DestinationIndex)
-                {
-                    bool isDoubleTurnValid;
-                    SquareIndex newSourceIndex = m_DestinationIndex; ;
-                    SquareIndex newDestinationIndex = new SquareIndex();
+            m_DestinationIndex.SetSquareIndices(m_SourceIndex.RowIndex - 2, m_SourceIndex.ColumnIndex - 2);
+            srcAndDestAreBasicallyValid = SourceAndDestinationBasicValidation(i_Board, i_CurrPlayer);
+            if (srcAndDestAreBasicallyValid)
+            {
+                recurringTurnEatingNorthWestIsPossible = EatingNorthWestMoveValidation(i_Board, i_CurrPlayer);
 
-                    newDestinationIndex.RowIndex = SetNewDestinationRow(i_CurrPlayer, m_DestinationIndex);
-                    newDestinationIndex.RowIndex = SetNewDestinationColumn(i_CurrPlayer, m_DestinationIndex);
+            }
 
-                    if (DoubleTurnWithSpecificDst(i_Board, i_CurrPlayer, newSourceIndex, newDestinationIndex))
-                    {
-                        isDoubleTurnValid = true;
-                    }
+            else
+            {
+                recurringTurnEatingNorthWestIsPossible = false;
+            }
 
-                    else
-                    {
-                        newDestinationIndex.ColumnIndex = m_DestinationIndex.ColumnIndex - 2;
-                        if (DoubleTurnWithSpecificDst(i_Board, i_CurrPlayer, newSourceIndex, newDestinationIndex))
-                        {
-                            isDoubleTurnValid = true;
-                        }
+            return recurringTurnEatingNorthWestIsPossible;
+        }
 
-                        else
-                        {
-                            isDoubleTurnValid = false;
-                        }
-                    }
+        public bool RecurringTurnEatingSouthEastPossibilty(Board i_Board, Player i_CurrPlayer)
+        {
+            bool recurringTurnEatingSouthEastIsPossible;
+            bool srcAndDestAreBasicallyValid;
 
-                    return isDoubleTurnValid;
-                }
+            m_DestinationIndex.SetSquareIndices(m_SourceIndex.RowIndex + 2, m_SourceIndex.ColumnIndex + 2);
+            srcAndDestAreBasicallyValid = SourceAndDestinationBasicValidation(i_Board, i_CurrPlayer);
+            if (srcAndDestAreBasicallyValid)
+            {
+                recurringTurnEatingSouthEastIsPossible = EatingSouthEastMoveValidation(i_Board, i_CurrPlayer);
+            }
 
-                public bool DoubleTurnWithSpecificDst(Board i_Board, Player i_CurrPlayer, SquareIndex m_SourceIndex, SquareIndex m_DestinationIndex)
-                {
-                    bool isDoubleTurnValid;
-                    bool indicesDifferencesAreValid;
-                    bool srcAndDestBasicallyValid;
-                    bool isEatenValid;
+            else
+            {
+                recurringTurnEatingSouthEastIsPossible = false;
+            }
 
-                    srcAndDestBasicallyValid = SrcAndDestBasicValidation(i_Board, i_CurrPlayer, m_SourceIndex, m_DestinationIndex);
-                    indicesDifferencesAreValid = IndicesDifferencesValidationAndSetup(m_SourceIndex, m_DestinationIndex, out int o_IndicesDifference);
-                    isEatenValid = EatingMoveValidation(i_Board, i_CurrPlayer, m_SourceIndex, m_DestinationIndex);
+            return recurringTurnEatingSouthEastIsPossible;
+        }
 
-                    if (srcAndDestBasicallyValid && indicesDifferencesAreValid && isEatenValid)
-                    {
-                        isDoubleTurnValid = true;
-                    }
+        public bool RecurringTurnEatingSouthWestPossibilty(Board i_Board, Player i_CurrPlayer)
+        {
+            bool recurringTurnEatingSouthWestIsPossible;
+            bool srcAndDestAreBasicallyValid;
 
-                    else
-                    {
-                        isDoubleTurnValid = false;
-                    }
+            m_DestinationIndex.SetSquareIndices(m_SourceIndex.RowIndex + 2, m_SourceIndex.ColumnIndex - 2);
+            srcAndDestAreBasicallyValid = SourceAndDestinationBasicValidation(i_Board, i_CurrPlayer);
+            if (srcAndDestAreBasicallyValid)
+            {
+                recurringTurnEatingSouthWestIsPossible = EatingSouthWestMoveValidation(i_Board, i_CurrPlayer);
+            }
 
-                    return isDoubleTurnValid;
+            else
+            {
+                recurringTurnEatingSouthWestIsPossible = false;
+            }
 
-                }
+            return recurringTurnEatingSouthWestIsPossible;
 
-                public int SetNewDestinationRow(Player i_CurrPlayer, SquareIndex m_DestinationIndex)
-                {
-                    int newRowResult = -1;
-
-                    if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up) //Forward
-                    {
-                        newRowResult = (m_DestinationIndex.RowIndex) - 2;
-                    }
-
-                    else if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
-                    {
-                        newRowResult = (m_DestinationIndex.RowIndex) + 2;
-                    }
-
-                    return newRowResult;
-                }
-
-                public int SetNewDestinationColumn(Player i_CurrPlayer, SquareIndex m_DestinationIndex)
-                {
-                    return m_DestinationIndex.RowIndex + 2;
-                }
-
-                public bool AnyPosabbilityToMove(Board i_Board, Player i_CurrPlayer, SquareIndex m_SourceIndex, SquareIndex i_destinationIndex)
-                {
-                    bool anyPosabbilityToMove = false;
-
-                    foreach (SquareIndex currSquare in i_CurrPlayer.CurrentHoldingSquareIndices)
-                    {
-                        if (SimpleMoveBackwardsValidation(i_CurrPlayer, m_SourceIndex, i_destinationIndex) || EatingMoveForwardValidation(i_Board, i_CurrPlayer, m_SourceIndex, i_destinationIndex))
-                        {
-                            anyPosabbilityToMove = true;
-                        }
-                    }
-
-                    return anyPosabbilityToMove;
-                }
-
-
-            }*/
+        }
+  
     }
 }
 

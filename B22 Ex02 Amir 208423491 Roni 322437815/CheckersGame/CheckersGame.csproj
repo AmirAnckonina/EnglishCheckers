@@ -38,7 +38,7 @@
     <Compile Include="BackupMoveManager.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="eGameMode.cs" />
-    <Compile Include="eWinnerPlayer.cs" />
+    <Compile Include="eGameResult.cs" />
     <Compile Include="eDiscType.cs" />
     <Compile Include="eMoveType.cs" />
     <Compile Include="ePlayerMovingDirection.cs" />

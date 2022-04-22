@@ -70,7 +70,7 @@ namespace CheckersGame
             return isEqual;
         }
 
-        public void SetSquareIndices (int i_NewRow, int i_NewColumn)
+        public void SetSquareIndices(int i_NewRow, int i_NewColumn)
         {
             m_RowIndex = i_NewRow;
             m_ColumnIndex = i_NewColumn;
