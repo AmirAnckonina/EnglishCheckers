@@ -183,21 +183,64 @@ namespace CheckersUI
             return discTypeChar;
         }
 
+        //public void PrintBoard(Board i_Board)
+        //{
+        //    /*foreach (Square sqr in i_Board.GameBoard)
+        //    {
+        //        if (sqr.DiscType != eDiscType.None)
+        //        {
+        //            Console.Write(" {0} | ", GetCharByDiscType(sqr.DiscType));
+        //        }
+
+        //        else
+        //        {
+        //            Console.Write("   | ");
+        //        }
+        //    }*/
+
+        //    int row, column, index;
+        //    char letter = 'A', currDiscChar;
+        //    eDiscType currDiscType;
+
+        //    for (row = 0; row < i_Board.BoardSize; row++)
+        //    {
+        //        Console.Write("   {0} ", letter);
+        //        letter = (char)(letter + 1);
+        //    }
+
+        //    Console.WriteLine("");
+        //    letter = 'a';
+        //    for (row = 0; row < i_Board.BoardSize; row++)
+        //    {
+        //        Console.Write("{0}|", letter);
+        //        letter = (char)(letter + 1);
+        //        for (column = 0; column < i_Board.BoardSize; column++)
+        //        {
+        //            currDiscChar = GetCharByDiscType(i_Board[row, column].DiscType);
+        //            currDiscType = i_Board[row, column].DiscType;
+        //            if (currDiscType != eDiscType.None)
+        //            {
+        //                Console.Write(" {0} | ", currDiscChar);
+        //            }
+
+        //            else
+        //            {
+        //                Console.Write("   | ");
+        //            }
+        //        }
+
+        //        Console.WriteLine(" ");
+        //        for (index = 0; index < i_Board.BoardSize; index++)
+        //        {
+        //            Console.Write("=====");
+        //        }
+
+        //        Console.WriteLine(" ");
+        //    }
+        //}
+
         public void PrintBoard(Board i_Board)
         {
-            /*foreach (Square sqr in i_Board.GameBoard)
-            {
-                if (sqr.DiscType != eDiscType.None)
-                {
-                    Console.Write(" {0} | ", GetCharByDiscType(sqr.DiscType));
-                }
-
-                else
-                {
-                    Console.Write("   | ");
-                }
-            }*/
-
             int row, column, index;
             char letter = 'A', currDiscChar;
             eDiscType currDiscType;
@@ -210,33 +253,43 @@ namespace CheckersUI
 
             Console.WriteLine("");
             letter = 'a';
-            for (row = 0; row < i_Board.BoardSize; row++)
+            Console.Write("{0}|", letter);
+            letter = (char)(letter + 1);
+
+            foreach(Square currSquare in i_Board.GameBoard)
             {
-                Console.Write("{0}|", letter);
-                letter = (char)(letter + 1);
-                for (column = 0; column < i_Board.BoardSize; column++)
+                currDiscChar = GetCharByDiscType(currSquare.DiscType);
+                currDiscType = currSquare.DiscType;
+                if (currDiscType != eDiscType.None)
                 {
-                    currDiscChar = GetCharByDiscType(i_Board[row, column].DiscType);
-                    currDiscType = i_Board[row, column].DiscType;
-                    if (currDiscType != eDiscType.None)
-                    {
-                        Console.Write(" {0} | ", currDiscChar);
-                    }
-
-                    else
-                    {
-                        Console.Write("   | ");
-                    }
+                    Console.Write(" {0} | ", currDiscChar);
                 }
 
-                Console.WriteLine(" ");
-                for (index = 0; index < i_Board.BoardSize; index++)
+                else
                 {
-                    Console.Write("=====");
+                    Console.Write("   | ");
                 }
 
-                Console.WriteLine(" ");
+                if(currSquare.SqrIndex.ColumnIndex == i_Board.BoardSize)
+                {
+                    Console.WriteLine("");
+                    Console.Write("{0}|", letter);
+                    letter = (char)(letter + 1);
+                }
             }
+
+            Console.WriteLine(" ");
+            for (index = 0; index < i_Board.BoardSize; index++)
+            {
+                 Console.Write("=====");
+            }
+
+            Console.WriteLine(" ");   
+        }
+
+        public StringBuilder GetPlayerName(Player i_CurrPlayer)
+        {
+            return i_CurrPlayer.Name;
         }
     }
 }
