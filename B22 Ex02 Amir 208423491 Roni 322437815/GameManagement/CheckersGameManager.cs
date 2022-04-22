@@ -28,7 +28,7 @@ namespace GameManagement
             // Split the whole old "TheCheckersGame", using m_Game.
 
             bool fullGameSessionsFinished = false;
-            
+
 
             m_UI.Welcome();
             GameInitialization();
