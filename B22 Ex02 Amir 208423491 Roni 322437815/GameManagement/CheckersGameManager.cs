@@ -63,7 +63,7 @@ namespace GameManagement
             while (!m_Game.GameOver()) /// && !NotQuit)
             {
                 m_Game.SwitchTurn();
-                m_UI.PrintWhoseTurn(m_Game.CurrentPlayer);
+                m_UI.PrintWhoseTurn(m_Game.CurrentPlayer); /// Move to ConsoleUI
                 MoveProcedure(); 
                 m_UI.PrintBoard(m_Game.Board);
                 RecurringTurnProcedure();

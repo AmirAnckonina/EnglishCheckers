@@ -1,4 +1,4 @@
-Tasks 22Apr Morning :
+Tasks 23Apr Morning :
 
 
 		
@@ -35,38 +35,20 @@ TESTING!!!
 1. 	*CheckersGameManager* 
 	
 	-Build function that initialize the relevant values/object bewteen singleGameSession
-	- Conitune RecurringTurnProcedure -> first 2 bullets in MoveManager
-	- Build PostMoveProcedure
-	
-
-2.	*MoveManager* 
-	*Complete PossibilityValidation
-	*Build RecurringTurnMoveValidation
-	*Converting to king method
-	
-3.	*Game*
-	
-	-Build GameWinner function
-	-PostSingleGameSession function 
-		*calculating score to the winnerPlayer
 		*Setting the board again?
-	-Build function to generate a move for computer
-		*consider use IF computer 
-			-> generate random source index from player m_CurrentHoldingSquareIndices?
-		*ELSE 
-			-> RawInputProcedure
-			
+	
+2.	*MoveManager* 
+	Organize RecurringTurnMove methods.
+	
+3. Game / MoveManager:
+	-> Build a function that receive some source index and checks if there is any possibily to move. (8 Options to check)
+	-> Build function that run on all CurrentHoldingIndices of a Player and for each one check any possibily to move.
+
 4. *ConsoleInputManager*
-	-Separate sourceIndex and DestinationIndex from the class
 	-Handle Quitting option (key Q)
-		*Update the data memebers
-		*return a flag or something.
 		
-5.	***General***
-	-Check enum structure
-	-AI
-	-using namespaces correctly
-		
+
+		TESTING
 
 		
 <======================================>
@@ -88,3 +70,8 @@ General:
 	----> Amir:
 		AnyMovePossibilty For All Indices of player
 		
+		
+5.	***General***
+	-Check enum structure
+	-AI
+	-using namespaces correctly

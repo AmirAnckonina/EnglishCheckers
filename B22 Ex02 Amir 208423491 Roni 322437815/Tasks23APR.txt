@@ -1,7 +1,6 @@
+
 Tasks 23Apr Morning :
 
-
-		
 <---------------RONI------------------->
 
 ConsoleUI Class
@@ -74,4 +73,3 @@ General:
 5.	***General***
 	-Check enum structure
 	-AI
-	-using namespaces correctly
