@@ -130,6 +130,8 @@ namespace CheckersGame
             m_SecondPlayer.MovingDirection = ePlayerMovingDirection.Up;
             m_FirstPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_FirstPlayer.DiscType);
             m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
+            m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
+            m_SecondPlayer.InitializeCurrentHoldingIndices(m_Board);
             m_FirstPlayer.PlayerType = ePlayerType.Human;
             if (m_GameMode == eGameMode.TwoPlayersMode)
             {
@@ -142,10 +144,18 @@ namespace CheckersGame
             }
         }
 
-        public void LoadNewPotentialMove(SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
+        public void LoadNewPotentialMove(SquareIndex i_SourceIndex = null, SquareIndex i_DestinationIndex = null)
         {
-            m_MoveManager.SourceIndex = i_SourceIndex;
-            m_MoveManager.DestinationIndex = i_DestinationIndex;
+            if (m_CurrentPlayer.PlayerType == ePlayerType.Human)
+            {
+                m_MoveManager.SourceIndex = i_SourceIndex;
+                m_MoveManager.DestinationIndex = i_DestinationIndex;
+            }
+
+            else //ComputerType
+            {
+                GenerateRandomPotentialMove();
+            }
         }
 
         public void GenerateRandomPotentialMove()
@@ -178,11 +188,13 @@ namespace CheckersGame
             {
                 /// IMPORTANT! -> Update here the m_NewSourceIndexPostEating variable under MoveManager.
                 recurringTurnIsPossible = true;
+                m_IsRecurringTurn = true;
             }
 
             else
             {
                 recurringTurnIsPossible = false;
+                m_IsRecurringTurn = false;
             }
 
             return recurringTurnIsPossible;

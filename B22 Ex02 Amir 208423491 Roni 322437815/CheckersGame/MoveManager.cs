@@ -11,7 +11,7 @@ namespace CheckersGame
         private static readonly int InvalidIndicesDifferences = -1; // Check how to set it.
         private SquareIndex m_SourceIndex;
         private SquareIndex m_DestinationIndex;
-        private SquareIndex m_NewSourceIndexPostEating;
+        private SquareIndex m_RecurringTurnNewSourceIndex;
         private eMoveType m_MoveType;
         private bool m_ReachedLastLine;
        // private bool m_EatingMove;
@@ -768,6 +768,7 @@ namespace CheckersGame
                 if (recurringTurnEatingNorthEastIsPossible || recurringTurnEatingNorthWestIsPossible)
                 {
                     anotherEatingIsPossible = true;
+                    /// The m_SourceIndex is the one we checked with the possibily, so if so, save it for later.
                 }
 
                 else if (i_Board[m_SourceIndex].DiscType == i_CurrPlayer.KingDiscType) /// Check If KingDiscType
@@ -804,6 +805,11 @@ namespace CheckersGame
                 {
                     anotherEatingIsPossible = false;
                 }
+            }
+
+            if (anotherEatingIsPossible)
+            {
+                m_RecurringTurnNewSourceIndex.CopySquareIndices(m_SourceIndex);
             }
 
             return anotherEatingIsPossible;
@@ -891,7 +897,50 @@ namespace CheckersGame
             return recurringTurnEatingSouthWestIsPossible;
 
         }
-  
+
+        public bool RecurringTurnMoveValidation(Board i_Board, Player i_CurrPlayer)
+        {
+            bool recurringTurnMoveIsValid;
+            bool eatingMoveIsValid;
+            bool srcAndDestBasicallyValid;
+            bool indicesDifferencesAreValid;
+            int  indicesDifferences;
+
+            srcAndDestBasicallyValid = SourceAndDestinationBasicValidation(i_Board, i_CurrPlayer);
+            indicesDifferencesAreValid = IndicesDifferencesValidationAndSetup(out indicesDifferences);
+
+            if (m_SourceIndex.IsEqual(m_RecurringTurnNewSourceIndex))
+            {
+                if (srcAndDestBasicallyValid && indicesDifferencesAreValid && indicesDifferences == 2)
+                {
+                    eatingMoveIsValid = EatingMoveValidation(i_Board, i_CurrPlayer);
+                    if (eatingMoveIsValid)
+                    {
+                        recurringTurnMoveIsValid = true;
+                    }
+
+                    else
+                    {
+                        recurringTurnMoveIsValid = false;
+                        m_MoveType = eMoveType.None;
+                    }
+                }
+
+                else
+                {
+                    recurringTurnMoveIsValid = false;
+                    m_MoveType = eMoveType.None;
+                }
+            }
+
+            else
+            {
+                recurringTurnMoveIsValid = false;
+                m_MoveType = eMoveType.None;
+            }
+
+            return recurringTurnMoveIsValid;
+        }
     }
 }
 

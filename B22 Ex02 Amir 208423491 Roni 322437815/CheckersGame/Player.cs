@@ -31,6 +31,7 @@ namespace CheckersGame
             m_NumOfDiscs = 0;
             m_PlayerType = ePlayerType.Human;
             m_DiscType = eDiscType.None;
+            m_CurrentHoldingSquareIndices = new List<SquareIndex>();
         }
 
         public StringBuilder Name
