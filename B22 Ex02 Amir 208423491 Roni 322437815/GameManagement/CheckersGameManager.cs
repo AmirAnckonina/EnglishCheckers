@@ -69,6 +69,7 @@ namespace GameManagement
                 RecurringTurnProcedure();
             }
 
+            m_Game.
             /// Winner Calaculation
             /// ScoreCalculation
         }
