@@ -16,6 +16,7 @@ namespace CheckersGame
         private eGameMode m_GameMode; // Consider if necessary ??
         private bool m_FirstPlayerTurn;
         private bool m_IsRecurringTurn;
+        private eGameResult m_GameResult;
 
         public Game()
         {
@@ -97,6 +98,19 @@ namespace CheckersGame
             }
         }
 
+        public eGameResult GameResult
+        {
+            get
+            {
+                return GameResult;
+            }
+
+            set
+            {
+                GameResult = value;
+            }
+        }
+
         public bool IsRecurringTurn
         {
             get
@@ -152,13 +166,26 @@ namespace CheckersGame
 
         public void GenerateRandomPotentialMove()
         {
-            /// generate for computer player a valid source index for potential move. /// Take in
-            /// If RecurringTurn -> Take the prev Destination and set it as a new source
-            /// Note to separate if it's recurring turn or not. 
-            
-            /// Invalid
+            bool isValidMove = false; ///remove the false!
+            var random = new Random();
+            int generatedIndexFromList = 0;
+            SquareIndex currentSquareIndex = new SquareIndex();
+            List<SquareIndex> tempHoldingSquareIndices = new List<SquareIndex>(m_CurrentPlayer.CurrentHoldingSquareIndices); 
+
+            SingleGenerate(tempHoldingSquareIndices, currentSquareIndex, generatedIndexFromList, random, isValidMove);
+            while (!isValidMove)
+            { 
+                tempHoldingSquareIndices.Remove(currentSquareIndex);
+                SingleGenerate(tempHoldingSquareIndices, currentSquareIndex, generatedIndexFromList, random, isValidMove);
+            }
         }
 
+        public void SingleGenerate(List<SquareIndex> i_TempHoldingSquareIndices, SquareIndex i_CurrentSquareIndex, int generatedIndexFromList,Random random, bool i_IsValidMove)
+        { 
+            generatedIndexFromList = random.Next(i_TempHoldingSquareIndices.Count);
+            i_CurrentSquareIndex = i_TempHoldingSquareIndices[generatedIndexFromList];
+            /// i_IsValidMove = MoveIsValid(randomSquareIndex);
+        }
         public void PostMoveProcedure()
         {
             /// Has recachedLastLine
@@ -213,11 +240,47 @@ namespace CheckersGame
 
         public bool GameOver()
         {
-            bool gameOver = false;
+            bool isGameOver;
 
-            return gameOver;
+            if(m_RivalPlayer.NumOfDiscs == 0)
+            {
+                isGameOver = true;
+            }
+
+            //else if(!m_RivalPlayer.AnyPossabillityToMove)     /// Amir's function
+            //{
+            //    isGameOver = true;
+            //}
+
+            else
+            {
+                isGameOver = false;
+            }
+
+            return isGameOver;
         }
 
+        public int ScoreCalculator()
+        {
+            int scoreCalculate;
+            
+            if(m_GameResult == eGameResult.FirstPlayerWon)
+            {
+                scoreCalculate = FirstPlayer.NumOfDiscs - SecondPlayer.NumOfDiscs;
+            }
+
+            else if(m_GameResult == eGameResult.SecondPlayerWon)
+            {
+                scoreCalculate = SecondPlayer.NumOfDiscs - FirstPlayer.NumOfDiscs;
+            }
+
+            else ///the game result is : Draw
+            {
+                scoreCalculate = 0;
+            }
+
+            return scoreCalculate;
+        }
     }
 
 }
