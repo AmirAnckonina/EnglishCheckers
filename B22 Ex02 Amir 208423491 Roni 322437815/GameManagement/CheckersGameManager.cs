@@ -58,18 +58,20 @@ namespace GameManagement
         public void RunSingleGameSession()
         {
             m_Game.CurrentPlayer = m_Game.SecondPlayer; /// CHANGE!!!!
+            m_Game.RivalPlayer = m_Game.FirstPlayer;
             m_UI.PrintBoard(m_Game.Board);
 
-            while (!m_Game.GameOver()) /// && !NotQuit)
+            do
             {
                 m_Game.SwitchTurn();
                 m_UI.PrintWhoseTurn(m_Game.CurrentPlayer); /// Move to ConsoleUI
-                MoveProcedure(); 
+                MoveProcedure();
                 m_UI.PrintBoard(m_Game.Board);
                 RecurringTurnProcedure();
-            }
 
-            m_Game.
+            } while (!m_Game.GameOver()); /// && !NotQuit)
+
+            /// m_Game.
             /// Winner Calaculation
             /// ScoreCalculation
         }
@@ -84,7 +86,6 @@ namespace GameManagement
 
             else /// (i_CurrentPlayer.PlayerType == ePlayerType.Computer)
             {
-                /// m_Game.LoadNewPotentialMove();
                 m_Game.GenerateRandomPotentialMove();
             }
         }

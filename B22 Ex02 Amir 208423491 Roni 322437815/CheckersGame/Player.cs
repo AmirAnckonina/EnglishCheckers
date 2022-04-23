@@ -129,30 +129,56 @@ namespace CheckersGame
         {
             get
             {
-                return CurrentHoldingSquareIndices;
+                return m_CurrentHoldingSquareIndices;
             }
 
             set
             {
-                CurrentHoldingSquareIndices = value;
+                m_CurrentHoldingSquareIndices = value;
             }
+        }
+
+        public int GetCurrentHoldingSqaureIndicesListLength()
+        {
+            return m_CurrentHoldingSquareIndices.Count;
         }
 
         public void InitializeCurrentHoldingIndices(Board i_Board)
         {
+            SquareIndex newSquareIndex;
+
             foreach (Square currSquare in i_Board.GameBoard)
             {
                 if (currSquare.SquareHolder == m_PlayerRecognition)
                 {
-                    m_CurrentHoldingSquareIndices.Add(currSquare.SquareIndex);
+                    newSquareIndex = new SquareIndex(currSquare.SquareIndex);
+                    m_CurrentHoldingSquareIndices.Add(newSquareIndex);
                 }
             }
         }
 
         public void UpdateCurrentHoldingSquareIndices(SquareIndex i_MovedFromSquareIndex, SquareIndex i_NewHoldingSquareIndex)
         {
-            m_CurrentHoldingSquareIndices.Remove(i_MovedFromSquareIndex);
-            m_CurrentHoldingSquareIndices.Add(i_NewHoldingSquareIndex);
+            RemoveIndexFromCurrentHoldingSquareIndices(i_MovedFromSquareIndex);
+            AddIndexToCurrentHoldingSquareIndices(i_NewHoldingSquareIndex);
+        }
+
+        public void AddIndexToCurrentHoldingSquareIndices(SquareIndex i_SquareIndexToAdd)
+        {
+            m_CurrentHoldingSquareIndices.Add(i_SquareIndexToAdd);
+        }
+
+        public void RemoveIndexFromCurrentHoldingSquareIndices(SquareIndex i_SquareIndexToRemove)
+        {
+            /// m_CurrentHoldingSquareIndices.Remove(i_MovedFromSquareIndex); /// not working!!!
+            foreach (SquareIndex sqrInd in m_CurrentHoldingSquareIndices)
+            {
+                if (sqrInd.IsEqual(i_SquareIndexToRemove))
+                {
+                    m_CurrentHoldingSquareIndices.Remove(sqrInd);
+                    break;
+                }
+            }
         }
 
         /* public bool AnyMovePossibilyValidation(ref Board i_Board, ref MoveManager i_MoveManager)
