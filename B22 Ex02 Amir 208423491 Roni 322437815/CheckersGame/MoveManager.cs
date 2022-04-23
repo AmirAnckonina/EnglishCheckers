@@ -666,7 +666,7 @@ namespace CheckersGame
             /// 
         }
 
-        public void EatingMoveProcedure(Board io_Board)
+        public void EatingMoveProcedure(Board io_Board) /// Organize this function -> Using new SquareIndex?
         {
             switch (m_MoveType)
             {
@@ -759,7 +759,7 @@ namespace CheckersGame
             /// Check SrcAndDestBasicValidation + EatingMoveNotrhEastValidation + Player Direction + PlayerDiscType - Important!!!!!
             /// 
 
-            m_SourceIndex = m_DestinationIndex;
+            m_SourceIndex = m_DestinationIndex; /// CHECK
 
             if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up)
             {
@@ -906,11 +906,11 @@ namespace CheckersGame
             bool indicesDifferencesAreValid;
             int  indicesDifferences;
 
-            srcAndDestBasicallyValid = SourceAndDestinationBasicValidation(i_Board, i_CurrPlayer);
-            indicesDifferencesAreValid = IndicesDifferencesValidationAndSetup(out indicesDifferences);
 
             if (m_SourceIndex.IsEqual(m_RecurringTurnNewSourceIndex))
             {
+                srcAndDestBasicallyValid = SourceAndDestinationBasicValidation(i_Board, i_CurrPlayer);
+                indicesDifferencesAreValid = IndicesDifferencesValidationAndSetup(out indicesDifferences);
                 if (srcAndDestBasicallyValid && indicesDifferencesAreValid && indicesDifferences == 2)
                 {
                     eatingMoveIsValid = EatingMoveValidation(i_Board, i_CurrPlayer);

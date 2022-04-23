@@ -4,33 +4,27 @@ Tasks 22Apr Morning :
 		
 <---------------RONI------------------->
 
-
-1. Square Class
-Try to get rid of the SquareIndex data member inside square.
-	- update SetSquare signiture 
-	- update the paramters which sent from initilaizeLineInBoard as well (Board Class)
-	- validate these parameters aren't used in other places so it won't harm the game running
-	
-2.	SquareIndex Class
-	- Implement IsEquals function to compare between two SquareIndex objects 
-		(Under SquareIndex Class, Instead of the operator implementaion)
-	- Implement SetSquareIndices function -> recieving two parmeters , row and col, and changed them.
-
-2. MoveManager Class
-In Continueous to 1, In MoveManager inside all moveValidation direction function (EastWest, etc...) ,
-	change the if condtion to use the IsEqual function in SquareIndex.
-	Also in every function of (East-West...) create a new SquareIndex and set with the relevant values using the C'tor
-	-> Example in EatingNorthEastValidation method
-	Validate it's working as it were before.
-	In all moveValidation function , in every case "false" returned, update m_MoveType = NONE.
-	
-4. ConsoleUI Class
+ConsoleUI Class
 	update GetPlayerName function to specify if it's the first Player or second.
 	- fix PrintBoard function to be more organized and readable.
 	Also, fix the spaces so the matrix will be more organized.
-	+ Add ------------------- between the first line and and the columns letters
 	Add Ex02.ConsoleUtils.Screen.Clear() to clear the screen
-	Then, try to find how to use GoToXY in C# to print the board in place.
+	
+Game Class:
+	GameOver method -> 
+		*check RivalPlayer numOfDiscs
+		*check if the RivalPlayer can move (running on m_CurrentHoldingSquareIndices) 
+			(Under GameClass) *RivalPlayerCanMoveValidation() -> 
+			/// *Amir*create 8 potential destination for each one-> MoveValidation(); (Under GameClass)
+	
+	GenerateMoveForComputer:
+		m_CurrentPlayer.CurrentHoldingSquareIndices copy to local ListArr.
+		For every random index -> 
+		///*Amir* create 8 potential destination for each one -> MoveValidation()
+		
+	ScoreCalculator & winnerPlayer (GameResult)
+	
+	
 
 TESTING!!! 
 
@@ -51,10 +45,7 @@ TESTING!!!
 	*Converting to king method
 	
 3.	*Game*
-	-Build GameOver function. 
-		*check if the nextPlayer can move (running on m_CurrentHoldingSquareIndices)
-		*check numOfDiscs?
-		*Quitting option choosed by one of the player.
+	
 	-Build GameWinner function
 	-PostSingleGameSession function 
 		*calculating score to the winnerPlayer
@@ -71,11 +62,29 @@ TESTING!!!
 		*Update the data memebers
 		*return a flag or something.
 		
-Ask Erez about using SLeep when the computer is playing.
 5.	***General***
 	-Check enum structure
 	-AI
 	-using namespaces correctly
 		
 
+		
+<======================================>
+General:
+
+1. Quit option -> both from moveInput at the end of singleGameSession
+	*InCheckersGame Manager handle it
+
+2. GameOver -> 
+	*check RivalPlayer numOfDiscs
+	*check if the RivalPlayer can move (running on m_CurrentHoldingSquareIndices) 
+		(Under GameClass) *RivalPlayerCanMoveValidation() -> create 8 potential destination for each one-> MoveValidation(); (Under GameClass)
+	
+3. GenerateMoveForComputer:
+	 m_CurrentPlayer.CurrentHoldingSquareIndices copy to local ListArr.
+	 For every random index -> // create 8 potential destination for each one -> MoveValidation()
+	
+	
+	----> Amir:
+		AnyMovePossibilty For All Indices of player
 		

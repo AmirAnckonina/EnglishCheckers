@@ -70,7 +70,7 @@ namespace CheckersUI
             ClearPreviousInput();
             m_RawInput.Append(Console.ReadLine());
             InputStructureValidation();
-            if (m_InputStructureIsValid)
+            if (m_InputStructureIsValid) /// and it's not Quit.
             {
                 UpdateIndices();
             }
@@ -91,9 +91,10 @@ namespace CheckersUI
             m_DestinationIndex.RowIndex = LetterToNumberIndexConverter(m_RawInput[4]);
         }
 
-        public void InputStructureValidation()
+        public void InputStructureValidation() /// Change to bool
         {
-            //CARFUL: validate if the first function returning false then the others won't be called.
+            /// CARFUL: validate if the first function returning false then the others won't be called.
+            /// Add quit option. Q or q is also valid.
             if (LengthValidation() && MovingFromValidation() && MovingToValidation() && OperatorValidation())
             {
                 m_InputStructureIsValid = true;

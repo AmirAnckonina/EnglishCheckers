@@ -144,26 +144,19 @@ namespace CheckersGame
             }
         }
 
-        public void LoadNewPotentialMove(SquareIndex i_SourceIndex = null, SquareIndex i_DestinationIndex = null)
-        {
-            if (m_CurrentPlayer.PlayerType == ePlayerType.Human)
-            {
-                m_MoveManager.SourceIndex = i_SourceIndex;
-                m_MoveManager.DestinationIndex = i_DestinationIndex;
-            }
-
-            else //ComputerType
-            {
-                GenerateRandomPotentialMove();
-            }
+        public void LoadNewPotentialMove(SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
+        {          
+            m_MoveManager.SourceIndex = i_SourceIndex;
+            m_MoveManager.DestinationIndex = i_DestinationIndex;
         }
 
         public void GenerateRandomPotentialMove()
         {
-            /// generate for computer player a valid source index for potential move.
+            /// generate for computer player a valid source index for potential move. /// Take in
             /// If RecurringTurn -> Take the prev Destination and set it as a new source
             /// Note to separate if it's recurring turn or not. 
-
+            
+            /// Invalid
         }
 
         public void PostMoveProcedure()
@@ -180,7 +173,7 @@ namespace CheckersGame
             m_CurrentPlayer.UpdateCurrentHoldingSquareIndices(m_MoveManager.SourceIndex, m_MoveManager.DestinationIndex);
         }
 
-        public bool RecurringTurnPossibilityValidation()
+        public bool RecurringTurnPossibilityValidation() //organize this function. using local booleans.
         {
             bool recurringTurnIsPossible;
 
