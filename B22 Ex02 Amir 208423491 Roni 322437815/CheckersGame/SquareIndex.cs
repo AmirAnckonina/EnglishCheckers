@@ -75,5 +75,11 @@ namespace CheckersGame
             m_RowIndex = i_NewRow;
             m_ColumnIndex = i_NewColumn;
         }
+
+        public void CopySquareIndices(SquareIndex i_OtherSquareIndex)
+        {
+            m_RowIndex = i_OtherSquareIndex.RowIndex;
+            m_ColumnIndex = i_OtherSquareIndex.ColumnIndex;
+        }
     }
 }
