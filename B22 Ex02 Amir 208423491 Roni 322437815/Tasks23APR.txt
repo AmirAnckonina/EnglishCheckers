@@ -1,0 +1,77 @@
+Tasks 23Apr Morning :
+
+
+		
+<---------------RONI------------------->
+
+ConsoleUI Class
+	update GetPlayerName function to specify if it's the first Player or second.
+	- fix PrintBoard function to be more organized and readable.
+	Also, fix the spaces so the matrix will be more organized.
+	Add Ex02.ConsoleUtils.Screen.Clear() to clear the screen
+	
+Game Class:
+	GameOver method -> 
+		*check RivalPlayer numOfDiscs
+		*check if the RivalPlayer can move (running on m_CurrentHoldingSquareIndices) 
+			(Under GameClass) *RivalPlayerCanMoveValidation() -> 
+			/// *Amir*create 8 potential destination for each one-> MoveValidation(); (Under GameClass)
+	
+	GenerateMoveForComputer:
+		m_CurrentPlayer.CurrentHoldingSquareIndices copy to local ListArr.
+		For every random index -> 
+		///*Amir* create 8 potential destination for each one -> MoveValidation()
+		
+	ScoreCalculator & winnerPlayer (GameResult)
+	
+	
+
+TESTING!!! 
+
+
+
+// <===================AMIR=================================>
+ 
+1. 	*CheckersGameManager* 
+	
+	-Build function that initialize the relevant values/object bewteen singleGameSession
+		*Setting the board again?
+	
+2.	*MoveManager* 
+	Organize RecurringTurnMove methods.
+	
+3. Game / MoveManager:
+	-> Build a function that receive some source index and checks if there is any possibily to move. (8 Options to check)
+	-> Build function that run on all CurrentHoldingIndices of a Player and for each one check any possibily to move.
+
+4. *ConsoleInputManager*
+	-Handle Quitting option (key Q)
+		
+
+		TESTING
+
+		
+<======================================>
+General:
+
+1. Quit option -> both from moveInput at the end of singleGameSession
+	*InCheckersGame Manager handle it
+
+2. GameOver -> 
+	*check RivalPlayer numOfDiscs
+	*check if the RivalPlayer can move (running on m_CurrentHoldingSquareIndices) 
+		(Under GameClass) *RivalPlayerCanMoveValidation() -> create 8 potential destination for each one-> MoveValidation(); (Under GameClass)
+	
+3. GenerateMoveForComputer:
+	 m_CurrentPlayer.CurrentHoldingSquareIndices copy to local ListArr.
+	 For every random index -> // create 8 potential destination for each one -> MoveValidation()
+	
+	
+	----> Amir:
+		AnyMovePossibilty For All Indices of player
+		
+		
+5.	***General***
+	-Check enum structure
+	-AI
+	-using namespaces correctly
