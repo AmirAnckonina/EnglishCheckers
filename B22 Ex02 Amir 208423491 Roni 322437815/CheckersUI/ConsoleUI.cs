@@ -138,7 +138,7 @@ namespace CheckersUI
         {
             bool boardSizeIsValid;
 
-            if (i_BoardSize == 6 || i_BoardSize == 8 || i_BoardSize == 10)
+            if (i_BoardSize == 4 || i_BoardSize == 6 || i_BoardSize == 8 || i_BoardSize == 10)
             {
                 boardSizeIsValid = true;
             }

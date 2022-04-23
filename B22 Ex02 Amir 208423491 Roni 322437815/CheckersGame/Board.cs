@@ -200,7 +200,7 @@ namespace CheckersGame
         {
             bool isRowIndexExist;
 
-            if (i_RowIndex >= 0 && i_RowIndex <= BoardSize)
+            if (i_RowIndex >= 0 && i_RowIndex < BoardSize)
             {
                 isRowIndexExist = true;
             }
@@ -218,7 +218,7 @@ namespace CheckersGame
         {
             bool isColumnIndexExist;
 
-            if (i_ColumnIndex >= 0 && i_ColumnIndex <= BoardSize)
+            if (i_ColumnIndex >= 0 && i_ColumnIndex < m_BoardSize)
             {
                 isColumnIndexExist = true;
             }

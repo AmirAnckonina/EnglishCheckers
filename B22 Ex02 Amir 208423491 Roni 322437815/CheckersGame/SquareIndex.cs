@@ -21,6 +21,12 @@ namespace CheckersGame
             m_ColumnIndex = i_ColumnIndex;
         }
 
+        public SquareIndex(SquareIndex i_OtherSquareIndex)
+        {
+            m_RowIndex = i_OtherSquareIndex.RowIndex;
+            m_ColumnIndex = i_OtherSquareIndex.ColumnIndex;
+        }
+
         public int RowIndex
         {
             get
@@ -47,11 +53,11 @@ namespace CheckersGame
             }
         }
 
-        public void SetSquareIndex(int i_RowIndex, int i_ColumnIndex)
+        /*public void SetSquareIndex(int i_RowIndex, int i_ColumnIndex)
         {
             m_RowIndex = i_RowIndex;
             m_ColumnIndex = i_ColumnIndex;  
-        }
+        }*/
 
         public bool IsEqual(SquareIndex i_SquareIndex)
         {
@@ -70,10 +76,10 @@ namespace CheckersGame
             return isEqual;
         }
 
-        public void SetSquareIndices(int i_NewRow, int i_NewColumn)
+        public void SetSquareIndices(int i_NewRowIndex, int i_NewColumnIndex)
         {
-            m_RowIndex = i_NewRow;
-            m_ColumnIndex = i_NewColumn;
+            m_RowIndex = i_NewRowIndex;
+            m_ColumnIndex = i_NewColumnIndex;
         }
 
         public void CopySquareIndices(SquareIndex i_OtherSquareIndex)

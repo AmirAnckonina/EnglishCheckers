@@ -14,9 +14,9 @@ namespace CheckersGame
         private Player m_RivalPlayer;
         MoveManager m_MoveManager;
         private eGameMode m_GameMode; // Consider if necessary ??
-        private bool m_FirstPlayerTurn;
-        private bool m_IsRecurringTurn;
         private eGameResult m_GameResult;
+        private bool m_IsRecurringTurn;
+        /// private bool m_FirstPlayerTurn;
 
         public Game()
         {
@@ -24,10 +24,7 @@ namespace CheckersGame
             m_FirstPlayer = new Player();
             m_SecondPlayer = new Player();
             m_MoveManager = new MoveManager();
-
             m_GameMode = eGameMode.SinglePlayerMode;
-            m_FirstPlayerTurn = true;
-
         }
 
         public MoveManager MoveManager
@@ -47,6 +44,19 @@ namespace CheckersGame
             set
             {
                 m_CurrentPlayer = value;
+            }
+        }
+
+        public Player RivalPlayer
+        {
+            get
+            {
+                return m_RivalPlayer;
+            }
+
+            set
+            {
+                m_RivalPlayer = value;
             }
         }
 
@@ -166,26 +176,31 @@ namespace CheckersGame
 
         public void GenerateRandomPotentialMove()
         {
-            bool isValidMove = false; ///remove the false!
+            bool isValidMove;
+            int generatedIndexFromList;
             var random = new Random();
-            int generatedIndexFromList = 0;
             SquareIndex currentSquareIndex = new SquareIndex();
-            List<SquareIndex> tempHoldingSquareIndices = new List<SquareIndex>(m_CurrentPlayer.CurrentHoldingSquareIndices); 
+            List<SquareIndex> tempHoldingSquareIndices = new List<SquareIndex>(m_CurrentPlayer.CurrentHoldingSquareIndices);
 
-            SingleGenerate(tempHoldingSquareIndices, currentSquareIndex, generatedIndexFromList, random, isValidMove);
+            generatedIndexFromList = random.Next(tempHoldingSquareIndices.Count);
+            currentSquareIndex = tempHoldingSquareIndices[generatedIndexFromList];
+            isValidMove = m_MoveManager.AnyMovePossibilityCheck(currentSquareIndex, m_Board, m_CurrentPlayer);
             while (!isValidMove)
             { 
                 tempHoldingSquareIndices.Remove(currentSquareIndex);
-                SingleGenerate(tempHoldingSquareIndices, currentSquareIndex, generatedIndexFromList, random, isValidMove);
+                generatedIndexFromList = random.Next(tempHoldingSquareIndices.Count);
+                currentSquareIndex = tempHoldingSquareIndices[generatedIndexFromList];
+                isValidMove = m_MoveManager.AnyMovePossibilityCheck(currentSquareIndex, m_Board, m_CurrentPlayer);
             }
-        }
+        } 
 
-        public void SingleGenerate(List<SquareIndex> i_TempHoldingSquareIndices, SquareIndex i_CurrentSquareIndex, int generatedIndexFromList,Random random, bool i_IsValidMove)
+       /* public void SingleRandomGenerationAndValidation(List<SquareIndex> i_TempHoldingSquareIndices, SquareIndex i_CurrentSquareIndex, int generatedIndexFromList,Random random, bool i_IsValidMove)
         { 
             generatedIndexFromList = random.Next(i_TempHoldingSquareIndices.Count);
             i_CurrentSquareIndex = i_TempHoldingSquareIndices[generatedIndexFromList];
             /// i_IsValidMove = MoveIsValid(randomSquareIndex);
-        }
+        }*/
+
         public void PostMoveProcedure()
         {
             /// Has recachedLastLine
@@ -194,9 +209,9 @@ namespace CheckersGame
             if (m_MoveManager.EatingMoveOccurred())
             {
                 m_RivalPlayer.NumOfDiscs--;
+                m_RivalPlayer.RemoveIndexFromCurrentHoldingSquareIndices(m_MoveManager.EatedSquareIndex);
             }
-            /// Update the new DestinationIndex to be on CurrentHoldingIndices
-            /// Remove the SourceIndex from the CurrentHoldingIndices.
+            /// Update the new DestinationIndex to be on CurrentHoldingIndices + Remove the SourceIndex from the CurrentHoldingIndices.
             m_CurrentPlayer.UpdateCurrentHoldingSquareIndices(m_MoveManager.SourceIndex, m_MoveManager.DestinationIndex);
         }
 
@@ -204,9 +219,10 @@ namespace CheckersGame
         {
             bool recurringTurnIsPossible;
 
-            if (m_MoveManager.EatingMoveOccurred() && m_MoveManager.RecurringTurnEatingMovePossibilty(m_Board, m_CurrentPlayer))
+            if (m_MoveManager.EatingMoveOccurred() && m_MoveManager.RecurringTurnPossibiltyCheck(m_Board, m_CurrentPlayer))
             {
-                /// IMPORTANT! -> Update here the m_NewSourceIndexPostEating variable under MoveManager.
+                /// Update newSourceIndex, So later when we check the input it has to be equal.
+                m_MoveManager.RecurringTurnNewSourceIndex.CopySquareIndices(m_MoveManager.SourceIndex);
                 recurringTurnIsPossible = true;
                 m_IsRecurringTurn = true;
             }
@@ -225,14 +241,12 @@ namespace CheckersGame
             //if (m_CurrentPlayer.Equals(FirstPlayer)) /// ReferenceEquals(FirstPlayer, CurrentPlayer)
             if (FirstPlayer == CurrentPlayer) // CHECK!!
             {
-                m_FirstPlayerTurn = false;
                 m_CurrentPlayer = m_SecondPlayer;
                 m_RivalPlayer = m_FirstPlayer;
             }
 
             else //Currently, it's the second player turn
             {
-                m_FirstPlayerTurn = true;
                 m_CurrentPlayer = m_FirstPlayer;
                 m_RivalPlayer = m_SecondPlayer;
             }
@@ -242,15 +256,10 @@ namespace CheckersGame
         {
             bool isGameOver;
 
-            if(m_RivalPlayer.NumOfDiscs == 0)
+            if(m_RivalPlayer.NumOfDiscs == 0 || !RivalPlayerMovementPossibilityCheck())
             {
                 isGameOver = true;
             }
-
-            //else if(!m_RivalPlayer.AnyPossabillityToMove)     /// Amir's function
-            //{
-            //    isGameOver = true;
-            //}
 
             else
             {
@@ -258,6 +267,36 @@ namespace CheckersGame
             }
 
             return isGameOver;
+        }
+
+        public bool RivalPlayerMovementPossibilityCheck()
+        {
+            bool rivalPlayerAbleToMove; 
+            /// SquareIndex currSquareIndex;
+            /// int indexInList;
+            /// int indicesListSize = m_RivalPlayer.GetCurrentHoldingSqaureIndicesListLength();
+            /// int indicesListSize = (m_RivalPlayer.CurrentHoldingSquareIndices).Count;
+
+            /// Set first to false so if "true" will be returned from a single SquareIndex check,
+            ///we will go out from the loop
+            rivalPlayerAbleToMove = false; 
+            /*for (indexInList = 0; indexInList < indicesListSize && !rivalPlayerAbleToMove ; indexInList++)
+            {
+                currSquareIndex = m_RivalPlayer.CurrentHoldingSquareIndices[indexInList];
+                rivalPlayerAbleToMove = m_MoveManager.AnyMovePossibilityCheck(currSquareIndex, m_Board, m_RivalPlayer);
+            }*/
+
+
+            foreach (SquareIndex currSquareIndex in m_RivalPlayer.CurrentHoldingSquareIndices)
+            {
+                rivalPlayerAbleToMove = m_MoveManager.AnyMovePossibilityCheck(currSquareIndex, m_Board, m_RivalPlayer);
+                if (rivalPlayerAbleToMove)
+                {
+                    break;
+                }
+            }
+
+            return rivalPlayerAbleToMove;
         }
 
         public int ScoreCalculator()
