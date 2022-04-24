@@ -65,68 +65,40 @@ namespace GameManagement
             {
                 m_Game.SwitchTurn();
                 m_UI.PrintWhoseTurn(m_Game.CurrentPlayer); /// Move to ConsoleUI
-                MoveProcedure();
-                m_UI.PrintBoard(m_Game.Board, m_Game.CurrentPlayer.PlayerType);
-                RecurringTurnProcedure();
+                CurrentPlayerTurnProcedure();
 
-            } while (!m_Game.GameOver()); /// && !NotQuit)
+            } while (!m_Game.GameOver() && !m_UI.Input.QuitInserted); /// && !NotQuit)
 
             /// m_Game.
             /// Winner Calaculation
             /// ScoreCalculation
         }
 
-        public void NewPotentialMoveProcedure()
+        public void CurrentPlayerTurnProcedure()
+        {
+            LoadNewPotentialMoveProcedure();
+            if (!m_UI.Input.QuitInserted)
+            {
+                MoveValidationProcedure();
+                m_Game.MoveManager.ExecuteMove(m_Game.Board, m_Game.CurrentPlayer);
+                m_Game.PostMoveProcedure();
+                m_UI.PrintBoard(m_Game.Board, m_Game.CurrentPlayer.PlayerType);
+                RecurringTurnProcedure();
+            }
+
+        }
+       
+        public void LoadNewPotentialMoveProcedure()
         {
             if (m_Game.CurrentPlayer.PlayerType == ePlayerType.Human)
             {
-                RawInputProcedure();
+                m_UI.RequestMoveInput();
                 m_Game.LoadNewPotentialMove(m_UI.Input.SourceIndex, m_UI.Input.DestinationIndex);
             }
 
             else /// (i_CurrentPlayer.PlayerType == ePlayerType.Computer)
             {
                 m_Game.GenerateRandomPotentialMove();
-            }
-        }
-
-        /// Should Be Placed under consoleUI InputManager
-        public void RawInputProcedure()
-        {
-            m_UI.Input.LoadNewInput();
-
-            while (!m_UI.Input.InputStructureIsValid)
-            {
-                m_UI.PrintInvalidInputStructure();
-                m_UI.Input.LoadNewInput();
-            }
-        }
-
-        public void MoveProcedure()
-        {
-            NewPotentialMoveProcedure();
-            /// if (!QUitOption)
-            /// 
-            MoveValidationProcedure();
-            m_Game.MoveManager.ExecuteMove(m_Game.Board, m_Game.CurrentPlayer);
-            m_Game.PostMoveProcedure();
-        }
-
-        public void RecurringTurnProcedure()
-        {
-            bool recurringTurnIsPossible;
-
-            recurringTurnIsPossible = m_Game.RecurringTurnPossibilityValidation();
-            while (recurringTurnIsPossible)
-            {
-                m_UI.PrintWhoseTurn(m_Game.CurrentPlayer);
-                /*NewPotentialMoveProcedure();
-                MoveValidationProcedure();
-                m_Game.MoveManager.ExecuteMove(m_Game.Board, m_Game.CurrentPlayer);
-                m_Game.PostMoveProcedure();*/
-                MoveProcedure();
-                m_UI.PrintBoard(m_Game.Board, m_Game.CurrentPlayer.PlayerType);
-                recurringTurnIsPossible = m_Game.RecurringTurnPossibilityValidation();
             }
         }
 
@@ -141,7 +113,7 @@ namespace GameManagement
                 while (!validMove)
                 {
                     m_UI.PrintInvalidInputMoveOption(); /// If computer Playing Do NOT Print it!
-                    NewPotentialMoveProcedure();
+                    LoadNewPotentialMoveProcedure();
                     validMove = m_Game.MoveManager.RecurringTurnMoveValidation(m_Game.Board, m_Game.CurrentPlayer);
                 }
             }
@@ -152,11 +124,26 @@ namespace GameManagement
                 while (!validMove)
                 {
                     m_UI.PrintInvalidInputMoveOption(); /// If computer Playing Do NOT Print it!
-                    NewPotentialMoveProcedure();
+                    LoadNewPotentialMoveProcedure();
                     validMove = m_Game.MoveManager.MoveValidation(m_Game.Board, m_Game.CurrentPlayer);
                 }
             }
         }
+       
+        public void RecurringTurnProcedure()
+        {
+            bool recurringTurnIsPossible;
+
+            recurringTurnIsPossible = m_Game.RecurringTurnPossibilityValidation();
+            while (recurringTurnIsPossible)
+            {
+                m_UI.PrintWhoseTurn(m_Game.CurrentPlayer);
+                CurrentPlayerTurnProcedure();
+                m_UI.PrintBoard(m_Game.Board, m_Game.CurrentPlayer.PlayerType);
+                recurringTurnIsPossible = m_Game.RecurringTurnPossibilityValidation();
+            }
+        }
+
 
     }
 }

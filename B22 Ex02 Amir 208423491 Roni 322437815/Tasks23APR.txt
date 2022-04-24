@@ -1,31 +1,44 @@
 
 Tasks 24Apr Morning :
 
-1. 1. Quit option -> both from moveInput at the end of singleGameSession
-	*InCheckersGameManager handle it
-	
-2. In Game class, Im method Generate New Move, build a case it's a recurring turn.
+2. *Amir*
+	-In Game class, Im method Generate New Move, build a case it's a recurring turn. (Use Load new potential move method inside game class
 
-3. In Game Manager, In method RecurringTurnProcedure, add a condition that if a invalid move genrated and the computer is the current player,
-	so DON'T print invalid move message.
-	
-4. ConsoleUI Class
+4. *Roni* ConsoleUI Class
 	update GetPlayerName function to specify if it's the first Player or second.
 	fix PrintBoard function to be more organized and readable.
 	Also, fix the spaces so the matrix will be more organized.
 
-5. 	*CheckersGameManager* 
+3. *Roni*
+	-In Game Manager, In method MoveValidationProcedure, add a condition that if a invalid move genrated and the computer is the current player,
+	so DON'T print invalid move message.
+	
+5. 	*Amir*
+	*CheckersGameManager* 
 	-Build function that initialize the relevant values/object bewteen singleGameSession
 		*Setting the board again?
+		
+*RONI*	 -> Make a list of the things we should intitialize between games. 
+		-i.e. -> Score, we should keep it, Board, we have to set again... 
+		
 
-6. GameClass:
-	ScoreCalculator & winnerPlayer (GameResult)
+6. *Roni*
+	GameClass: 
+		ScoreCalculator & winnerPlayer (GameResult) -> RONI add it, and test!
+		Also, add a call to this method from CheckersGameManager.
 	
 7.	***General***
 		-Check enum structure
 		-AI
 
 
-TESTING!!! 
+TESTING, TESTING AND MORE TESTING
+make a list with special things to check. it's very important.
+Be smart. set a game play of computer vs computer. 4X4 Board, and others things thar might help you to test
+Try to simulate a case of a Draw. 
 
 
+DONE Recently:
+
+ 1. Quit option -> both from moveInput at the end of singleGameSession
+	*InCheckersGameManager handle it
