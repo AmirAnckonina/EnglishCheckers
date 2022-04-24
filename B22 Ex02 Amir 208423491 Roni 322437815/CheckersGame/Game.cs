@@ -112,12 +112,12 @@ namespace CheckersGame
         {
             get
             {
-                return GameResult;
+                return m_GameResult;
             }
 
             set
             {
-                GameResult = value;
+                m_GameResult = value;
             }
         }
 
@@ -260,14 +260,30 @@ namespace CheckersGame
             }
         }
 
-        public bool GameOver()
+        public bool GameOver(bool i_IsQPressed)
         {
             bool isGameOver;
 
-            if(m_RivalPlayer.NumOfDiscs == 0 || !RivalPlayerMovementPossibilityCheck())
+            if (i_IsQPressed || (m_RivalPlayer.NumOfDiscs == 0)) 
             {
                 isGameOver = true;
             }
+
+            else if(!RivalPlayerMovementPossibilityCheck(rival))
+            { 
+                isGameOver = true;
+                if(!RivalPlayerMovementPossibilityCheck(currplayer))
+                {
+                    //draw
+                }
+
+               
+            }
+
+            //else if(CheckIfDraw())
+            //{
+            //    isGameOver = true;
+            //}
 
             else
             {
@@ -275,6 +291,26 @@ namespace CheckersGame
             }
 
             return isGameOver;
+        }
+
+        //public bool CheckIfDraw()
+        //{
+        //    bool isDraw;
+
+        //    if(m_CurrentPlayer.NumOfDiscs ==0 && m_RivalPlayer)
+        //}
+
+        public void UpdateTheGameResult()
+        {
+            if (m_CurrentPlayer.PlayerRecognition == ePlayerRecognition.FirstPlayer)
+            {
+                m_GameResult = eGameResult.FirstPlayerWon;
+            }
+
+            else
+            {
+                m_GameResult = eGameResult.SecondPlayerWon;
+            }
         }
 
         public bool RivalPlayerMovementPossibilityCheck()

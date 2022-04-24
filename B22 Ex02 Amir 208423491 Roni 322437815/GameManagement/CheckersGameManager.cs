@@ -67,11 +67,11 @@ namespace GameManagement
                 m_UI.PrintWhoseTurn(m_Game.CurrentPlayer); /// Move to ConsoleUI
                 CurrentPlayerTurnProcedure();
 
-            } while (!m_Game.GameOver() && !m_UI.Input.QuitInserted); /// && !NotQuit)
+            } while (!m_Game.GameOver(m_UI.Input.QuitInserted)); 
 
-            /// m_Game.
-            /// Winner Calaculation
-            /// ScoreCalculation
+            m_Game.UpdateTheGameResult();
+            m_Game.ScoreCalculator();
+
         }
 
         public void CurrentPlayerTurnProcedure()
@@ -112,7 +112,10 @@ namespace GameManagement
                 /// We have here Non-Ending loop in case of computer is playing
                 while (!validMove)
                 {
-                    m_UI.PrintInvalidInputMoveOption(); /// If computer Playing Do NOT Print it!
+                    if (m_Game.CurrentPlayer.PlayerType != ePlayerType.Computer) /// If computer Playing Do NOT Print it!
+                    {
+                        m_UI.PrintInvalidInputMoveOption(); 
+                    }
                     LoadNewPotentialMoveProcedure();
                     validMove = m_Game.MoveManager.RecurringTurnMoveValidation(m_Game.Board, m_Game.CurrentPlayer);
                 }

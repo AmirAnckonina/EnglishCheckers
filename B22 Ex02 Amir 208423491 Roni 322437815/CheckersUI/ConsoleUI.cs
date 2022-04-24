@@ -11,8 +11,10 @@ namespace CheckersUI
     public class ConsoleUI
     {
         private ConsoleInputManager m_Input;
-
+        private bool m_IsSecondPlayerName;
         private GameDetails m_GameDetails;
+
+
 
         public ConsoleUI()
         {
@@ -47,6 +49,7 @@ namespace CheckersUI
         {
             int gameModeChoice;
 
+            m_IsSecondPlayerName = false;
             m_GameDetails.FirstPlayerName = GetPlayerName();
             m_GameDetails.BoardSize = GetSizeOfBoard();
             gameModeChoice = GetGameMode();
@@ -59,6 +62,7 @@ namespace CheckersUI
             else //gameModeChoice == 2
             {
                 m_GameDetails.GameMode = CheckersGame.eGameMode.TwoPlayersMode;
+                m_IsSecondPlayerName = true;
                 m_GameDetails.SecondPlayerName = GetPlayerName();
             }
         }
@@ -67,7 +71,16 @@ namespace CheckersUI
         {
             StringBuilder m_Name = new StringBuilder();
 
-            Console.WriteLine("Please enter your Name: ");
+            if (!m_IsSecondPlayerName)
+            {
+                Console.WriteLine("Please enter your Name: ");
+            }
+
+            else
+            {
+                Console.WriteLine("Please enter the second player Name: ");
+            }
+
             m_Name.Append(System.Console.ReadLine());
 
             return m_Name;
@@ -312,10 +325,10 @@ namespace CheckersUI
 
         }
 
-        public StringBuilder GetPlayerName(Player i_CurrPlayer)
-        {
-            return i_CurrPlayer.Name;
-        }
+        //public StringBuilder GetPlayerName(Player i_CurrPlayer)
+        //{
+        //    return i_CurrPlayer.Name;
+        //}
 
         public void RequestMoveInput()
         {
@@ -325,6 +338,12 @@ namespace CheckersUI
                 PrintInvalidInputStructure();
                 m_Input.LoadNewInput();
             }
+        }
+
+        public void PrintSingleGameResult(eGameResult i_GameResult,Player i_FirsPlayer, Player i_SecondPlayer)
+        {
+           
+            Console.WriteLine("The winner is {0}",);
         }
     }
 }
