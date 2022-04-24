@@ -59,14 +59,14 @@ namespace GameManagement
         {
             m_Game.CurrentPlayer = m_Game.SecondPlayer; /// CHANGE!!!!
             m_Game.RivalPlayer = m_Game.FirstPlayer;
-            m_UI.PrintBoard(m_Game.Board);
+            m_UI.PrintBoard(m_Game.Board, ePlayerType.Computer);
 
             do
             {
                 m_Game.SwitchTurn();
                 m_UI.PrintWhoseTurn(m_Game.CurrentPlayer); /// Move to ConsoleUI
                 MoveProcedure();
-                m_UI.PrintBoard(m_Game.Board);
+                m_UI.PrintBoard(m_Game.Board, m_Game.CurrentPlayer.PlayerType);
                 RecurringTurnProcedure();
 
             } while (!m_Game.GameOver()); /// && !NotQuit)
@@ -125,7 +125,7 @@ namespace GameManagement
                 m_Game.MoveManager.ExecuteMove(m_Game.Board, m_Game.CurrentPlayer);
                 m_Game.PostMoveProcedure();*/
                 MoveProcedure();
-                m_UI.PrintBoard(m_Game.Board);
+                m_UI.PrintBoard(m_Game.Board, m_Game.CurrentPlayer.PlayerType);
                 recurringTurnIsPossible = m_Game.RecurringTurnPossibilityValidation();
             }
         }
@@ -137,9 +137,10 @@ namespace GameManagement
             if (m_Game.IsRecurringTurn)
             {
                 validMove = m_Game.MoveManager.RecurringTurnMoveValidation(m_Game.Board, m_Game.CurrentPlayer);
+                /// We have here Non-Ending loop in case of computer is playing
                 while (!validMove)
                 {
-                    m_UI.PrintInvalidInputMoveOption();
+                    m_UI.PrintInvalidInputMoveOption(); /// If computer Playing Do NOT Print it!
                     NewPotentialMoveProcedure();
                     validMove = m_Game.MoveManager.RecurringTurnMoveValidation(m_Game.Board, m_Game.CurrentPlayer);
                 }
@@ -150,7 +151,7 @@ namespace GameManagement
                 validMove = m_Game.MoveManager.MoveValidation(m_Game.Board, m_Game.CurrentPlayer);
                 while (!validMove)
                 {
-                    m_UI.PrintInvalidInputMoveOption();
+                    m_UI.PrintInvalidInputMoveOption(); /// If computer Playing Do NOT Print it!
                     NewPotentialMoveProcedure();
                     validMove = m_Game.MoveManager.MoveValidation(m_Game.Board, m_Game.CurrentPlayer);
                 }

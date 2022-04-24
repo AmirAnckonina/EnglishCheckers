@@ -131,7 +131,7 @@ namespace CheckersUI
         public void PrintInvalidInputMoveOption()
         {
             Console.WriteLine("Sorry, your move choice isn't valid!");
-            Console.Write("Please enter a new valid move: ");
+            Console.WriteLine("Please enter a new valid move: ");
         }
 
         public bool BoardSizeInputValueValidation(int i_BoardSize)
@@ -239,13 +239,19 @@ namespace CheckersUI
         //    }
         //}
 
-        public void PrintBoard(Board i_Board)
+        public void PrintBoard(Board i_Board, ePlayerType i_PlayerType)
         {
-            Ex02.ConsoleUtils.Screen.Clear();
             int row, counter = 0, index;
             char letter = 'A', currDiscChar;
             eDiscType currDiscType;
 
+            if (i_PlayerType == ePlayerType.Computer)
+            {
+                System.Threading.Thread.Sleep(3000);
+            }
+
+            Ex02.ConsoleUtils.Screen.Clear();
+            
             for (row = 0; row < i_Board.BoardSize; row++)
             {
                 Console.Write("   {0} ", letter);
@@ -297,6 +303,13 @@ namespace CheckersUI
 
             Console.WriteLine(" ");
             Console.WriteLine(" ");
+
+            /*if (i_PlayerType == ePlayerType.Computer)
+            {
+                System.Threading.Thread.Sleep(3000);
+            }*/
+
+
         }
 
         public StringBuilder GetPlayerName(Player i_CurrPlayer)
