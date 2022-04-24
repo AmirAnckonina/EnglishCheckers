@@ -156,7 +156,7 @@ namespace CheckersGame
             m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
             m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
             m_SecondPlayer.InitializeCurrentHoldingIndices(m_Board);
-            m_FirstPlayer.PlayerType = ePlayerType.Human;
+            m_FirstPlayer.PlayerType = ePlayerType.Human; //Should be Human, Justfor testing  Computer 
             if (m_GameMode == eGameMode.TwoPlayersMode)
             {
                 m_FirstPlayer.PlayerType = ePlayerType.Human;
@@ -174,23 +174,31 @@ namespace CheckersGame
             m_MoveManager.DestinationIndex = i_DestinationIndex;
         }
 
-        public void GenerateRandomPotentialMove()
+        public void GenerateRandomPotentialMove() 
         {
-            bool isValidMove;
-            int generatedIndexFromList;
-            var random = new Random();
-            SquareIndex currentSquareIndex = new SquareIndex();
-            List<SquareIndex> tempHoldingSquareIndices = new List<SquareIndex>(m_CurrentPlayer.CurrentHoldingSquareIndices);
+            if (m_IsRecurringTurn)
+            {
+                /// We should add HERE a condition If it's a recurring turn.
+            }
 
-            generatedIndexFromList = random.Next(tempHoldingSquareIndices.Count);
-            currentSquareIndex = tempHoldingSquareIndices[generatedIndexFromList];
-            isValidMove = m_MoveManager.AnyMovePossibilityCheck(currentSquareIndex, m_Board, m_CurrentPlayer);
-            while (!isValidMove)
-            { 
-                tempHoldingSquareIndices.Remove(currentSquareIndex);
+            else
+            {
+                bool isValidMove;
+                int generatedIndexFromList;
+                var random = new Random();
+                SquareIndex currentSquareIndex = new SquareIndex();
+                List<SquareIndex> tempHoldingSquareIndices = new List<SquareIndex>(m_CurrentPlayer.CurrentHoldingSquareIndices);
+
                 generatedIndexFromList = random.Next(tempHoldingSquareIndices.Count);
                 currentSquareIndex = tempHoldingSquareIndices[generatedIndexFromList];
                 isValidMove = m_MoveManager.AnyMovePossibilityCheck(currentSquareIndex, m_Board, m_CurrentPlayer);
+                while (!isValidMove)
+                { 
+                    tempHoldingSquareIndices.Remove(currentSquareIndex);
+                    generatedIndexFromList = random.Next(tempHoldingSquareIndices.Count);
+                    currentSquareIndex = tempHoldingSquareIndices[generatedIndexFromList];
+                    isValidMove = m_MoveManager.AnyMovePossibilityCheck(currentSquareIndex, m_Board, m_CurrentPlayer);
+                }
             }
         } 
 

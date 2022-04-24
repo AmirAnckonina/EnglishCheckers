@@ -165,7 +165,8 @@ namespace CheckersGame
 
         public void AddIndexToCurrentHoldingSquareIndices(SquareIndex i_SquareIndexToAdd)
         {
-            m_CurrentHoldingSquareIndices.Add(i_SquareIndexToAdd);
+            SquareIndex newSquareIndex = new SquareIndex(i_SquareIndexToAdd);
+            m_CurrentHoldingSquareIndices.Add(newSquareIndex);
         }
 
         public void RemoveIndexFromCurrentHoldingSquareIndices(SquareIndex i_SquareIndexToRemove)
