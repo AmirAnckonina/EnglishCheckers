@@ -10,10 +10,11 @@ namespace CheckersUI
 {
     public class ConsoleInputManager
     {
-        StringBuilder m_RawInput;
-        bool m_InputStructureIsValid;
-        SquareIndex m_SourceIndex;
-        SquareIndex m_DestinationIndex;
+        private   StringBuilder m_RawInput;
+        private bool m_RawInputIsValid;
+        private bool m_QuitInserted;
+        private SquareIndex m_SourceIndex;
+        private SquareIndex m_DestinationIndex;
 
         /* int[] m_SourceIndex; //Structure - > [ rowIndex, ColIndex ] // Af>Bi
          int[] m_DestinationIndex;*/
@@ -25,7 +26,8 @@ namespace CheckersUI
             m_RawInput = new StringBuilder();
             m_SourceIndex = new SquareIndex();
             m_DestinationIndex = new SquareIndex();
-            m_InputStructureIsValid = false;
+            m_RawInputIsValid = false;
+            m_QuitInserted = false;
         }
 
         public StringBuilder RawInput
@@ -57,11 +59,24 @@ namespace CheckersUI
             }
         }
 
-        public bool InputStructureIsValid
+        public bool RawInputIsValid
         {
             get
             {
-                return m_InputStructureIsValid; 
+                return m_RawInputIsValid; 
+            }
+        }
+
+        public bool QuitInserted
+        {
+            get
+            {
+                return m_QuitInserted;
+            }
+
+            set
+            {
+                m_QuitInserted = value;
             }
         }
 
@@ -69,8 +84,8 @@ namespace CheckersUI
         {
             ClearPreviousInput();
             m_RawInput.Append(Console.ReadLine());
-            InputStructureValidation();
-            if (m_InputStructureIsValid) /// and it's not Quit.
+            RawInputValidation();
+            if (m_RawInputIsValid && !m_QuitInserted) /// and it's not Quit.
             {
                 UpdateIndices();
             }
@@ -80,7 +95,7 @@ namespace CheckersUI
         {
             m_RawInput.Clear();
             //Init indices
-            m_InputStructureIsValid = false;
+            m_RawInputIsValid = false;
         }
 
         public void UpdateIndices()
@@ -91,19 +106,53 @@ namespace CheckersUI
             m_DestinationIndex.RowIndex = LetterToNumberIndexConverter(m_RawInput[4]);
         }
 
-        public void InputStructureValidation() /// Change to bool
+        public void RawInputValidation() /// Change to bool
         {
             /// CARFUL: validate if the first function returning false then the others won't be called.
             /// Add quit option. Q or q is also valid.
-            if (LengthValidation() && MovingFromValidation() && MovingToValidation() && OperatorValidation())
+            if (DoesQuitInserted() || InputStructureValidation())
             {
-                m_InputStructureIsValid = true;
+                m_RawInputIsValid = true;
             }
 
             else
             {
-                m_InputStructureIsValid = false;
+                m_RawInputIsValid = false;
             }
+        }
+
+        public bool InputStructureValidation()
+        {
+            bool inputStructureIsValid;
+            
+            if (LengthValidation() && MovingFromValidation() && MovingToValidation() && OperatorValidation())
+            {
+                inputStructureIsValid = true;
+            }
+
+            else
+            {
+                inputStructureIsValid = false;
+            }
+
+            return inputStructureIsValid;
+        }
+
+        public bool DoesQuitInserted()
+        {
+            bool quitInserted;
+
+            if (m_RawInput.ToString() == "Q" || m_RawInput.ToString() == "q")
+            {
+                quitInserted = m_QuitInserted = true;
+            }
+
+            else
+            {
+                quitInserted = m_QuitInserted = false;
+            }
+
+            return quitInserted;
         }
 
         public bool MovingFromValidation()

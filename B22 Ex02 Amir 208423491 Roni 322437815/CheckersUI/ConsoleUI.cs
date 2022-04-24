@@ -316,5 +316,15 @@ namespace CheckersUI
         {
             return i_CurrPlayer.Name;
         }
+
+        public void RequestMoveInput()
+        {
+            m_Input.LoadNewInput();
+            while (!m_Input.RawInputIsValid)
+            {
+                PrintInvalidInputStructure();
+                m_Input.LoadNewInput();
+            }
+        }
     }
 }
