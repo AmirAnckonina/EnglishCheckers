@@ -132,7 +132,15 @@ namespace CheckersUI
 
         public void PrintWhoseTurn(Player i_CurrPlayer)
         {
-            Console.WriteLine("- It's {0} turn, Go Ahead! : ", i_CurrPlayer.Name);
+            if(i_CurrPlayer.PlayerType == ePlayerType.Computer)
+            {
+                Console.WriteLine("- It's the Comuter turn!");
+            }
+
+            else
+            {
+               Console.WriteLine("- It's {0} turn, Go Ahead! : ", i_CurrPlayer.Name);
+            }
         }
 
         public void PrintInvalidInputStructure()
@@ -199,58 +207,6 @@ namespace CheckersUI
             return discTypeChar;
         }
 
-        //public void PrintBoard(Board i_Board, ePlayerType i_PlayerType)
-        //{
-        //    int columnIndex = 0;
-        //    char rowLetter = 'a';
-        //    char currDiscTypeChar;
-        //    eDiscType currDiscType;
-
-        //    if (i_PlayerType == ePlayerType.Computer)
-        //    {
-        //        System.Threading.Thread.Sleep(3000);
-        //    }
-
-        //    Ex02.ConsoleUtils.Screen.Clear();
-        //    PrintColumnsFrame(i_Board.BoardSize);
-        //    Console.Write("{0}|", rowLetter);
-        //    rowLetter = (char)(rowLetter + 1);
-
-        //    foreach (Square currSquare in i_Board.GameBoard)
-        //    {
-        //        currDiscTypeChar = GetCharByDiscType(currSquare.DiscType);
-        //        currDiscType = currSquare.DiscType;
-
-        //        if (columnIndex == i_Board.BoardSize)
-        //        {
-        //            PrintNewRow(i_Board.BoardSize, ref rowLetter);
-        //            columnIndex = 0;
-        //        }
-
-        //        if (currDiscType != eDiscType.None)
-        //        {
-        //            Console.Write(" {0} | ", currDiscTypeChar);
-        //        }
-
-        //        else
-        //        {
-        //            Console.Write("   | ");
-        //        }
-
-        //        columnIndex++;
-        //    }
-
-        //    Console.WriteLine(" ");
-        //    Console.WriteLine(" ");
-
-        //    /*if (i_PlayerType == ePlayerType.Computer)
-        //    {
-        //        System.Threading.Thread.Sleep(3000);
-        //    }*/
-
-
-        //}
-
         public void PrintBoard(Board i_Board, ePlayerType i_PlayerType)
         {
             int columnIndex = 0;
@@ -273,9 +229,7 @@ namespace CheckersUI
 
                 if (columnIndex == 0)
                 {
-                    Console.Write("{0}|", rowLetter);
-                    rowLetter = (char)(rowLetter + 1);
-                    PrintNewRow(i_Board.BoardSize, ref rowLetter);
+                    PrintNewRowChar(i_Board.BoardSize,ref rowLetter);
                 }
 
                 if (currDiscType != eDiscType.None)
@@ -290,39 +244,31 @@ namespace CheckersUI
 
                 columnIndex++;
                 if(columnIndex == m_GameDetails.BoardSize)
-                {
+                {                   
                     columnIndex = 0;
+                    PrintRowBorder(i_Board.BoardSize);
                 }
             }
 
             Console.WriteLine(" ");
-            Console.WriteLine(" ");
-
-            /*if (i_PlayerType == ePlayerType.Computer)
-            {
-                System.Threading.Thread.Sleep(3000);
-            }*/
-
-
         }
 
-        public void PrintNewRow(int i_BoardSize, ref char io_RowLetter)
+        public void PrintNewRowChar(int i_BoardSize, ref char io_RowLetter)
         {
-            Console.WriteLine(" ");
-            PrintRowBorder(i_BoardSize);
-            Console.WriteLine(" ");
             Console.Write("{0}|", io_RowLetter);
-            io_RowLetter = (char)(io_RowLetter + 1);
-
+            io_RowLetter = (char)(io_RowLetter + 1);          
         }
 
         public void PrintRowBorder(int i_BoardSize)
         {
             int index;
+
+            Console.WriteLine(" ");
             for (index = 0; index < i_BoardSize; index++)
             {
                 Console.Write("=====");
             }
+            Console.WriteLine(" ");
         }
 
         public void PrintColumnsFrame(int i_BoardSize)
@@ -359,12 +305,12 @@ namespace CheckersUI
         {
            if(i_GameResult == eGameResult.FirstPlayerWon)
             {
-                Console.WriteLine("The Winner is {0} ", i_FirstPlayer.Name);
+                Console.WriteLine("The Winner is {0} !", i_FirstPlayer.Name);
             }
 
            else if(i_GameResult == eGameResult.SecondPlayerWon)
             {
-                Console.WriteLine("The Winner is {0} ", i_SecondPlayer.Name);
+                Console.WriteLine("The Winner is {0} !", i_SecondPlayer.Name);
             }
             
            else ///The game result is draw
@@ -372,8 +318,8 @@ namespace CheckersUI
                 Console.WriteLine("The game result is draw!");
             }
 
-            ///Console.WriteLine("{0}'s score: {1}", i_FirstPlayer.Name,i_FirstPlayer.score);
-            ///Console.WriteLine("{0}'s score: {1}", i_SecondPlayer.Name,i_SecondPlayer.score);
+             Console.WriteLine("{0}'s score: {1}", i_FirstPlayer.Name, i_FirstPlayer.Score);
+             Console.WriteLine("{0}'s score: {1}", i_SecondPlayer.Name, i_SecondPlayer.Score);
         }
     }
 }
