@@ -196,13 +196,25 @@ namespace CheckersGame
             }
         }
 
-        /* public bool AnyMovePossibilyValidation(ref Board i_Board, ref MoveManager i_MoveManager)
-         {
-             foreach (SquareIndex sqrIndex in m_CurrentHoldingIndices)
-             {
-                 i_MoveManager.MoveFromOptionValiidation(m_DiscType, m_KingDiscType, i_Board[sqrIndex]); //How to pass *this* object by ref?
-             }
-         }*/
+        public int CalculatePlayerDiscValuesAfterSingleGame(Board i_Board)
+        {
+            int totalDiscValues = 0;
+
+            foreach (SquareIndex currSquareIndex in m_CurrentHoldingSquareIndices)
+            {
+                if (i_Board[currSquareIndex].DiscType == m_KingDiscType)
+                {
+                    totalDiscValues += 4;
+                }
+
+                else // So it's a regular discType
+                {
+                    totalDiscValues++;
+                }
+            }
+
+            return totalDiscValues;
+        }
 
     }
 }

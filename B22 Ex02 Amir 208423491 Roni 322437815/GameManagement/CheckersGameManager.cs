@@ -29,24 +29,26 @@ namespace GameManagement
             // Update Game (under CheckersGame project)
             // Split the whole old "TheCheckersGame", using m_Game.
 
-            bool fullGameSessionsFinished = false;
-
+            bool playAnotherRound;
 
             m_UI.Welcome();
             GameInitialization();
-
             do
             {
-                /// ResetBetweenSessions
                 RunSingleGameSession();
-                /// PlayAnotherTurn();
+                m_Game.ResetBetweenSessions();
+                playAnotherRound =  m_UI.AskForAnotherRound();
 
-            } while (!fullGameSessionsFinished);
+            } while (playAnotherRound);
 
-
+            m_Game.SaveFinalCheckersGameResult();
+            m_UI.PrintAllGameSessionsResult(m_Game.FinalCheckersSessionResult, m_Game.FirstPlayer, m_Game.SecondPlayer);
+            m_UI.Goodbye();
         }
 
-        public void GameInitialization()
+        
+
+    public void GameInitialization()
         {
             m_UI.RequestGameDetails();
             /// m_GameDetails = m_UI.GameDetails; /// set via m_GameDetails /// CHANGE!
@@ -57,10 +59,8 @@ namespace GameManagement
 
         public void RunSingleGameSession()
         {
-            m_Game.CurrentPlayer = m_Game.SecondPlayer; /// CHANGE!!!!
-            m_Game.RivalPlayer = m_Game.FirstPlayer;
-            m_UI.PrintBoard(m_Game.Board, ePlayerType.Computer);
-
+            m_Game.TurnsSetup();
+            m_UI.PrintBoard(m_Game.Board, ePlayerType.Human);
             do
             {
                 m_Game.SwitchTurn();
@@ -70,7 +70,7 @@ namespace GameManagement
             } while (!m_Game.GameOver(m_UI.Input.QuitInserted)); 
 
             m_Game.ScoreCalculationAndUpdate();
-            m_UI.PrintSingleGameResult(m_Game.GameResult, m_Game.FirstPlayer, m_Game.SecondPlayer);
+            m_UI.PrintSingleGameResult(m_Game.SingleGameResult, m_Game.FirstPlayer, m_Game.SecondPlayer);
 
         }
 

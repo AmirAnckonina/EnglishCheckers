@@ -19,9 +19,9 @@ Try to simulate a case of a Draw.
 <======================================================================>
 	
 On start of SingleGame, handle who's aterating with respect to the "SwitchTurn"	
-1. ScoreCalc - Count all discs values.
+1. ScoreCalc - Count all discs values. ---- VVVVVVVV
 
-2 . In RUN function add another Quit option.
+2 . In RUN function add another Quit option. ---------- VVVVVVV
 
 2. Build ResetBetweenGames:
 	
@@ -45,6 +45,9 @@ Which data members to initialize catgorized by Objects:
 	***CurrentPlayer & RivalPlayer -> Set order before singleSession.
 3. MoveManager -> NOTHING to change, But pay attention the new values override the previous.
 4. Game -> IsRecurringTurn ???
+
+
+<-------------------------------------------------------------->
 
 Testing :
 
