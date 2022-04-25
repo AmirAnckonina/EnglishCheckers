@@ -14,7 +14,8 @@ namespace CheckersGame
         private Player m_RivalPlayer;
         MoveManager m_MoveManager;
         private eGameMode m_GameMode; // Consider if necessary ??
-        private eGameResult m_GameResult;
+        private eGameResult m_SingleGameResult;
+        private eGameResult m_FinalCheckersSessionResult;
         private bool m_IsRecurringTurn;
 
         public Game()
@@ -107,17 +108,31 @@ namespace CheckersGame
             }
         }
 
-        public eGameResult GameResult
+        public eGameResult SingleGameResult
         {
             get
             {
-                return m_GameResult;
+                return m_SingleGameResult;
             }
 
             set
             {
-                m_GameResult = value;
+                m_SingleGameResult = value;
             }
+        }
+
+        public eGameResult FinalCheckersSessionResult
+        {
+            get
+            {
+                return m_FinalCheckersSessionResult;
+            }
+
+            set
+            {
+                m_FinalCheckersSessionResult = value;
+            }
+
         }
 
         public bool IsRecurringTurn
@@ -204,13 +219,6 @@ namespace CheckersGame
             }
         } 
 
-       /* public void SingleRandomGenerationAndValidation(List<SquareIndex> i_TempHoldingSquareIndices, SquareIndex i_CurrentSquareIndex, int generatedIndexFromList,Random random, bool i_IsValidMove)
-        { 
-            generatedIndexFromList = random.Next(i_TempHoldingSquareIndices.Count);
-            i_CurrentSquareIndex = i_TempHoldingSquareIndices[generatedIndexFromList];
-            /// i_IsValidMove = MoveIsValid(randomSquareIndex);
-        }*/
-
         public void PostMoveProcedure()
         {
             /// Has recachedLastLine
@@ -246,10 +254,15 @@ namespace CheckersGame
             return recurringTurnIsPossible;
         }
 
+        public void TurnsSetup()
+        {
+            m_CurrentPlayer = m_SecondPlayer; 
+            m_RivalPlayer = m_FirstPlayer;
+        }
+
         public void SwitchTurn()
         {
-            //if (m_CurrentPlayer.Equals(FirstPlayer)) /// ReferenceEquals(FirstPlayer, CurrentPlayer)
-            if (FirstPlayer == CurrentPlayer) // CHECK!!
+            if (FirstPlayer == CurrentPlayer) 
             {
                 m_CurrentPlayer = m_SecondPlayer;
                 m_RivalPlayer = m_FirstPlayer;
@@ -304,51 +317,110 @@ namespace CheckersGame
         {
             if (i_WinnerPlayerRecognition == ePlayerRecognition.FirstPlayer)
             {
-                m_GameResult = eGameResult.FirstPlayerWon;
+                m_SingleGameResult = eGameResult.FirstPlayerWon;
             }
 
-            else if (i_WinnerPlayerRecognition == ePlayerRecognition.FirstPlayer)
+            else if (i_WinnerPlayerRecognition == ePlayerRecognition.SecondPlayer)
             {
-                m_GameResult = eGameResult.SecondPlayerWon;
+                m_SingleGameResult = eGameResult.SecondPlayerWon;
             }
 
             else /// i_CurrPlayerRecognition == ePlayerRecognition.None
             {
-                m_GameResult = eGameResult.Draw;
+                m_SingleGameResult = eGameResult.Draw;
             }
         }
 
         public bool PlayerMovementPossibilityCheck(Player i_Player)
         {
-            bool rivalPlayerAbleToMove; 
+            bool playerAbleToMove; 
 
             /// Set first to false so if "true" will be returned from a single SquareIndex check, we will go out from the loop
-            rivalPlayerAbleToMove = false; 
-            foreach (SquareIndex currSquareIndex in m_RivalPlayer.CurrentHoldingSquareIndices)
+            playerAbleToMove = false; 
+            foreach (SquareIndex currSquareIndex in i_Player.CurrentHoldingSquareIndices)
             {
-                rivalPlayerAbleToMove = m_MoveManager.AnyMovePossibilityCheck(currSquareIndex, m_Board, m_RivalPlayer);
-                if (rivalPlayerAbleToMove)
+                playerAbleToMove = m_MoveManager.AnyMovePossibilityCheck(currSquareIndex, m_Board, i_Player);
+                if (playerAbleToMove)
                 {
                     break;
                 }
             }
 
-            return rivalPlayerAbleToMove;
+            return playerAbleToMove;
         }
 
         public void ScoreCalculationAndUpdate()
         {
             int singleGameScore;
+            int firstPlayerTotalDiscValues;
+            int secondPlayerTotalDiscValues;
 
-            singleGameScore = Math.Abs(FirstPlayer.NumOfDiscs - SecondPlayer.NumOfDiscs);
-            if(m_GameResult == eGameResult.FirstPlayerWon)
+            firstPlayerTotalDiscValues = m_FirstPlayer.CalculatePlayerDiscValuesAfterSingleGame(m_Board);
+            secondPlayerTotalDiscValues = m_SecondPlayer.CalculatePlayerDiscValuesAfterSingleGame(m_Board);
+
+            singleGameScore = Math.Abs(firstPlayerTotalDiscValues - secondPlayerTotalDiscValues);
+            if(m_SingleGameResult == eGameResult.FirstPlayerWon)
             {
                 m_FirstPlayer.Score += singleGameScore;
             }
 
-            else if(m_GameResult == eGameResult.SecondPlayerWon)
+            else if(m_SingleGameResult == eGameResult.SecondPlayerWon)
             {
                 m_SecondPlayer.Score += singleGameScore;
+            }
+        }
+
+        public void ResetBetweenSessions()
+        {
+            /*
+                2.Build ResetBetweenGames:
+
+                To Save:
+	            *FirstPlayerName, SecongPlayerName, BoardSize, GameMode(Comp or Human)
+               * Players' score, Players details except these in the next block.
+
+                To Initialize:
+	            /// All discs occurences (After RESETING board)
+	            *m_FirstPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_FirstPlayer.DiscType);
+                *m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
+                /// Clear the whole List from prevoius game.
+                *m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
+                *m_SecondPlayer.InitializeCurrentHoldingIndices(m_Board);
+                *
+           Which data members to initialize catgorized by Objects:
+            1.BOARD->m_GameBoard
+            2.PLAYER->m_NumOfDiscs, m_CurrentHlodingIndices
+             *** CurrentPlayer &RivalPlayer->Set order before singleSession.
+            3.MoveManager->NOTHING to change, But pay attention the new values override the previous.
+            4. Game -> IsRecurringTurn ???
+            */
+
+            FirstPlayer.NumOfDiscs = 0;
+            SecondPlayer.NumOfDiscs = 0;
+            FirstPlayer.CurrentHoldingSquareIndices.Clear();
+            SecondPlayer.CurrentHoldingSquareIndices.Clear();
+            m_Board.InitializeBoard();
+            m_FirstPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_FirstPlayer.DiscType);
+            m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
+            m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
+            m_SecondPlayer.InitializeCurrentHoldingIndices(m_Board);
+        }
+
+        public void SaveFinalCheckersGameResult()
+        {
+            if (m_FirstPlayer.Score > m_SecondPlayer.Score)
+            {
+                m_FinalCheckersSessionResult = eGameResult.FirstPlayerWon;
+            }
+
+            else if (m_SecondPlayer.Score > m_FirstPlayer.Score)
+            {
+                m_FinalCheckersSessionResult = eGameResult.SecondPlayerWon;
+            }
+
+            else // ==
+            {
+                m_FinalCheckersSessionResult = eGameResult.Draw;
             }
         }
     }

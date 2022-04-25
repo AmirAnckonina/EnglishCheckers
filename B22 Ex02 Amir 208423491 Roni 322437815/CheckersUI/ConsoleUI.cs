@@ -11,7 +11,7 @@ namespace CheckersUI
     public class ConsoleUI
     {
         private ConsoleInputManager m_Input;
-        private bool m_IsSecondPlayerName;
+        private bool m_GetSecondPlayerName;
         private GameDetails m_GameDetails;
 
         public ConsoleUI()
@@ -42,12 +42,17 @@ namespace CheckersUI
             //System.Threading.Thread.Sleep(3000);
             // Add rules? Game description?
         }
+        
+        public void Goodbye()
+        {
+            Console.WriteLine("Thanks for playing! See you next time.");
+        }
 
         public void RequestGameDetails()
         {
             int gameModeChoice;
 
-            m_IsSecondPlayerName = false;
+            m_GetSecondPlayerName = false;
             m_GameDetails.FirstPlayerName = GetPlayerName();
             m_GameDetails.BoardSize = GetSizeOfBoard();
             gameModeChoice = GetGameMode();
@@ -55,12 +60,13 @@ namespace CheckersUI
             if (gameModeChoice == 1)
             {
                 m_GameDetails.GameMode = CheckersGame.eGameMode.SinglePlayerMode;
+                m_GameDetails.SecondPlayerName.Append("The Computer");
             }
 
             else //gameModeChoice == 2
             {
                 m_GameDetails.GameMode = CheckersGame.eGameMode.TwoPlayersMode;
-                m_IsSecondPlayerName = true;
+                m_GetSecondPlayerName = true;
                 m_GameDetails.SecondPlayerName = GetPlayerName();
             }
         }
@@ -69,14 +75,14 @@ namespace CheckersUI
         {
             StringBuilder m_Name = new StringBuilder();
 
-            if (!m_IsSecondPlayerName)
+            if (!m_GetSecondPlayerName)
             {
                 Console.WriteLine("Please enter your Name: ");
             }
 
             else
             {
-                Console.WriteLine("Please enter the second player Name: ");
+                Console.WriteLine("Please enter the second player name: ");
             }
 
             m_Name.Append(System.Console.ReadLine());
@@ -89,13 +95,12 @@ namespace CheckersUI
             int boardSize;
             bool boardSizeInputTypeIsValid;
 
-            Console.WriteLine("Please enter the game board size: ");
+            PrintRequestForBoardSize();
             boardSizeInputTypeIsValid = int.TryParse(Console.ReadLine(), out boardSize);
-
             while (!boardSizeInputTypeIsValid || !BoardSizeInputValueValidation(boardSize))
             {
-                Console.WriteLine("The input is not valid");
-                Console.WriteLine("Please enter the size of the game board");
+                PrintInvalidInputMessage();
+                PrintRequestForBoardSize();
                 boardSizeInputTypeIsValid = int.TryParse(Console.ReadLine(), out boardSize);
             }
 
@@ -121,9 +126,22 @@ namespace CheckersUI
             return numOfPlayers;
         }
 
+        public void PrintInvalidInputMessage()
+        {
+            Console.WriteLine("Sorry! Your input isn't valid");
+        }
+
+        public void PrintRequestForBoardSize()
+        {
+            Console.WriteLine("Please pick your Checkers board size: ");
+            Console.WriteLine("6 - For 6X6 board");
+            Console.WriteLine("8 - For 8X8 board");
+            Console.WriteLine("10 - For 10X10 board");
+        }
+
         public void PrintGameModeChoosingRequest()
         {
-            Console.WriteLine("Please choose your game mode:");
+            Console.WriteLine("Please pick your game mode: ");
             Console.WriteLine("1 - Single player mode (play against the computer)");
             Console.WriteLine("2 - Two players mode (play against your friend!)");
         }
@@ -250,7 +268,6 @@ namespace CheckersUI
             }
         }
 
-
         public void PrintNewRowLetter(int i_BoardSize, ref char io_RowLetter)
         {
             Console.Write("{0}|", io_RowLetter);
@@ -303,12 +320,12 @@ namespace CheckersUI
         {
            if(i_GameResult == eGameResult.FirstPlayerWon)
             {
-                Console.WriteLine("The Winner is {0} !", i_FirstPlayer.Name);
+                Console.WriteLine("The Winner is {0}!", i_FirstPlayer.Name);
             }
 
            else if(i_GameResult == eGameResult.SecondPlayerWon)
             {
-                Console.WriteLine("The Winner is {0} !", i_SecondPlayer.Name);
+                Console.WriteLine("The Winner is {0}!", i_SecondPlayer.Name);
             }
             
            else ///The game result is draw
@@ -316,8 +333,86 @@ namespace CheckersUI
                 Console.WriteLine("The game result is draw!");
             }
 
-             Console.WriteLine("{0}'s score: {1}", i_FirstPlayer.Name, i_FirstPlayer.Score);
-             Console.WriteLine("{0}'s score: {1}", i_SecondPlayer.Name, i_SecondPlayer.Score);
+            Console.WriteLine("The total score till now: ");
+            PrintScore(i_FirstPlayer, i_SecondPlayer);
+        }
+
+        public void PrintAllGameSessionsResult(eGameResult i_FinalCheckersSessionResult, Player i_FirstPlayer, Player i_SecondPlayer)
+        {
+            if (i_FinalCheckersSessionResult == eGameResult.FirstPlayerWon)
+            {
+                Console.WriteLine("The final Winner is {0}!", i_FirstPlayer.Name);
+            }
+
+            else if (i_FinalCheckersSessionResult == eGameResult.SecondPlayerWon)
+            {
+                Console.WriteLine("The final Winner is {0}!", i_SecondPlayer.Name);
+            }
+
+            else ///The game result is draw
+            {
+                Console.WriteLine("This Checkers session final result is a draw!");
+            }
+
+            Console.WriteLine("Final session score: ");
+            PrintScore(i_FirstPlayer, i_SecondPlayer);
+        }
+
+        public void PrintScore(Player i_FirstPlayer, Player i_SecondPlayer)
+        {
+            Console.WriteLine("{0}'s score: {1}", i_FirstPlayer.Name, i_FirstPlayer.Score);
+            Console.WriteLine("{0}'s score: {1}", i_SecondPlayer.Name, i_SecondPlayer.Score);
+        }
+
+        public bool AskForAnotherRound()
+        {
+            bool playAnotherRound;
+            bool userChoiceIsValid;
+            char userChoice;
+
+            PrintAnotherGameRequest();
+            userChoiceIsValid = Char.TryParse(Console.ReadLine(), out userChoice);
+            while (!userChoiceIsValid || !AnotherTurnInputValidation(userChoice))
+            {
+                PrintInvalidInputMessage();
+                PrintAnotherGameRequest();
+                userChoiceIsValid = Char.TryParse(Console.ReadLine(), out userChoice);
+            }
+
+            if (Char.ToUpper(userChoice) == 'Q')
+            {
+                playAnotherRound = false;
+            }
+
+            else
+            {
+                playAnotherRound = true;
+            }
+
+            return playAnotherRound;
+        }
+
+        public bool AnotherTurnInputValidation(char i_UserChoice)
+        {
+            bool anotherTurnInputIsValid;
+
+            if ((Char.ToUpper(i_UserChoice) == 'Y' || Char.ToUpper(i_UserChoice) == 'Q'))
+            {
+                anotherTurnInputIsValid = true;
+            }
+
+            else
+            {
+                anotherTurnInputIsValid = false;
+            }
+
+            return anotherTurnInputIsValid;
+        }
+
+        public void PrintAnotherGameRequest()
+        {
+            Console.WriteLine("Do you want to go for another game?");
+            Console.WriteLine("If so, press 'Y' to start a new game. If Not press 'Q' to quit");
         }
     }
 }
