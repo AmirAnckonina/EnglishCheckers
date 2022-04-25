@@ -156,7 +156,7 @@ namespace CheckersGame
             m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
             m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
             m_SecondPlayer.InitializeCurrentHoldingIndices(m_Board);
-            m_FirstPlayer.PlayerType = ePlayerType.Human; //Should be Human, Justfor testing  Computer 
+            m_FirstPlayer.PlayerType = ePlayerType.Computer; //Should be Human, Justfor testing  Computer 
             if (m_GameMode == eGameMode.TwoPlayersMode)
             {
                 m_FirstPlayer.PlayerType = ePlayerType.Human;
@@ -179,6 +179,9 @@ namespace CheckersGame
             if (m_IsRecurringTurn)
             {
                 /// We should add HERE a condition If it's a recurring turn.
+                /// At his point I have the newSourceIndex and I want to load it.
+                /// What about the destinationIndex? how can I take it?
+                LoadNewPotentialMove(m_MoveManager.RecurringTurnNewSourceIndex, m_MoveManager.DestinationIndex);
             }
 
             else
@@ -264,20 +267,30 @@ namespace CheckersGame
         {
             bool isGameOver;
 
-            if (i_IsQPressed || (m_RivalPlayer.NumOfDiscs == 0)) 
+            if (i_IsQPressed) 
             {
                 isGameOver = true;
+                SaveSingleGameResult(m_RivalPlayer.PlayerRecognition);
+            }
+
+            else if (m_RivalPlayer.NumOfDiscs == 0)
+            {
+                isGameOver = true;
+                SaveSingleGameResult(m_CurrentPlayer.PlayerRecognition);
             }
 
             else if(!PlayerMovementPossibilityCheck(m_RivalPlayer))
             { 
                 isGameOver = true;
-                if(!PlayerMovementPossibilityCheck(m_CurrentPlayer))
+                if (!PlayerMovementPossibilityCheck(m_CurrentPlayer))
                 {
-                    m_GameResult = eGameResult.Draw;
+                    SaveSingleGameResult(ePlayerRecognition.None);
                 }
 
-               
+                else /// So the current player can keep moving
+                {
+                    SaveSingleGameResult(m_CurrentPlayer.PlayerRecognition);
+                }
             }
 
             else
@@ -288,37 +301,30 @@ namespace CheckersGame
             return isGameOver;
         }
 
-        public void UpdateTheGameResult()
+        public void SaveSingleGameResult(ePlayerRecognition i_WinnerPlayerRecognition)
         {
-            if (m_CurrentPlayer.PlayerRecognition == ePlayerRecognition.FirstPlayer)
+            if (i_WinnerPlayerRecognition == ePlayerRecognition.FirstPlayer)
             {
                 m_GameResult = eGameResult.FirstPlayerWon;
             }
 
-            else
+            else if (i_WinnerPlayerRecognition == ePlayerRecognition.FirstPlayer)
             {
                 m_GameResult = eGameResult.SecondPlayerWon;
+            }
+
+            else /// i_CurrPlayerRecognition == ePlayerRecognition.None
+            {
+                m_GameResult = eGameResult.Draw;
             }
         }
 
         public bool PlayerMovementPossibilityCheck(Player i_Player)
         {
             bool rivalPlayerAbleToMove; 
-            /// SquareIndex currSquareIndex;
-            /// int indexInList;
-            /// int indicesListSize = m_RivalPlayer.GetCurrentHoldingSqaureIndicesListLength();
-            /// int indicesListSize = (m_RivalPlayer.CurrentHoldingSquareIndices).Count;
 
-            /// Set first to false so if "true" will be returned from a single SquareIndex check,
-            ///we will go out from the loop
+            /// Set first to false so if "true" will be returned from a single SquareIndex check, we will go out from the loop
             rivalPlayerAbleToMove = false; 
-            /*for (indexInList = 0; indexInList < indicesListSize && !rivalPlayerAbleToMove ; indexInList++)
-            {
-                currSquareIndex = m_RivalPlayer.CurrentHoldingSquareIndices[indexInList];
-                rivalPlayerAbleToMove = m_MoveManager.AnyMovePossibilityCheck(currSquareIndex, m_Board, m_RivalPlayer);
-            }*/
-
-
             foreach (SquareIndex currSquareIndex in m_RivalPlayer.CurrentHoldingSquareIndices)
             {
                 rivalPlayerAbleToMove = m_MoveManager.AnyMovePossibilityCheck(currSquareIndex, m_Board, m_RivalPlayer);
@@ -331,26 +337,20 @@ namespace CheckersGame
             return rivalPlayerAbleToMove;
         }
 
-        public int ScoreCalculator()
+        public void ScoreCalculationAndUpdate()
         {
-            int scoreCalculate;
-            
+            int singleGameScore;
+
+            singleGameScore = Math.Abs(FirstPlayer.NumOfDiscs - SecondPlayer.NumOfDiscs);
             if(m_GameResult == eGameResult.FirstPlayerWon)
             {
-                scoreCalculate = FirstPlayer.NumOfDiscs - SecondPlayer.NumOfDiscs;
+                m_FirstPlayer.Score += singleGameScore;
             }
 
             else if(m_GameResult == eGameResult.SecondPlayerWon)
             {
-                scoreCalculate = SecondPlayer.NumOfDiscs - FirstPlayer.NumOfDiscs;
+                m_SecondPlayer.Score += singleGameScore;
             }
-
-            else ///the game result is : Draw
-            {
-                scoreCalculate = 0;
-            }
-
-            return scoreCalculate;
         }
     }
 
