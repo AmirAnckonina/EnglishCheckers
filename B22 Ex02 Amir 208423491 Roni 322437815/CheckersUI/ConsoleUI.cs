@@ -10,10 +10,9 @@ namespace CheckersUI
 {
     public class ConsoleUI
     {
-        private ConsoleInputManager m_Input;
-        private bool m_IsSecondPlayerName;
+        private ConsoleInputManager m_Input;      
         private GameDetails m_GameDetails;
-
+        private bool m_IsSecondPlayerName;
 
 
         public ConsoleUI()
@@ -141,12 +140,14 @@ namespace CheckersUI
             Console.Write("Please enter a new move: ");
         }
 
-        public void PrintInvalidInputMoveOption()
+        public void PrintInvalidInputMoveOption(Player i_CurrPlayer)
         {
-            Console.WriteLine("Sorry, your move choice isn't valid!");
-            Console.WriteLine("Please enter a new valid move: ");
+            if (i_CurrPlayer.PlayerType != ePlayerType.Computer)
+            {
+                Console.WriteLine("Sorry, your move choice isn't valid!");
+                Console.WriteLine("Please enter a new valid move: ");
+            }
         }
-
         public bool BoardSizeInputValueValidation(int i_BoardSize)
         {
             bool boardSizeIsValid;
