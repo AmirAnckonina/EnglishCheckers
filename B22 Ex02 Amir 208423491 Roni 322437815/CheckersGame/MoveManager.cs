@@ -14,9 +14,7 @@ namespace CheckersGame
         private SquareIndex m_RecurringTurnNewSourceIndex;
         private SquareIndex m_EatedSquareIndex;
         private eMoveType m_MoveType;
-        /// private bool m_ReachedLastLine;
-       
-        
+ 
         public MoveManager()
         {
             m_SourceIndex = new SquareIndex();
@@ -25,19 +23,6 @@ namespace CheckersGame
             m_EatedSquareIndex = new SquareIndex();
             m_MoveType = eMoveType.None;
         }
-
-        /*public bool EatingMove
-        {
-            get
-            {
-                return m_EatingMove;
-            }
-
-            set
-            {
-                m_EatingMove = value;
-            }
-        }*/
 
         public SquareIndex SourceIndex
         {
@@ -1110,7 +1095,7 @@ namespace CheckersGame
         {
             bool recurringTurnIsPossible;
 
-            m_SourceIndex.CopySquareIndices(m_DestinationIndex); /// A ref = might be enough but be careful.
+            m_SourceIndex.CopySquareIndices(m_DestinationIndex); /// A ref = might be enough but be careful. 
             recurringTurnIsPossible = AnyEatingMovePossibiltyCheck(i_Board, i_CurrPlayer);
 
             return recurringTurnIsPossible;

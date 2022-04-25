@@ -16,7 +16,6 @@ namespace CheckersGame
         private eGameMode m_GameMode; // Consider if necessary ??
         private eGameResult m_GameResult;
         private bool m_IsRecurringTurn;
-        /// private bool m_FirstPlayerTurn;
 
         public Game()
         {
@@ -156,7 +155,7 @@ namespace CheckersGame
             m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
             m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
             m_SecondPlayer.InitializeCurrentHoldingIndices(m_Board);
-            m_FirstPlayer.PlayerType = ePlayerType.Computer; //Should be Human, Justfor testing  Computer 
+            m_FirstPlayer.PlayerType = ePlayerType.Human; //Should be Human, Justfor testing  Computer 
             if (m_GameMode == eGameMode.TwoPlayersMode)
             {
                 m_FirstPlayer.PlayerType = ePlayerType.Human;

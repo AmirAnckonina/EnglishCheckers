@@ -14,8 +14,6 @@ namespace CheckersUI
         private bool m_IsSecondPlayerName;
         private GameDetails m_GameDetails;
 
-
-
         public ConsoleUI()
         {
             m_Input = new ConsoleInputManager();
@@ -211,8 +209,6 @@ namespace CheckersUI
         {
             int columnIndex = 0;
             char rowLetter = 'a';
-            char currDiscTypeChar;
-            eDiscType currDiscType;
 
             if (i_PlayerType == ePlayerType.Computer)
             {
@@ -224,26 +220,14 @@ namespace CheckersUI
 
             foreach (Square currSquare in i_Board.GameBoard)
             {
-                currDiscTypeChar = GetCharByDiscType(currSquare.DiscType);
-                currDiscType = currSquare.DiscType;
-
                 if (columnIndex == 0)
                 {
-                    PrintNewRowChar(i_Board.BoardSize,ref rowLetter);
+                    PrintNewRowLetter(i_Board.BoardSize,ref rowLetter);
                 }
 
-                if (currDiscType != eDiscType.None)
-                {
-                    Console.Write(" {0} | ", currDiscTypeChar);
-                }
-
-                else
-                {
-                    Console.Write("   | ");
-                }
-
+                PrintSquare(currSquare.DiscType);
                 columnIndex++;
-                if(columnIndex == m_GameDetails.BoardSize)
+                if (columnIndex == m_GameDetails.BoardSize)
                 {                   
                     columnIndex = 0;
                     PrintRowBorder(i_Board.BoardSize);
@@ -253,7 +237,21 @@ namespace CheckersUI
             Console.WriteLine(" ");
         }
 
-        public void PrintNewRowChar(int i_BoardSize, ref char io_RowLetter)
+        public void PrintSquare(eDiscType i_CurrSquareDiscType)
+        {
+            if (i_CurrSquareDiscType != eDiscType.None)
+            {
+                Console.Write(" {0} | ", GetCharByDiscType(i_CurrSquareDiscType));
+            }
+
+                else
+            {
+                Console.Write("   | ");
+            }
+        }
+
+
+        public void PrintNewRowLetter(int i_BoardSize, ref char io_RowLetter)
         {
             Console.Write("{0}|", io_RowLetter);
             io_RowLetter = (char)(io_RowLetter + 1);          

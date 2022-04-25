@@ -10,7 +10,6 @@ namespace CheckersGame
     {
         private Square[,] m_GameBoard;
         private int m_BoardSize;
-        private eDiscType eDiscType;
 
         public Board()
         {
@@ -75,13 +74,6 @@ namespace CheckersGame
                 m_BoardSize = value; 
             }
         }
-
-        /*public void SetBoard(int i_BoardSize)
-        {
-            m_BoardSize = i_BoardSize;
-            m_GameBoard = new Square[m_BoardSize, m_BoardSize];
-            InitializeBoard();
-        }*/
 
         public void AssignSquareObjectsInBoard()
         {

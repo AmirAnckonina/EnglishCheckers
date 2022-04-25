@@ -69,8 +69,8 @@ namespace GameManagement
 
             } while (!m_Game.GameOver(m_UI.Input.QuitInserted)); 
 
-            /// m_Game.UpdateTheGameResult();
             m_Game.ScoreCalculationAndUpdate();
+            m_UI.PrintSingleGameResult(m_Game.GameResult, m_Game.FirstPlayer, m_Game.SecondPlayer);
 
         }
 
