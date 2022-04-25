@@ -136,15 +136,18 @@ namespace CheckersUI
         }
 
         public void PrintInvalidInputStructure()
-        {
-            Console.WriteLine("Sorry, your input structure isn't valid.");
-            Console.Write("Please enter a new move: ");
+        {            
+                Console.WriteLine("Sorry, your input structure isn't valid.");
+                Console.Write("Please enter a new move: ");          
         }
 
-        public void PrintInvalidInputMoveOption()
+        public void PrintInvalidInputMoveOption(ePlayerType i_CurrentPlayerType)
         {
-            Console.WriteLine("Sorry, your move choice isn't valid!");
-            Console.WriteLine("Please enter a new valid move: ");
+            if (i_CurrentPlayerType == ePlayerType.Human)
+            {
+                Console.WriteLine("Sorry, your move choice isn't valid!");
+                Console.WriteLine("Please enter a new valid move: ");
+            }
         }
 
         public bool BoardSizeInputValueValidation(int i_BoardSize)
@@ -196,6 +199,58 @@ namespace CheckersUI
             return discTypeChar;
         }
 
+        //public void PrintBoard(Board i_Board, ePlayerType i_PlayerType)
+        //{
+        //    int columnIndex = 0;
+        //    char rowLetter = 'a';
+        //    char currDiscTypeChar;
+        //    eDiscType currDiscType;
+
+        //    if (i_PlayerType == ePlayerType.Computer)
+        //    {
+        //        System.Threading.Thread.Sleep(3000);
+        //    }
+
+        //    Ex02.ConsoleUtils.Screen.Clear();
+        //    PrintColumnsFrame(i_Board.BoardSize);
+        //    Console.Write("{0}|", rowLetter);
+        //    rowLetter = (char)(rowLetter + 1);
+
+        //    foreach (Square currSquare in i_Board.GameBoard)
+        //    {
+        //        currDiscTypeChar = GetCharByDiscType(currSquare.DiscType);
+        //        currDiscType = currSquare.DiscType;
+
+        //        if (columnIndex == i_Board.BoardSize)
+        //        {
+        //            PrintNewRow(i_Board.BoardSize, ref rowLetter);
+        //            columnIndex = 0;
+        //        }
+
+        //        if (currDiscType != eDiscType.None)
+        //        {
+        //            Console.Write(" {0} | ", currDiscTypeChar);
+        //        }
+
+        //        else
+        //        {
+        //            Console.Write("   | ");
+        //        }
+
+        //        columnIndex++;
+        //    }
+
+        //    Console.WriteLine(" ");
+        //    Console.WriteLine(" ");
+
+        //    /*if (i_PlayerType == ePlayerType.Computer)
+        //    {
+        //        System.Threading.Thread.Sleep(3000);
+        //    }*/
+
+
+        //}
+
         public void PrintBoard(Board i_Board, ePlayerType i_PlayerType)
         {
             int columnIndex = 0;
@@ -210,18 +265,17 @@ namespace CheckersUI
 
             Ex02.ConsoleUtils.Screen.Clear();
             PrintColumnsFrame(i_Board.BoardSize);
-            Console.Write("{0}|", rowLetter);
-            rowLetter = (char)(rowLetter + 1);
 
             foreach (Square currSquare in i_Board.GameBoard)
             {
                 currDiscTypeChar = GetCharByDiscType(currSquare.DiscType);
                 currDiscType = currSquare.DiscType;
 
-                if (columnIndex == i_Board.BoardSize)
+                if (columnIndex == 0)
                 {
+                    Console.Write("{0}|", rowLetter);
+                    rowLetter = (char)(rowLetter + 1);
                     PrintNewRow(i_Board.BoardSize, ref rowLetter);
-                    columnIndex = 0;
                 }
 
                 if (currDiscType != eDiscType.None)
@@ -235,6 +289,10 @@ namespace CheckersUI
                 }
 
                 columnIndex++;
+                if(columnIndex == m_GameDetails.BoardSize)
+                {
+                    columnIndex = 0;
+                }
             }
 
             Console.WriteLine(" ");
@@ -299,8 +357,23 @@ namespace CheckersUI
 
         public void PrintSingleGameResult(eGameResult i_GameResult,Player i_FirstPlayer, Player i_SecondPlayer)
         {
-           
-            Console.WriteLine("The winner is {0}", i_FirstPlayer.Name);
+           if(i_GameResult == eGameResult.FirstPlayerWon)
+            {
+                Console.WriteLine("The Winner is {0} ", i_FirstPlayer.Name);
+            }
+
+           else if(i_GameResult == eGameResult.SecondPlayerWon)
+            {
+                Console.WriteLine("The Winner is {0} ", i_SecondPlayer.Name);
+            }
+            
+           else ///The game result is draw
+            {
+                Console.WriteLine("The game result is draw!");
+            }
+
+            ///Console.WriteLine("{0}'s score: {1}", i_FirstPlayer.Name,i_FirstPlayer.score);
+            ///Console.WriteLine("{0}'s score: {1}", i_SecondPlayer.Name,i_SecondPlayer.score);
         }
     }
 }
