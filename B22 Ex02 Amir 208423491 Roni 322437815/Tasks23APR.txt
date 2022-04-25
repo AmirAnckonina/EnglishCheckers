@@ -1,30 +1,13 @@
 
 Tasks 24Apr Morning :
 
-2. *Amir*
-	-In Game class, Im method Generate New Move, build a case it's a recurring turn. (Use Load new potential move method inside game class
-
-4. *Roni* ConsoleUI Class
-	fix PrintBoard function to be more organized and readable.
-	Also, fix the spaces so the matrix will be more organized.
 	
-5. 	*Amir*
-	*CheckersGameManager* 
-	-Build function that initialize the relevant values/object bewteen singleGameSession
-		*Setting the board again?
-		
-*RONI*	 -> Make a list of the things we should intitialize between games. 
-		-i.e. -> Score, we should keep it, Board, we have to set again... 
-		
-
-6. *Roni*
-	GameClass: 
-		ScoreCalculator & winnerPlayer (GameResult) -> RONI add it, and test!
-		Also, add a call to this method from CheckersGameManager.
-	
-7.	***General***
+***General***
 		-Check enum structure
-		-AI
+		- AI
+		- Remove comments
+		- Naming rules review
+		- How to do value assigning between two Class OBJECTS!
 
 
 TESTING, TESTING AND MORE TESTING
@@ -33,7 +16,56 @@ Be smart. set a game play of computer vs computer. 4X4 Board, and others things 
 Try to simulate a case of a Draw. 
 
 
-DONE Recently:
+<======================================================================>
+	
+On start of SingleGame, handle who's aterating with respect to the "SwitchTurn"	
+1. ScoreCalc - Count all discs values.
 
- 1. Quit option -> both from moveInput at the end of singleGameSession
-	*InCheckersGameManager handle it
+2 . In RUN function add another Quit option.
+
+2. Build ResetBetweenGames:
+	
+	To Save:
+	* FirstPlayerName, SecongPlayerName, BoardSize, GameMode (Comp or Human)
+	* Players' score, Players details except these in the next block.
+	
+	To Initialize:
+	/// All discs occurences (After RESETING board)
+	* m_FirstPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_FirstPlayer.DiscType);
+    * m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
+	  
+	/// Clear the whole List from prevoius game.
+	* m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
+	* m_SecondPlayer.InitializeCurrentHoldingIndices(m_Board);
+	
+Which data members to initialize catgorized by Objects:
+
+1. BOARD -> m_GameBoard
+2. PLAYER -> m_NumOfDiscs, m_CurrentHlodingIndices
+	***CurrentPlayer & RivalPlayer -> Set order before singleSession.
+3. MoveManager -> NOTHING to change, But pay attention the new values override the previous.
+4. Game -> IsRecurringTurn ???
+
+Testing :
+
+	 1. Pre-Game: 
+		- Check enter name, board size, game mode.
+		
+		Iמ-Game:
+		- SimpleMove - All 4 directions + Both players
+		- EatingMove - All 4 directions + Both Players
+		- Invalid Input (ConsoleInputManager)
+		- Quit as input
+		- Load new input
+		- Post-Move Procedure 
+		- Recurring turn procedure - Both for computer and Human
+		
+		Post-Game:
+		GameOver function:
+		-Check FirstPlayerWin and SecongPlayerWin
+		-Check Draw
+		-Check SaveGameResult
+		-ScoreCalculator
+		-PrintSingleGameResult
+		
+	
