@@ -28,10 +28,11 @@ namespace CheckersGame
         public Player()
         {
             m_Name = new StringBuilder(0, 20);
-            m_NumOfDiscs = 0;
+            m_CurrentHoldingSquareIndices = new List<SquareIndex>();
             m_PlayerType = ePlayerType.Human;
             m_DiscType = eDiscType.None;
-            m_CurrentHoldingSquareIndices = new List<SquareIndex>();
+            m_NumOfDiscs = 0;
+            m_Score = 0;
         }
 
         public StringBuilder Name
@@ -57,6 +58,19 @@ namespace CheckersGame
             set
             { 
                 m_NumOfDiscs = value; 
+            }
+        }
+
+        public int Score
+        {
+            get
+            {
+                return m_Score;
+            }
+
+            set
+            {
+                m_Score = value;
             }
         }
 

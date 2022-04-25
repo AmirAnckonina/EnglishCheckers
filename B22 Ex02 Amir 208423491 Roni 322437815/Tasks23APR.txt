@@ -5,13 +5,8 @@ Tasks 24Apr Morning :
 	-In Game class, Im method Generate New Move, build a case it's a recurring turn. (Use Load new potential move method inside game class
 
 4. *Roni* ConsoleUI Class
-	update GetPlayerName function to specify if it's the first Player or second.
 	fix PrintBoard function to be more organized and readable.
 	Also, fix the spaces so the matrix will be more organized.
-
-3. *Roni*
-	-In Game Manager, In method MoveValidationProcedure, add a condition that if a invalid move genrated and the computer is the current player,
-	so DON'T print invalid move message.
 	
 5. 	*Amir*
 	*CheckersGameManager* 

@@ -69,8 +69,8 @@ namespace GameManagement
 
             } while (!m_Game.GameOver(m_UI.Input.QuitInserted)); 
 
-            m_Game.UpdateTheGameResult();
-            m_Game.ScoreCalculator();
+            /// m_Game.UpdateTheGameResult();
+            m_Game.ScoreCalculationAndUpdate();
 
         }
 
@@ -112,7 +112,7 @@ namespace GameManagement
                 /// We have here Non-Ending loop in case of computer is playing
                 while (!validMove)
                 {
-                    m_UI.PrintInvalidInputMoveOption(m_Game.CurrentPlayer); 
+                    /// m_UI.PrintInvalidInputMoveOption(m_Game.CurrentPlayer); 
                     LoadNewPotentialMoveProcedure();
                     validMove = m_Game.MoveManager.RecurringTurnMoveValidation(m_Game.Board, m_Game.CurrentPlayer);
                 }
@@ -123,7 +123,7 @@ namespace GameManagement
                 validMove = m_Game.MoveManager.MoveValidation(m_Game.Board, m_Game.CurrentPlayer);
                 while (!validMove)
                 {
-                    m_UI.PrintInvalidInputMoveOption(m_Game.CurrentPlayer); 
+                    /// m_UI.PrintInvalidInputMoveOption(m_Game.CurrentPlayer.PlayerType); 
                     LoadNewPotentialMoveProcedure();
                     validMove = m_Game.MoveManager.MoveValidation(m_Game.Board, m_Game.CurrentPlayer);
                 }
