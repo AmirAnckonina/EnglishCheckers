@@ -13,7 +13,7 @@ namespace CheckersGame
         private Player m_CurrentPlayer;
         private Player m_RivalPlayer;
         MoveManager m_MoveManager;
-        private eGameMode m_GameMode; // Consider if necessary ??
+        private eGameMode m_GameMode;
         private eGameResult m_SingleGameResult;
         private eGameResult m_FinalCheckersSessionResult;
         private bool m_IsRecurringTurn;
@@ -174,7 +174,7 @@ namespace CheckersGame
             m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
             m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
             m_SecondPlayer.InitializeCurrentHoldingIndices(m_Board);
-            m_FirstPlayer.PlayerType = ePlayerType.Human;
+            m_FirstPlayer.PlayerType = ePlayerType.Computer;
             if (m_GameMode == eGameMode.TwoPlayersMode)
             {
                 m_FirstPlayer.PlayerType = ePlayerType.Human;
@@ -187,39 +187,45 @@ namespace CheckersGame
         }
 
         public void LoadNewPotentialMove(SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
-        {          
+        {
             m_MoveManager.SourceIndex = i_SourceIndex;
             m_MoveManager.DestinationIndex = i_DestinationIndex;
         }
 
-        public void GenerateRandomPotentialMove() 
+        public void GenerateRandomPotentialMove()
         {
+            bool isValidEatingMove;
+            int generatedIndexFromList;
+            var random = new Random();
+            SquareIndex currentSquareIndex = new SquareIndex();
+            List<SquareIndex> tempHoldingSquareIndices = new List<SquareIndex>(m_CurrentPlayer.CurrentHoldingSquareIndices);
+
             if (m_IsRecurringTurn)
             {
                 /// immediately load the SquareIndex we reached in the last move.
                 LoadNewPotentialMove(m_MoveManager.RecurringTurnNewSourceIndex, m_MoveManager.DestinationIndex);
             }
 
-            else
-            {
-                bool isValidMove;
-                int generatedIndexFromList;
-                var random = new Random();
-                SquareIndex currentSquareIndex = new SquareIndex();
-                List<SquareIndex> tempHoldingSquareIndices = new List<SquareIndex>(m_CurrentPlayer.CurrentHoldingSquareIndices);
-
+            else if(!CurrentPlayerAnyEatingMovePossibilityCheck())
+            { 
                 generatedIndexFromList = random.Next(tempHoldingSquareIndices.Count);
                 currentSquareIndex = tempHoldingSquareIndices[generatedIndexFromList];
-                isValidMove = m_MoveManager.AnyMovePossibilityCheck(currentSquareIndex, m_Board, m_CurrentPlayer);
-                while (!isValidMove)
-                { 
+                isValidEatingMove = m_MoveManager.AnyMovePossibilityCheck(currentSquareIndex, m_Board, m_CurrentPlayer);
+                while (!isValidEatingMove)
+                {
                     tempHoldingSquareIndices.Remove(currentSquareIndex);
                     generatedIndexFromList = random.Next(tempHoldingSquareIndices.Count);
                     currentSquareIndex = tempHoldingSquareIndices[generatedIndexFromList];
-                    isValidMove = m_MoveManager.AnyMovePossibilityCheck(currentSquareIndex, m_Board, m_CurrentPlayer);
+                    isValidEatingMove = m_MoveManager.AnyMovePossibilityCheck(currentSquareIndex, m_Board, m_CurrentPlayer);
                 }
             }
-        } 
+
+            else /// In case the player must eat:
+            {
+                /// the source and destination will be loaded automatically during the eatingMovePossibilitycheck:
+                /// CurrentPlayerAnyEatingMovePossibilityCheck()
+            }
+        }
 
         public void PostMoveProcedure()
         {
@@ -345,6 +351,54 @@ namespace CheckersGame
             }
 
             return playerAbleToMove;
+        }
+
+        public bool CurrentPlayerAnyEatingMovePossibilityCheck()
+        {
+            bool playerCanMakeEatingMove;
+
+            /// Set first to false so if "true" will be returned from a single SquareIndex check, we will go out from the loop via break.
+            playerCanMakeEatingMove = false;
+            foreach (SquareIndex currSquareIndex in m_CurrentPlayer.CurrentHoldingSquareIndices)
+            {
+                m_MoveManager.SourceIndex.CopySquareIndices(currSquareIndex);
+                playerCanMakeEatingMove = m_MoveManager.AnyEatingMovePossibiltyCheck(m_Board, m_CurrentPlayer);
+                if (playerCanMakeEatingMove)
+                {
+                    m_MoveManager.OnlyEatingIsValid = true;
+                    break;
+                }
+            }
+
+            if (playerCanMakeEatingMove)
+            {
+                m_MoveManager.OnlyEatingIsValid = true;
+            }
+
+            else
+            {
+                m_MoveManager.OnlyEatingIsValid = false;
+            }
+
+            return playerCanMakeEatingMove;
+        }
+
+        public void CheckAndUpdateIfCurrentPlayerMustEat() /// Run from moveValidationProcedure -> indicesSave because input already loaded
+        {
+            bool currentPlayerMustEat;
+            SquareIndex sourceIndexSaver;
+            SquareIndex destinationIndexSaver;
+
+            /// If playertype isn't computer.
+            /// Because while we generate a movement for computer we check if eating option exist and then loading it directly so no duoblr validation needed
+            if (m_CurrentPlayer.PlayerType == ePlayerType.Human)
+            {
+                sourceIndexSaver = new SquareIndex(m_MoveManager.SourceIndex);
+                destinationIndexSaver = new SquareIndex(m_MoveManager.DestinationIndex);
+                currentPlayerMustEat = CurrentPlayerAnyEatingMovePossibilityCheck();
+                m_MoveManager.SourceIndex.CopySquareIndices(sourceIndexSaver);
+                m_MoveManager.DestinationIndex.CopySquareIndices(destinationIndexSaver);
+            }
         }
 
         public void ScoreCalculationAndUpdate()

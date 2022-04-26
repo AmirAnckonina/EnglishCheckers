@@ -14,6 +14,7 @@ namespace CheckersGame
         private SquareIndex m_RecurringTurnNewSourceIndex;
         private SquareIndex m_EatedSquareIndex;
         private eMoveType m_MoveType;
+        private bool m_OnlyEatingMoveIsValid;
  
         public MoveManager()
         {
@@ -75,6 +76,19 @@ namespace CheckersGame
             }
         }
 
+        public bool OnlyEatingIsValid
+        {
+            get
+            {
+                return m_OnlyEatingMoveIsValid;
+            }
+
+            set
+            {
+                m_OnlyEatingMoveIsValid = value;
+            }
+        }
+
         /// In the following method we validate if the player can move. the inidces already loaded to the object.
         /// The validations goes from the basic ones to the severe.
         public bool MoveValidation(Board i_Board, Player i_CurrPlayer)
@@ -90,7 +104,25 @@ namespace CheckersGame
             indicesDifferencesAreValid = IndicesDifferencesValidationAndSetup(out indicesDifferences);
             if (srcAndDestBasicallyValid && indicesDifferencesAreValid)
             {
-                switch (indicesDifferences)
+                if (m_OnlyEatingMoveIsValid)
+                {
+                    eatingMoveIsValid = indicesDifferences == 2 && EatingMoveValidation(i_Board, i_CurrPlayer);
+                    moveIsValid = eatingMoveIsValid;
+                }
+
+                else if (indicesDifferences == 1 && SimpleMoveValidation(i_Board, i_CurrPlayer))
+                {
+                    simpleMoveIsValid = SimpleMoveValidation(i_Board, i_CurrPlayer);
+                    moveIsValid = simpleMoveIsValid;
+                }
+
+                else
+                {
+                    moveIsValid = false;
+                }
+
+
+                /*switch (indicesDifferences)
                 {
                     case 1:
                         simpleMoveIsValid = SimpleMoveValidation(i_Board, i_CurrPlayer);
@@ -107,7 +139,7 @@ namespace CheckersGame
                         moveIsValid = false;
                         m_MoveType = eMoveType.None;
                         break;
-                }
+                }*/
             }
 
             else
@@ -837,7 +869,6 @@ namespace CheckersGame
         {
             bool eatingMoveIsPossible;
             bool eatingMoveForwardIsPossible;
-            bool eatingMoveBackwardsIsPossible;
 
             eatingMoveForwardIsPossible = AnyEatingForwardMovePossibilityCheck(i_Board, i_CurrPlayer);
             if (eatingMoveForwardIsPossible)
@@ -847,7 +878,7 @@ namespace CheckersGame
 
             else if (i_Board[m_SourceIndex].DiscType == i_CurrPlayer.KingDiscType)
             {
-                eatingMoveIsPossible = eatingMoveBackwardsIsPossible = AnyEatingBackwardsMovePossibilityCheck(i_Board, i_CurrPlayer);
+                eatingMoveIsPossible = AnyEatingBackwardsMovePossibilityCheck(i_Board, i_CurrPlayer);
             }
 
             else
@@ -856,7 +887,6 @@ namespace CheckersGame
             }
 
             return eatingMoveIsPossible;
-
         }
 
         public bool AnyEatingForwardMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
@@ -1026,6 +1056,30 @@ namespace CheckersGame
 
             return recurringTurnIsPossible;
         }
+/*
+        public bool AnyOptionForEatingMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
+        {
+            bool playerCanMakeEatingMove;
+            SquareIndex sourceIndexSaver = new SquareIndex(m_SourceIndex);
+            SquareIndex destinationIndexSaver = new SquareIndex(m_DestinationIndex);
+
+            /// Set first to false so if "true" will be returned from a single SquareIndex check, we will go out from the loop via break.
+            playerCanMakeEatingMove = false;
+            foreach (SquareIndex currSquareIndex in i_CurrPlayer.CurrentHoldingSquareIndices)
+            {
+                m_SourceIndex.CopySquareIndices(currSquareIndex);
+                playerCanMakeEatingMove = AnyEatingMovePossibiltyCheck(i_Board, i_CurrPlayer);
+                if (playerCanMakeEatingMove)
+                {
+                    break;
+                }
+            }
+
+            m_SourceIndex.CopySquareIndices(sourceIndexSaver);
+            m_DestinationIndex.CopySquareIndices(destinationIndexSaver);
+
+            return playerCanMakeEatingMove;
+        }*/
     }
 }
 
