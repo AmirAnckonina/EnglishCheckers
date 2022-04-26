@@ -39,8 +39,6 @@ namespace CheckersUI
         public void Welcome()
         {
             Console.WriteLine("Welcome to English Checkers Game!");
-            //System.Threading.Thread.Sleep(3000);
-            // Add rules? Game description?
         }
         
         public void Goodbye()
@@ -114,8 +112,6 @@ namespace CheckersUI
 
             PrintGameModeChoosingRequest();
             gameModeInputTypeIsValid = int.TryParse(Console.ReadLine(), out numOfPlayers);
-            //numOfPlayers = int.Parse(Console.ReadLine());
-
             while (!gameModeInputTypeIsValid || (numOfPlayers != 1 && numOfPlayers != 2))
             {
                 Console.WriteLine("Invalid choice!");
@@ -235,7 +231,6 @@ namespace CheckersUI
 
             Ex02.ConsoleUtils.Screen.Clear();
             PrintColumnsFrame(i_Board.BoardSize);
-
             foreach (Square currSquare in i_Board.GameBoard)
             {
                 if (columnIndex == 0)
@@ -262,7 +257,7 @@ namespace CheckersUI
                 Console.Write(" {0} | ", GetCharByDiscType(i_CurrSquareDiscType));
             }
 
-                else
+            else
             {
                 Console.Write("   | ");
             }
@@ -303,6 +298,7 @@ namespace CheckersUI
             {
                 Console.Write("=====");
             }
+
             Console.WriteLine("");
         }
             

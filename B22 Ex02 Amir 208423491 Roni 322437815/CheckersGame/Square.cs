@@ -107,8 +107,5 @@ namespace CheckersGame
 
             return rivalInSqaure;
         }
-
     }
-
-
 }

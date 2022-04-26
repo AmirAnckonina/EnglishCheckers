@@ -7,23 +7,15 @@ namespace CheckersGame
 {
     public class Player
     {
-        /*private class MoveOption
-        {
-            SquareIndex m_SourceIndex;
-            SquareIndex m_DestinationIndex;
-        } */
-
         private StringBuilder m_Name;
         private int m_NumOfDiscs;
         private int m_Score;
-        private eDiscType m_DiscType; //X, O
-        private eDiscType m_KingDiscType; //K, U
+        private eDiscType m_DiscType; 
+        private eDiscType m_KingDiscType; 
         private ePlayerType m_PlayerType;
         private ePlayerMovingDirection m_MovingDirection;
         private ePlayerRecognition m_PlayerRecognition;
         private List<SquareIndex> m_CurrentHoldingSquareIndices;
-
-        //private List<MoveOption> m_PlayerPossibleMoves;
 
         public Player()
         {
@@ -185,7 +177,6 @@ namespace CheckersGame
 
         public void RemoveIndexFromCurrentHoldingSquareIndices(SquareIndex i_SquareIndexToRemove)
         {
-            /// m_CurrentHoldingSquareIndices.Remove(i_MovedFromSquareIndex); /// not working!!!
             foreach (SquareIndex sqrInd in m_CurrentHoldingSquareIndices)
             {
                 if (sqrInd.IsEqual(i_SquareIndexToRemove))
@@ -207,7 +198,7 @@ namespace CheckersGame
                     totalDiscValues += 4;
                 }
 
-                else // So it's a regular discType
+                else 
                 {
                     totalDiscValues++;
                 }
@@ -215,6 +206,5 @@ namespace CheckersGame
 
             return totalDiscValues;
         }
-
     }
 }

@@ -7,7 +7,7 @@ namespace CheckersGame
 {
     public class SquareIndex
     {
-        private int m_RowIndex;  //consider internal access modifier ??
+        private int m_RowIndex;  
         private int m_ColumnIndex;
 
         public SquareIndex()
@@ -52,12 +52,6 @@ namespace CheckersGame
                 m_ColumnIndex = value; 
             }
         }
-
-        /*public void SetSquareIndex(int i_RowIndex, int i_ColumnIndex)
-        {
-            m_RowIndex = i_RowIndex;
-            m_ColumnIndex = i_ColumnIndex;  
-        }*/
 
         public bool IsEqual(SquareIndex i_SquareIndex)
         {

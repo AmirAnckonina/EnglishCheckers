@@ -14,7 +14,6 @@ namespace GameManagement
         private readonly Game m_Game;
         private readonly ConsoleUI m_UI;
 
-
         public CheckersGameManager()
         {
             m_GameDetails = new GameDetails();
@@ -24,11 +23,6 @@ namespace GameManagement
 
         public void Run()
         {
-            //Integrate between UI and GameLogic.
-            // via ConsoleUI, get all the relevant details for building a game.
-            // Update Game (under CheckersGame project)
-            // Split the whole old "TheCheckersGame", using m_Game.
-
             bool playAnotherRound;
 
             m_UI.Welcome();
@@ -46,12 +40,9 @@ namespace GameManagement
             m_UI.Goodbye();
         }
 
-        
-
-    public void GameInitialization()
+        public void GameInitialization()
         {
             m_UI.RequestGameDetails();
-            /// m_GameDetails = m_UI.GameDetails; /// set via m_GameDetails /// CHANGE!
             m_Game.GameMode = m_UI.GameDetails.GameMode;
             m_Game.SetBoard(m_UI.GameDetails.BoardSize);
             m_Game.SetGamePlayers(m_UI.GameDetails.FirstPlayerName, m_UI.GameDetails.SecondPlayerName);
@@ -71,7 +62,6 @@ namespace GameManagement
 
             m_Game.ScoreCalculationAndUpdate();
             m_UI.PrintSingleGameResult(m_Game.SingleGameResult, m_Game.FirstPlayer, m_Game.SecondPlayer);
-
         }
 
         public void CurrentPlayerTurnProcedure()
@@ -85,7 +75,6 @@ namespace GameManagement
                 m_UI.PrintBoard(m_Game.Board, m_Game.CurrentPlayer.PlayerType);
                 RecurringTurnProcedure();
             }
-
         }
        
         public void LoadNewPotentialMoveProcedure()
@@ -109,10 +98,9 @@ namespace GameManagement
             if (m_Game.IsRecurringTurn)
             {
                 validMove = m_Game.MoveManager.RecurringTurnMoveValidation(m_Game.Board, m_Game.CurrentPlayer);
-                /// We have here Non-Ending loop in case of computer is playing
                 while (!validMove)
                 {
-                    /// m_UI.PrintInvalidInputMoveOption(m_Game.CurrentPlayer); 
+                    m_UI.PrintInvalidInputMoveOption(m_Game.CurrentPlayer.PlayerType);
                     LoadNewPotentialMoveProcedure();
                     validMove = m_Game.MoveManager.RecurringTurnMoveValidation(m_Game.Board, m_Game.CurrentPlayer);
                 }
@@ -123,7 +111,7 @@ namespace GameManagement
                 validMove = m_Game.MoveManager.MoveValidation(m_Game.Board, m_Game.CurrentPlayer);
                 while (!validMove)
                 {
-                    /// m_UI.PrintInvalidInputMoveOption(m_Game.CurrentPlayer.PlayerType); 
+                    m_UI.PrintInvalidInputMoveOption(m_Game.CurrentPlayer.PlayerType); 
                     LoadNewPotentialMoveProcedure();
                     validMove = m_Game.MoveManager.MoveValidation(m_Game.Board, m_Game.CurrentPlayer);
                 }
@@ -143,7 +131,5 @@ namespace GameManagement
                 recurringTurnIsPossible = m_Game.RecurringTurnPossibilityValidation();
             }
         }
-
-
     }
 }

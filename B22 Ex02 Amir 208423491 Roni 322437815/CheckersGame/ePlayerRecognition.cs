@@ -9,6 +9,6 @@ namespace CheckersGame
     {
         FirstPlayer = 1,
         SecondPlayer = 2,
-        None = -1
+        None
     }
 }
