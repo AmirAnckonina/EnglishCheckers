@@ -33,10 +33,9 @@ namespace CheckersGame
 
         public Game()
         {
-            m_FirstPlayer = new Player();
-            m_SecondPlayer = new Player();
+            /*m_FirstPlayer = new Player();
+            m_SecondPlayer = new Player();*/
             m_MoveManager = new MoveManager();
-            m_GameMode = eGameMode.SinglePlayerMode;
         }
 
         public MoveManager MoveManager
@@ -173,7 +172,23 @@ namespace CheckersGame
 
         public void SetGamePlayers(StringBuilder i_FirstPlayerName, StringBuilder i_SecondPlayerName)
         {
-            m_FirstPlayer.Name = i_FirstPlayerName;
+            Player.ePlayerType secondPlayerType;
+
+            if (m_GameMode == eGameMode.TwoPlayersMode)
+            {
+                secondPlayerType = Player.ePlayerType.Human;
+            }
+
+            else /// In case it's a Single Player Game Mode.
+            {
+                secondPlayerType = Player.ePlayerType.Computer;
+            }
+
+            m_FirstPlayer = new Player(i_FirstPlayerName, eDiscType.XDisc, eDiscType.XKingDisc, Player.ePlayerType.Computer,
+                Player.ePlayerMovingDirection.Down, Player.ePlayerRecognition.FirstPlayer);
+            m_SecondPlayer = new Player(i_SecondPlayerName, eDiscType.ODisc, eDiscType.OKingDisc, secondPlayerType,
+                Player.ePlayerMovingDirection.Up, Player.ePlayerRecognition.SecondPlayer);
+           /* m_FirstPlayer.Name = i_FirstPlayerName;
             m_SecondPlayer.Name = i_SecondPlayerName;
             m_FirstPlayer.PlayerRecognition = Player.ePlayerRecognition.FirstPlayer;
             m_SecondPlayer.PlayerRecognition = Player.ePlayerRecognition.SecondPlayer;
@@ -182,12 +197,8 @@ namespace CheckersGame
             m_FirstPlayer.KingDiscType = eDiscType.XKingDisc;
             m_SecondPlayer.KingDiscType = eDiscType.OKingDisc;
             m_FirstPlayer.MovingDirection = Player.ePlayerMovingDirection.Down;
-            m_SecondPlayer.MovingDirection = Player.ePlayerMovingDirection.Up;
-            m_FirstPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_FirstPlayer.DiscType);
-            m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
-            m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
-            m_SecondPlayer.InitializeCurrentHoldingIndices(m_Board);
-            m_FirstPlayer.PlayerType = Player.ePlayerType.Computer;
+            m_SecondPlayer.MovingDirection = Player.ePlayerMovingDirection.Up;*/
+            /*m_FirstPlayer.PlayerType = Player.ePlayerType.Computer;
             if (m_GameMode == eGameMode.TwoPlayersMode)
             {
                 m_FirstPlayer.PlayerType = Player.ePlayerType.Human;
@@ -196,7 +207,12 @@ namespace CheckersGame
             else /// In case it's a Single Player Game Mode.
             {
                 m_SecondPlayer.PlayerType = Player.ePlayerType.Computer;
-            }
+            }*/
+
+            m_FirstPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_FirstPlayer.DiscType);
+            m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
+            m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
+            m_SecondPlayer.InitializeCurrentHoldingIndices(m_Board);
         }
 
         public void LoadSpecificNewPotentialMove(SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
