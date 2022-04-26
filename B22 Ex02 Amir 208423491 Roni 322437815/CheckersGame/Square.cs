@@ -17,12 +17,6 @@ namespace CheckersGame
             m_SquareIndex = new SquareIndex();
         }
 
-        public Square(bool i_LegalSquare, eDiscType i_CurrDiscType)
-        {
-            m_LegalSquare = i_LegalSquare;
-            m_DiscType = i_CurrDiscType;
-        }
-
         public SquareIndex SquareIndex
         {
             get

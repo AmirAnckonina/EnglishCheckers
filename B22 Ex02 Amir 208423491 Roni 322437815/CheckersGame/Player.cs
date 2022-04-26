@@ -27,37 +27,51 @@ namespace CheckersGame
             Human
         }
 
-        private StringBuilder m_Name;
+        private readonly StringBuilder r_Name;
+        private readonly eDiscType r_DiscType; 
+        private readonly eDiscType r_KingDiscType; 
+        private readonly Player.ePlayerType r_PlayerType;
+        private readonly ePlayerMovingDirection r_MovingDirection;
+        private readonly ePlayerRecognition r_PlayerRecognition;
         private int m_NumOfDiscs;
         private int m_Score;
-        private eDiscType m_DiscType; 
-        private eDiscType m_KingDiscType; 
-        private Player.ePlayerType m_PlayerType;
-        private ePlayerMovingDirection m_MovingDirection;
-        private ePlayerRecognition m_PlayerRecognition;
         private List<SquareIndex> m_CurrentHoldingSquareIndices;
-
-        public Player()
+        
+        public Player(StringBuilder i_Name, eDiscType i_DiscType, eDiscType i_KingDiscType, ePlayerType i_PlayerType,
+                        ePlayerMovingDirection i_PlayerMovingDirection, ePlayerRecognition i_PlayerRecognition)
         {
-            m_Name = new StringBuilder(0, 20);
-            m_CurrentHoldingSquareIndices = new List<SquareIndex>();
-            m_PlayerType = Player.ePlayerType.Human;
-            m_DiscType = eDiscType.None;
+            r_Name = i_Name;
+            r_DiscType = i_DiscType;
+            r_KingDiscType = i_KingDiscType;
+            r_PlayerType = i_PlayerType;
+            r_MovingDirection = i_PlayerMovingDirection;
+            r_PlayerRecognition = i_PlayerRecognition;
             m_NumOfDiscs = 0;
             m_Score = 0;
+            m_CurrentHoldingSquareIndices = new List<SquareIndex>();
         }
+
+        /*public Player()
+        {
+            r_Name = new StringBuilder(0, 20);
+            r_PlayerType = Player.ePlayerType.Human;
+            r_DiscType = eDiscType.None;
+            m_NumOfDiscs = 0;
+            m_Score = 0;
+            m_CurrentHoldingSquareIndices = new List<SquareIndex>();
+        }*/
 
         public StringBuilder Name
         {
             get 
             {
-                return m_Name;
+                return r_Name;
             }
 
-            set
+/*            set
             {
                 m_Name = value; 
-            }
+            }*/
         }
 
         public int NumOfDiscs
@@ -90,65 +104,65 @@ namespace CheckersGame
         {
             get
             { 
-                return m_PlayerType;
+                return r_PlayerType;
             }
 
-            set
+/*            set
             {
-                m_PlayerType = value; 
-            }
+                r_PlayerType = value; 
+            }*/
         }
 
         public eDiscType DiscType
         {
             get
             {
-                return m_DiscType; 
+                return r_DiscType; 
             }
 
-            set 
+/*            set 
             {
-                m_DiscType = value; 
-            }
+                r_DiscType = value; 
+            }*/
         }
 
         public eDiscType KingDiscType
         {
             get 
             { 
-                return m_KingDiscType; 
+                return r_KingDiscType; 
             }
 
-            set
+/*            set
             {
-                m_KingDiscType = value;
-            }
+                r_KingDiscType = value;
+            }*/
         }
 
         public ePlayerMovingDirection MovingDirection
         {
             get
             {
-                return m_MovingDirection;
+                return r_MovingDirection;
             }
 
-            set 
+/*            set 
             {
-                m_MovingDirection = value; 
-            }
+                r_MovingDirection = value; 
+            }*/
         }
 
         public ePlayerRecognition PlayerRecognition
         {
             get 
             {
-                return m_PlayerRecognition; 
+                return r_PlayerRecognition; 
             }
 
-            set
+ /*           set
             {
-                m_PlayerRecognition = value; 
-            }
+                r_PlayerRecognition = value; 
+            }*/
         }
 
         public List<SquareIndex> CurrentHoldingSquareIndices
@@ -175,7 +189,7 @@ namespace CheckersGame
 
             foreach (Square currSquare in i_Board.GameBoard)
             {
-                if (currSquare.SquareHolder == m_PlayerRecognition)
+                if (currSquare.SquareHolder == r_PlayerRecognition)
                 {
                     newSquareIndex = new SquareIndex(currSquare.SquareIndex);
                     m_CurrentHoldingSquareIndices.Add(newSquareIndex);
@@ -213,7 +227,7 @@ namespace CheckersGame
 
             foreach (SquareIndex currSquareIndex in m_CurrentHoldingSquareIndices)
             {
-                if (i_Board[currSquareIndex].DiscType == m_KingDiscType)
+                if (i_Board[currSquareIndex].DiscType == r_KingDiscType)
                 {
                     totalDiscValues += 4;
                 }

@@ -11,11 +11,6 @@ namespace CheckersGame
         private Square[,] m_GameBoard;
         private int m_BoardSize;
 
-        public Board()
-        {
-           m_GameBoard = new Square[0,0];
-        }
-
         public Board(int i_BoardSize)
         {
             m_BoardSize = i_BoardSize;

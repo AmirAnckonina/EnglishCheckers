@@ -21,11 +21,11 @@ namespace CheckersGame
             None
         }
 
-        private static readonly int InvalidIndicesDifferences = -1;
+        private static readonly int sr_InvalidIndicesDifferences = -1;
         private SquareIndex m_SourceIndex;
         private SquareIndex m_DestinationIndex;
-        private SquareIndex m_RecurringTurnNewSourceIndex;
         private SquareIndex m_EatedSquareIndex;
+        private SquareIndex m_RecurringTurnNewSourceIndex;
         private eMoveType m_MoveType;
         private bool m_OnlyEatingMoveIsValid;
  
@@ -185,7 +185,7 @@ namespace CheckersGame
             else
             {
                 indicesDifferencesAreValid = false;
-                o_IndicesDifference = InvalidIndicesDifferences;
+                o_IndicesDifference = sr_InvalidIndicesDifferences;
             }
 
             return indicesDifferencesAreValid;

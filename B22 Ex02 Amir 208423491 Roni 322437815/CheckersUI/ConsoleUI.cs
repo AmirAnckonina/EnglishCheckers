@@ -8,90 +8,90 @@ namespace CheckersUI
 {
     class ConsoleUI
     {
-        private readonly Game m_Game;
-        private readonly ConsoleIOManager m_ConsoleIOManager;
-        private GameDetails m_GameDetails;
+        private readonly Game r_Game;
+        private readonly ConsoleIOManager r_ConsoleIOManager;
+        private GameDetails r_GameDetails;
 
         public ConsoleUI()
         {
-            m_GameDetails = new GameDetails();
-            m_Game = new Game();
-            m_ConsoleIOManager = new ConsoleIOManager();
+            r_GameDetails = new GameDetails();
+            r_Game = new Game();
+            r_ConsoleIOManager = new ConsoleIOManager();
         }
 
         public void Run()
         {
             bool playAnotherRound;
 
-            m_ConsoleIOManager.Welcome();
+            r_ConsoleIOManager.Welcome();
             GameInitialization();
             do
             {
                 RunSingleGameSession();
-                m_Game.ResetBetweenSessions();
-                playAnotherRound = m_ConsoleIOManager.AskForAnotherRound();
+                r_Game.ResetBetweenSessions();
+                playAnotherRound = r_ConsoleIOManager.AskForAnotherRound();
 
             } while (playAnotherRound);
 
-            m_Game.SaveFinalCheckersGameResult();
-            m_ConsoleIOManager.PrintAllGameSessionsResult(m_Game.FinalCheckersSessionResult, m_Game.FirstPlayer, m_Game.SecondPlayer);
-            m_ConsoleIOManager.Goodbye();
+            r_Game.SaveFinalCheckersGameResult();
+            r_ConsoleIOManager.PrintAllGameSessionsResult(r_Game.FinalCheckersSessionResult, r_Game.FirstPlayer, r_Game.SecondPlayer);
+            r_ConsoleIOManager.Goodbye();
         }
 
         public void GameInitialization()
         {
-            m_ConsoleIOManager.GetGameDetailsProcedure(m_GameDetails);
-            m_Game.GameMode = m_GameDetails.GameMode;
-            m_Game.SetBoard(m_GameDetails.BoardSize);
-            m_Game.SetGamePlayers(m_GameDetails.FirstPlayerName, m_GameDetails.SecondPlayerName);
+            r_ConsoleIOManager.GetGameDetailsProcedure(r_GameDetails);
+            r_Game.GameMode = r_GameDetails.GameMode;
+            r_Game.SetBoard(r_GameDetails.BoardSize);
+            r_Game.SetGamePlayers(r_GameDetails.FirstPlayerName, r_GameDetails.SecondPlayerName);
         }
 
         public void RunSingleGameSession()
         {
-            m_Game.TurnsSetup();
-            m_ConsoleIOManager.PrintBoard(m_Game.Board, Player.ePlayerType.Human);
+            r_Game.TurnsSetup();
+            r_ConsoleIOManager.PrintBoard(r_Game.Board, Player.ePlayerType.Human);
             do
             {
-                m_Game.SwitchTurn();
-                m_ConsoleIOManager.PrintWhoseTurn(m_Game.CurrentPlayer);
+                r_Game.SwitchTurn();
+                r_ConsoleIOManager.PrintWhoseTurn(r_Game.CurrentPlayer);
                 CurrentPlayerTurnProcedure();
 
-            } while (!m_Game.GameOver(m_ConsoleIOManager.RawMoveInputManager.QuitInserted));
+            } while (!r_Game.GameOver(r_ConsoleIOManager.RawMoveInputManager.QuitInserted));
 
-            m_Game.ScoreCalculationAndUpdate();
-            m_ConsoleIOManager.PrintSingleGameResult(m_Game.SingleGameResult, m_Game.FirstPlayer, m_Game.SecondPlayer);
+            r_Game.ScoreCalculationAndUpdate();
+            r_ConsoleIOManager.PrintSingleGameResult(r_Game.SingleGameResult, r_Game.FirstPlayer, r_Game.SecondPlayer);
         }
 
         public void CurrentPlayerTurnProcedure()
         {
             /// If it's a recurring turn we are called from RecurringTurnProcedure and this check already done.
-            if (!m_Game.IsRecurringTurn)
+            if (!r_Game.IsRecurringTurn)
             {
-                m_Game.CurrentPlayerAnyEatingMovePossibilityCheck();
+                r_Game.CurrentPlayerAnyEatingMovePossibilityCheck();
             }
 
             LoadNewPotentialMoveProcedure();
-            if (!m_ConsoleIOManager.RawMoveInputManager.QuitInserted)
+            if (!r_ConsoleIOManager.RawMoveInputManager.QuitInserted)
             {
                 MoveValidationProcedure();
-                m_Game.MoveManager.ExecuteMove(m_Game.Board, m_Game.CurrentPlayer);
-                m_Game.PostMoveProcedure();
-                m_ConsoleIOManager.PrintBoard(m_Game.Board, m_Game.CurrentPlayer.PlayerType);
+                r_Game.MoveManager.ExecuteMove(r_Game.Board, r_Game.CurrentPlayer);
+                r_Game.PostMoveProcedure();
+                r_ConsoleIOManager.PrintBoard(r_Game.Board, r_Game.CurrentPlayer.PlayerType);
                 RecurringTurnProcedure();
             }
         }
 
         public void LoadNewPotentialMoveProcedure()
         {
-            if (m_Game.CurrentPlayer.PlayerType == Player.ePlayerType.Human)
+            if (r_Game.CurrentPlayer.PlayerType == Player.ePlayerType.Human)
             {
-                m_ConsoleIOManager.RequestMoveInput();
-                m_Game.LoadSpecificNewPotentialMove(m_ConsoleIOManager.RawMoveInputManager.SourceIndex, m_ConsoleIOManager.RawMoveInputManager.DestinationIndex);
+                r_ConsoleIOManager.RequestMoveInput();
+                r_Game.LoadSpecificNewPotentialMove(r_ConsoleIOManager.RawMoveInputManager.SourceIndex, r_ConsoleIOManager.RawMoveInputManager.DestinationIndex);
             }
 
             else /// (i_CurrentPlayer.PlayerType == Player.ePlayerType.Computer)
             {
-                m_Game.GenerateAndLoadNewPotentialMove();
+                r_Game.GenerateAndLoadNewPotentialMove();
             }
         }
 
@@ -99,14 +99,14 @@ namespace CheckersUI
         {
             bool validMove;
 
-            if (m_Game.IsRecurringTurn)
+            if (r_Game.IsRecurringTurn)
             {
-                validMove = m_Game.MoveManager.RecurringTurnMoveValidation(m_Game.Board, m_Game.CurrentPlayer);
+                validMove = r_Game.MoveManager.RecurringTurnMoveValidation(r_Game.Board, r_Game.CurrentPlayer);
                 while (!validMove)
                 {
-                    m_ConsoleIOManager.PrintInvalidInputMoveOption(m_Game.CurrentPlayer.PlayerType);
+                    r_ConsoleIOManager.PrintInvalidInputMoveOption(r_Game.CurrentPlayer.PlayerType);
                     LoadNewPotentialMoveProcedure();
-                    validMove = m_Game.MoveManager.RecurringTurnMoveValidation(m_Game.Board, m_Game.CurrentPlayer);
+                    validMove = r_Game.MoveManager.RecurringTurnMoveValidation(r_Game.Board, r_Game.CurrentPlayer);
                 }
             }
 
@@ -116,12 +116,12 @@ namespace CheckersUI
                 /// If so , allow only eating option
                 /// if not check for simple move
                 /// m_Game.CheckAndUpdateIfCurrentPlayerMustEat();
-                validMove = m_Game.MoveManager.MoveValidation(m_Game.Board, m_Game.CurrentPlayer);
+                validMove = r_Game.MoveManager.MoveValidation(r_Game.Board, r_Game.CurrentPlayer);
                 while (!validMove)
                 {
-                    m_ConsoleIOManager.PrintInvalidInputMoveOption(m_Game.CurrentPlayer.PlayerType);
+                    r_ConsoleIOManager.PrintInvalidInputMoveOption(r_Game.CurrentPlayer.PlayerType);
                     LoadNewPotentialMoveProcedure();
-                    validMove = m_Game.MoveManager.MoveValidation(m_Game.Board, m_Game.CurrentPlayer);
+                    validMove = r_Game.MoveManager.MoveValidation(r_Game.Board, r_Game.CurrentPlayer);
                 }
             }
         }
@@ -130,13 +130,13 @@ namespace CheckersUI
         {
             bool recurringTurnIsPossible;
 
-            recurringTurnIsPossible = m_Game.RecurringTurnPossibilityValidation();
+            recurringTurnIsPossible = r_Game.RecurringTurnPossibilityValidation();
             while (recurringTurnIsPossible)
             {
-                m_ConsoleIOManager.PrintWhoseTurn(m_Game.CurrentPlayer);
+                r_ConsoleIOManager.PrintWhoseTurn(r_Game.CurrentPlayer);
                 CurrentPlayerTurnProcedure();
-                m_ConsoleIOManager.PrintBoard(m_Game.Board, m_Game.CurrentPlayer.PlayerType);
-                recurringTurnIsPossible = m_Game.RecurringTurnPossibilityValidation();
+                r_ConsoleIOManager.PrintBoard(r_Game.Board, r_Game.CurrentPlayer.PlayerType);
+                recurringTurnIsPossible = r_Game.RecurringTurnPossibilityValidation();
             }
         }
     }
