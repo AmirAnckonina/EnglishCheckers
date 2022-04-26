@@ -10,15 +10,14 @@ namespace GameManagement
 {
     public class CheckersGameManager
     {
-        private GameDetails m_GameDetails;
         private readonly Game m_Game;
-        private readonly ConsoleUI m_UI;
+        private readonly ConsoleInputOutputManager m_UI;
 
         public CheckersGameManager()
         {
             m_GameDetails = new GameDetails();
             m_Game = new Game();
-            m_UI = new ConsoleUI();
+            m_UI = new ConsoleInputOutputManager();
         }
 
         public void Run()
@@ -55,7 +54,7 @@ namespace GameManagement
             do
             {
                 m_Game.SwitchTurn();
-                m_UI.PrintWhoseTurn(m_Game.CurrentPlayer); /// Move to ConsoleUI
+                m_UI.PrintWhoseTurn(m_Game.CurrentPlayer); 
                 CurrentPlayerTurnProcedure();
 
             } while (!m_Game.GameOver(m_UI.Input.QuitInserted)); 

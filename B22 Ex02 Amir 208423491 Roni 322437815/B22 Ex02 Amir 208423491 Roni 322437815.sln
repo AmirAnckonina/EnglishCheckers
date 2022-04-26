@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckersUI", "CheckersUI\Ch
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckersGame", "CheckersGame\CheckersGame.csproj", "{C43EF4DF-5BB5-41EF-A101-7310B9E7045D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameManagement", "GameManagement\GameManagement.csproj", "{FDB04B55-84C7-4136-98C8-F507277D4A18}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{C43EF4DF-5BB5-41EF-A101-7310B9E7045D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C43EF4DF-5BB5-41EF-A101-7310B9E7045D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C43EF4DF-5BB5-41EF-A101-7310B9E7045D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FDB04B55-84C7-4136-98C8-F507277D4A18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FDB04B55-84C7-4136-98C8-F507277D4A18}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FDB04B55-84C7-4136-98C8-F507277D4A18}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FDB04B55-84C7-4136-98C8-F507277D4A18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
