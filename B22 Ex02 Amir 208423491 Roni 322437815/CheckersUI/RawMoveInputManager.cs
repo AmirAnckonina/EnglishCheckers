@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+/// CheckAndUpdate
 
 using CheckersGame;
 
 namespace CheckersUI
 {
-    public class ConsoleInputManager
+    public class RawMoveInputManager
     {
         private   StringBuilder m_RawInput;
         private bool m_RawInputIsValid;
@@ -16,7 +17,7 @@ namespace CheckersUI
         private SquareIndex m_SourceIndex;
         private SquareIndex m_DestinationIndex;
 
-        public ConsoleInputManager()
+        public RawMoveInputManager()
         {
             m_RawInput = new StringBuilder();
             m_SourceIndex = new SquareIndex();
