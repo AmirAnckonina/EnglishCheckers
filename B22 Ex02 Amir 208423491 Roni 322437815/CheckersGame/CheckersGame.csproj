@@ -36,13 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
-    <Compile Include="eGameMode.cs" />
-    <Compile Include="eGameResult.cs" />
     <Compile Include="eDiscType.cs" />
-    <Compile Include="eMoveType.cs" />
-    <Compile Include="ePlayerMovingDirection.cs" />
-    <Compile Include="ePlayerRecognition.cs" />
-    <Compile Include="ePlayerType.cs" />
     <Compile Include="MoveManager.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Square.cs" />

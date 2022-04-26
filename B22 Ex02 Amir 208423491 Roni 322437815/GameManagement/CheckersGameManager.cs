@@ -51,7 +51,7 @@ namespace GameManagement
         public void RunSingleGameSession()
         {
             m_Game.TurnsSetup();
-            m_UI.PrintBoard(m_Game.Board, ePlayerType.Human);
+            m_UI.PrintBoard(m_Game.Board, Player.ePlayerType.Human);
             do
             {
                 m_Game.SwitchTurn();
@@ -80,13 +80,13 @@ namespace GameManagement
        
         public void LoadNewPotentialMoveProcedure()
         {
-            if (m_Game.CurrentPlayer.PlayerType == ePlayerType.Human)
+            if (m_Game.CurrentPlayer.PlayerType == Player.ePlayerType.Human)
             {
                 m_UI.RequestMoveInput();
                 m_Game.LoadNewPotentialMove(m_UI.Input.SourceIndex, m_UI.Input.DestinationIndex);
             }
 
-            else /// (i_CurrentPlayer.PlayerType == ePlayerType.Computer)
+            else /// (i_CurrentPlayer.PlayerType == Player.ePlayerType.Computer)
             {
                 m_Game.GenerateRandomPotentialMove();
             }

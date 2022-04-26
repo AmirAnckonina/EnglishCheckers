@@ -89,21 +89,21 @@ namespace CheckersGame
 
             for (rowIndex = 0; rowIndex < (m_BoardSize / 2) - 1; rowIndex++)
             {
-                InitializeLineInBoard(rowIndex, eDiscType.XDisc, ePlayerRecognition.FirstPlayer);
+                InitializeLineInBoard(rowIndex, eDiscType.XDisc, Player.ePlayerRecognition.FirstPlayer);
             }
 
             for (emptyLinesIndex = 0; emptyLinesIndex < 2; emptyLinesIndex++)
             {
-                InitializeLineInBoard(rowIndex + emptyLinesIndex, eDiscType.None, ePlayerRecognition.None);
+                InitializeLineInBoard(rowIndex + emptyLinesIndex, eDiscType.None, Player.ePlayerRecognition.None);
             }
 
             for (rowIndex += 2; rowIndex < m_BoardSize; rowIndex++)
             {
-                InitializeLineInBoard(rowIndex, eDiscType.ODisc, ePlayerRecognition.SecondPlayer);
+                InitializeLineInBoard(rowIndex, eDiscType.ODisc, Player.ePlayerRecognition.SecondPlayer);
             }
         }
 
-        public void InitializeLineInBoard(int i_RowIndex, eDiscType i_DiscType, ePlayerRecognition i_CurrLineSquaresHolder)
+        public void InitializeLineInBoard(int i_RowIndex, eDiscType i_DiscType, Player.ePlayerRecognition i_CurrLineSquaresHolder)
         {
            int squareIndicesParityCalculationResult;
 
@@ -118,7 +118,7 @@ namespace CheckersGame
 
                 else //(squareIndicesParityCalculationResult == 0)
                 {
-                    m_GameBoard[i_RowIndex, i_ColumnIndex].SetSquare(false, eDiscType.None, ePlayerRecognition.None, i_RowIndex, i_ColumnIndex);
+                    m_GameBoard[i_RowIndex, i_ColumnIndex].SetSquare(false, eDiscType.None, Player.ePlayerRecognition.None, i_RowIndex, i_ColumnIndex);
                 }
             }
         }

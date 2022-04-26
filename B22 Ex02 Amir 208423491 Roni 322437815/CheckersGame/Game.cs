@@ -7,6 +7,19 @@ namespace CheckersGame
 {
     public class Game
     {
+        public enum eGameMode
+        {
+            SinglePlayerMode,
+            TwoPlayersMode
+        }
+
+        public enum eGameResult 
+        {
+            FirstPlayerWon,
+            SecondPlayerWon,
+            Draw
+        }
+
         private Board m_Board;
         private Player m_FirstPlayer;
         private Player m_SecondPlayer;
@@ -162,27 +175,27 @@ namespace CheckersGame
         {
             m_FirstPlayer.Name = i_FirstPlayerName;
             m_SecondPlayer.Name = i_SecondPlayerName;
-            m_FirstPlayer.PlayerRecognition = ePlayerRecognition.FirstPlayer;
-            m_SecondPlayer.PlayerRecognition = ePlayerRecognition.SecondPlayer;
+            m_FirstPlayer.PlayerRecognition = Player.ePlayerRecognition.FirstPlayer;
+            m_SecondPlayer.PlayerRecognition = Player.ePlayerRecognition.SecondPlayer;
             m_FirstPlayer.DiscType = eDiscType.XDisc;
             m_SecondPlayer.DiscType = eDiscType.ODisc;
             m_FirstPlayer.KingDiscType = eDiscType.XKingDisc;
             m_SecondPlayer.KingDiscType = eDiscType.OKingDisc;
-            m_FirstPlayer.MovingDirection = ePlayerMovingDirection.Down;
-            m_SecondPlayer.MovingDirection = ePlayerMovingDirection.Up;
+            m_FirstPlayer.MovingDirection = Player.ePlayerMovingDirection.Down;
+            m_SecondPlayer.MovingDirection = Player.ePlayerMovingDirection.Up;
             m_FirstPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_FirstPlayer.DiscType);
             m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
             m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
             m_SecondPlayer.InitializeCurrentHoldingIndices(m_Board);
-            m_FirstPlayer.PlayerType = ePlayerType.Computer;
+            m_FirstPlayer.PlayerType = Player.ePlayerType.Computer;
             if (m_GameMode == eGameMode.TwoPlayersMode)
             {
-                m_FirstPlayer.PlayerType = ePlayerType.Human;
+                m_FirstPlayer.PlayerType = Player.ePlayerType.Human;
             }
 
             else /// In case it's a Single Player Game Mode.
             {
-                m_SecondPlayer.PlayerType = ePlayerType.Computer;
+                m_SecondPlayer.PlayerType = Player.ePlayerType.Computer;
             }
         }
 
@@ -300,7 +313,7 @@ namespace CheckersGame
                 isGameOver = true;
                 if (!PlayerMovementPossibilityCheck(m_CurrentPlayer))
                 {
-                    SaveSingleGameResult(ePlayerRecognition.None);
+                    SaveSingleGameResult(Player.ePlayerRecognition.None);
                 }
 
                 else /// So the current player can keep moving
@@ -317,14 +330,14 @@ namespace CheckersGame
             return isGameOver;
         }
 
-        public void SaveSingleGameResult(ePlayerRecognition i_WinnerPlayerRecognition)
+        public void SaveSingleGameResult(Player.ePlayerRecognition i_WinnerPlayerRecognition)
         {
-            if (i_WinnerPlayerRecognition == ePlayerRecognition.FirstPlayer)
+            if (i_WinnerPlayerRecognition == Player.ePlayerRecognition.FirstPlayer)
             {
                 m_SingleGameResult = eGameResult.FirstPlayerWon;
             }
 
-            else if (i_WinnerPlayerRecognition == ePlayerRecognition.SecondPlayer)
+            else if (i_WinnerPlayerRecognition == Player.ePlayerRecognition.SecondPlayer)
             {
                 m_SingleGameResult = eGameResult.SecondPlayerWon;
             }
@@ -391,7 +404,7 @@ namespace CheckersGame
 
             /// If playertype isn't computer.
             /// Because while we generate a movement for computer we check if eating option exist and then loading it directly so no duoblr validation needed
-            if (m_CurrentPlayer.PlayerType == ePlayerType.Human)
+            if (m_CurrentPlayer.PlayerType == Player.ePlayerType.Human)
             {
                 sourceIndexSaver = new SquareIndex(m_MoveManager.SourceIndex);
                 destinationIndexSaver = new SquareIndex(m_MoveManager.DestinationIndex);

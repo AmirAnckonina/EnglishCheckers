@@ -9,7 +9,7 @@ namespace CheckersGame
     {
         private bool m_LegalSquare;
         private eDiscType m_DiscType;
-        private ePlayerRecognition m_SquareHolder;
+        private Player.ePlayerRecognition m_SquareHolder;
         private SquareIndex m_SquareIndex;
 
         public Square()
@@ -62,7 +62,7 @@ namespace CheckersGame
             }
         }
 
-        public ePlayerRecognition SquareHolder
+        public Player.ePlayerRecognition SquareHolder
         {
             get
             {
@@ -74,7 +74,7 @@ namespace CheckersGame
             }
         }
 
-        public void SetSquare(bool i_LegalSquare, eDiscType i_DiscType, ePlayerRecognition i_SquareHolder, int i_RowIndex, int i_ColumnIndex)
+        public void SetSquare(bool i_LegalSquare, eDiscType i_DiscType, Player.ePlayerRecognition i_SquareHolder, int i_RowIndex, int i_ColumnIndex)
         {
             m_LegalSquare = i_LegalSquare;
             m_DiscType = i_DiscType;
@@ -95,7 +95,7 @@ namespace CheckersGame
             bool rivalInSqaure;
 
             /// If the current sqaure holder isn't the currPlayer and isn't vacant so the rival is there.
-            if (m_SquareHolder != i_CurrPlayer.PlayerRecognition && m_SquareHolder != ePlayerRecognition.None)
+            if (m_SquareHolder != i_CurrPlayer.PlayerRecognition && m_SquareHolder != Player.ePlayerRecognition.None)
             {
                 rivalInSqaure = true;
             }

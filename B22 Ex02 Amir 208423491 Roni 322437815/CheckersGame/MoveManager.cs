@@ -8,6 +8,19 @@ namespace CheckersGame
 
     public class MoveManager
     {
+        public enum eMoveType
+        {
+            SimpleNorthEastMove,
+            SimpleNorthWestMove,
+            SimpleSouthEastMove,
+            SimpleSouthWestMove,
+            EatingNorthEastMove,
+            EatingNorthWestMove,
+            EatingSouthEastMove,
+            EatingSouthWestMove,
+            None
+        }
+
         private static readonly int InvalidIndicesDifferences = -1;
         private SquareIndex m_SourceIndex;
         private SquareIndex m_DestinationIndex;
@@ -221,12 +234,12 @@ namespace CheckersGame
         {
             bool simpleMoveForwardIsValid;
 
-            if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up)
+            if (i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Up)
             {
                 simpleMoveForwardIsValid = SimpleNorthEastMoveValidation() || SimpleNorthWestMoveValidation();
             }
 
-            else /// (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
+            else /// (i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Down)
             {
                 simpleMoveForwardIsValid = SimpleSouthEastMoveValidation() || SimpleSouthWestMoveValidation();
             }
@@ -238,12 +251,12 @@ namespace CheckersGame
         {
             bool simpleMoveBackwardsIsValid;
 
-            if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up)
+            if (i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Up)
             {
                 simpleMoveBackwardsIsValid = SimpleSouthEastMoveValidation() || SimpleSouthWestMoveValidation();
             }
 
-            else //(i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
+            else //(i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Down)
             {
                 simpleMoveBackwardsIsValid = SimpleNorthEastMoveValidation() || SimpleNorthWestMoveValidation();
             }
@@ -360,12 +373,12 @@ namespace CheckersGame
         {
             bool eatingMoveForwardIsValid;
 
-            if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up)
+            if (i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Up)
             {
                 eatingMoveForwardIsValid = EatingNorthEastMoveValidation(i_Board, i_CurrPlayer) || EatingNorthWestMoveValidation(i_Board, i_CurrPlayer);
             }
 
-            else //(i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
+            else //(i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Down)
             {
                 eatingMoveForwardIsValid = EatingSouthEastMoveValidation(i_Board, i_CurrPlayer) || EatingSouthWestMoveValidation(i_Board, i_CurrPlayer);
             }
@@ -377,12 +390,12 @@ namespace CheckersGame
         {
             bool eatingMoveBackwardsIsValid;
 
-            if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up)
+            if (i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Up)
             {
                 eatingMoveBackwardsIsValid = EatingSouthEastMoveValidation(i_Board, i_CurrPlayer) || EatingSouthWestMoveValidation(i_Board, i_CurrPlayer);
             }
 
-            else //(i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
+            else //(i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Down)
             {
                 eatingMoveBackwardsIsValid = EatingNorthEastMoveValidation(i_Board, i_CurrPlayer) || EatingNorthWestMoveValidation(i_Board, i_CurrPlayer);
             }
@@ -643,7 +656,7 @@ namespace CheckersGame
             io_Board[m_DestinationIndex].DiscType = io_Board[m_SourceIndex].DiscType;
             io_Board[m_DestinationIndex].SquareHolder = i_CurrPlayer.PlayerRecognition;
             io_Board[m_SourceIndex].DiscType = eDiscType.None;
-            io_Board[m_SourceIndex].SquareHolder = ePlayerRecognition.None;
+            io_Board[m_SourceIndex].SquareHolder = Player.ePlayerRecognition.None;
         }
 
         public void EatingMoveProcedure(Board io_Board)
@@ -652,25 +665,25 @@ namespace CheckersGame
             {
                 case eMoveType.EatingNorthEastMove:
                     io_Board[m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex + 1].DiscType = eDiscType.None;
-                    io_Board[m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex + 1].SquareHolder = ePlayerRecognition.None;
+                    io_Board[m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex + 1].SquareHolder = Player.ePlayerRecognition.None;
                     m_EatedSquareIndex.SetSquareIndices(m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex + 1);
                     break;
 
                 case eMoveType.EatingNorthWestMove:
                     io_Board[m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex - 1].DiscType = eDiscType.None;
-                    io_Board[m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex - 1].SquareHolder = ePlayerRecognition.None;
+                    io_Board[m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex - 1].SquareHolder = Player.ePlayerRecognition.None;
                     m_EatedSquareIndex.SetSquareIndices(m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex - 1);
                     break;
 
                 case eMoveType.EatingSouthEastMove:
                     io_Board[m_SourceIndex.RowIndex + 1 , m_SourceIndex.ColumnIndex + 1].DiscType = eDiscType.None;
-                    io_Board[m_SourceIndex.RowIndex + 1, m_SourceIndex.ColumnIndex + 1].SquareHolder = ePlayerRecognition.None;
+                    io_Board[m_SourceIndex.RowIndex + 1, m_SourceIndex.ColumnIndex + 1].SquareHolder = Player.ePlayerRecognition.None;
                     m_EatedSquareIndex.SetSquareIndices(m_SourceIndex.RowIndex + 1, m_SourceIndex.ColumnIndex + 1);
                     break;
 
                 case eMoveType.EatingSouthWestMove:
                     io_Board[m_SourceIndex.RowIndex + 1, m_SourceIndex.ColumnIndex - 1].DiscType = eDiscType.None;
-                    io_Board[m_SourceIndex.RowIndex + 1, m_SourceIndex.ColumnIndex - 1].SquareHolder = ePlayerRecognition.None;
+                    io_Board[m_SourceIndex.RowIndex + 1, m_SourceIndex.ColumnIndex - 1].SquareHolder = Player.ePlayerRecognition.None;
                     m_EatedSquareIndex.SetSquareIndices(m_SourceIndex.RowIndex + 1, m_SourceIndex.ColumnIndex - 1);
                     break;
 
@@ -696,7 +709,7 @@ namespace CheckersGame
         {
             bool firstPlayerReachedLastLine;
 
-            if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down && m_DestinationIndex.RowIndex == i_Board.BoardSize - 1)
+            if (i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Down && m_DestinationIndex.RowIndex == i_Board.BoardSize - 1)
             {
                 firstPlayerReachedLastLine = true;
             }
@@ -713,7 +726,7 @@ namespace CheckersGame
         {
             bool secondPlayerReachedLastLine;
             
-            if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up && m_DestinationIndex.RowIndex == 0)
+            if (i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Up && m_DestinationIndex.RowIndex == 0)
             {
                 secondPlayerReachedLastLine = true;
             }
@@ -755,12 +768,12 @@ namespace CheckersGame
         {
             bool simpleMoveForwardIsPossible;
 
-            if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up)
+            if (i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Up)
             {
                 simpleMoveForwardIsPossible = SimpleNorthEastMovePossibilityCheck(i_Board, i_CurrPlayer) || SimpleNorthWestMovePossibilityCheck(i_Board, i_CurrPlayer);
             }
 
-            else //(i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
+            else //(i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Down)
             {
                 simpleMoveForwardIsPossible = SimpleSouthEastMovePossibilityCheck(i_Board, i_CurrPlayer) || SimpleSouthWestMovePossibilityCheck(i_Board, i_CurrPlayer);
             }
@@ -772,12 +785,12 @@ namespace CheckersGame
         {
             bool simpleMoveBackwardsIsPossible;
 
-            if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up)
+            if (i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Up)
             {
                 simpleMoveBackwardsIsPossible = SimpleSouthEastMovePossibilityCheck(i_Board, i_CurrPlayer) || SimpleSouthWestMovePossibilityCheck(i_Board, i_CurrPlayer);
             }
 
-            else //(i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
+            else //(i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Down)
             {
                 simpleMoveBackwardsIsPossible = SimpleNorthEastMovePossibilityCheck(i_Board, i_CurrPlayer) || SimpleNorthWestMovePossibilityCheck(i_Board, i_CurrPlayer);
             }
@@ -893,12 +906,12 @@ namespace CheckersGame
         {
             bool eatingMoveForwardIsPossible;
 
-            if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up)
+            if (i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Up)
             {
                 eatingMoveForwardIsPossible = EatingNorthEastMovePossibiltyCheck(i_Board, i_CurrPlayer) || EatingNorthWestMovePossibiltyCheck(i_Board, i_CurrPlayer);
             }
 
-            else //(i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
+            else //(i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Down)
             {
                 eatingMoveForwardIsPossible = EatingSouthEastMovePossibiltyCheck(i_Board, i_CurrPlayer) || EatingSouthWestMovePossibiltyCheck(i_Board, i_CurrPlayer);
             }
@@ -909,13 +922,12 @@ namespace CheckersGame
         public bool AnyEatingBackwardsMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingMoveBackwardsIsPossible;
-
-            if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up)
+            if (i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Up)
             {
                 eatingMoveBackwardsIsPossible = EatingSouthEastMovePossibiltyCheck(i_Board, i_CurrPlayer) || EatingSouthWestMovePossibiltyCheck(i_Board, i_CurrPlayer);
             }
 
-            else //(i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
+            else //(i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Down)
             {
                 eatingMoveBackwardsIsPossible = EatingNorthEastMovePossibiltyCheck(i_Board, i_CurrPlayer) || EatingNorthWestMovePossibiltyCheck(i_Board, i_CurrPlayer);
             }
