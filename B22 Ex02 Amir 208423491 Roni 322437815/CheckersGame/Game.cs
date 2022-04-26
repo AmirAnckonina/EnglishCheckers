@@ -20,7 +20,6 @@ namespace CheckersGame
 
         public Game()
         {
-            //m_Board = new Board();
             m_FirstPlayer = new Player();
             m_SecondPlayer = new Player();
             m_MoveManager = new MoveManager();
@@ -41,6 +40,7 @@ namespace CheckersGame
             {
                 return m_CurrentPlayer;
             }
+
             set
             {
                 m_CurrentPlayer = value;
@@ -66,6 +66,7 @@ namespace CheckersGame
             {
                 return m_FirstPlayer;
             }
+
             set
             {
                 m_FirstPlayer = value;
@@ -78,6 +79,7 @@ namespace CheckersGame
             {
                 return m_SecondPlayer;
             }
+
             set
             {
                 m_SecondPlayer = value;
@@ -90,6 +92,7 @@ namespace CheckersGame
             {
                 return m_Board;
             }
+
             set
             {
                 m_Board = value;
@@ -102,6 +105,7 @@ namespace CheckersGame
             {
                 return m_GameMode;
             }
+
             set
             {
                 m_GameMode = value;
@@ -170,13 +174,13 @@ namespace CheckersGame
             m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
             m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
             m_SecondPlayer.InitializeCurrentHoldingIndices(m_Board);
-            m_FirstPlayer.PlayerType = ePlayerType.Human; //Should be Human, Justfor testing  Computer 
+            m_FirstPlayer.PlayerType = ePlayerType.Human;
             if (m_GameMode == eGameMode.TwoPlayersMode)
             {
                 m_FirstPlayer.PlayerType = ePlayerType.Human;
             }
 
-            else // (m_GameMode == eGameMode.SinglePlayerMode)
+            else /// In case it's a Single Player Game Mode.
             {
                 m_SecondPlayer.PlayerType = ePlayerType.Computer;
             }
@@ -192,9 +196,7 @@ namespace CheckersGame
         {
             if (m_IsRecurringTurn)
             {
-                /// We should add HERE a condition If it's a recurring turn.
-                /// At his point I have the newSourceIndex and I want to load it.
-                /// What about the destinationIndex? how can I take it?
+                /// immediately load the SquareIndex we reached in the last move.
                 LoadNewPotentialMove(m_MoveManager.RecurringTurnNewSourceIndex, m_MoveManager.DestinationIndex);
             }
 
@@ -221,25 +223,21 @@ namespace CheckersGame
 
         public void PostMoveProcedure()
         {
-            /// Has recachedLastLine
             m_MoveManager.ReachedLastLineValidationAndUpdate(m_Board, m_CurrentPlayer);
-            /// Reduce numOfdiscs of rival
             if (m_MoveManager.EatingMoveOccurred())
             {
                 m_RivalPlayer.NumOfDiscs--;
                 m_RivalPlayer.RemoveIndexFromCurrentHoldingSquareIndices(m_MoveManager.EatedSquareIndex);
             }
-            /// Update the new DestinationIndex to be on CurrentHoldingIndices + Remove the SourceIndex from the CurrentHoldingIndices.
             m_CurrentPlayer.UpdateCurrentHoldingSquareIndices(m_MoveManager.SourceIndex, m_MoveManager.DestinationIndex);
         }
 
-        public bool RecurringTurnPossibilityValidation() //organize this function. using local booleans.
+        public bool RecurringTurnPossibilityValidation() 
         {
             bool recurringTurnIsPossible;
 
             if (m_MoveManager.EatingMoveOccurred() && m_MoveManager.RecurringTurnPossibiltyCheck(m_Board, m_CurrentPlayer))
             {
-                /// Update newSourceIndex, So later when we check the input it has to be equal.
                 m_MoveManager.RecurringTurnNewSourceIndex.CopySquareIndices(m_MoveManager.SourceIndex);
                 recurringTurnIsPossible = true;
                 m_IsRecurringTurn = true;
@@ -325,7 +323,7 @@ namespace CheckersGame
                 m_SingleGameResult = eGameResult.SecondPlayerWon;
             }
 
-            else /// i_CurrPlayerRecognition == ePlayerRecognition.None
+            else /// None of the players won.
             {
                 m_SingleGameResult = eGameResult.Draw;
             }
@@ -335,7 +333,7 @@ namespace CheckersGame
         {
             bool playerAbleToMove; 
 
-            /// Set first to false so if "true" will be returned from a single SquareIndex check, we will go out from the loop
+            /// Set first to false so if "true" will be returned from a single SquareIndex check, we will go out from the loop via break.
             playerAbleToMove = false; 
             foreach (SquareIndex currSquareIndex in i_Player.CurrentHoldingSquareIndices)
             {
@@ -357,7 +355,6 @@ namespace CheckersGame
 
             firstPlayerTotalDiscValues = m_FirstPlayer.CalculatePlayerDiscValuesAfterSingleGame(m_Board);
             secondPlayerTotalDiscValues = m_SecondPlayer.CalculatePlayerDiscValuesAfterSingleGame(m_Board);
-
             singleGameScore = Math.Abs(firstPlayerTotalDiscValues - secondPlayerTotalDiscValues);
             if(m_SingleGameResult == eGameResult.FirstPlayerWon)
             {
@@ -372,29 +369,6 @@ namespace CheckersGame
 
         public void ResetBetweenSessions()
         {
-            /*
-                2.Build ResetBetweenGames:
-
-                To Save:
-	            *FirstPlayerName, SecongPlayerName, BoardSize, GameMode(Comp or Human)
-               * Players' score, Players details except these in the next block.
-
-                To Initialize:
-	            /// All discs occurences (After RESETING board)
-	            *m_FirstPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_FirstPlayer.DiscType);
-                *m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
-                /// Clear the whole List from prevoius game.
-                *m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
-                *m_SecondPlayer.InitializeCurrentHoldingIndices(m_Board);
-                *
-           Which data members to initialize catgorized by Objects:
-            1.BOARD->m_GameBoard
-            2.PLAYER->m_NumOfDiscs, m_CurrentHlodingIndices
-             *** CurrentPlayer &RivalPlayer->Set order before singleSession.
-            3.MoveManager->NOTHING to change, But pay attention the new values override the previous.
-            4. Game -> IsRecurringTurn ???
-            */
-
             FirstPlayer.NumOfDiscs = 0;
             SecondPlayer.NumOfDiscs = 0;
             FirstPlayer.CurrentHoldingSquareIndices.Clear();
@@ -418,7 +392,7 @@ namespace CheckersGame
                 m_FinalCheckersSessionResult = eGameResult.SecondPlayerWon;
             }
 
-            else // ==
+            else 
             {
                 m_FinalCheckersSessionResult = eGameResult.Draw;
             }

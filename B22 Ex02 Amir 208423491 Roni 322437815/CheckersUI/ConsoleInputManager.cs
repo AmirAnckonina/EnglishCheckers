@@ -16,11 +16,6 @@ namespace CheckersUI
         private SquareIndex m_SourceIndex;
         private SquareIndex m_DestinationIndex;
 
-        /* int[] m_SourceIndex; //Structure - > [ rowIndex, ColIndex ] // Af>Bi
-         int[] m_DestinationIndex;*/
-        /*Square m_FromSquare;
-        Square m_ToSquare;*/
-
         public ConsoleInputManager()
         {
             m_RawInput = new StringBuilder();
@@ -85,7 +80,7 @@ namespace CheckersUI
             ClearPreviousInput();
             m_RawInput.Append(Console.ReadLine());
             RawInputValidation();
-            if (m_RawInputIsValid && !m_QuitInserted) /// and it's not Quit.
+            if (m_RawInputIsValid && !m_QuitInserted) 
             {
                 UpdateIndices();
             }
@@ -94,7 +89,6 @@ namespace CheckersUI
         public void ClearPreviousInput()
         {
             m_RawInput.Clear();
-            //Init indices
             m_RawInputIsValid = false;
         }
 
@@ -106,10 +100,8 @@ namespace CheckersUI
             m_DestinationIndex.RowIndex = LetterToNumberIndexConverter(m_RawInput[4]);
         }
 
-        public void RawInputValidation() /// Change to bool
+        public void RawInputValidation()
         {
-            /// CARFUL: validate if the first function returning false then the others won't be called.
-            /// Add quit option. Q or q is also valid.
             if (DoesQuitInserted() || InputStructureValidation())
             {
                 m_RawInputIsValid = true;
@@ -227,11 +219,9 @@ namespace CheckersUI
         {
             int index;
 
-            // Explanation: 'A' ascii value is 65. So minus 65 will give us index = 0.
             index = Char.ToUpper(i_Letter) - 65;
 
             return index;
-
         }
     }
 }

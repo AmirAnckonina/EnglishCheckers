@@ -23,17 +23,12 @@ namespace CheckersGame
             AssignSquareObjectsInBoard();
         }
 
-
-
         public Square[,] GameBoard
         {
-            get { return m_GameBoard; }
-            //set { m_GameBoard = value; }
-        }
-
-        public Square GetSquare(int i_Row, int i_Column)
-        {
-            return m_GameBoard[i_Row, i_Column];
+            get 
+            { 
+                return m_GameBoard;
+            }
         }
 
         public Square this[SquareIndex i_SquareIndex]
@@ -125,7 +120,6 @@ namespace CheckersGame
                 {
                     m_GameBoard[i_RowIndex, i_ColumnIndex].SetSquare(false, eDiscType.None, ePlayerRecognition.None, i_RowIndex, i_ColumnIndex);
                 }
-               
             }
         }
 
@@ -163,7 +157,6 @@ namespace CheckersGame
             }
 
             return isSquareExist;
-
         }
 
         public bool SquareExistenceValidation(SquareIndex i_SquareIndex)
@@ -185,7 +178,6 @@ namespace CheckersGame
             }
 
             return isSquareExist;
-
         }
 
         public bool RowIndexExistenceValidation(int i_RowIndex)
@@ -203,7 +195,6 @@ namespace CheckersGame
             }
 
             return isRowIndexExist;
-
         }
 
         public bool ColumnIndexExistenceValidation(int i_ColumnIndex)
@@ -221,7 +212,6 @@ namespace CheckersGame
             }
 
             return isColumnIndexExist;
-
         }
     }
 }

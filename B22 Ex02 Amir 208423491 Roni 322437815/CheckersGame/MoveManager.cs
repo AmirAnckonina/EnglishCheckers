@@ -8,7 +8,7 @@ namespace CheckersGame
 
     public class MoveManager
     {
-        private static readonly int InvalidIndicesDifferences = -1; // Check how to set it.
+        private static readonly int InvalidIndicesDifferences = -1;
         private SquareIndex m_SourceIndex;
         private SquareIndex m_DestinationIndex;
         private SquareIndex m_RecurringTurnNewSourceIndex;
@@ -30,6 +30,7 @@ namespace CheckersGame
             {
                 return m_SourceIndex;
             }
+
             set
             {
                 m_SourceIndex = value;
@@ -74,51 +75,22 @@ namespace CheckersGame
             }
         }
 
-
-        /*public bool ReachedLastLine
-        {
-            get
-            {
-                return m_ReachedLastLine;
-            }
-
-            set
-            {
-                m_ReachedLastLine = value;
-            }
-        }
-*/
-
-        public void clearPreviousValues()
-        {
-            /// ?
-        }
-
+        /// In the following method we validate if the player can move. the inidces already loaded to the object.
+        /// The validations goes from the basic ones to the severe.
         public bool MoveValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool moveIsValid;
             bool srcAndDestBasicallyValid;
-            bool simpleMoveIsValid; //No eating step.
+            bool simpleMoveIsValid;
             bool eatingMoveIsValid;
             bool indicesDifferencesAreValid;
             int indicesDifferences;
 
-            // SrcAndDestValidation: 
-            // 1. IndicesInBoard
-            // 2. SrcSquare contains the CurrPlayer DiscType
-            // 3. DstSquare is vacant and legal 
-            // 4. indicesDiffernceAreValid
-
-            //Then according to the indicesDifferences, check:
-            // 5. SimpleMoveIsValid
-            // 6. EatingMoveIsValid
-
             srcAndDestBasicallyValid = SourceAndDestinationBasicValidation(i_Board, i_CurrPlayer);
             indicesDifferencesAreValid = IndicesDifferencesValidationAndSetup(out indicesDifferences);
-            /// Consider Handle the moveValidation 
             if (srcAndDestBasicallyValid && indicesDifferencesAreValid)
             {
-                switch (indicesDifferences) // Think how to use the boolean result above
+                switch (indicesDifferences)
                 {
                     case 1:
                         simpleMoveIsValid = SimpleMoveValidation(i_Board, i_CurrPlayer);
@@ -130,7 +102,7 @@ namespace CheckersGame
                         moveIsValid = eatingMoveIsValid;
                         break;
 
-                    //In case abs(rowIndicesDifference) isn't 1 or 2 , so the move isn't valid. 
+                    /// In case abs(rowIndicesDifference) isn't 1 or 2 , so the move isn't valid. 
                     default:
                         moveIsValid = false;
                         m_MoveType = eMoveType.None;
@@ -145,7 +117,6 @@ namespace CheckersGame
             }
 
             return moveIsValid;
-
         }
 
         public bool IndicesDifferencesValidationAndSetup(out int o_IndicesDifference)
@@ -156,7 +127,6 @@ namespace CheckersGame
 
             rowIndicesDifference = CalculateRowIndicesDifference();
             columnIndicesDifference = CalculateColumnIndicesDifference();
-
             if ((rowIndicesDifference == columnIndicesDifference) && (rowIndicesDifference == 1 || rowIndicesDifference == 2))
             {
                 indicesDifferencesAreValid = true;
@@ -170,7 +140,6 @@ namespace CheckersGame
             }
 
             return indicesDifferencesAreValid;
-
         }
 
         public int CalculateRowIndicesDifference()
@@ -195,7 +164,6 @@ namespace CheckersGame
         {
             bool simpleMoveIsValid;
             bool simpleMoveForwardIsValid;
-            bool simpleMoveBackwardsIsValid;
 
             simpleMoveForwardIsValid = SimpleForwardMoveValidation(i_CurrPlayer);
             if (simpleMoveForwardIsValid)
@@ -205,8 +173,7 @@ namespace CheckersGame
 
             else if (i_Board[m_SourceIndex].DiscType == i_CurrPlayer.KingDiscType) //The sourceIndex contain a KingDiscType.
             {
-                simpleMoveIsValid  = simpleMoveBackwardsIsValid = SimpleBackwardsMoveValidation(i_CurrPlayer);
-                /// simpleMoveIsValid = simpleMoveBackwardsIsValid;
+                simpleMoveIsValid = SimpleBackwardsMoveValidation(i_CurrPlayer);
             }
 
             else
@@ -216,7 +183,6 @@ namespace CheckersGame
             }
 
             return simpleMoveIsValid;
-
         }
 
         public bool SimpleForwardMoveValidation(Player i_CurrPlayer)
@@ -228,13 +194,12 @@ namespace CheckersGame
                 simpleMoveForwardIsValid = SimpleNorthEastMoveValidation() || SimpleNorthWestMoveValidation();
             }
 
-            else //(i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
+            else /// (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
             {
                 simpleMoveForwardIsValid = SimpleSouthEastMoveValidation() || SimpleSouthWestMoveValidation();
             }
 
             return simpleMoveForwardIsValid;
-
         }
 
         public bool SimpleBackwardsMoveValidation(Player i_CurrPlayer)
@@ -252,7 +217,6 @@ namespace CheckersGame
             }
 
             return simpleMoveBackwardsIsValid;
-
         }
 
         public bool SimpleNorthEastMoveValidation()
@@ -273,13 +237,6 @@ namespace CheckersGame
             }
 
             return simpleNorthEastMoveIsValid;
-
-            //SquareIndex potentialNewSquareIndex; new SquareIndex(m_SourceIndex.RowIndex -1, m_SourceIndex.ColumnIndex + 1);
-            //How to Use operator????
-            /* if (potentialNewSquareIndex. == m_DestinationIndex)
-             {
-
-             }*/
         }
 
         public bool SimpleNorthWestMoveValidation()
@@ -300,7 +257,6 @@ namespace CheckersGame
             }
 
             return simpleNorthWestMoveIsValid;
-
         }
 
         public bool SimpleSouthEastMoveValidation()
@@ -321,7 +277,6 @@ namespace CheckersGame
             }
 
             return simpleSouthEastMoveIsValid;
-
         }
 
         public bool SimpleSouthWestMoveValidation()
@@ -342,14 +297,12 @@ namespace CheckersGame
             }
 
             return simpleSouthWestMoveIsValid;
-
         }
 
         public bool EatingMoveValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingMoveIsValid;
             bool eatingMoveForwardIsValid;
-            bool eatingMoveBackwardsIsValid;
 
             eatingMoveForwardIsValid = EatingForwardMoveValidation(i_Board, i_CurrPlayer);
             if (eatingMoveForwardIsValid)
@@ -359,8 +312,7 @@ namespace CheckersGame
 
             else if (i_Board[m_SourceIndex].DiscType == i_CurrPlayer.KingDiscType) //The sourceIndex contain a KingDiscType.
             {
-                eatingMoveIsValid = eatingMoveBackwardsIsValid = EatingBackwardsMoveValidation(i_Board, i_CurrPlayer);
-                /// eatingMoveIsValid = eatingMoveBackwardsIsValid;
+                eatingMoveIsValid = EatingBackwardsMoveValidation(i_Board, i_CurrPlayer);
             }
 
             else
@@ -370,7 +322,6 @@ namespace CheckersGame
             }
 
             return eatingMoveIsValid;
-
         }
 
         public bool EatingForwardMoveValidation(Board i_Board, Player i_CurrPlayer)
@@ -388,7 +339,6 @@ namespace CheckersGame
             }
 
             return eatingMoveForwardIsValid;
-
         }
 
         public bool EatingBackwardsMoveValidation(Board i_Board, Player i_CurrPlayer)
@@ -406,7 +356,6 @@ namespace CheckersGame
             }
 
             return eatingMoveBackwardsIsValid;
-
         }
 
         public bool EatingNorthEastMoveValidation(Board i_Board, Player i_CurrPlayer)
@@ -437,7 +386,6 @@ namespace CheckersGame
                 m_MoveType = eMoveType.None;
             }
 
-
             return eatingNorthEastMoveIsValid;
         }
 
@@ -447,8 +395,7 @@ namespace CheckersGame
             SquareIndex northWestSquareIndex = new SquareIndex(m_SourceIndex.RowIndex - 2, m_SourceIndex.ColumnIndex - 2);
             SquareIndex northWestPotentialEatedSquareIndex;
 
-            //Two Validation. 1. Indices are matching 2. Rival is in between
-
+            /// Two Validation: 1. Indices are matching 2. Rival is in between
             if (m_DestinationIndex.IsEqual(northWestSquareIndex))
             {
                 northWestPotentialEatedSquareIndex = new SquareIndex(m_SourceIndex.RowIndex - 1, m_SourceIndex.ColumnIndex - 1);
@@ -470,7 +417,6 @@ namespace CheckersGame
                 eatingNorthWestMoveIsValid = false;
                 m_MoveType = eMoveType.None;
             }
-
 
             return eatingNorthWestMoveIsValid;
         }
@@ -503,7 +449,6 @@ namespace CheckersGame
                 m_MoveType = eMoveType.None;
             }
 
-
             return eatingSouthEastMoveIsValid;
         }
 
@@ -534,7 +479,6 @@ namespace CheckersGame
                 eatingSouthWestMoveIsValid = false;
                 m_MoveType = eMoveType.None;
             }
-
 
             return eatingSouthWestMoveIsValid;
         }
@@ -570,7 +514,6 @@ namespace CheckersGame
             }
 
             return srcAndDestBasicallyValid;
-
         }
 
         public bool IndiciesInBoardValidation(Board i_Board)
@@ -581,7 +524,6 @@ namespace CheckersGame
 
             sourceIsExist = i_Board.SquareExistenceValidation(m_SourceIndex);
             destinationIsExist = i_Board.SquareExistenceValidation(m_DestinationIndex);
-
             if (sourceIsExist && destinationIsExist)
             {
                 indiciesInBoard = true;
@@ -603,7 +545,6 @@ namespace CheckersGame
 
             currDestinationDiscType = i_DestinationSquare.DiscType;
             indexIsLegal = i_DestinationSquare.LegalSquare;
-
             if (currDestinationDiscType == eDiscType.None && indexIsLegal)
             {
                 destinationIsVacant = true;
@@ -637,11 +578,6 @@ namespace CheckersGame
 
         public void ExecuteMove(Board io_Board, Player i_CurrPlayer)
         {
-            /// We need:
-            /// 1. Update the destinationSquare DiscType of the source.
-            /// 2. Update the sourceSquare DiscType to None.
-            /// 3. If eating occured -> update also the square we passed above
-
             BasicMoveProcedure(io_Board, i_CurrPlayer);
             if (EatingMoveOccurred())
             {
@@ -672,17 +608,13 @@ namespace CheckersGame
 
         public void BasicMoveProcedure(Board io_Board, Player i_CurrPlayer)
         {
-            /// option1: update field by field in square:
             io_Board[m_DestinationIndex].DiscType = io_Board[m_SourceIndex].DiscType;
             io_Board[m_DestinationIndex].SquareHolder = i_CurrPlayer.PlayerRecognition;
             io_Board[m_SourceIndex].DiscType = eDiscType.None;
             io_Board[m_SourceIndex].SquareHolder = ePlayerRecognition.None;
-
-            /// option2: set the detinationSquare ref to sourceIndex?
-            /// 
         }
 
-        public void EatingMoveProcedure(Board io_Board) /// Organize this function -> Using new SquareIndex?
+        public void EatingMoveProcedure(Board io_Board)
         {
             switch (m_MoveType)
             {
@@ -1040,7 +972,6 @@ namespace CheckersGame
             }
 
             return eatingSouthWestIsPossible;
-
         }
 
         public bool RecurringTurnMoveValidation(Board i_Board, Player i_CurrPlayer)
@@ -1080,12 +1011,7 @@ namespace CheckersGame
         {
             bool thereOptionToMoveFromIndex;
 
-            /// The recieved index already validated (in Player's HoldingSquareIndices.)
-            /// We should check all 8 potential options to move from the received index.
-            /// For every option
-
-            m_SourceIndex.CopySquareIndices(i_SquareIndex); /// regular = ? afraid something will be wrong.
-
+            m_SourceIndex.CopySquareIndices(i_SquareIndex);
             thereOptionToMoveFromIndex = AnySimpleMovePossibiltyCheck(i_Board, i_CurrPlayer) || AnyEatingMovePossibiltyCheck(i_Board, i_CurrPlayer);
 
             return thereOptionToMoveFromIndex;
@@ -1095,82 +1021,11 @@ namespace CheckersGame
         {
             bool recurringTurnIsPossible;
 
-            m_SourceIndex.CopySquareIndices(m_DestinationIndex); /// A ref = might be enough but be careful. 
+            m_SourceIndex.CopySquareIndices(m_DestinationIndex); 
             recurringTurnIsPossible = AnyEatingMovePossibiltyCheck(i_Board, i_CurrPlayer);
 
             return recurringTurnIsPossible;
         }
-
-
-
-
-        /*          bool eatingNorthEastIsPossible;
-                    bool eatingNorthWestIsPossible;
-                    bool eatingSouthEastIsPossible;
-                    bool eatingSouthWestIsPossible;*/
-
-        /// Should be placed outside this method. -> m_NewSourceIndexPostEating = m_DestinationIndex;
-        /// Should check for newSourceIndex if there any possibilty for another eating.
-        /// CAREFUL!!! handle the data memebrs with extra caution.
-        /// 
-        /// Will know to ask only for switch case 2 because we sending only + 2,2 Indicies.
-        /// Or send directly to Basic Validation and EatingMoveValidation directions
-        /// Check SrcAndDestBasicValidation + EatingMoveNotrhEastValidation + Player Direction + PlayerDiscType - Important!!!!!
-
-
-        /*
-                    if (i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Up)
-                    {
-                        eatingNorthEastIsPossible = EatingNorthEastPossibiltyCheck(i_Board, i_CurrPlayer);
-                        eatingNorthWestIsPossible = EatingNorthWestPossibiltyCheck(i_Board, i_CurrPlayer);
-                        if (eatingNorthEastIsPossible || eatingNorthWestIsPossible)
-                        {
-                            eatingMoveIsPossible = true;
-                            /// The m_SourceIndex is the one we checked with the possibily, so if so, save it for later.
-                        }
-
-                        else if (i_Board[m_SourceIndex].DiscType == i_CurrPlayer.KingDiscType) /// Check If KingDiscType
-                        {
-                            eatingSouthEastIsPossible = EatingSouthEastPossibiltyCheck(i_Board, i_CurrPlayer);
-                            eatingSouthWestIsPossible = EatingSouthWestPossibiltyCheck(i_Board, i_CurrPlayer);
-                            eatingMoveIsPossible = eatingSouthEastIsPossible || eatingSouthWestIsPossible;
-                        }
-
-                        else
-                        {
-                            eatingMoveIsPossible = false;
-                        }
-
-                    }
-
-                    else //(i_CurrPlayer.MovingDirection == ePlayerMovingDirection.Down)
-                    {
-                        eatingSouthEastIsPossible = EatingSouthEastPossibiltyCheck(i_Board, i_CurrPlayer);
-                        eatingSouthWestIsPossible = EatingSouthWestPossibiltyCheck(i_Board, i_CurrPlayer);
-                        if (eatingSouthEastIsPossible || eatingSouthWestIsPossible)
-                        {
-                            eatingMoveIsPossible = true;
-                        }
-
-                        else if (i_Board[m_SourceIndex].DiscType == i_CurrPlayer.KingDiscType)
-                        {
-                            eatingNorthEastIsPossible = EatingNorthEastPossibiltyCheck(i_Board, i_CurrPlayer);
-                            eatingNorthWestIsPossible = EatingNorthWestPossibiltyCheck(i_Board, i_CurrPlayer);
-                            eatingMoveIsPossible = eatingNorthEastIsPossible || eatingNorthWestIsPossible;
-                        }
-
-                        else
-                        {
-                            eatingMoveIsPossible = false;
-                        }
-                    }
-
-                    if (eatingMoveIsPossible)
-                    {
-                        m_RecurringTurnNewSourceIndex.CopySquareIndices(m_SourceIndex);
-                    }
-        */
-
     }
 }
 

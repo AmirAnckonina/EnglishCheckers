@@ -50,6 +50,7 @@ namespace CheckersUI
             {
                 return m_GameMode;
             }
+
             set
             {
                 m_GameMode = value;
