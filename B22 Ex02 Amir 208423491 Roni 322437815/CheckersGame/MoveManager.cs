@@ -108,8 +108,6 @@ namespace CheckersGame
         {
             bool moveIsValid;
             bool srcAndDestBasicallyValid;
-            bool simpleMoveIsValid;
-            bool eatingMoveIsValid;
             bool indicesDifferencesAreValid;
             int indicesDifferences;
 
@@ -119,14 +117,20 @@ namespace CheckersGame
             {
                 if (m_OnlyEatingMoveIsValid)
                 {
-                    eatingMoveIsValid = indicesDifferences == 2 && EatingMoveValidation(i_Board, i_CurrPlayer);
-                    moveIsValid = eatingMoveIsValid;
+                    if (indicesDifferences == 2 && EatingMoveValidation(i_Board, i_CurrPlayer))
+                    {
+                        moveIsValid = true;
+                    }
+
+                    else
+                    {
+                        moveIsValid = false;
+                    }
                 }
 
                 else if (indicesDifferences == 1 && SimpleMoveValidation(i_Board, i_CurrPlayer))
                 {
-                    simpleMoveIsValid = SimpleMoveValidation(i_Board, i_CurrPlayer);
-                    moveIsValid = simpleMoveIsValid;
+                    moveIsValid = true;
                 }
 
                 else
@@ -739,12 +743,12 @@ namespace CheckersGame
             return secondPlayerReachedLastLine;
         }
 
-        public bool AnySimpleMovePossibiltyCheck(Board i_Board, Player i_CurrPlayer)
+        public bool AnySimpleMovePossibiltyCheck(SquareIndex i_SquareIndex, Board i_Board, Player i_CurrPlayer)
         {
             bool simpleMoveIsPossible;
             bool simpleMoveForwardIsPossible;
-            bool simpleMoveBackwardsIsPossible;
 
+            m_SourceIndex.CopySquareIndices(i_SquareIndex);
             simpleMoveForwardIsPossible = AnySimpleForwardMovePossibilityCheck(i_Board, i_CurrPlayer);
             if (simpleMoveForwardIsPossible)
             {
@@ -753,7 +757,7 @@ namespace CheckersGame
 
             else if (i_Board[m_SourceIndex].DiscType == i_CurrPlayer.KingDiscType)
             {
-                simpleMoveIsPossible = simpleMoveBackwardsIsPossible = AnySimpleBackwardsMovePossibilityCheck(i_Board, i_CurrPlayer);
+                simpleMoveIsPossible = AnySimpleBackwardsMovePossibilityCheck(i_Board, i_CurrPlayer);
             }
 
             else
@@ -878,11 +882,12 @@ namespace CheckersGame
             return simpleSouthWestMoveIsPossible;
         }
 
-        public bool AnyEatingMovePossibiltyCheck(Board i_Board, Player i_CurrPlayer)
+        public bool AnyEatingMovePossibiltyCheckByIndex(SquareIndex i_PotentialSourceSquareIndex, Board i_Board, Player i_CurrPlayer)
         {
             bool eatingMoveIsPossible;
             bool eatingMoveForwardIsPossible;
 
+            m_SourceIndex.CopySquareIndices(i_PotentialSourceSquareIndex);
             eatingMoveForwardIsPossible = AnyEatingForwardMovePossibilityCheck(i_Board, i_CurrPlayer);
             if (eatingMoveForwardIsPossible)
             {
@@ -1049,22 +1054,21 @@ namespace CheckersGame
             return recurringTurnMoveIsValid;
         }
 
-        public bool AnyMovePossibilityCheck(SquareIndex i_SquareIndex, Board i_Board, Player i_CurrPlayer)
+        public bool AnyMovePossibilityCheckByIndex(SquareIndex i_PotentialSourceSquareIndex, Board i_Board, Player i_CurrPlayer)
         {
             bool thereOptionToMoveFromIndex;
 
-            m_SourceIndex.CopySquareIndices(i_SquareIndex);
-            thereOptionToMoveFromIndex = AnySimpleMovePossibiltyCheck(i_Board, i_CurrPlayer) || AnyEatingMovePossibiltyCheck(i_Board, i_CurrPlayer);
+            thereOptionToMoveFromIndex = AnySimpleMovePossibiltyCheck(i_PotentialSourceSquareIndex ,i_Board, i_CurrPlayer) || AnyEatingMovePossibiltyCheckByIndex(i_PotentialSourceSquareIndex, i_Board, i_CurrPlayer);
 
             return thereOptionToMoveFromIndex;
         }
 
-        public bool RecurringTurnPossibiltyCheck(Board i_Board, Player i_CurrPlayer)
+        public bool RecurringTurnPossibiltyCheck(SquareIndex i_NewSourceIndexAfterEating, Board i_Board, Player i_CurrPlayer)
         {
             bool recurringTurnIsPossible;
 
-            m_SourceIndex.CopySquareIndices(m_DestinationIndex); 
-            recurringTurnIsPossible = AnyEatingMovePossibiltyCheck(i_Board, i_CurrPlayer);
+            /// m_SourceIndex.CopySquareIndices(m_DestinationIndex); 
+            recurringTurnIsPossible = AnyEatingMovePossibiltyCheckByIndex(i_NewSourceIndexAfterEating, i_Board, i_CurrPlayer);
 
             return recurringTurnIsPossible;
         }

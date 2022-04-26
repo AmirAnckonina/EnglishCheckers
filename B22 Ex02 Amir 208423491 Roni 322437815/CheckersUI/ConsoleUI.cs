@@ -64,6 +64,12 @@ namespace CheckersUI
 
         public void CurrentPlayerTurnProcedure()
         {
+            /// If it's a recurring turn we are called from RecurringTurnProcedure and this check already done.
+            if (!m_Game.IsRecurringTurn)
+            {
+                m_Game.CurrentPlayerAnyEatingMovePossibilityCheck();
+            }
+
             LoadNewPotentialMoveProcedure();
             if (!m_ConsoleIOManager.RawMoveInputManager.QuitInserted)
             {
@@ -80,12 +86,12 @@ namespace CheckersUI
             if (m_Game.CurrentPlayer.PlayerType == Player.ePlayerType.Human)
             {
                 m_ConsoleIOManager.RequestMoveInput();
-                m_Game.LoadNewPotentialMove(m_ConsoleIOManager.RawMoveInputManager.SourceIndex, m_ConsoleIOManager.RawMoveInputManager.DestinationIndex);
+                m_Game.LoadSpecificNewPotentialMove(m_ConsoleIOManager.RawMoveInputManager.SourceIndex, m_ConsoleIOManager.RawMoveInputManager.DestinationIndex);
             }
 
             else /// (i_CurrentPlayer.PlayerType == Player.ePlayerType.Computer)
             {
-                m_Game.GenerateRandomPotentialMove();
+                m_Game.GenerateAndLoadNewPotentialMove();
             }
         }
 
@@ -109,7 +115,7 @@ namespace CheckersUI
                 /// Check If there any eating option
                 /// If so , allow only eating option
                 /// if not check for simple move
-                m_Game.CheckAndUpdateIfCurrentPlayerMustEat();
+                /// m_Game.CheckAndUpdateIfCurrentPlayerMustEat();
                 validMove = m_Game.MoveManager.MoveValidation(m_Game.Board, m_Game.CurrentPlayer);
                 while (!validMove)
                 {
