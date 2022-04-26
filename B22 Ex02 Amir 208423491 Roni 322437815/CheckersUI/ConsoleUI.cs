@@ -57,13 +57,13 @@ namespace CheckersUI
 
             if (gameModeChoice == 1)
             {
-                m_GameDetails.GameMode = CheckersGame.eGameMode.SinglePlayerMode;
+                m_GameDetails.GameMode = CheckersGame.Game.eGameMode.SinglePlayerMode;
                 m_GameDetails.SecondPlayerName.Append("The Computer");
             }
 
             else //gameModeChoice == 2
             {
-                m_GameDetails.GameMode = CheckersGame.eGameMode.TwoPlayersMode;
+                m_GameDetails.GameMode = CheckersGame.Game.eGameMode.TwoPlayersMode;
                 m_GetSecondPlayerName = true;
                 m_GameDetails.SecondPlayerName = GetPlayerName();
             }
@@ -144,14 +144,14 @@ namespace CheckersUI
 
         public void PrintWhoseTurn(Player i_CurrPlayer)
         {
-            if(i_CurrPlayer.PlayerType == ePlayerType.Computer)
+            if(i_CurrPlayer.PlayerType == Player.ePlayerType.Computer)
             {
-                Console.WriteLine("- It's the Comuter turn!");
+                Console.WriteLine("- It's The Computer ({0}) turn!", GetCharByDiscType(i_CurrPlayer.DiscType));
             }
 
             else
             {
-               Console.WriteLine("- It's {0} turn, Go Ahead! : ", i_CurrPlayer.Name);
+               Console.WriteLine("- It's {0} turn ({1}), Go Ahead! : ", i_CurrPlayer.Name, GetCharByDiscType(i_CurrPlayer.DiscType));
             }
         }
 
@@ -161,9 +161,9 @@ namespace CheckersUI
                 Console.Write("Please enter a new move: ");          
         }
 
-        public void PrintInvalidInputMoveOption(ePlayerType i_CurrentPlayerType)
+        public void PrintInvalidInputMoveOption(Player.ePlayerType i_CurrentPlayerType)
         {
-            if (i_CurrentPlayerType == ePlayerType.Human)
+            if (i_CurrentPlayerType == Player.ePlayerType.Human)
             {
                 Console.WriteLine("Sorry, your move choice isn't valid!");
                 Console.WriteLine("Please enter a new valid move: ");
@@ -219,12 +219,12 @@ namespace CheckersUI
             return discTypeChar;
         }
 
-        public void PrintBoard(Board i_Board, ePlayerType i_PlayerType)
+        public void PrintBoard(Board i_Board, Player.ePlayerType i_PlayerType)
         {
             int columnIndex = 0;
             char rowLetter = 'a';
 
-            if (i_PlayerType == ePlayerType.Computer)
+            if (i_PlayerType == Player.ePlayerType.Computer)
             {
                 System.Threading.Thread.Sleep(2000);
             }
@@ -312,14 +312,14 @@ namespace CheckersUI
             }
         }
 
-        public void PrintSingleGameResult(eGameResult i_GameResult,Player i_FirstPlayer, Player i_SecondPlayer)
+        public void PrintSingleGameResult(Game.eGameResult i_GameResult,Player i_FirstPlayer, Player i_SecondPlayer)
         {
-           if(i_GameResult == eGameResult.FirstPlayerWon)
+           if(i_GameResult == Game.eGameResult.FirstPlayerWon)
             {
                 Console.WriteLine("The Winner is {0}!", i_FirstPlayer.Name);
             }
 
-           else if(i_GameResult == eGameResult.SecondPlayerWon)
+           else if(i_GameResult == Game.eGameResult.SecondPlayerWon)
             {
                 Console.WriteLine("The Winner is {0}!", i_SecondPlayer.Name);
             }
@@ -333,14 +333,14 @@ namespace CheckersUI
             PrintScore(i_FirstPlayer, i_SecondPlayer);
         }
 
-        public void PrintAllGameSessionsResult(eGameResult i_FinalCheckersSessionResult, Player i_FirstPlayer, Player i_SecondPlayer)
+        public void PrintAllGameSessionsResult(Game.eGameResult i_FinalCheckersSessionResult, Player i_FirstPlayer, Player i_SecondPlayer)
         {
-            if (i_FinalCheckersSessionResult == eGameResult.FirstPlayerWon)
+            if (i_FinalCheckersSessionResult == Game.eGameResult.FirstPlayerWon)
             {
                 Console.WriteLine("The final Winner is {0}!", i_FirstPlayer.Name);
             }
 
-            else if (i_FinalCheckersSessionResult == eGameResult.SecondPlayerWon)
+            else if (i_FinalCheckersSessionResult == Game.eGameResult.SecondPlayerWon)
             {
                 Console.WriteLine("The final Winner is {0}!", i_SecondPlayer.Name);
             }

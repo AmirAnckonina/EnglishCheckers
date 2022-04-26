@@ -7,12 +7,32 @@ namespace CheckersGame
 {
     public class Player
     {
+        public enum ePlayerRecognition
+        {
+            FirstPlayer = 1,
+            SecondPlayer = 2,
+            None
+        }
+
+        public enum ePlayerMovingDirection
+        {
+            Up,
+            Down,
+            None
+        }
+
+        public enum ePlayerType
+        {
+            Computer,
+            Human
+        }
+
         private StringBuilder m_Name;
         private int m_NumOfDiscs;
         private int m_Score;
         private eDiscType m_DiscType; 
         private eDiscType m_KingDiscType; 
-        private ePlayerType m_PlayerType;
+        private Player.ePlayerType m_PlayerType;
         private ePlayerMovingDirection m_MovingDirection;
         private ePlayerRecognition m_PlayerRecognition;
         private List<SquareIndex> m_CurrentHoldingSquareIndices;
@@ -21,7 +41,7 @@ namespace CheckersGame
         {
             m_Name = new StringBuilder(0, 20);
             m_CurrentHoldingSquareIndices = new List<SquareIndex>();
-            m_PlayerType = ePlayerType.Human;
+            m_PlayerType = Player.ePlayerType.Human;
             m_DiscType = eDiscType.None;
             m_NumOfDiscs = 0;
             m_Score = 0;
@@ -66,7 +86,7 @@ namespace CheckersGame
             }
         }
 
-        public ePlayerType PlayerType
+        public Player.ePlayerType PlayerType
         {
             get
             { 
