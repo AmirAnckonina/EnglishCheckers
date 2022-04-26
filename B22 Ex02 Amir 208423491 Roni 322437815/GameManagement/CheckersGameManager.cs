@@ -69,6 +69,7 @@ namespace GameManagement
             LoadNewPotentialMoveProcedure();
             if (!m_UI.Input.QuitInserted)
             {
+
                 MoveValidationProcedure();
                 m_Game.MoveManager.ExecuteMove(m_Game.Board, m_Game.CurrentPlayer);
                 m_Game.PostMoveProcedure();
@@ -108,6 +109,10 @@ namespace GameManagement
 
             else //Regular turn.
             {
+                /// Check If there any eating option
+                /// If so , allow only eating option
+                /// if not check for simple move
+                m_Game.CheckAndUpdateIfCurrentPlayerMustEat();
                 validMove = m_Game.MoveManager.MoveValidation(m_Game.Board, m_Game.CurrentPlayer);
                 while (!validMove)
                 {

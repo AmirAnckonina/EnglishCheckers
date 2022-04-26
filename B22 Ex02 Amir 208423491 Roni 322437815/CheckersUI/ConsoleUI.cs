@@ -226,7 +226,7 @@ namespace CheckersUI
 
             if (i_PlayerType == ePlayerType.Computer)
             {
-                System.Threading.Thread.Sleep(3000);
+                System.Threading.Thread.Sleep(2000);
             }
 
             Ex02.ConsoleUtils.Screen.Clear();
