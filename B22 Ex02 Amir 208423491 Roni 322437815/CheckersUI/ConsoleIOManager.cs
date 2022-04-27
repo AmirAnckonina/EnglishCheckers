@@ -265,7 +265,7 @@ namespace CheckersUI
             {
                 if (columnIndex == 0)
                 {
-                    PrintNewRowLetter(i_Board.BoardSize,ref rowLetter);
+                    PrintNewRowLetter(ref rowLetter);
                 }
 
                 PrintSquare(currSquare.DiscType);
