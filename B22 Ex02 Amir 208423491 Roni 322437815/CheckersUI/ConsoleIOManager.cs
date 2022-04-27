@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-
-
 using CheckersGame;
 
 namespace CheckersUI
@@ -27,22 +23,6 @@ namespace CheckersUI
             {
                 return r_RawMoveInputManager;
             }
-        }
-
-        public void Welcome()
-        {
-            StringBuilder welcomeMessage = new StringBuilder();
-
-            welcomeMessage.Append("Welcome to English Checkers Game!");
-            Console.WriteLine(welcomeMessage);
-        }
-        
-        public void Goodbye()
-        {
-            StringBuilder goodbyeMessage = new StringBuilder();
-
-            goodbyeMessage.Append("Thanks for playing! See you next time.");
-            Console.WriteLine(goodbyeMessage);
         }
 
         public void GetGameDetailsProcedure(GameDetails io_GameDetails)
@@ -91,9 +71,11 @@ namespace CheckersUI
             while(name.Length > k_MaximumNameLength)
             {
                 name.Remove(0, name.Length);
-                invalidNameMessage.Append("The name is not valid! Please Enter another name");
+                invalidNameMessage.Append("The inserted name is too long! Please enter a valid name:");
+                Console.WriteLine(invalidNameMessage);
                 name.Append(System.Console.ReadLine());
             }
+
             return name;
         }
 
@@ -133,71 +115,49 @@ namespace CheckersUI
             return numOfPlayers;
         }
 
-        public static void PrintInvalidInputMessage()
+        public bool AskForAnotherRound()
         {
-            StringBuilder inputIsNotValidMessage = new StringBuilder();
+            bool playAnotherRound;
+            bool userChoiceIsValid;
+            char userChoice;
 
-            inputIsNotValidMessage.Append("Sorry! Your input isn't valid");
-            Console.WriteLine(inputIsNotValidMessage);
-        }
-
-        public static void PrintRequestForBoardSize()
-        {
-            StringBuilder optionsOfBoardSizeMessage = new StringBuilder();
-
-            optionsOfBoardSizeMessage.AppendLine("Please pick your Checkers board size: ");
-            optionsOfBoardSizeMessage.AppendLine("6 - For 6X6 board");
-            optionsOfBoardSizeMessage.AppendLine("8 - For 8X8 board");
-            optionsOfBoardSizeMessage.Append("10 - For 10X10 board");
-            Console.WriteLine(optionsOfBoardSizeMessage);
-        }
-
-        public static void PrintGameModeChoosingRequest()
-        {
-            StringBuilder optionsOfGameModeMessage = new StringBuilder();
-
-            optionsOfGameModeMessage.AppendLine("Please pick your game mode: ");
-            optionsOfGameModeMessage.AppendLine("1 - Single player mode (play against the computer)");
-            optionsOfGameModeMessage.Append("2 - Two players mode (play against your friend!)");
-            Console.WriteLine(optionsOfGameModeMessage);
-        }
-
-        public void PrintWhoseTurn(Player i_CurrPlayer)
-        {
-            StringBuilder whoseTurnMessage = new StringBuilder();
-
-            if(i_CurrPlayer.PlayerType == Player.ePlayerType.Computer)
+            PrintAnotherGameRequest();
+            userChoiceIsValid = char.TryParse(Console.ReadLine(), out userChoice);
+            while (!userChoiceIsValid || !AnotherTurnInputValidation(userChoice))
             {
-                whoseTurnMessage.Append(string.Format("- It's The Computer ({0}) turn!", GetCharByDiscType(i_CurrPlayer.DiscType)));
-                Console.WriteLine(whoseTurnMessage);
+                PrintInvalidInputMessage();
+                PrintAnotherGameRequest();
+                userChoiceIsValid = char.TryParse(Console.ReadLine(), out userChoice);
+            }
+
+            if (char.ToUpper(userChoice) == k_Quit)
+            {
+                playAnotherRound = false;
             }
 
             else
             {
-                whoseTurnMessage.Append(string.Format("- It's {0} turn ({1}), Go Ahead! : ", i_CurrPlayer.Name, GetCharByDiscType(i_CurrPlayer.DiscType)));
-               Console.WriteLine(whoseTurnMessage);
+                playAnotherRound = true;
             }
+
+            return playAnotherRound;
         }
 
-        public static void PrintInvalidInputStructure()
+        public bool AnotherTurnInputValidation(char i_UserChoice)
         {
-            StringBuilder invalidInputStructureMessage = new StringBuilder();
+            bool anotherTurnInputIsValid;
 
-            invalidInputStructureMessage.AppendLine("Sorry, your input structure isn't valid.");
-            invalidInputStructureMessage.Append("Please enter a new move: ");
-            Console.WriteLine(invalidInputStructureMessage);  
-        }
-
-        public void PrintInvalidInputMoveOption(Player.ePlayerType i_CurrentPlayerType)
-        {
-            StringBuilder invalidInputMoveOptionMessage = new StringBuilder();
-
-            if (i_CurrentPlayerType == Player.ePlayerType.Human)
+            if ((char.ToUpper(i_UserChoice) == k_Continue || char.ToUpper(i_UserChoice) == k_Quit))
             {
-                invalidInputMoveOptionMessage.AppendLine("Sorry, your move choice isn't valid!");
-                invalidInputMoveOptionMessage.Append("Please enter a new valid move: ");
-                Console.WriteLine(invalidInputMoveOptionMessage);
+                anotherTurnInputIsValid = true;
             }
+
+            else
+            {
+                anotherTurnInputIsValid = false;
+            }
+
+            return anotherTurnInputIsValid;
         }
 
         public static bool BoardSizeInputValueValidation(int i_BoardSize)
@@ -247,6 +207,51 @@ namespace CheckersUI
             }
 
             return discTypeChar;
+        }
+
+        public void Welcome()
+        {
+            StringBuilder welcomeMessage = new StringBuilder();
+
+            welcomeMessage.Append("Welcome to English Checkers Game!");
+            Console.WriteLine(welcomeMessage);
+        }
+        
+        public void Goodbye()
+        {
+            StringBuilder goodbyeMessage = new StringBuilder();
+
+            goodbyeMessage.Append("Thanks for playing! See you next time.");
+            Console.WriteLine(goodbyeMessage);
+        }
+
+        public void PrintWhoseTurn(Player i_CurrPlayer)
+        {
+            StringBuilder whoseTurnMessage = new StringBuilder();
+
+            if(i_CurrPlayer.PlayerType == Player.ePlayerType.Computer)
+            {
+                whoseTurnMessage.Append(string.Format("- It's The Computer ({0}) turn!", GetCharByDiscType(i_CurrPlayer.DiscType)));
+                Console.WriteLine(whoseTurnMessage);
+            }
+
+            else
+            {
+                whoseTurnMessage.Append(string.Format("- It's {0} turn ({1}), Go Ahead! : ", i_CurrPlayer.Name, GetCharByDiscType(i_CurrPlayer.DiscType)));
+               Console.WriteLine(whoseTurnMessage);
+            }
+        }
+
+        public void PrintInvalidInputMoveOption(Player.ePlayerType i_CurrentPlayerType)
+        {
+            StringBuilder invalidInputMoveOptionMessage = new StringBuilder();
+
+            if (i_CurrentPlayerType == Player.ePlayerType.Human)
+            {
+                invalidInputMoveOptionMessage.AppendLine("Sorry, your move choice isn't valid!");
+                invalidInputMoveOptionMessage.Append("Please enter a new valid move: ");
+                Console.WriteLine(invalidInputMoveOptionMessage);
+            }
         }
 
         public void PrintBoard(Board i_Board, Player.ePlayerType i_PlayerType)
@@ -418,49 +423,50 @@ namespace CheckersUI
             Console.WriteLine(score);
         }
 
-        public bool AskForAnotherRound()
+        public void PrintLastMoveByRawInput(StringBuilder i_RawInput, Player i_CurrPlayer)
         {
-            bool playAnotherRound;
-            bool userChoiceIsValid;
-            char userChoice;
+            StringBuilder lastMoveInfo = new StringBuilder();
 
-            PrintAnotherGameRequest();
-            userChoiceIsValid = char.TryParse(Console.ReadLine(), out userChoice);
-            while (!userChoiceIsValid || !AnotherTurnInputValidation(userChoice))
-            {
-                PrintInvalidInputMessage();
-                PrintAnotherGameRequest();
-                userChoiceIsValid = char.TryParse(Console.ReadLine(), out userChoice);
-            }
-
-            if (char.ToUpper(userChoice) == k_Quit)
-            {
-                playAnotherRound = false;
-            }
-
-            else
-            {
-                playAnotherRound = true;
-            }
-
-            return playAnotherRound;
+            lastMoveInfo.Append(string.Format("{0}'s move was ({1}): {2}", i_CurrPlayer.Name, GetCharByDiscType(i_CurrPlayer.DiscType), i_RawInput));
+            Console.WriteLine(lastMoveInfo);
         }
 
-        public bool AnotherTurnInputValidation(char i_UserChoice)
+        public static void PrintInvalidInputMessage()
         {
-            bool anotherTurnInputIsValid;
+            StringBuilder inputIsNotValidMessage = new StringBuilder();
 
-            if ((Char.ToUpper(i_UserChoice) == k_Continue || Char.ToUpper(i_UserChoice) == k_Quit))
-            {
-                anotherTurnInputIsValid = true;
-            }
+            inputIsNotValidMessage.Append("Sorry! Your input isn't valid");
+            Console.WriteLine(inputIsNotValidMessage);
+        }
 
-            else
-            {
-                anotherTurnInputIsValid = false;
-            }
+        public static void PrintRequestForBoardSize()
+        {
+            StringBuilder optionsOfBoardSizeMessage = new StringBuilder();
 
-            return anotherTurnInputIsValid;
+            optionsOfBoardSizeMessage.AppendLine("Please pick your Checkers board size: ");
+            optionsOfBoardSizeMessage.AppendLine("6 - For 6X6 board");
+            optionsOfBoardSizeMessage.AppendLine("8 - For 8X8 board");
+            optionsOfBoardSizeMessage.Append("10 - For 10X10 board");
+            Console.WriteLine(optionsOfBoardSizeMessage);
+        }
+
+        public static void PrintGameModeChoosingRequest()
+        {
+            StringBuilder optionsOfGameModeMessage = new StringBuilder();
+
+            optionsOfGameModeMessage.AppendLine("Please pick your game mode: ");
+            optionsOfGameModeMessage.AppendLine("1 - Single player mode (play against the computer)");
+            optionsOfGameModeMessage.Append("2 - Two players mode (play against your friend!)");
+            Console.WriteLine(optionsOfGameModeMessage);
+        }
+
+        public static void PrintInvalidInputStructure()
+        {
+            StringBuilder invalidInputStructureMessage = new StringBuilder();
+
+            invalidInputStructureMessage.AppendLine("Sorry, your input structure isn't valid.");
+            invalidInputStructureMessage.Append("Please enter a new move: ");
+            Console.WriteLine(invalidInputStructureMessage);  
         }
 
         public static void PrintAnotherGameRequest()
@@ -470,14 +476,6 @@ namespace CheckersUI
             anotherGameRequest.AppendLine("Do you want to go for another game?");
             anotherGameRequest.Append("If so, press 'Y' to start a new game. If Not press 'Q' to quit");
             Console.WriteLine(anotherGameRequest);
-        }
-
-        public void PrintLastMoveByRawInput(StringBuilder i_RawInput, Player i_CurrPlayer)
-        {
-            StringBuilder lastMoveInfo = new StringBuilder();
-
-            lastMoveInfo.Append(string.Format("{0}'s move was ({1}): {2}", i_CurrPlayer.Name, GetCharByDiscType(i_CurrPlayer.DiscType), i_RawInput));
-            Console.WriteLine(lastMoveInfo);
         }
     }
 }

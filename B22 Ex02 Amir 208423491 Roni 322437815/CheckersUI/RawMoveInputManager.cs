@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-
-/// CheckAndUpdate
-
 using CheckersGame;
 
 namespace CheckersUI
@@ -91,7 +86,7 @@ namespace CheckersUI
 
         public void ClearPreviousInput()
         {
-            m_RawInput.Clear();
+            m_RawInput.Remove(0, m_RawInput.Length);
             m_RawInputIsValid = false;
         }
 
@@ -105,7 +100,7 @@ namespace CheckersUI
 
         public void RawInputValidation()
         {
-            if (DoesQuitInserted() || InputStructureValidation())
+            if (InputStructureValidation())
             {
                 m_RawInputIsValid = true;
             }
@@ -120,7 +115,19 @@ namespace CheckersUI
         {
             bool inputStructureIsValid;
             
-            if (LengthValidation() && MovingFromValidation() && MovingToValidation() && OperatorValidation())
+            if (m_RawInput.Length == 1)
+            {
+                if (DoesQuitInserted())
+                { 
+                    inputStructureIsValid = true;
+                }
+                else
+                {
+                    inputStructureIsValid = false;
+                }
+            }
+
+            else if (LengthValidation() && MovingFromValidation() && MovingToValidation() && OperatorValidation())
             {
                 inputStructureIsValid = true;
             }
