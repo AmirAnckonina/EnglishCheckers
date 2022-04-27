@@ -12,7 +12,7 @@ namespace CheckersGame
 
         public SquareIndex()
         {
-            //Empty constructor.
+            /// Empty constructor.
         }
 
         public SquareIndex(int i_RowIndex, int i_ColumnIndex)
@@ -68,6 +68,16 @@ namespace CheckersGame
             }
 
             return isEqual;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return this.IsEqual((SquareIndex)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
         public void SetSquareIndices(int i_NewRowIndex, int i_NewColumnIndex)

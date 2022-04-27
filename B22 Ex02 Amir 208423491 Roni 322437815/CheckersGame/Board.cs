@@ -8,13 +8,13 @@ namespace CheckersGame
 {
     public class Board
     {
-        private Square[,] m_GameBoard;
-        private int m_BoardSize;
+        private readonly Square[,] r_GameBoard;
+        private readonly int r_BoardSize;
 
         public Board(int i_BoardSize)
         {
-            m_BoardSize = i_BoardSize;
-            m_GameBoard = new Square[m_BoardSize, m_BoardSize];
+            r_BoardSize = i_BoardSize;
+            r_GameBoard = new Square[r_BoardSize, r_BoardSize];
             AssignSquareObjectsInBoard();
         }
 
@@ -22,7 +22,7 @@ namespace CheckersGame
         {
             get 
             { 
-                return m_GameBoard;
+                return r_GameBoard;
             }
         }
 
@@ -30,12 +30,12 @@ namespace CheckersGame
         {
             get 
             { 
-                return m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex]; 
+                return r_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex]; 
             }
 
             set 
             {
-                m_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex] = value;
+                r_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex] = value;
             }
         }
 
@@ -43,12 +43,12 @@ namespace CheckersGame
         {
             get 
             { 
-                return m_GameBoard[i_RowIndex, i_ColumnIndex]; 
+                return r_GameBoard[i_RowIndex, i_ColumnIndex]; 
             }
 
             set
             {
-                m_GameBoard[i_RowIndex, i_ColumnIndex] = value; 
+                r_GameBoard[i_RowIndex, i_ColumnIndex] = value; 
             }
         }
 
@@ -56,12 +56,7 @@ namespace CheckersGame
         {
             get 
             { 
-                return m_BoardSize;
-            }
-
-            set 
-            { 
-                m_BoardSize = value; 
+                return r_BoardSize;
             }
         }
 
@@ -69,60 +64,60 @@ namespace CheckersGame
         {
             int rowIndex, columnIndex;
 
-            for (rowIndex = 0; rowIndex < m_BoardSize; rowIndex++)
+            for (rowIndex = 0; rowIndex < r_BoardSize; rowIndex++)
             {
-                for (columnIndex = 0; columnIndex < m_BoardSize; columnIndex++)
+                for (columnIndex = 0; columnIndex < r_BoardSize; columnIndex++)
                 {
-                    m_GameBoard[rowIndex, columnIndex] = new Square();
+                    r_GameBoard[rowIndex, columnIndex] = new Square();
                 }
             }
         }
 
-        public void InitializeBoard()
+        public void InitializeBoard(Player i_FirstPlayer, Player i_SecondPlayer)
         {
             int rowIndex, emptyLinesIndex; 
 
-            for (rowIndex = 0; rowIndex < (m_BoardSize / 2) - 1; rowIndex++)
+            for (rowIndex = 0; rowIndex < (r_BoardSize / 2) - 1; rowIndex++)
             {
-                InitializeLineInBoard(rowIndex, eDiscType.XDisc, Player.ePlayerRecognition.FirstPlayer);
+                InitializeLineInBoard(rowIndex, i_FirstPlayer.DiscType, i_FirstPlayer.PlayerRecognition);
             }
 
             for (emptyLinesIndex = 0; emptyLinesIndex < 2; emptyLinesIndex++)
             {
-                InitializeLineInBoard(rowIndex + emptyLinesIndex, eDiscType.None, Player.ePlayerRecognition.None);
+                InitializeLineInBoard(rowIndex + emptyLinesIndex, Game.eDiscType.None, Player.ePlayerRecognition.None);
             }
 
-            for (rowIndex += 2; rowIndex < m_BoardSize; rowIndex++)
+            for (rowIndex += 2; rowIndex < r_BoardSize; rowIndex++)
             {
-                InitializeLineInBoard(rowIndex, eDiscType.ODisc, Player.ePlayerRecognition.SecondPlayer);
+                InitializeLineInBoard(rowIndex, i_SecondPlayer.DiscType, i_SecondPlayer.PlayerRecognition);
             }
         }
 
-        public void InitializeLineInBoard(int i_RowIndex, eDiscType i_DiscType, Player.ePlayerRecognition i_CurrLineSquaresHolder)
+        public void InitializeLineInBoard(int i_RowIndex, Game.eDiscType i_DiscType, Player.ePlayerRecognition i_CurrLineSquaresHolder)
         {
            int squareIndicesParityCalculationResult;
 
-            for (int i_ColumnIndex = 0; i_ColumnIndex < m_BoardSize; i_ColumnIndex++)
+            for (int i_ColumnIndex = 0; i_ColumnIndex < r_BoardSize; i_ColumnIndex++)
             {
                 squareIndicesParityCalculationResult = (i_RowIndex + i_ColumnIndex) % 2;
                 if (squareIndicesParityCalculationResult == 1)
                 {
-                    m_GameBoard[i_RowIndex, i_ColumnIndex].SetSquare(true, i_DiscType, i_CurrLineSquaresHolder, i_RowIndex, i_ColumnIndex);
+                    r_GameBoard[i_RowIndex, i_ColumnIndex].SetSquare(true, i_DiscType, i_CurrLineSquaresHolder, i_RowIndex, i_ColumnIndex);
 
                 }
 
                 else //(squareIndicesParityCalculationResult == 0)
                 {
-                    m_GameBoard[i_RowIndex, i_ColumnIndex].SetSquare(false, eDiscType.None, Player.ePlayerRecognition.None, i_RowIndex, i_ColumnIndex);
+                    r_GameBoard[i_RowIndex, i_ColumnIndex].SetSquare(false, Game.eDiscType.None, Player.ePlayerRecognition.None, i_RowIndex, i_ColumnIndex);
                 }
             }
         }
 
-        public int GetDiscOccurences(eDiscType i_DiscType)
+        public int GetDiscOccurences(Game.eDiscType i_DiscType)
         {
             int counter = 0;
 
-            foreach(Square currSquare in m_GameBoard)
+            foreach(Square currSquare in r_GameBoard)
             {
                if(currSquare.DiscType == i_DiscType)
                 {
@@ -196,7 +191,7 @@ namespace CheckersGame
         {
             bool isColumnIndexExist;
 
-            if (i_ColumnIndex >= 0 && i_ColumnIndex < m_BoardSize)
+            if (i_ColumnIndex >= 0 && i_ColumnIndex < r_BoardSize)
             {
                 isColumnIndexExist = true;
             }

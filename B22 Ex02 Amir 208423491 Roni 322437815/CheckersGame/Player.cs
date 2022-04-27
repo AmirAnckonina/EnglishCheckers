@@ -28,8 +28,8 @@ namespace CheckersGame
         }
 
         private readonly StringBuilder r_Name;
-        private readonly eDiscType r_DiscType; 
-        private readonly eDiscType r_KingDiscType; 
+        private readonly Game.eDiscType r_DiscType; 
+        private readonly Game.eDiscType r_KingDiscType; 
         private readonly Player.ePlayerType r_PlayerType;
         private readonly ePlayerMovingDirection r_MovingDirection;
         private readonly ePlayerRecognition r_PlayerRecognition;
@@ -37,7 +37,7 @@ namespace CheckersGame
         private int m_Score;
         private List<SquareIndex> m_CurrentHoldingSquareIndices;
         
-        public Player(StringBuilder i_Name, eDiscType i_DiscType, eDiscType i_KingDiscType, ePlayerType i_PlayerType,
+        public Player(StringBuilder i_Name, Game.eDiscType i_DiscType, Game.eDiscType i_KingDiscType, ePlayerType i_PlayerType,
                         ePlayerMovingDirection i_PlayerMovingDirection, ePlayerRecognition i_PlayerRecognition)
         {
             r_Name = i_Name;
@@ -98,7 +98,7 @@ namespace CheckersGame
             }
         }
 
-        public eDiscType DiscType
+        public Game.eDiscType DiscType
         {
             get
             {
@@ -106,7 +106,7 @@ namespace CheckersGame
             }
         }
 
-        public eDiscType KingDiscType
+        public Game.eDiscType KingDiscType
         {
             get 
             { 
@@ -178,7 +178,7 @@ namespace CheckersGame
         {
             foreach (SquareIndex sqrInd in m_CurrentHoldingSquareIndices)
             {
-                if (sqrInd.IsEqual(i_SquareIndexToRemove))
+                if (sqrInd.Equals(i_SquareIndexToRemove))
                 {
                     m_CurrentHoldingSquareIndices.Remove(sqrInd);
                     break;
