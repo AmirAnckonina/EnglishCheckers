@@ -20,12 +20,21 @@ namespace CheckersGame
             Draw
         }
 
+        public enum eDiscType
+        {
+            XDisc,
+            ODisc,
+            XKingDisc,
+            OKingDisc,
+            None
+        }
+
         private Board m_Board;
         private Player m_FirstPlayer;
         private Player m_SecondPlayer;
         private Player m_CurrentPlayer;
         private Player m_RivalPlayer;
-        private MoveManager m_MoveManager;
+        private readonly MoveManager r_MoveManager;
         private eGameMode m_GameMode;
         private eGameResult m_SingleGameResult;
         private eGameResult m_FinalCheckersSessionResult;
@@ -33,14 +42,14 @@ namespace CheckersGame
 
         public Game()
         {
-            m_MoveManager = new MoveManager();
+            r_MoveManager = new MoveManager();
         }
 
         public MoveManager MoveManager
         {
             get
             {
-                return m_MoveManager;
+                return r_MoveManager;
             }
         }
 
@@ -162,13 +171,7 @@ namespace CheckersGame
             }
         }
 
-        public void SetBoard(int i_BoardSize)
-        {
-            m_Board = new Board(i_BoardSize);
-            m_Board.InitializeBoard();
-        }
-
-        public void SetGamePlayers(StringBuilder i_FirstPlayerName, StringBuilder i_SecondPlayerName)
+        public void SetGameObjects(StringBuilder i_FirstPlayerName, StringBuilder i_SecondPlayerName,int i_BoardSize)
         {
             Player.ePlayerType secondPlayerType;
 
@@ -182,11 +185,12 @@ namespace CheckersGame
                 secondPlayerType = Player.ePlayerType.Computer;
             }
 
-            m_FirstPlayer = new Player(i_FirstPlayerName, eDiscType.XDisc, eDiscType.XKingDisc, Player.ePlayerType.Computer,
+            m_FirstPlayer = new Player(i_FirstPlayerName, Game.eDiscType.ODisc, Game.eDiscType.OKingDisc, Player.ePlayerType.Computer,
                 Player.ePlayerMovingDirection.Down, Player.ePlayerRecognition.FirstPlayer);
-            m_SecondPlayer = new Player(i_SecondPlayerName, eDiscType.ODisc, eDiscType.OKingDisc, secondPlayerType,
+            m_SecondPlayer = new Player(i_SecondPlayerName, Game.eDiscType.XDisc, Game.eDiscType.XKingDisc, secondPlayerType,
                 Player.ePlayerMovingDirection.Up, Player.ePlayerRecognition.SecondPlayer);
-
+            m_Board = new Board(i_BoardSize);
+            m_Board.InitializeBoard(m_FirstPlayer , m_SecondPlayer);
             m_FirstPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_FirstPlayer.DiscType);
             m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
             m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
@@ -195,8 +199,8 @@ namespace CheckersGame
 
         public void LoadSpecificNewPotentialMove(SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
         {
-            m_MoveManager.SourceIndex = i_SourceIndex;
-            m_MoveManager.DestinationIndex = i_DestinationIndex;
+            r_MoveManager.SourceIndex = i_SourceIndex;
+            r_MoveManager.DestinationIndex = i_DestinationIndex;
         }
 
         public void GenerateAndLoadNewPotentialMove()
@@ -204,10 +208,10 @@ namespace CheckersGame
             if (m_IsRecurringTurn)
             {
                 /// immediately load the SquareIndex we reached in the last move.
-                LoadSpecificNewPotentialMove(m_MoveManager.RecurringTurnNewSourceIndex, m_MoveManager.DestinationIndex);
+                LoadSpecificNewPotentialMove(r_MoveManager.RecurringTurnNewSourceIndex, r_MoveManager.DestinationIndex);
             }
 
-            else if (m_MoveManager.OnlyEatingIsValid)
+            else if (r_MoveManager.OnlyEatingIsValid)
             {
                 GenerateAndLoadNewRandomEatingMove();
             }
@@ -223,18 +227,18 @@ namespace CheckersGame
             bool isValidEatingMove;
             int generatedIndexFromList;
             var random = new Random();
-            SquareIndex currentSquareIndex = new SquareIndex();
+            SquareIndex currentSquareIndex;
             List<SquareIndex> tempHoldingSquareIndices = new List<SquareIndex>(m_CurrentPlayer.CurrentHoldingSquareIndices);
 
             generatedIndexFromList = random.Next(tempHoldingSquareIndices.Count);
             currentSquareIndex = tempHoldingSquareIndices[generatedIndexFromList];
-            isValidEatingMove = m_MoveManager.AnyEatingMovePossibiltyCheckByIndex(currentSquareIndex, m_Board, m_CurrentPlayer);
+            isValidEatingMove = r_MoveManager.AnyEatingMovePossibiltyCheckByIndex(currentSquareIndex, m_Board, m_CurrentPlayer);
             while (!isValidEatingMove)
             {
                 tempHoldingSquareIndices.Remove(currentSquareIndex);
                 generatedIndexFromList = random.Next(tempHoldingSquareIndices.Count);
                 currentSquareIndex = tempHoldingSquareIndices[generatedIndexFromList];
-                isValidEatingMove = m_MoveManager.AnyEatingMovePossibiltyCheckByIndex(currentSquareIndex, m_Board, m_CurrentPlayer);
+                isValidEatingMove = r_MoveManager.AnyEatingMovePossibiltyCheckByIndex(currentSquareIndex, m_Board, m_CurrentPlayer);
             }
         }
 
@@ -243,38 +247,39 @@ namespace CheckersGame
             bool isValidEatingMove;
             int generatedIndexFromList;
             var random = new Random();
-            SquareIndex currentSquareIndex = new SquareIndex();
+            SquareIndex currentSquareIndex;
             List<SquareIndex> tempHoldingSquareIndices = new List<SquareIndex>(m_CurrentPlayer.CurrentHoldingSquareIndices);
 
             generatedIndexFromList = random.Next(tempHoldingSquareIndices.Count);
             currentSquareIndex = tempHoldingSquareIndices[generatedIndexFromList];
-            isValidEatingMove = m_MoveManager.AnySimpleMovePossibiltyCheck(currentSquareIndex, m_Board, m_CurrentPlayer);
+            isValidEatingMove = r_MoveManager.AnySimpleMovePossibiltyCheck(currentSquareIndex, m_Board, m_CurrentPlayer);
             while (!isValidEatingMove)
             {
                 tempHoldingSquareIndices.Remove(currentSquareIndex);
                 generatedIndexFromList = random.Next(tempHoldingSquareIndices.Count);
                 currentSquareIndex = tempHoldingSquareIndices[generatedIndexFromList];
-                isValidEatingMove = m_MoveManager.AnySimpleMovePossibiltyCheck(currentSquareIndex, m_Board, m_CurrentPlayer);
+                isValidEatingMove = r_MoveManager.AnySimpleMovePossibiltyCheck(currentSquareIndex, m_Board, m_CurrentPlayer);
             }
         }
+       
         public void PostMoveProcedure()
         {
-            m_MoveManager.ReachedLastLineValidationAndUpdate(m_Board, m_CurrentPlayer);
-            if (m_MoveManager.EatingMoveOccurred())
+            r_MoveManager.ReachedLastLineValidationAndUpdate(m_Board, m_CurrentPlayer);
+            if (r_MoveManager.EatingMoveOccurred())
             {
                 m_RivalPlayer.NumOfDiscs--;
-                m_RivalPlayer.RemoveIndexFromCurrentHoldingSquareIndices(m_MoveManager.EatedSquareIndex);
+                m_RivalPlayer.RemoveIndexFromCurrentHoldingSquareIndices(r_MoveManager.EatedSquareIndex);
             }
-            m_CurrentPlayer.UpdateCurrentHoldingSquareIndices(m_MoveManager.SourceIndex, m_MoveManager.DestinationIndex);
+            m_CurrentPlayer.UpdateCurrentHoldingSquareIndices(r_MoveManager.SourceIndex, r_MoveManager.DestinationIndex);
         }
 
         public bool RecurringTurnPossibilityValidation() 
         {
             bool recurringTurnIsPossible;
 
-            if (m_MoveManager.EatingMoveOccurred() && m_MoveManager.RecurringTurnPossibiltyCheck(m_MoveManager.DestinationIndex ,m_Board, m_CurrentPlayer))
+            if (r_MoveManager.EatingMoveOccurred() && r_MoveManager.RecurringTurnPossibiltyCheck(r_MoveManager.DestinationIndex ,m_Board, m_CurrentPlayer))
             {
-                m_MoveManager.RecurringTurnNewSourceIndex.CopySquareIndices(m_MoveManager.SourceIndex);
+                r_MoveManager.RecurringTurnNewSourceIndex.CopySquareIndices(r_MoveManager.SourceIndex);
                 recurringTurnIsPossible = true;
                 m_IsRecurringTurn = true;
             }
@@ -374,7 +379,7 @@ namespace CheckersGame
             playerAbleToMove = false; 
             foreach (SquareIndex currSquareIndex in i_Player.CurrentHoldingSquareIndices)
             {
-                playerAbleToMove = m_MoveManager.AnyMovePossibilityCheckByIndex(currSquareIndex, m_Board, i_Player);
+                playerAbleToMove = r_MoveManager.AnyMovePossibilityCheckByIndex(currSquareIndex, m_Board, i_Player);
                 if (playerAbleToMove)
                 {
                     break;
@@ -393,22 +398,22 @@ namespace CheckersGame
             playerCanMakeEatingMove = false;
             foreach (SquareIndex currSquareIndex in m_CurrentPlayer.CurrentHoldingSquareIndices)
             {
-                playerCanMakeEatingMove = m_MoveManager.AnyEatingMovePossibiltyCheckByIndex(currSquareIndex, m_Board, m_CurrentPlayer);
+                playerCanMakeEatingMove = r_MoveManager.AnyEatingMovePossibiltyCheckByIndex(currSquareIndex, m_Board, m_CurrentPlayer);
                 if (playerCanMakeEatingMove)
                 {
-                    m_MoveManager.OnlyEatingIsValid = true;
+                    r_MoveManager.OnlyEatingIsValid = true;
                     break;
                 }
             }
 
             if (playerCanMakeEatingMove)
             {
-                m_MoveManager.OnlyEatingIsValid = true;
+                r_MoveManager.OnlyEatingIsValid = true;
             }
 
             else
             {
-                m_MoveManager.OnlyEatingIsValid = false;
+                r_MoveManager.OnlyEatingIsValid = false;
             }
 
             return playerCanMakeEatingMove;
@@ -436,13 +441,11 @@ namespace CheckersGame
 
         public void ResetObjectsBetweenSessions()
         {
-            m_IsRecurringTurn = false;
-            m_MoveManager.ResetMoveManager();
             FirstPlayer.NumOfDiscs = 0;
             SecondPlayer.NumOfDiscs = 0;
             FirstPlayer.CurrentHoldingSquareIndices.Clear();
             SecondPlayer.CurrentHoldingSquareIndices.Clear();
-            m_Board.InitializeBoard();
+            m_Board.InitializeBoard(m_FirstPlayer, m_SecondPlayer);
             m_FirstPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_FirstPlayer.DiscType);
             m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
             m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);

@@ -11,7 +11,7 @@ namespace CheckersUI
 {
     public class RawMoveInputManager
     {
-        private   StringBuilder m_RawInput;
+        private StringBuilder m_RawInput;
         private bool m_RawInputIsValid;
         private bool m_QuitInserted;
         private SquareIndex m_SourceIndex;
@@ -152,7 +152,7 @@ namespace CheckersUI
         {
             bool movingFromIndexIsValid;
 
-            if (Char.IsUpper(m_RawInput[0]) && Char.IsLower(m_RawInput[1]))
+            if (char.IsUpper(m_RawInput[0]) && char.IsLower(m_RawInput[1]))
             {
                 movingFromIndexIsValid = true;
             }
@@ -169,7 +169,7 @@ namespace CheckersUI
         {
             bool movingToIndexIsValid;
 
-            if (Char.IsUpper(m_RawInput[3]) && Char.IsLower(m_RawInput[4]))
+            if (char.IsUpper(m_RawInput[3]) && char.IsLower(m_RawInput[4]))
             {
                 movingToIndexIsValid = true;
             }
@@ -220,7 +220,7 @@ namespace CheckersUI
         {
             int index;
 
-            index = Char.ToUpper(i_Letter) - 65;
+            index = char.ToUpper(i_Letter) - 65;
 
             return index;
         }

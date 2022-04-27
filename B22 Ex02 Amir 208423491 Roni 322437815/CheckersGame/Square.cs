@@ -8,7 +8,7 @@ namespace CheckersGame
     public class Square
     {
         private bool m_LegalSquare;
-        private eDiscType m_DiscType;
+        private Game.eDiscType m_DiscType;
         private Player.ePlayerRecognition m_SquareHolder;
         private SquareIndex m_SquareIndex;
 
@@ -43,7 +43,7 @@ namespace CheckersGame
             }
         }
 
-        public eDiscType DiscType
+        public Game.eDiscType DiscType
         {
             get
             {
@@ -68,7 +68,7 @@ namespace CheckersGame
             }
         }
 
-        public void SetSquare(bool i_LegalSquare, eDiscType i_DiscType, Player.ePlayerRecognition i_SquareHolder, int i_RowIndex, int i_ColumnIndex)
+        public void SetSquare(bool i_LegalSquare, Game.eDiscType i_DiscType, Player.ePlayerRecognition i_SquareHolder, int i_RowIndex, int i_ColumnIndex)
         {
             m_LegalSquare = i_LegalSquare;
             m_DiscType = i_DiscType;

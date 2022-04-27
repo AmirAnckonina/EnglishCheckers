@@ -10,7 +10,7 @@ namespace CheckersUI
     {
         private readonly Game r_Game;
         private readonly ConsoleIOManager r_ConsoleIOManager;
-        private GameDetails r_GameDetails;
+        private readonly GameDetails r_GameDetails;
 
         public ConsoleUI()
         {
@@ -43,8 +43,8 @@ namespace CheckersUI
         {
             r_ConsoleIOManager.GetGameDetailsProcedure(r_GameDetails);
             r_Game.GameMode = r_GameDetails.GameMode;
-            r_Game.SetBoard(r_GameDetails.BoardSize);
-            r_Game.SetGamePlayers(r_GameDetails.FirstPlayerName, r_GameDetails.SecondPlayerName);
+            /// r_Game.SetBoard(r_GameDetails.BoardSize);
+            r_Game.SetGameObjects(r_GameDetails.FirstPlayerName, r_GameDetails.SecondPlayerName, r_GameDetails.BoardSize);
         }
 
         public void RunSingleGameSession()
@@ -78,6 +78,7 @@ namespace CheckersUI
                 r_Game.MoveManager.ExecuteMove(r_Game.Board, r_Game.CurrentPlayer);
                 r_Game.PostMoveProcedure();
                 r_ConsoleIOManager.PrintBoard(r_Game.Board, r_Game.CurrentPlayer.PlayerType);
+                /// r_ConsoleIOManager.PrintLastMoveByRawInput(r_ConsoleIOManager.Input.RawInput);
                 RecurringTurnProcedure();
             }
         }

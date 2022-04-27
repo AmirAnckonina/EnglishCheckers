@@ -7,7 +7,6 @@ namespace CheckersUI
 {
     public class GameDetails
     {
-        /// private const int k_MaxNameLen = 20;
         private StringBuilder m_FirstPlayerName;
         private StringBuilder m_SecondPlayerName;
         private CheckersGame.Game.eGameMode m_GameMode;

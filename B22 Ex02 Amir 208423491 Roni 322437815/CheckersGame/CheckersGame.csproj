@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
-    <Compile Include="eDiscType.cs" />
+    <Compile Include="ConsoleUI.cs" />
     <Compile Include="MoveManager.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Square.cs" />
