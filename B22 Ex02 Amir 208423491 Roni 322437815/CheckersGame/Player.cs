@@ -51,16 +51,6 @@ namespace CheckersGame
             m_CurrentHoldingSquareIndices = new List<SquareIndex>();
         }
 
-        /*public Player()
-        {
-            r_Name = new StringBuilder(0, 20);
-            r_PlayerType = Player.ePlayerType.Human;
-            r_DiscType = eDiscType.None;
-            m_NumOfDiscs = 0;
-            m_Score = 0;
-            m_CurrentHoldingSquareIndices = new List<SquareIndex>();
-        }*/
-
         public StringBuilder Name
         {
             get 
@@ -106,11 +96,6 @@ namespace CheckersGame
             { 
                 return r_PlayerType;
             }
-
-/*            set
-            {
-                r_PlayerType = value; 
-            }*/
         }
 
         public eDiscType DiscType
@@ -119,11 +104,6 @@ namespace CheckersGame
             {
                 return r_DiscType; 
             }
-
-/*            set 
-            {
-                r_DiscType = value; 
-            }*/
         }
 
         public eDiscType KingDiscType
@@ -132,11 +112,6 @@ namespace CheckersGame
             { 
                 return r_KingDiscType; 
             }
-
-/*            set
-            {
-                r_KingDiscType = value;
-            }*/
         }
 
         public ePlayerMovingDirection MovingDirection
@@ -145,11 +120,6 @@ namespace CheckersGame
             {
                 return r_MovingDirection;
             }
-
-/*            set 
-            {
-                r_MovingDirection = value; 
-            }*/
         }
 
         public ePlayerRecognition PlayerRecognition
@@ -158,11 +128,6 @@ namespace CheckersGame
             {
                 return r_PlayerRecognition; 
             }
-
- /*           set
-            {
-                r_PlayerRecognition = value; 
-            }*/
         }
 
         public List<SquareIndex> CurrentHoldingSquareIndices

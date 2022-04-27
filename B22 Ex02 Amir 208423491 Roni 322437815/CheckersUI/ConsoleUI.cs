@@ -28,7 +28,8 @@ namespace CheckersUI
             do
             {
                 RunSingleGameSession();
-                r_Game.ResetBetweenSessions();
+                r_ConsoleIOManager.RawMoveInputManager.QuitInserted = false;
+                r_Game.ResetObjectsBetweenSessions();
                 playAnotherRound = r_ConsoleIOManager.AskForAnotherRound();
 
             } while (playAnotherRound);
@@ -55,8 +56,8 @@ namespace CheckersUI
                 r_Game.SwitchTurn();
                 r_ConsoleIOManager.PrintWhoseTurn(r_Game.CurrentPlayer);
                 CurrentPlayerTurnProcedure();
-
             } while (!r_Game.GameOver(r_ConsoleIOManager.RawMoveInputManager.QuitInserted));
+
 
             r_Game.ScoreCalculationAndUpdate();
             r_ConsoleIOManager.PrintSingleGameResult(r_Game.SingleGameResult, r_Game.FirstPlayer, r_Game.SecondPlayer);

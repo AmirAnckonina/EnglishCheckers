@@ -29,12 +29,20 @@ namespace CheckersUI
 
         public void Welcome()
         {
-            Console.WriteLine("Welcome to English Checkers Game!");
+            StringBuilder welcomeMessage = new StringBuilder();
+
+            welcomeMessage.Append("Welcome to English Checkers Game!");
+            Console.WriteLine(welcomeMessage);
+
+            /*Console.WriteLine("Welcome to English Checkers Game!");*/
         }
         
         public void Goodbye()
         {
-            Console.WriteLine("Thanks for playing! See you next time.");
+            StringBuilder goodbyeMessage = new StringBuilder();
+
+            goodbyeMessage.Append("Thanks for playing! See you next time.");
+            Console.WriteLine(goodbyeMessage);
         }
 
         public void GetGameDetailsProcedure(GameDetails io_GameDetails)
@@ -113,12 +121,12 @@ namespace CheckersUI
             return numOfPlayers;
         }
 
-        public void PrintInvalidInputMessage()
+        public static void PrintInvalidInputMessage()
         {
             Console.WriteLine("Sorry! Your input isn't valid");
         }
 
-        public void PrintRequestForBoardSize()
+        public static void PrintRequestForBoardSize()
         {
             Console.WriteLine("Please pick your Checkers board size: ");
             Console.WriteLine("6 - For 6X6 board");
@@ -126,7 +134,7 @@ namespace CheckersUI
             Console.WriteLine("10 - For 10X10 board");
         }
 
-        public void PrintGameModeChoosingRequest()
+        public static void PrintGameModeChoosingRequest()
         {
             Console.WriteLine("Please pick your game mode: ");
             Console.WriteLine("1 - Single player mode (play against the computer)");
@@ -146,7 +154,7 @@ namespace CheckersUI
             }
         }
 
-        public void PrintInvalidInputStructure()
+        public static void PrintInvalidInputStructure()
         {            
                 Console.WriteLine("Sorry, your input structure isn't valid.");
                 Console.Write("Please enter a new move: ");          
@@ -161,7 +169,7 @@ namespace CheckersUI
             }
         }
 
-        public bool BoardSizeInputValueValidation(int i_BoardSize)
+        public static bool BoardSizeInputValueValidation(int i_BoardSize)
         {
             bool boardSizeIsValid;
 
@@ -178,7 +186,7 @@ namespace CheckersUI
             return boardSizeIsValid;
         }
 
-        public char GetCharByDiscType(eDiscType i_DiscTypeNum)
+        public static char GetCharByDiscType(eDiscType i_DiscTypeNum)
         {
             char discTypeChar;
 
@@ -238,7 +246,7 @@ namespace CheckersUI
                 }
             }
 
-            Console.WriteLine(" ");
+            Console.WriteLine(Environment.NewLine);
         }
 
         public void PrintSquare(eDiscType i_CurrSquareDiscType)
@@ -264,12 +272,12 @@ namespace CheckersUI
         {
             int index;
 
-            Console.WriteLine(" ");
+            Console.WriteLine(Environment.NewLine);
             for (index = 0; index < i_BoardSize; index++)
             {
                 Console.Write("=====");
             }
-            Console.WriteLine(" ");
+            Console.WriteLine(Environment.NewLine);
         }
 
         public void PrintColumnsFrame(int i_BoardSize)
@@ -284,13 +292,13 @@ namespace CheckersUI
                 columnLetter = (char)(columnLetter + 1);
             }
 
-            Console.WriteLine("");
+            Console.WriteLine(Environment.NewLine);
             for (columnIndex = 0; columnIndex < i_BoardSize; columnIndex++)
             {
                 Console.Write("=====");
             }
 
-            Console.WriteLine("");
+            Console.WriteLine(Environment.NewLine);
         }
             
         public void RequestMoveInput()
@@ -396,7 +404,7 @@ namespace CheckersUI
             return anotherTurnInputIsValid;
         }
 
-        public void PrintAnotherGameRequest()
+        public static void PrintAnotherGameRequest()
         {
             Console.WriteLine("Do you want to go for another game?");
             Console.WriteLine("If so, press 'Y' to start a new game. If Not press 'Q' to quit");

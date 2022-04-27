@@ -25,7 +25,7 @@ namespace CheckersGame
         private Player m_SecondPlayer;
         private Player m_CurrentPlayer;
         private Player m_RivalPlayer;
-        MoveManager m_MoveManager;
+        private MoveManager m_MoveManager;
         private eGameMode m_GameMode;
         private eGameResult m_SingleGameResult;
         private eGameResult m_FinalCheckersSessionResult;
@@ -33,8 +33,6 @@ namespace CheckersGame
 
         public Game()
         {
-            /*m_FirstPlayer = new Player();
-            m_SecondPlayer = new Player();*/
             m_MoveManager = new MoveManager();
         }
 
@@ -188,26 +186,6 @@ namespace CheckersGame
                 Player.ePlayerMovingDirection.Down, Player.ePlayerRecognition.FirstPlayer);
             m_SecondPlayer = new Player(i_SecondPlayerName, eDiscType.ODisc, eDiscType.OKingDisc, secondPlayerType,
                 Player.ePlayerMovingDirection.Up, Player.ePlayerRecognition.SecondPlayer);
-           /* m_FirstPlayer.Name = i_FirstPlayerName;
-            m_SecondPlayer.Name = i_SecondPlayerName;
-            m_FirstPlayer.PlayerRecognition = Player.ePlayerRecognition.FirstPlayer;
-            m_SecondPlayer.PlayerRecognition = Player.ePlayerRecognition.SecondPlayer;
-            m_FirstPlayer.DiscType = eDiscType.XDisc;
-            m_SecondPlayer.DiscType = eDiscType.ODisc;
-            m_FirstPlayer.KingDiscType = eDiscType.XKingDisc;
-            m_SecondPlayer.KingDiscType = eDiscType.OKingDisc;
-            m_FirstPlayer.MovingDirection = Player.ePlayerMovingDirection.Down;
-            m_SecondPlayer.MovingDirection = Player.ePlayerMovingDirection.Up;*/
-            /*m_FirstPlayer.PlayerType = Player.ePlayerType.Computer;
-            if (m_GameMode == eGameMode.TwoPlayersMode)
-            {
-                m_FirstPlayer.PlayerType = Player.ePlayerType.Human;
-            }
-
-            else /// In case it's a Single Player Game Mode.
-            {
-                m_SecondPlayer.PlayerType = Player.ePlayerType.Computer;
-            }*/
 
             m_FirstPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_FirstPlayer.DiscType);
             m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
@@ -223,12 +201,6 @@ namespace CheckersGame
 
         public void GenerateAndLoadNewPotentialMove()
         {
-            /*bool isValidEatingMove;
-            int generatedIndexFromList;
-            var random = new Random();
-            SquareIndex currentSquareIndex = new SquareIndex();
-            List<SquareIndex> tempHoldingSquareIndices = new List<SquareIndex>(m_CurrentPlayer.CurrentHoldingSquareIndices);*/
-
             if (m_IsRecurringTurn)
             {
                 /// immediately load the SquareIndex we reached in the last move.
@@ -244,26 +216,6 @@ namespace CheckersGame
             {
                 GenerateAndLoadNewRandomSimpleMove();
             }
-/*
-            else if(!CurrentPlayerAnyEatingMovePossibilityCheck())
-            { 
-                generatedIndexFromList = random.Next(tempHoldingSquareIndices.Count);
-                currentSquareIndex = tempHoldingSquareIndices[generatedIndexFromList];
-                isValidEatingMove = m_MoveManager.AnyMovePossibilityCheck(currentSquareIndex, m_Board, m_CurrentPlayer);
-                while (!isValidEatingMove)
-                {
-                    tempHoldingSquareIndices.Remove(currentSquareIndex);
-                    generatedIndexFromList = random.Next(tempHoldingSquareIndices.Count);
-                    currentSquareIndex = tempHoldingSquareIndices[generatedIndexFromList];
-                    isValidEatingMove = m_MoveManager.AnyMovePossibilityCheck(currentSquareIndex, m_Board, m_CurrentPlayer);
-                }
-            }
-
-            else /// In case the player must eat:
-            {
-                /// the source and destination will be loaded automatically during the eatingMovePossibilitycheck:
-                /// CurrentPlayerAnyEatingMovePossibilityCheck()
-            }*/
         }
 
         public void GenerateAndLoadNewRandomEatingMove()
@@ -417,7 +369,8 @@ namespace CheckersGame
         {
             bool playerAbleToMove; 
 
-            /// Set first to false so if "true" will be returned from a single SquareIndex check, we will go out from the loop via break.
+            /// Set first to false so if "true" will be returned from a single SquareIndex check,
+            /// we will go out from the loop via break.
             playerAbleToMove = false; 
             foreach (SquareIndex currSquareIndex in i_Player.CurrentHoldingSquareIndices)
             {
@@ -435,11 +388,11 @@ namespace CheckersGame
         {
             bool playerCanMakeEatingMove;
 
-            /// Set first to false so if "true" will be returned from a single SquareIndex check, we will go out from the loop via break.
+            /// Set first to false so if "true" will be returned from a single SquareIndex check,
+            /// we will go out from the loop via break.
             playerCanMakeEatingMove = false;
             foreach (SquareIndex currSquareIndex in m_CurrentPlayer.CurrentHoldingSquareIndices)
             {
-/*                m_MoveManager.SourceIndex.CopySquareIndices(currSquareIndex);*/
                 playerCanMakeEatingMove = m_MoveManager.AnyEatingMovePossibiltyCheckByIndex(currSquareIndex, m_Board, m_CurrentPlayer);
                 if (playerCanMakeEatingMove)
                 {
@@ -461,26 +414,6 @@ namespace CheckersGame
             return playerCanMakeEatingMove;
         }
 
-      /*  public void CheckAndUpdateIfCurrentPlayerMustEat() /// Run from moveValidationProcedure -> indicesSave because input already loaded
-        {
-            bool currentPlayerMustEat;
-
-            currentPlayerMustEat = CurrentPlayerAnyEatingMovePossibilityCheck();
-            *//* SquareIndex sourceIndexSaver;
-             SquareIndex destinationIndexSaver;*//*
-
-            /// If playertype isn't computer.
-            /// Because while we generate a movement for computer we check if eating option exist and then loading it directly so no duoblr validation needed
-            *//*if (m_CurrentPlayer.PlayerType == Player.ePlayerType.Human)
-            {*/
-            /*sourceIndexSaver = new SquareIndex(m_MoveManager.SourceIndex);
-            destinationIndexSaver = new SquareIndex(m_MoveManager.DestinationIndex);*//*
-            /// currentPlayerMustEat = CurrentPlayerAnyEatingMovePossibilityCheck();
-            *//* m_MoveManager.SourceIndex.CopySquareIndices(sourceIndexSaver);
-             m_MoveManager.DestinationIndex.CopySquareIndices(destinationIndexSaver);*//*
-            /// }
-        }*/
-
         public void ScoreCalculationAndUpdate()
         {
             int singleGameScore;
@@ -501,8 +434,10 @@ namespace CheckersGame
             }
         }
 
-        public void ResetBetweenSessions()
+        public void ResetObjectsBetweenSessions()
         {
+            m_IsRecurringTurn = false;
+            m_MoveManager.ResetMoveManager();
             FirstPlayer.NumOfDiscs = 0;
             SecondPlayer.NumOfDiscs = 0;
             FirstPlayer.CurrentHoldingSquareIndices.Clear();
