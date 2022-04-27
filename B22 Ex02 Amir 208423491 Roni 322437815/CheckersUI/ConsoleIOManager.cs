@@ -10,22 +10,22 @@ namespace CheckersUI
 {
     public class ConsoleIOManager
     {
-        private RawMoveInputManager m_RawMoveInputManager;
+        private readonly RawMoveInputManager r_RawMoveInputManager;
         private bool m_GetSecondPlayerName;
-        const int k_MaximumNameLength = 20;
-        const char k_Quit = 'Q';
-        const char k_Continue = 'Y';
+        public const int k_MaximumNameLength = 20;
+        public const char k_Quit = 'Q';
+        public const char k_Continue = 'Y';
 
         public ConsoleIOManager()
         {
-            m_RawMoveInputManager = new RawMoveInputManager();
+            r_RawMoveInputManager = new RawMoveInputManager();
         }
 
         public RawMoveInputManager RawMoveInputManager
         {
             get
             {
-                return m_RawMoveInputManager;
+                return r_RawMoveInputManager;
             }
         }
 
@@ -90,7 +90,7 @@ namespace CheckersUI
             name.Append(System.Console.ReadLine());
             while(name.Length > k_MaximumNameLength)
             {
-                name = new StringBuilder();
+                name.Remove(0, name.Length);
                 invalidNameMessage.Append("The name is not valid! Please Enter another name");
                 name.Append(System.Console.ReadLine());
             }
@@ -256,7 +256,7 @@ namespace CheckersUI
 
             if (i_PlayerType == Player.ePlayerType.Computer)
             {
-                System.Threading.Thread.Sleep(200);
+                System.Threading.Thread.Sleep(3000);
             }
 
             Ex02.ConsoleUtils.Screen.Clear();
@@ -273,31 +273,35 @@ namespace CheckersUI
                 if (columnIndex == i_Board.BoardSize)
                 {                   
                     columnIndex = 0;
+                    Console.WriteLine(Environment.NewLine);
                     PrintRowBorder(i_Board.BoardSize);
+                    Console.WriteLine(Environment.NewLine); 
                 }
             }
-
-            Console.WriteLine(Environment.NewLine);
         }
 
         public void PrintSquare(Game.eDiscType i_CurrSquareDiscType)
         {
+            StringBuilder squareContent = new StringBuilder(); 
+
             if (i_CurrSquareDiscType != Game.eDiscType.None)
             {
-                Console.Write(" {0} | ", GetCharByDiscType(i_CurrSquareDiscType));
+                squareContent.Append(String.Format(" {0} |", GetCharByDiscType(i_CurrSquareDiscType)));
             }
 
             else
             {
-                Console.Write("   | ");
+                squareContent.Append("   |");
             }
+
+            Console.Write(squareContent);
         }
 
         public void PrintNewRowLetter(ref char io_RowLetter)
         {
             StringBuilder rawLetter = new StringBuilder();
 
-            rawLetter.Append(string.Format("{0}|", io_RowLetter));
+            rawLetter.Append(string.Format(" {0} |", io_RowLetter));
             Console.Write(rawLetter);
             io_RowLetter = (char)(io_RowLetter + 1);          
         }
@@ -305,54 +309,47 @@ namespace CheckersUI
         public void PrintRowBorder(int i_BoardSize)
         {
             int index;
-            StringBuilder rowBorder;
+            StringBuilder rowBorder = new StringBuilder();
 
-            Console.WriteLine(Environment.NewLine);
+            rowBorder.Append("====");
+            Console.Write(rowBorder);
+
             for (index = 0; index < i_BoardSize; index++)
             {
-                rowBorder = new StringBuilder();
-                rowBorder.Append("=====");
                 Console.Write(rowBorder);
             }
-            Console.WriteLine(Environment.NewLine);
         }
 
         public void PrintColumnsFrame(int i_BoardSize)
         {
             int columnIndex;
-            char columnLetter = 'A';
+            char letter = 'A';
             StringBuilder space = new StringBuilder();
-            StringBuilder rowBorder;
-            StringBuilder columnNumber;
+            StringBuilder columnLetter;
 
-            space.Append(" ");
+            space.Append("    ");
             Console.Write(space);
             for (columnIndex = 0; columnIndex < i_BoardSize; columnIndex++)
             {
-                columnNumber = new StringBuilder();
-                columnNumber.Append(string.Format(" {0} | ", columnLetter));
-                Console.Write(columnNumber);
-                columnLetter = (char)(columnLetter + 1);              
+                columnLetter = new StringBuilder();
+                columnLetter.Append(string.Format(" {0} |", letter));
+                Console.Write(columnLetter);
+                letter = (char)(letter + 1);              
             }
 
             Console.WriteLine(Environment.NewLine);
-            for (columnIndex = 0; columnIndex < i_BoardSize; columnIndex++)
-            {
-                rowBorder = new StringBuilder();
-                rowBorder.Append("=====");
-                Console.Write(rowBorder);
-            }
-
+            PrintRowBorder(i_BoardSize);
             Console.WriteLine(Environment.NewLine);
+
         }
             
         public void RequestMoveInput()
         {
-            m_RawMoveInputManager.LoadNewInput();
-            while (!m_RawMoveInputManager.RawInputIsValid)
+            r_RawMoveInputManager.LoadNewInput();
+            while (!r_RawMoveInputManager.RawInputIsValid)
             {
                 PrintInvalidInputStructure();
-                m_RawMoveInputManager.LoadNewInput();
+                r_RawMoveInputManager.LoadNewInput();
             }
         }
 
@@ -428,15 +425,15 @@ namespace CheckersUI
             char userChoice;
 
             PrintAnotherGameRequest();
-            userChoiceIsValid = Char.TryParse(Console.ReadLine(), out userChoice);
+            userChoiceIsValid = char.TryParse(Console.ReadLine(), out userChoice);
             while (!userChoiceIsValid || !AnotherTurnInputValidation(userChoice))
             {
                 PrintInvalidInputMessage();
                 PrintAnotherGameRequest();
-                userChoiceIsValid = Char.TryParse(Console.ReadLine(), out userChoice);
+                userChoiceIsValid = char.TryParse(Console.ReadLine(), out userChoice);
             }
 
-            if (Char.ToUpper(userChoice) == k_Quit)
+            if (char.ToUpper(userChoice) == k_Quit)
             {
                 playAnotherRound = false;
             }
@@ -475,9 +472,12 @@ namespace CheckersUI
             Console.WriteLine(anotherGameRequest);
         }
 
-        public void PrintLastMoveByRawInput(StringBuilder i_RawInput)
+        public void PrintLastMoveByRawInput(StringBuilder i_RawInput, Player i_CurrPlayer)
         {
-            Console.WriteLine(i_RawInput);
+            StringBuilder lastMoveInfo = new StringBuilder();
+
+            lastMoveInfo.Append(string.Format("{0}'s move was ({1}): {2}", i_CurrPlayer.Name, GetCharByDiscType(i_CurrPlayer.DiscType), i_RawInput));
+            Console.WriteLine(lastMoveInfo);
         }
     }
 }
