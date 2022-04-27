@@ -43,7 +43,6 @@ namespace CheckersUI
         {
             r_ConsoleIOManager.GetGameDetailsProcedure(r_GameDetails);
             r_Game.GameMode = r_GameDetails.GameMode;
-            /// r_Game.SetBoard(r_GameDetails.BoardSize);
             r_Game.SetGameObjects(r_GameDetails.FirstPlayerName, r_GameDetails.SecondPlayerName, r_GameDetails.BoardSize);
         }
 
@@ -77,8 +76,9 @@ namespace CheckersUI
                 MoveValidationProcedure();
                 r_Game.MoveManager.ExecuteMove(r_Game.Board, r_Game.CurrentPlayer);
                 r_Game.PostMoveProcedure();
+                r_ConsoleIOManager.RawMoveInputManager.LoadLastMoveToRawInput(r_Game.MoveManager.SourceIndex, r_Game.MoveManager.DestinationIndex);
                 r_ConsoleIOManager.PrintBoard(r_Game.Board, r_Game.CurrentPlayer.PlayerType);
-                /// r_ConsoleIOManager.PrintLastMoveByRawInput(r_ConsoleIOManager.Input.RawInput);
+                r_ConsoleIOManager.PrintLastMoveByRawInput(r_ConsoleIOManager.RawMoveInputManager.RawInput, r_Game.CurrentPlayer);
                 RecurringTurnProcedure();
             }
         }
@@ -114,10 +114,6 @@ namespace CheckersUI
 
             else //Regular turn.
             {
-                /// Check If there any eating option
-                /// If so , allow only eating option
-                /// if not check for simple move
-                /// m_Game.CheckAndUpdateIfCurrentPlayerMustEat();
                 validMove = r_Game.MoveManager.MoveValidation(r_Game.Board, r_Game.CurrentPlayer);
                 while (!validMove)
                 {

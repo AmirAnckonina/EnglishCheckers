@@ -185,10 +185,20 @@ namespace CheckersGame
                 secondPlayerType = Player.ePlayerType.Computer;
             }
 
-            m_FirstPlayer = new Player(i_FirstPlayerName, Game.eDiscType.ODisc, Game.eDiscType.OKingDisc, Player.ePlayerType.Computer,
-                Player.ePlayerMovingDirection.Down, Player.ePlayerRecognition.FirstPlayer);
-            m_SecondPlayer = new Player(i_SecondPlayerName, Game.eDiscType.XDisc, Game.eDiscType.XKingDisc, secondPlayerType,
-                Player.ePlayerMovingDirection.Up, Player.ePlayerRecognition.SecondPlayer);
+            m_FirstPlayer = new Player
+                (i_FirstPlayerName,
+                Game.eDiscType.ODisc,
+                Game.eDiscType.OKingDisc,
+                Player.ePlayerType.Human,
+                Player.ePlayerMovingDirection.Down,
+                Player.ePlayerRecognition.FirstPlayer);
+            m_SecondPlayer = new Player
+                (i_SecondPlayerName,
+                Game.eDiscType.XDisc,
+                Game.eDiscType.XKingDisc,
+                secondPlayerType,
+                Player.ePlayerMovingDirection.Up,
+                Player.ePlayerRecognition.SecondPlayer);
             m_Board = new Board(i_BoardSize);
             m_Board.InitializeBoard(m_FirstPlayer , m_SecondPlayer);
             m_FirstPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_FirstPlayer.DiscType);

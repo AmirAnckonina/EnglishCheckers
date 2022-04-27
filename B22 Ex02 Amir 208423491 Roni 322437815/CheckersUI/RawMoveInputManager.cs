@@ -14,14 +14,16 @@ namespace CheckersUI
         private StringBuilder m_RawInput;
         private bool m_RawInputIsValid;
         private bool m_QuitInserted;
-        private SquareIndex m_SourceIndex;
-        private SquareIndex m_DestinationIndex;
+        private readonly SquareIndex r_SourceIndex;
+        private readonly SquareIndex r_DestinationIndex;
+        private const char k_DirectionSign = '>';
 
         public RawMoveInputManager()
         {
             m_RawInput = new StringBuilder();
-            m_SourceIndex = new SquareIndex();
-            m_DestinationIndex = new SquareIndex();
+            m_RawInput.Append("     ");
+            r_SourceIndex = new SquareIndex();
+            r_DestinationIndex = new SquareIndex();
             m_RawInputIsValid = false;
             m_QuitInserted = false;
         }
@@ -30,7 +32,7 @@ namespace CheckersUI
         {
             get
             {
-                return RawInput; 
+                return m_RawInput; 
             }
 
             set 
@@ -43,7 +45,7 @@ namespace CheckersUI
         {
             get
             {
-                return m_SourceIndex;
+                return r_SourceIndex;
             }
         }
 
@@ -51,7 +53,7 @@ namespace CheckersUI
         {
             get 
             {
-                return m_DestinationIndex; 
+                return r_DestinationIndex; 
             }
         }
 
@@ -95,10 +97,10 @@ namespace CheckersUI
 
         public void UpdateIndices()
         {
-            m_SourceIndex.ColumnIndex = LetterToNumberIndexConverter(m_RawInput[0]);
-            m_SourceIndex.RowIndex = LetterToNumberIndexConverter(m_RawInput[1]);
-            m_DestinationIndex.ColumnIndex = LetterToNumberIndexConverter(m_RawInput[3]);
-            m_DestinationIndex.RowIndex = LetterToNumberIndexConverter(m_RawInput[4]);
+            r_SourceIndex.ColumnIndex = LetterToIndexNumberConverter(m_RawInput[0]);
+            r_SourceIndex.RowIndex = LetterToIndexNumberConverter(m_RawInput[1]);
+            r_DestinationIndex.ColumnIndex = LetterToIndexNumberConverter(m_RawInput[3]);
+            r_DestinationIndex.RowIndex = LetterToIndexNumberConverter(m_RawInput[4]);
         }
 
         public void RawInputValidation()
@@ -135,7 +137,7 @@ namespace CheckersUI
         {
             bool quitInserted;
 
-            if (m_RawInput.ToString() == "Q" || m_RawInput.ToString() == "q")
+            if (char.ToUpper(m_RawInput[0]) == ConsoleIOManager.k_Quit)
             {
                 quitInserted = m_QuitInserted = true;
             }
@@ -186,7 +188,7 @@ namespace CheckersUI
         {
             bool operatorIsValid;
 
-            if (m_RawInput[2] == '>')
+            if (m_RawInput[2] == k_DirectionSign)
             {
                 operatorIsValid = true;
             }
@@ -216,13 +218,45 @@ namespace CheckersUI
             return lengthIsValid;
         }
 
-        public int LetterToNumberIndexConverter(char i_Letter)
+        public int LetterToIndexNumberConverter(char i_Letter)
         {
             int index;
 
             index = char.ToUpper(i_Letter) - 65;
 
             return index;
+        }
+
+        public char IndexNumberToUpperCaseLetterConverter(int i_Number)
+        {
+            char letter;
+
+            letter = (char)(i_Number + 65);
+
+            return letter;
+        }
+
+        public char IndexNumberToLowerCaseLetterConverter(int i_Number)
+        {
+            char letter;
+
+            letter = (char)(i_Number + 97);
+
+            return letter;
+        }
+
+        public void LoadLastMoveToRawInput(SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
+        {
+            int i_SourceColumn = i_SourceIndex.ColumnIndex;
+            int i_SourceRow = i_SourceIndex.RowIndex;
+            int i_DestColumn = i_DestinationIndex.ColumnIndex;
+            int i_DestRow = i_DestinationIndex.RowIndex;
+
+            m_RawInput[0] = IndexNumberToUpperCaseLetterConverter(i_SourceColumn);
+            m_RawInput[1] = IndexNumberToLowerCaseLetterConverter(i_SourceRow);
+            m_RawInput[2] = k_DirectionSign;
+            m_RawInput[3] = IndexNumberToUpperCaseLetterConverter(i_DestColumn);
+            m_RawInput[4] = IndexNumberToLowerCaseLetterConverter(i_DestRow);
         }
     }
 }
