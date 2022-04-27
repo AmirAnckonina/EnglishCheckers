@@ -12,7 +12,9 @@ namespace CheckersUI
     {
         private RawMoveInputManager m_RawMoveInputManager;
         private bool m_GetSecondPlayerName;
-        /// private GameDetails io_GameDetails;
+        const int k_MaximumNameLength = 20;
+        const char k_Quit = 'Q';
+        const char k_Continue = 'Y';
 
         public ConsoleIOManager()
         {
@@ -33,8 +35,6 @@ namespace CheckersUI
 
             welcomeMessage.Append("Welcome to English Checkers Game!");
             Console.WriteLine(welcomeMessage);
-
-            /*Console.WriteLine("Welcome to English Checkers Game!");*/
         }
         
         public void Goodbye()
@@ -70,21 +70,31 @@ namespace CheckersUI
 
         public StringBuilder GetPlayerName()
         {
-            StringBuilder m_Name = new StringBuilder();
+            StringBuilder name = new StringBuilder();
+            StringBuilder enterNameMessage = new StringBuilder();
+            StringBuilder invalidNameMessage = new StringBuilder();
 
+            
             if (!m_GetSecondPlayerName)
             {
-                Console.WriteLine("Please enter your Name: ");
+                enterNameMessage.Append("Please enter your Name: ");
+                Console.WriteLine(enterNameMessage);
             }
 
             else
             {
-                Console.WriteLine("Please enter the second player name: ");
+                enterNameMessage.Append("Please enter the second player name: ");
+                Console.WriteLine(enterNameMessage);
             }
 
-            m_Name.Append(System.Console.ReadLine());
-
-            return m_Name;
+            name.Append(System.Console.ReadLine());
+            while(name.Length > k_MaximumNameLength)
+            {
+                name = new StringBuilder();
+                invalidNameMessage.Append("The name is not valid! Please Enter another name");
+                name.Append(System.Console.ReadLine());
+            }
+            return name;
         }
 
         public int GetSizeOfBoard()
@@ -108,12 +118,14 @@ namespace CheckersUI
         {
             int numOfPlayers;
             bool gameModeInputTypeIsValid;
+            StringBuilder invalidMessage = new StringBuilder();
 
             PrintGameModeChoosingRequest();
             gameModeInputTypeIsValid = int.TryParse(Console.ReadLine(), out numOfPlayers);
             while (!gameModeInputTypeIsValid || (numOfPlayers != 1 && numOfPlayers != 2))
             {
-                Console.WriteLine("Invalid choice!");
+                invalidMessage.Append("Invalid choice!");
+                Console.WriteLine(invalidMessage);
                 PrintGameModeChoosingRequest();
                 gameModeInputTypeIsValid = int.TryParse(Console.ReadLine(), out numOfPlayers);
             }
@@ -123,49 +135,68 @@ namespace CheckersUI
 
         public static void PrintInvalidInputMessage()
         {
-            Console.WriteLine("Sorry! Your input isn't valid");
+            StringBuilder inputIsNotValidMessage = new StringBuilder();
+
+            inputIsNotValidMessage.Append("Sorry! Your input isn't valid");
+            Console.WriteLine(inputIsNotValidMessage);
         }
 
         public static void PrintRequestForBoardSize()
         {
-            Console.WriteLine("Please pick your Checkers board size: ");
-            Console.WriteLine("6 - For 6X6 board");
-            Console.WriteLine("8 - For 8X8 board");
-            Console.WriteLine("10 - For 10X10 board");
+            StringBuilder optionsOfBoardSizeMessage = new StringBuilder();
+
+            optionsOfBoardSizeMessage.AppendLine("Please pick your Checkers board size: ");
+            optionsOfBoardSizeMessage.AppendLine("6 - For 6X6 board");
+            optionsOfBoardSizeMessage.AppendLine("8 - For 8X8 board");
+            optionsOfBoardSizeMessage.Append("10 - For 10X10 board");
+            Console.WriteLine(optionsOfBoardSizeMessage);
         }
 
         public static void PrintGameModeChoosingRequest()
         {
-            Console.WriteLine("Please pick your game mode: ");
-            Console.WriteLine("1 - Single player mode (play against the computer)");
-            Console.WriteLine("2 - Two players mode (play against your friend!)");
+            StringBuilder optionsOfGameModeMessage = new StringBuilder();
+
+            optionsOfGameModeMessage.AppendLine("Please pick your game mode: ");
+            optionsOfGameModeMessage.AppendLine("1 - Single player mode (play against the computer)");
+            optionsOfGameModeMessage.Append("2 - Two players mode (play against your friend!)");
+            Console.WriteLine(optionsOfGameModeMessage);
         }
 
         public void PrintWhoseTurn(Player i_CurrPlayer)
         {
+            StringBuilder whoseTurnMessage = new StringBuilder();
+
             if(i_CurrPlayer.PlayerType == Player.ePlayerType.Computer)
             {
-                Console.WriteLine("- It's The Computer ({0}) turn!", GetCharByDiscType(i_CurrPlayer.DiscType));
+                whoseTurnMessage.Append(string.Format("- It's The Computer ({0}) turn!", GetCharByDiscType(i_CurrPlayer.DiscType)));
+                Console.WriteLine(whoseTurnMessage);
             }
 
             else
             {
-               Console.WriteLine("- It's {0} turn ({1}), Go Ahead! : ", i_CurrPlayer.Name, GetCharByDiscType(i_CurrPlayer.DiscType));
+                whoseTurnMessage.Append(string.Format("- It's {0} turn ({1}), Go Ahead! : ", i_CurrPlayer.Name, GetCharByDiscType(i_CurrPlayer.DiscType)));
+               Console.WriteLine(whoseTurnMessage);
             }
         }
 
         public static void PrintInvalidInputStructure()
-        {            
-                Console.WriteLine("Sorry, your input structure isn't valid.");
-                Console.Write("Please enter a new move: ");          
+        {
+            StringBuilder invalidInputStructureMessage = new StringBuilder();
+
+            invalidInputStructureMessage.AppendLine("Sorry, your input structure isn't valid.");
+            invalidInputStructureMessage.Append("Please enter a new move: ");
+            Console.WriteLine(invalidInputStructureMessage);  
         }
 
         public void PrintInvalidInputMoveOption(Player.ePlayerType i_CurrentPlayerType)
         {
+            StringBuilder invalidInputMoveOptionMessage = new StringBuilder();
+
             if (i_CurrentPlayerType == Player.ePlayerType.Human)
             {
-                Console.WriteLine("Sorry, your move choice isn't valid!");
-                Console.WriteLine("Please enter a new valid move: ");
+                invalidInputMoveOptionMessage.AppendLine("Sorry, your move choice isn't valid!");
+                invalidInputMoveOptionMessage.Append("Please enter a new valid move: ");
+                Console.WriteLine(invalidInputMoveOptionMessage);
             }
         }
 
@@ -173,7 +204,7 @@ namespace CheckersUI
         {
             bool boardSizeIsValid;
 
-            if (i_BoardSize == 4 || i_BoardSize == 6 || i_BoardSize == 8 || i_BoardSize == 10)
+            if (i_BoardSize == 6 || i_BoardSize == 8 || i_BoardSize == 10)
             {
                 boardSizeIsValid = true;
             }
@@ -186,26 +217,26 @@ namespace CheckersUI
             return boardSizeIsValid;
         }
 
-        public static char GetCharByDiscType(eDiscType i_DiscTypeNum)
+        public static char GetCharByDiscType(Game.eDiscType i_DiscTypeNum)
         {
             char discTypeChar;
 
-            if (i_DiscTypeNum == eDiscType.XDisc)
+            if (i_DiscTypeNum == Game.eDiscType.XDisc)
             {
                 discTypeChar = 'X';
             }
 
-            else if (i_DiscTypeNum == eDiscType.ODisc)
+            else if (i_DiscTypeNum == Game.eDiscType.ODisc)
             {
                 discTypeChar = 'O';
             }
 
-            else if (i_DiscTypeNum == eDiscType.XKingDisc)
+            else if (i_DiscTypeNum == Game.eDiscType.XKingDisc)
             {
                 discTypeChar = 'K';
             }
 
-            else if (i_DiscTypeNum == eDiscType.OKingDisc)
+            else if (i_DiscTypeNum == Game.eDiscType.OKingDisc)
             {
                 discTypeChar = 'U';
             }
@@ -249,9 +280,9 @@ namespace CheckersUI
             Console.WriteLine(Environment.NewLine);
         }
 
-        public void PrintSquare(eDiscType i_CurrSquareDiscType)
+        public void PrintSquare(Game.eDiscType i_CurrSquareDiscType)
         {
-            if (i_CurrSquareDiscType != eDiscType.None)
+            if (i_CurrSquareDiscType != Game.eDiscType.None)
             {
                 Console.Write(" {0} | ", GetCharByDiscType(i_CurrSquareDiscType));
             }
@@ -262,20 +293,26 @@ namespace CheckersUI
             }
         }
 
-        public void PrintNewRowLetter(int i_BoardSize, ref char io_RowLetter)
+        public void PrintNewRowLetter(ref char io_RowLetter)
         {
-            Console.Write("{0}|", io_RowLetter);
+            StringBuilder rawLetter = new StringBuilder();
+
+            rawLetter.Append(string.Format("{0}|", io_RowLetter));
+            Console.Write(rawLetter);
             io_RowLetter = (char)(io_RowLetter + 1);          
         }
 
         public void PrintRowBorder(int i_BoardSize)
         {
             int index;
+            StringBuilder rowBorder;
 
             Console.WriteLine(Environment.NewLine);
             for (index = 0; index < i_BoardSize; index++)
             {
-                Console.Write("=====");
+                rowBorder = new StringBuilder();
+                rowBorder.Append("=====");
+                Console.Write(rowBorder);
             }
             Console.WriteLine(Environment.NewLine);
         }
@@ -284,18 +321,26 @@ namespace CheckersUI
         {
             int columnIndex;
             char columnLetter = 'A';
+            StringBuilder space = new StringBuilder();
+            StringBuilder rowBorder;
+            StringBuilder columnNumber;
 
-            Console.Write("  ");
+            space.Append(" ");
+            Console.Write(space);
             for (columnIndex = 0; columnIndex < i_BoardSize; columnIndex++)
             {
-                Console.Write(" {0} | ", columnLetter);
-                columnLetter = (char)(columnLetter + 1);
+                columnNumber = new StringBuilder();
+                columnNumber.Append(string.Format(" {0} | ", columnLetter));
+                Console.Write(columnNumber);
+                columnLetter = (char)(columnLetter + 1);              
             }
 
             Console.WriteLine(Environment.NewLine);
             for (columnIndex = 0; columnIndex < i_BoardSize; columnIndex++)
             {
-                Console.Write("=====");
+                rowBorder = new StringBuilder();
+                rowBorder.Append("=====");
+                Console.Write(rowBorder);
             }
 
             Console.WriteLine(Environment.NewLine);
@@ -313,50 +358,67 @@ namespace CheckersUI
 
         public void PrintSingleGameResult(Game.eGameResult i_GameResult,Player i_FirstPlayer, Player i_SecondPlayer)
         {
+            StringBuilder gameResult = new StringBuilder();
+            StringBuilder totalScoreMessage = new StringBuilder();
+
            if(i_GameResult == Game.eGameResult.FirstPlayerWon)
             {
-                Console.WriteLine("The Winner is {0}!", i_FirstPlayer.Name);
+                gameResult.Append(string.Format("The Winner is {0}!", i_FirstPlayer.Name));
+                Console.WriteLine(gameResult);
             }
 
            else if(i_GameResult == Game.eGameResult.SecondPlayerWon)
             {
-                Console.WriteLine("The Winner is {0}!", i_SecondPlayer.Name);
+                gameResult.Append(string.Format("The Winner is {0}!", i_SecondPlayer.Name));
+                Console.WriteLine(gameResult);
             }
             
            else ///The game result is draw
             {
-                Console.WriteLine("The game result is draw!");
+                gameResult.Append("The game result is draw!");
+                Console.WriteLine(gameResult);
             }
 
-            Console.WriteLine("The total score till now: ");
+            totalScoreMessage.Append("The total score till now: ");
+            Console.WriteLine(totalScoreMessage);
             PrintScore(i_FirstPlayer, i_SecondPlayer);
         }
 
         public void PrintAllGameSessionsResult(Game.eGameResult i_FinalCheckersSessionResult, Player i_FirstPlayer, Player i_SecondPlayer)
         {
+            StringBuilder sessionResult = new StringBuilder();
+            StringBuilder sessionScore = new StringBuilder();
+
             if (i_FinalCheckersSessionResult == Game.eGameResult.FirstPlayerWon)
             {
-                Console.WriteLine("The final Winner is {0}!", i_FirstPlayer.Name);
+                sessionResult.Append(string.Format("The final Winner is {0}!", i_FirstPlayer.Name));
+                Console.WriteLine(sessionResult);
             }
 
             else if (i_FinalCheckersSessionResult == Game.eGameResult.SecondPlayerWon)
             {
-                Console.WriteLine("The final Winner is {0}!", i_SecondPlayer.Name);
+                sessionResult.Append(string.Format("The final Winner is {0}!", i_SecondPlayer.Name));
+                Console.WriteLine(sessionResult);
             }
 
             else ///The game result is draw
             {
-                Console.WriteLine("This Checkers session final result is a draw!");
+                sessionResult.Append("This Checkers session final result is a draw!"); 
+                Console.WriteLine(sessionResult);
             }
 
-            Console.WriteLine("Final session score: ");
+            sessionScore.Append("Final session score: ");
+            Console.WriteLine(sessionScore);
             PrintScore(i_FirstPlayer, i_SecondPlayer);
         }
 
         public void PrintScore(Player i_FirstPlayer, Player i_SecondPlayer)
         {
-            Console.WriteLine("{0}'s score: {1}", i_FirstPlayer.Name, i_FirstPlayer.Score);
-            Console.WriteLine("{0}'s score: {1}", i_SecondPlayer.Name, i_SecondPlayer.Score);
+            StringBuilder score = new StringBuilder();
+
+            score.AppendLine(string.Format("{0}'s score: {1}", i_FirstPlayer.Name, i_FirstPlayer.Score));
+            score.Append(string.Format("{0}'s score: {1}", i_SecondPlayer.Name, i_SecondPlayer.Score));
+            Console.WriteLine(score);
         }
 
         public bool AskForAnotherRound()
@@ -374,7 +436,7 @@ namespace CheckersUI
                 userChoiceIsValid = Char.TryParse(Console.ReadLine(), out userChoice);
             }
 
-            if (Char.ToUpper(userChoice) == 'Q')
+            if (Char.ToUpper(userChoice) == k_Quit)
             {
                 playAnotherRound = false;
             }
@@ -391,7 +453,7 @@ namespace CheckersUI
         {
             bool anotherTurnInputIsValid;
 
-            if ((Char.ToUpper(i_UserChoice) == 'Y' || Char.ToUpper(i_UserChoice) == 'Q'))
+            if ((Char.ToUpper(i_UserChoice) == k_Continue || Char.ToUpper(i_UserChoice) == k_Quit))
             {
                 anotherTurnInputIsValid = true;
             }
@@ -406,8 +468,16 @@ namespace CheckersUI
 
         public static void PrintAnotherGameRequest()
         {
-            Console.WriteLine("Do you want to go for another game?");
-            Console.WriteLine("If so, press 'Y' to start a new game. If Not press 'Q' to quit");
+            StringBuilder anotherGameRequest = new StringBuilder();
+
+            anotherGameRequest.AppendLine("Do you want to go for another game?");
+            anotherGameRequest.Append("If so, press 'Y' to start a new game. If Not press 'Q' to quit");
+            Console.WriteLine(anotherGameRequest);
+        }
+
+        public void PrintLastMoveByRawInput(StringBuilder i_RawInput)
+        {
+            Console.WriteLine(i_RawInput);
         }
     }
 }
