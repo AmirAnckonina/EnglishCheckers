@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-
 using CheckersGame;
+
 namespace CheckersUI
 {
     class ConsoleUI
@@ -112,7 +110,7 @@ namespace CheckersUI
                 }
             }
 
-            else //Regular turn.
+            else /// Regular turn.
             {
                 validMove = r_Game.MoveManager.MoveValidation(r_Game.Board, r_Game.CurrentPlayer);
                 while (!validMove)
