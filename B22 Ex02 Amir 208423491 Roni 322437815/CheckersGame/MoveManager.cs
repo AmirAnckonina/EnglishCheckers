@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace CheckersGame
 {
-
     public class MoveManager
     {
         public enum eMoveType
@@ -1010,7 +1007,6 @@ namespace CheckersGame
             bool indicesDifferencesAreValid;
             int indicesDifferences;
 
-
             if (m_SourceIndex.Equals(m_RecurringTurnNewSourceIndex))
             {
                 srcAndDestBasicallyValid = SourceAndDestinationBasicValidation(i_Board, i_CurrPlayer);
@@ -1049,7 +1045,6 @@ namespace CheckersGame
         {
             bool recurringTurnIsPossible;
 
-            /// m_SourceIndex.CopySquareIndices(m_DestinationIndex); 
             recurringTurnIsPossible = AnyEatingMovePossibiltyCheckByIndex(i_NewSourceIndexAfterEating, i_Board, i_CurrPlayer);
 
             return recurringTurnIsPossible;

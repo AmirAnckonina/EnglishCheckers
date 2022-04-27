@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace CheckersGame
@@ -57,11 +56,6 @@ namespace CheckersGame
             {
                 return r_Name;
             }
-
-/*            set
-            {
-                m_Name = value; 
-            }*/
         }
 
         public int NumOfDiscs
