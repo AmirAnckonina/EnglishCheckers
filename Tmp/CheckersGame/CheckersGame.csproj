@@ -41,7 +41,7 @@
     <Compile Include="PotentialMove.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="SquareIndex.cs" />
-    <Compile Include="Game.cs" />
+    <Compile Include="GameLogic.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

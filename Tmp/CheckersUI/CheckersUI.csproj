@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1EA04D01-AF9E-4498-B89D-86C04DF28B94}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>CheckersUI</RootNamespace>
     <AssemblyName>CheckersUI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -35,7 +35,20 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ConsoleUI.cs" />
+    <Compile Include="GameDetailsFilledEventArgs.cs" />
+    <Compile Include="GameManager.cs" />
+    <Compile Include="FormSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetup.Designer.cs">
+      <DependentUpon>FormSetup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormGame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormGame.Designer.cs">
+      <DependentUpon>FormGame.cs</DependentUpon>
+    </Compile>
     <Compile Include="RawMoveInputManager.cs" />
     <Compile Include="IOManager.cs" />
     <Compile Include="GameDetails.cs" />
@@ -51,6 +64,19 @@
     <Reference Include="Ex02.ConsoleUtils">
       <HintPath>..\..\..\..\..\..\..\..\Temp\Ex02.ConsoleUtils.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FormGame.resx">
+      <DependentUpon>FormGame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetup.resx">
+      <DependentUpon>FormSetup.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

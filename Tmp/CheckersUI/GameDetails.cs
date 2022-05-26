@@ -7,7 +7,7 @@ namespace CheckersUI
     {
         private StringBuilder m_FirstPlayerName;
         private StringBuilder m_SecondPlayerName;
-        private CheckersGame.Game.eGameMode m_GameMode;
+        private CheckersGame.GameLogic.eGameMode m_GameMode;
         private int m_BoardSize;
 
         public GameDetails()
@@ -42,7 +42,7 @@ namespace CheckersUI
             }
         }
 
-        public CheckersGame.Game.eGameMode GameMode
+        public CheckersGame.GameLogic.eGameMode GameMode
         {
             get
             {

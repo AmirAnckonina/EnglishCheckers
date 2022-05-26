@@ -4,7 +4,7 @@ using CheckersGame;
 
 namespace CheckersUI
 {
-    public class ConsoleIOManager
+    public class IOManager
     {
         private readonly RawMoveInputManager r_RawMoveInputManager;
         private bool m_GetSecondPlayerName;
@@ -12,7 +12,7 @@ namespace CheckersUI
         public const char k_Quit = 'Q';
         public const char k_Continue = 'Y';
 
-        public ConsoleIOManager()
+        public IOManager()
         {
             r_RawMoveInputManager = new RawMoveInputManager();
         }
@@ -37,13 +37,13 @@ namespace CheckersUI
 
             if (gameModeChoice == 1)
             {
-                io_GameDetails.GameMode = CheckersGame.Game.eGameMode.SinglePlayerMode;
+                io_GameDetails.GameMode = CheckersGame.GameLogic.eGameMode.SinglePlayerMode;
                 io_GameDetails.SecondPlayerName.Append("The Computer");
             }
 
             else //gameModeChoice == 2
             {
-                io_GameDetails.GameMode = CheckersGame.Game.eGameMode.TwoPlayersMode;
+                io_GameDetails.GameMode = CheckersGame.GameLogic.eGameMode.TwoPlayersMode;
                 m_GetSecondPlayerName = true;
                 io_GameDetails.SecondPlayerName = GetPlayerName();
             }
@@ -183,26 +183,26 @@ namespace CheckersUI
         }
 
         //  This method should be private (None of the other classes used this method...)
-        public static char GetCharByDiscType(Game.eDiscType i_DiscTypeNum)
+        public static char GetCharByDiscType(GameLogic.eDiscType i_DiscTypeNum)
         {
             char discTypeChar;
 
-            if (i_DiscTypeNum == Game.eDiscType.XDisc)
+            if (i_DiscTypeNum == GameLogic.eDiscType.XDisc)
             {
                 discTypeChar = 'X';
             }
 
-            else if (i_DiscTypeNum == Game.eDiscType.ODisc)
+            else if (i_DiscTypeNum == GameLogic.eDiscType.ODisc)
             {
                 discTypeChar = 'O';
             }
 
-            else if (i_DiscTypeNum == Game.eDiscType.XKingDisc)
+            else if (i_DiscTypeNum == GameLogic.eDiscType.XKingDisc)
             {
                 discTypeChar = 'K';
             }
 
-            else if (i_DiscTypeNum == Game.eDiscType.OKingDisc)
+            else if (i_DiscTypeNum == GameLogic.eDiscType.OKingDisc)
             {
                 discTypeChar = 'U';
             }
@@ -292,11 +292,11 @@ namespace CheckersUI
         }
 
         //  This method should be private (None of the other classes used this method...)
-        public void PrintSquare(Game.eDiscType i_CurrSquareDiscType)
+        public void PrintSquare(GameLogic.eDiscType i_CurrSquareDiscType)
         {
             StringBuilder squareContent = new StringBuilder(); 
 
-            if (i_CurrSquareDiscType != Game.eDiscType.None)
+            if (i_CurrSquareDiscType != GameLogic.eDiscType.None)
             {
                 squareContent.Append(String.Format(" {0} |", GetCharByDiscType(i_CurrSquareDiscType)));
             }
@@ -375,18 +375,18 @@ namespace CheckersUI
             return newPotentialMove;
         }
 
-        public void PrintSingleGameResult(Game.eGameResult i_GameResult,Player i_FirstPlayer, Player i_SecondPlayer)
+        public void PrintSingleGameResult(GameLogic.eGameResult i_GameResult,Player i_FirstPlayer, Player i_SecondPlayer)
         {
             StringBuilder gameResult = new StringBuilder();
             StringBuilder totalScoreMessage = new StringBuilder();
 
-           if(i_GameResult == Game.eGameResult.FirstPlayerWon)
+           if(i_GameResult == GameLogic.eGameResult.FirstPlayerWon)
             {
                 gameResult.Append(string.Format("The Winner is {0}!", i_FirstPlayer.Name));
                 Console.WriteLine(gameResult);
             }
 
-           else if(i_GameResult == Game.eGameResult.SecondPlayerWon)
+           else if(i_GameResult == GameLogic.eGameResult.SecondPlayerWon)
             {
                 gameResult.Append(string.Format("The Winner is {0}!", i_SecondPlayer.Name));
                 Console.WriteLine(gameResult);
@@ -403,18 +403,18 @@ namespace CheckersUI
             PrintScore(i_FirstPlayer, i_SecondPlayer);
         }
 
-        public void PrintAllGameSessionsResult(Game.eGameResult i_FinalCheckersSessionResult, Player i_FirstPlayer, Player i_SecondPlayer)
+        public void PrintAllGameSessionsResult(GameLogic.eGameResult i_FinalCheckersSessionResult, Player i_FirstPlayer, Player i_SecondPlayer)
         {
             StringBuilder sessionResult = new StringBuilder();
             StringBuilder sessionScore = new StringBuilder();
 
-            if (i_FinalCheckersSessionResult == Game.eGameResult.FirstPlayerWon)
+            if (i_FinalCheckersSessionResult == GameLogic.eGameResult.FirstPlayerWon)
             {
                 sessionResult.Append(string.Format("The final Winner is {0}!", i_FirstPlayer.Name));
                 Console.WriteLine(sessionResult);
             }
 
-            else if (i_FinalCheckersSessionResult == Game.eGameResult.SecondPlayerWon)
+            else if (i_FinalCheckersSessionResult == GameLogic.eGameResult.SecondPlayerWon)
             {
                 sessionResult.Append(string.Format("The final Winner is {0}!", i_SecondPlayer.Name));
                 Console.WriteLine(sessionResult);

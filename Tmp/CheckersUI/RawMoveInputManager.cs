@@ -144,7 +144,7 @@ namespace CheckersUI
         {
             bool quitInserted;
 
-            if (char.ToUpper(m_RawInput[0]) == ConsoleIOManager.k_Quit)
+            if (char.ToUpper(m_RawInput[0]) == IOManager.k_Quit)
             {
                 quitInserted = m_QuitInserted = true;
             }

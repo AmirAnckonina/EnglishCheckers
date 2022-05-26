@@ -10,11 +10,11 @@ namespace CheckersGame
         private SquareIndex m_SrcIdx;
         private SquareIndex m_DestIdx;
 
-        /*public PotentialMove(SquareIndex i_SrcIdx, SquareIndex i_DestIdx)
+        public PotentialMove(SquareIndex i_SrcIdx, SquareIndex i_DestIdx)
         {
             m_SrcIdx = i_SrcIdx;
             m_DestIdx = i_DestIdx;
-        }*/
+        }
 
         public SquareIndex SrcIdx
         {

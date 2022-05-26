@@ -574,12 +574,12 @@ namespace CheckersGame
         public bool DestinationVacancyAndLegalityValidation(Square i_DestinationSquare)
         {
             bool destinationIsVacant;
-            Game.eDiscType currDestinationDiscType;
+            GameLogic.eDiscType currDestinationDiscType;
             bool indexIsLegal;
 
             currDestinationDiscType = i_DestinationSquare.DiscType;
             indexIsLegal = i_DestinationSquare.LegalSquare;
-            if (currDestinationDiscType == Game.eDiscType.None && indexIsLegal)
+            if (currDestinationDiscType == GameLogic.eDiscType.None && indexIsLegal)
             {
                 destinationIsVacant = true;
             }
@@ -645,7 +645,7 @@ namespace CheckersGame
         {
             io_Board[m_DestIdx].DiscType = io_Board[m_SrcIdx].DiscType;
             io_Board[m_DestIdx].SquareHolder = i_CurrPlayer.PlayerRecognition;
-            io_Board[m_SrcIdx].DiscType = Game.eDiscType.None;
+            io_Board[m_SrcIdx].DiscType = GameLogic.eDiscType.None;
             io_Board[m_SrcIdx].SquareHolder = Player.ePlayerRecognition.None;
         }
         
@@ -655,25 +655,25 @@ namespace CheckersGame
             switch (m_MoveType)
             {
                 case eMoveType.EatingNorthEastMove:
-                    io_Board[m_SrcIdx.RowIdx - 1, m_SrcIdx.ColumnIdx + 1].DiscType = Game.eDiscType.None;
+                    io_Board[m_SrcIdx.RowIdx - 1, m_SrcIdx.ColumnIdx + 1].DiscType = GameLogic.eDiscType.None;
                     io_Board[m_SrcIdx.RowIdx - 1, m_SrcIdx.ColumnIdx + 1].SquareHolder = Player.ePlayerRecognition.None;
                     m_EatedSquareIdx.SetSquareIndices(m_SrcIdx.RowIdx - 1, m_SrcIdx.ColumnIdx + 1);
                     break;
 
                 case eMoveType.EatingNorthWestMove:
-                    io_Board[m_SrcIdx.RowIdx - 1, m_SrcIdx.ColumnIdx - 1].DiscType = Game.eDiscType.None;
+                    io_Board[m_SrcIdx.RowIdx - 1, m_SrcIdx.ColumnIdx - 1].DiscType = GameLogic.eDiscType.None;
                     io_Board[m_SrcIdx.RowIdx - 1, m_SrcIdx.ColumnIdx - 1].SquareHolder = Player.ePlayerRecognition.None;
                     m_EatedSquareIdx.SetSquareIndices(m_SrcIdx.RowIdx - 1, m_SrcIdx.ColumnIdx - 1);
                     break;
 
                 case eMoveType.EatingSouthEastMove:
-                    io_Board[m_SrcIdx.RowIdx + 1, m_SrcIdx.ColumnIdx + 1].DiscType = Game.eDiscType.None;
+                    io_Board[m_SrcIdx.RowIdx + 1, m_SrcIdx.ColumnIdx + 1].DiscType = GameLogic.eDiscType.None;
                     io_Board[m_SrcIdx.RowIdx + 1, m_SrcIdx.ColumnIdx + 1].SquareHolder = Player.ePlayerRecognition.None;
                     m_EatedSquareIdx.SetSquareIndices(m_SrcIdx.RowIdx + 1, m_SrcIdx.ColumnIdx + 1);
                     break;
 
                 case eMoveType.EatingSouthWestMove:
-                    io_Board[m_SrcIdx.RowIdx + 1, m_SrcIdx.ColumnIdx - 1].DiscType = Game.eDiscType.None;
+                    io_Board[m_SrcIdx.RowIdx + 1, m_SrcIdx.ColumnIdx - 1].DiscType = GameLogic.eDiscType.None;
                     io_Board[m_SrcIdx.RowIdx + 1, m_SrcIdx.ColumnIdx - 1].SquareHolder = Player.ePlayerRecognition.None;
                     m_EatedSquareIdx.SetSquareIndices(m_SrcIdx.RowIdx + 1, m_SrcIdx.ColumnIdx - 1);
                     break;

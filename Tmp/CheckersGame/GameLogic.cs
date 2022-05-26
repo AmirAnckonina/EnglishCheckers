@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CheckersGame
 {
-    public class Game
+    public class GameLogic
     {
         public enum eGameMode
         {
@@ -39,7 +39,7 @@ namespace CheckersGame
         private eGameResult m_FinalCheckersSessionResult;
         private bool m_IsRecurringTurn;
 
-        public Game()
+        public GameLogic()
         {
             r_MoveManager = new MoveManager();
         }
@@ -186,15 +186,15 @@ namespace CheckersGame
 
             m_FirstPlayer = new Player
                 (i_FirstPlayerName,
-                Game.eDiscType.ODisc,
-                Game.eDiscType.OKingDisc,
+                GameLogic.eDiscType.ODisc,
+                GameLogic.eDiscType.OKingDisc,
                 Player.ePlayerType.Computer,
                 Player.ePlayerMovingDirection.Down,
                 Player.ePlayerRecognition.FirstPlayer);
             m_SecondPlayer = new Player
                 (i_SecondPlayerName,
-                Game.eDiscType.XDisc,
-                Game.eDiscType.XKingDisc,
+                GameLogic.eDiscType.XDisc,
+                GameLogic.eDiscType.XKingDisc,
                 secondPlayerType,
                 Player.ePlayerMovingDirection.Up,
                 Player.ePlayerRecognition.SecondPlayer);
@@ -492,7 +492,7 @@ namespace CheckersGame
             }
         }
 
-        private void UpdatePlayerPotentialMovesLists(Player io_Player)
+        /*private void UpdatePlayerPotentialMovesLists(Player io_Player)
         {
             /// Run on board Matrix,
             /// Each square that in player's holding check 4 SimpleMoves Options, 4 EatingMovesOption
@@ -509,18 +509,18 @@ namespace CheckersGame
 
         private void AddAllEatingPotentialMovesToThisSrcIdx(Player io_Player, Square i_Sqr)
         {
-            PotentialMove newPotentialMove = new PotentialMove();
+           *//* PotentialMove newPotentialMove(i_Sqr.); /// = new PotentialMove();
 
             newPotentialMove.SrcIdx = i_Sqr.SquareIndex;
 
             newPotentialMove.DestIdx.RowIdx = i_Sqr.SquareIndex.RowIdx - 1;
-            newPotentialMove.DestIdx.ColumnIdx = i_Sqr.SquareIndex.ColumnIdx - 1;
+            newPotentialMove.DestIdx.ColumnIdx = i_Sqr.SquareIndex.ColumnIdx - 1;*//*
         }
 
         private void AddAllSimplePotentialMovesToThisSrcIdx(Player io_Player, Square i_Sqr)
         {
 
-        }
+        }*/
     }
 
 }

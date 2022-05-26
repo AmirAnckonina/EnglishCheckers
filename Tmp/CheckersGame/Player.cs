@@ -27,8 +27,8 @@ namespace CheckersGame
         }
 
         private readonly StringBuilder r_Name;
-        private readonly Game.eDiscType r_DiscType; 
-        private readonly Game.eDiscType r_KingDiscType; 
+        private readonly GameLogic.eDiscType r_DiscType; 
+        private readonly GameLogic.eDiscType r_KingDiscType; 
         private readonly Player.ePlayerType r_PlayerType;
         private readonly ePlayerMovingDirection r_MovingDirection;
         private readonly ePlayerRecognition r_PlayerRecognition;
@@ -38,7 +38,7 @@ namespace CheckersGame
         /// private List<PotentialMove> m_SimpleMoves;
         /// private List<PotentialMove> m_EatingMoves;
         
-        public Player(StringBuilder i_Name, Game.eDiscType i_DiscType, Game.eDiscType i_KingDiscType, ePlayerType i_PlayerType,
+        public Player(StringBuilder i_Name, GameLogic.eDiscType i_DiscType, GameLogic.eDiscType i_KingDiscType, ePlayerType i_PlayerType,
                         ePlayerMovingDirection i_PlayerMovingDirection, ePlayerRecognition i_PlayerRecognition)
         {
             r_Name = i_Name;
@@ -96,7 +96,7 @@ namespace CheckersGame
             }
         }
 
-        public Game.eDiscType DiscType
+        public GameLogic.eDiscType DiscType
         {
             get
             {
@@ -104,7 +104,7 @@ namespace CheckersGame
             }
         }
 
-        public Game.eDiscType KingDiscType
+        public GameLogic.eDiscType KingDiscType
         {
             get 
             { 

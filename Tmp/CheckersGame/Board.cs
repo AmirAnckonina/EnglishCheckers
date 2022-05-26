@@ -81,7 +81,7 @@ namespace CheckersGame
 
             for (emptyLinesIndex = 0; emptyLinesIndex < 2; emptyLinesIndex++)
             {
-                InitializeLineInBoard(rowIndex + emptyLinesIndex, Game.eDiscType.None, Player.ePlayerRecognition.None);
+                InitializeLineInBoard(rowIndex + emptyLinesIndex, GameLogic.eDiscType.None, Player.ePlayerRecognition.None);
             }
 
             for (rowIndex += 2; rowIndex < r_BoardSize; rowIndex++)
@@ -90,7 +90,7 @@ namespace CheckersGame
             }
         }
 
-        public void InitializeLineInBoard(int i_RowIndex, Game.eDiscType i_DiscType, Player.ePlayerRecognition i_CurrLineSquaresHolder)
+        public void InitializeLineInBoard(int i_RowIndex, GameLogic.eDiscType i_DiscType, Player.ePlayerRecognition i_CurrLineSquaresHolder)
         {
            int squareIndicesParityCalculationResult;
 
@@ -106,12 +106,12 @@ namespace CheckersGame
 
                 else //(squareIndicesParityCalculationResult == 0)
                 {
-                    r_GameBoard[i_RowIndex, i_ColumnIndex].SetSquare(false, Game.eDiscType.None, Player.ePlayerRecognition.None, i_RowIndex, i_ColumnIndex);
+                    r_GameBoard[i_RowIndex, i_ColumnIndex].SetSquare(false, GameLogic.eDiscType.None, Player.ePlayerRecognition.None, i_RowIndex, i_ColumnIndex);
                 }
             }
         }
 
-        public int GetDiscOccurences(Game.eDiscType i_DiscType)
+        public int GetDiscOccurences(GameLogic.eDiscType i_DiscType)
         {
             int counter = 0;
 
