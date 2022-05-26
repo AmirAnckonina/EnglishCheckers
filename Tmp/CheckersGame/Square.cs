@@ -71,8 +71,8 @@ namespace CheckersGame
             m_LegalSquare = i_LegalSquare;
             m_DiscType = i_DiscType;
             m_SquareHolder = i_SquareHolder;
-            m_SquareIndex.RowIndex = i_RowIndex;
-            m_SquareIndex.ColumnIndex = i_ColumnIndex;
+            m_SquareIndex.RowIdx = i_RowIndex;
+            m_SquareIndex.ColumnIdx = i_ColumnIndex;
         }
 
         public void CopySquareContent(Square i_CopyFromSquare)

@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1EA04D01-AF9E-4498-B89D-86C04DF28B94}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>CheckersUI</RootNamespace>
-    <AssemblyName>CheckersUI</AssemblyName>
+    <ProjectGuid>{C43EF4DF-5BB5-41EF-A101-7310B9E7045D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CheckersGame</RootNamespace>
+    <AssemblyName>CheckersGame</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -35,22 +35,13 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ConsoleUI.cs" />
-    <Compile Include="RawMoveInputManager.cs" />
-    <Compile Include="ConsoleIOManager.cs" />
-    <Compile Include="GameDetails.cs" />
-    <Compile Include="Program.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CheckersGame\CheckersGame.csproj">
-      <Project>{c43ef4df-5bb5-41ef-a101-7310b9e7045d}</Project>
-      <Name>CheckersGame</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Ex02.ConsoleUtils">
-      <HintPath>..\..\..\..\..\..\..\..\Temp\Ex02.ConsoleUtils.dll</HintPath>
-    </Reference>
+    <Compile Include="Board.cs" />
+    <Compile Include="MoveManager.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="PotentialMove.cs" />
+    <Compile Include="Square.cs" />
+    <Compile Include="SquareIndex.cs" />
+    <Compile Include="Game.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

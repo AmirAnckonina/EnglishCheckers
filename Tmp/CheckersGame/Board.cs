@@ -27,12 +27,12 @@ namespace CheckersGame
         {
             get 
             { 
-                return r_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex]; 
+                return r_GameBoard[i_SquareIndex.RowIdx, i_SquareIndex.ColumnIdx]; 
             }
 
             set 
             {
-                r_GameBoard[i_SquareIndex.RowIndex, i_SquareIndex.ColumnIndex] = value;
+                r_GameBoard[i_SquareIndex.RowIdx, i_SquareIndex.ColumnIdx] = value;
             }
         }
 
@@ -94,6 +94,7 @@ namespace CheckersGame
         {
            int squareIndicesParityCalculationResult;
 
+           // $G$ CSS-001 (-3) Local variable name shouldn't start with i_.
             for (int i_ColumnIndex = 0; i_ColumnIndex < r_BoardSize; i_ColumnIndex++)
             {
                 squareIndicesParityCalculationResult = (i_RowIndex + i_ColumnIndex) % 2;
@@ -152,8 +153,8 @@ namespace CheckersGame
             bool isRowIndexInBoard;
             bool isColumnIndexInBoard;
 
-            isRowIndexInBoard = RowIndexExistenceValidation(i_SquareIndex.RowIndex);
-            isColumnIndexInBoard = ColumnIndexExistenceValidation(i_SquareIndex.ColumnIndex);
+            isRowIndexInBoard = RowIndexExistenceValidation(i_SquareIndex.RowIdx);
+            isColumnIndexInBoard = ColumnIndexExistenceValidation(i_SquareIndex.ColumnIdx);
             if (isRowIndexInBoard && isColumnIndexInBoard)
             {
                 isSquareExist = true;

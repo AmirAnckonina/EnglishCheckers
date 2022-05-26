@@ -25,6 +25,7 @@ namespace CheckersUI
             }
         }
 
+        // should start with i_. read the coding standards and use the stylecop !!!!!!
         public void GetGameDetailsProcedure(GameDetails io_GameDetails)
         {
             int gameModeChoice;
@@ -79,6 +80,7 @@ namespace CheckersUI
             return name;
         }
 
+        // $G$ NTT-999 (-5) This method should be private (None of the other classes used this method...)
         public int GetSizeOfBoard()
         {
             int boardSize;
@@ -96,6 +98,7 @@ namespace CheckersUI
             return boardSize;
         }
 
+        // $G$ NTT-999 (-5) This method should be private (None of the other classes used this method...)
         public int GetGameMode()
         {
             int numOfPlayers;
@@ -143,6 +146,7 @@ namespace CheckersUI
             return playAnotherRound;
         }
 
+        // $G$ NTT-999 (-5) This method should be private (None of the other classes used this method...)
         public bool AnotherTurnInputValidation(char i_UserChoice)
         {
             bool anotherTurnInputIsValid;
@@ -160,6 +164,7 @@ namespace CheckersUI
             return anotherTurnInputIsValid;
         }
 
+        // $G$ NTT-999 (-5) This method should be private (None of the other classes used this method...)
         public static bool BoardSizeInputValueValidation(int i_BoardSize)
         {
             bool boardSizeIsValid;
@@ -177,6 +182,7 @@ namespace CheckersUI
             return boardSizeIsValid;
         }
 
+        //  This method should be private (None of the other classes used this method...)
         public static char GetCharByDiscType(Game.eDiscType i_DiscTypeNum)
         {
             char discTypeChar;
@@ -285,6 +291,7 @@ namespace CheckersUI
             }
         }
 
+        //  This method should be private (None of the other classes used this method...)
         public void PrintSquare(Game.eDiscType i_CurrSquareDiscType)
         {
             StringBuilder squareContent = new StringBuilder(); 
@@ -302,6 +309,7 @@ namespace CheckersUI
             Console.Write(squareContent);
         }
 
+        //  This method should be private (None of the other classes used this method...)
         public void PrintNewRowLetter(ref char io_RowLetter)
         {
             StringBuilder rawLetter = new StringBuilder();
@@ -325,6 +333,7 @@ namespace CheckersUI
             }
         }
 
+        //  This method should be private (None of the other classes used this method...)
         public void PrintColumnsFrame(int i_BoardSize)
         {
             int columnIndex;
@@ -348,14 +357,22 @@ namespace CheckersUI
 
         }
             
-        public void RequestMoveInput()
+        ///public void GetMoveInput()
+        public PotentialMove GetMoveInput()
         {
+            PotentialMove newPotentialMove = new PotentialMove();
+
             r_RawMoveInputManager.LoadNewInput();
             while (!r_RawMoveInputManager.RawInputIsValid)
             {
                 PrintInvalidInputStructure();
                 r_RawMoveInputManager.LoadNewInput();
             }
+
+            newPotentialMove.SrcIdx = r_RawMoveInputManager.SourceIndex;
+            newPotentialMove.DestIdx = r_RawMoveInputManager.DestinationIndex;
+
+            return newPotentialMove;
         }
 
         public void PrintSingleGameResult(Game.eGameResult i_GameResult,Player i_FirstPlayer, Player i_SecondPlayer)
@@ -414,6 +431,7 @@ namespace CheckersUI
             PrintScore(i_FirstPlayer, i_SecondPlayer);
         }
 
+        //  This method should be private (None of the other classes used this method...)
         public void PrintScore(Player i_FirstPlayer, Player i_SecondPlayer)
         {
             StringBuilder score = new StringBuilder();

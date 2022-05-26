@@ -9,8 +9,8 @@ namespace CheckersUI
         private StringBuilder m_RawInput;
         private bool m_RawInputIsValid;
         private bool m_QuitInserted;
-        private readonly SquareIndex r_SourceIndex;
-        private readonly SquareIndex r_DestinationIndex;
+        private SquareIndex r_SourceIndex;
+        private SquareIndex r_DestinationIndex;
         private const char k_DirectionSign = '>';
 
         public RawMoveInputManager()
@@ -92,10 +92,10 @@ namespace CheckersUI
 
         public void UpdateIndices()
         {
-            r_SourceIndex.ColumnIndex = LetterToIndexNumberConverter(m_RawInput[0]);
-            r_SourceIndex.RowIndex = LetterToIndexNumberConverter(m_RawInput[1]);
-            r_DestinationIndex.ColumnIndex = LetterToIndexNumberConverter(m_RawInput[3]);
-            r_DestinationIndex.RowIndex = LetterToIndexNumberConverter(m_RawInput[4]);
+            r_SourceIndex.ColumnIdx = LetterToIndexNumberConverter(m_RawInput[0]);
+            r_SourceIndex.RowIdx = LetterToIndexNumberConverter(m_RawInput[1]);
+            r_DestinationIndex.ColumnIdx = LetterToIndexNumberConverter(m_RawInput[3]);
+            r_DestinationIndex.RowIdx = LetterToIndexNumberConverter(m_RawInput[4]);
         }
 
         public void RawInputValidation()
@@ -254,10 +254,11 @@ namespace CheckersUI
 
         public void LoadLastMoveToRawInput(SquareIndex i_SourceIndex, SquareIndex i_DestinationIndex)
         {
-            int i_SourceColumn = i_SourceIndex.ColumnIndex;
-            int i_SourceRow = i_SourceIndex.RowIndex;
-            int i_DestColumn = i_DestinationIndex.ColumnIndex;
-            int i_DestRow = i_DestinationIndex.RowIndex;
+            // also here,  Local variable name shouldn't start with i_.
+            int i_SourceColumn = i_SourceIndex.ColumnIdx;
+            int i_SourceRow = i_SourceIndex.RowIdx;
+            int i_DestColumn = i_DestinationIndex.ColumnIdx;
+            int i_DestRow = i_DestinationIndex.RowIdx;
 
             m_RawInput[0] = IndexNumberToUpperCaseLetterConverter(i_SourceColumn);
             m_RawInput[1] = IndexNumberToLowerCaseLetterConverter(i_SourceRow);

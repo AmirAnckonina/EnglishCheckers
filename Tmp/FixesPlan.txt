@@ -1,0 +1,13 @@
+Create in every player two lists.
+
+1. AllSimpleMoves
+2. AllEatingMoves
+
+Change Square index to struct
+
+Flow:
+
+Every step pass on board.
+
+In every square there is in player's own, check all move possibilities. 
+Add the valid ones to the list

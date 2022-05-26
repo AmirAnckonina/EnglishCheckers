@@ -35,6 +35,8 @@ namespace CheckersGame
         private int m_NumOfDiscs;
         private int m_Score;
         private List<SquareIndex> m_CurrentHoldingSquareIndices;
+        /// private List<PotentialMove> m_SimpleMoves;
+        /// private List<PotentialMove> m_EatingMoves;
         
         public Player(StringBuilder i_Name, Game.eDiscType i_DiscType, Game.eDiscType i_KingDiscType, ePlayerType i_PlayerType,
                         ePlayerMovingDirection i_PlayerMovingDirection, ePlayerRecognition i_PlayerRecognition)
@@ -48,6 +50,8 @@ namespace CheckersGame
             m_NumOfDiscs = 0;
             m_Score = 0;
             m_CurrentHoldingSquareIndices = new List<SquareIndex>();
+            /// m_SimpleMoves = new List<PotentialMove>();
+            /// m_EatingMoves = new List<PotentialMove>();
         }
 
         public StringBuilder Name
