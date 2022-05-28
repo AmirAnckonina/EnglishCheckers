@@ -25,7 +25,7 @@ namespace CheckersUI
 
         public void Run()
         {
-            /// RegisterLogicEvents
+            RegisterLogicEvents();
             RegisterFormEvents();
             m_FormGame.ShowDialog();
         }
@@ -44,13 +44,23 @@ namespace CheckersUI
 
             if (gameDetails != null)
             {
-               /// r_GameUnit.SetGameObjects()
+               /// r_GameUnit.SetGameObjects() 
             }
         }
 
         private void RegisterLogicEvents()
         {
             /// BoardUpdated / MoveExecuted
+            r_GameUnit.MoveManager.MoveExecuted += MoveManager_MoveExecuted;
+        }
+
+        private void MoveManager_MoveExecuted(object sender, EventArgs e)
+        {
+            /// Tell the FormGame MoveExecuted So the Board diaplay should change
+            /// SquareIndex to Remove 
+            /// SquareIndex to Add
+            /// PictureBox -> remove
+            
         }
 
         /* private void GameInitialization()
@@ -129,6 +139,7 @@ namespace CheckersUI
               {
                   MoveValidationProcedure();
                   r_GameLogicUnit.MoveManager.ExecuteMove(r_GameLogicUnit.Board, r_GameLogicUnit.CurrentPlayer);
+                  
                   r_GameLogicUnit.PostMoveProcedure();
                   r_ConsoleIOManager.RawMoveInputManager.LoadLastMoveToRawInput(r_GameLogicUnit.MoveManager.SrcIdx, r_GameLogicUnit.MoveManager.DestIdx);
                   r_ConsoleIOManager.PrintBoard(r_GameLogicUnit.Board, r_GameLogicUnit.CurrentPlayer.PlayerType);

@@ -11,17 +11,28 @@ namespace CheckersUI
 {
     public partial class FormGame : Form
     {
+        public enum eMoveChoiceStatus
+        {
+            NoneClicked,
+            SrcClicked,
+            SrcAndDstClicked
+        }
+
+        public event EventHandler PictureBoxSquareClicked;
+
         private PictureBoxSquare[,] m_pictureBoxSquareMatrix;
         private FormSetup r_FormSetup;
         private GameDetailsFilledEventArgs m_GameDetailsEventArgs;
         private Label m_labelPlayer1NameAndScore;
         private Label m_labelPlayer2NameAndScore;
+        private eMoveChoiceStatus m_MoveStatus;
 
         public event EventHandler GameDetailsFilled;
 
         public FormGame()
         {
             r_FormSetup = new FormSetup();
+            m_MoveStatus = eMoveChoiceStatus.NoneClicked;
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
         }
@@ -95,7 +106,6 @@ namespace CheckersUI
             this.Width = (r_FormSetup.BoardSize * FormGameSpecs.k_PictureBoxWidth) + FormGameSpecs.k_WidthExtention;
         }
 
-
         private void InitPictureBoxSquareMatrix()
         {
             PictureBoxSquare newPicBoxSqr;
@@ -118,6 +128,29 @@ namespace CheckersUI
             if (GameDetailsFilled != null)
             {
                 GameDetailsFilled(this, m_GameDetailsEventArgs);
+            }
+        }
+
+        public void PictureBoxSquare_Clicked(object sender, EventArgs e)
+        {
+            /// Classify according to MoveStatus
+            UpdateMoveArgsAfterPictureBoxSquareClick();
+            if (m_MoveStatus == eMoveChoiceStatus.SrcAndDstClicked)
+            {
+                /// Check Move...
+            }
+        }
+
+        private void UpdateMoveArgsAfterPictureBoxSquareClick()
+        {
+            if (m_MoveStatus == eMoveChoiceStatus.NoneClicked)
+            {
+                m_MoveStatus = eMoveChoiceStatus.SrcClicked;
+            }
+
+            else if (m_MoveStatus == eMoveChoiceStatus.SrcClicked)
+            {
+                m_MoveStatus = eMoveChoiceStatus.SrcAndDstClicked;
             }
         }
 

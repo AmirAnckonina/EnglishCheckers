@@ -26,6 +26,8 @@ namespace CheckersGame
         private eMoveType m_MoveType;
         private bool m_OnlyEatingMoveIsValid;
 
+        public event EventHandler MoveExecuted;
+
         public MoveManager()
         {
             m_SrcIdx = new SquareIndex();
@@ -617,7 +619,19 @@ namespace CheckersGame
             {
                 EatingMoveProcedure(io_Board);
             }
+
+            /// MoveExecutedEventArgs XXX = 
+            /// OnMoveExecuted(XXX)
+            /// Report BoardUpdated.
         }
+
+      /*  protected virtual void OnMoveExecuted(MoveExecutedEventArgs i_MUEventArgs)
+        {
+            if (!=null)
+            {
+                MoveExecuted.Invoke(this, i_MUEventArgs);
+            }
+        }*/
 
         public bool EatingMoveOccurred()
         {

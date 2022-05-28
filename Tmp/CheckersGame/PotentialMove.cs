@@ -41,7 +41,5 @@ namespace CheckersGame
                 m_DestIdx = value;
             }
         }
-
-
     }
 }
