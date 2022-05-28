@@ -270,7 +270,7 @@ namespace CheckersUI
                 System.Threading.Thread.Sleep(3000);
             }
 
-            Ex02.ConsoleUtils.Screen.Clear();
+            /// Ex02.ConsoleUtils.Screen.Clear();
             PrintColumnsFrame(i_Board.BoardSize);
             foreach (Square currSquare in i_Board.GameBoard)
             {

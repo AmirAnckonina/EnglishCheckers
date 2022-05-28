@@ -11,16 +11,19 @@ namespace CheckersUI
 {
     public partial class FormGame : Form
     {
-        private PictureBox[,] m_pictureBoxBoard;
+        private PictureBoxSquare[,] m_pictureBoxSquareMatrix;
         private FormSetup r_FormSetup;
         private GameDetailsFilledEventArgs m_GameDetailsEventArgs;
+        private Label m_labelPlayer1NameAndScore;
+        private Label m_labelPlayer2NameAndScore;
 
         public event EventHandler GameDetailsFilled;
 
         public FormGame()
         {
             r_FormSetup = new FormSetup();
-            InitializeComponent();   
+            InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void FormGame_Load(object sender, EventArgs e)
@@ -61,19 +64,51 @@ namespace CheckersUI
                 r_FormSetup.Player2IsHuman
                 );
 
-            /// Set pictureBoxBoard.
-            m_pictureBoxBoard = new PictureBox[r_FormSetup.BoardSize, r_FormSetup.BoardSize];
-            InitPictureBoxBoard();
+            
+            m_pictureBoxSquareMatrix = new PictureBoxSquare[r_FormSetup.BoardSize, r_FormSetup.BoardSize];
+            SetAdaptableFormGame();        
+            InitPictureBoxSquareMatrix();
             OnGameDetailsFilled();
         }
-        
-        private void InitPictureBoxBoard()
+
+        private void SetAdaptableFormGame()
         {
+            SetFormGameDimensions();
+            SetPlayersLabels();
+        }
+
+        private void SetPlayersLabels()
+        {
+            Point player1Position = new Point(this.Bottom - 20, this.Left + 20);
+            Point player2Position = new Point(this.Bottom - 20, this.Right - 20);
+
+            m_labelPlayer1NameAndScore.Location = player1Position;
+            m_labelPlayer2NameAndScore.Location = player2Position;
+            m_labelPlayer1NameAndScore.Text = r_FormSetup.Player1Name;
+            m_labelPlayer2NameAndScore.Text = r_FormSetup.Player2Name;
+
+        }
+
+        private void SetFormGameDimensions()
+        {
+            this.Height = (r_FormSetup.BoardSize * FormGameSpecs.k_PictureBoxHeight) + FormGameSpecs.k_HeightExtention;
+            this.Width = (r_FormSetup.BoardSize * FormGameSpecs.k_PictureBoxWidth) + FormGameSpecs.k_WidthExtention;
+        }
+
+
+        private void InitPictureBoxSquareMatrix()
+        {
+            PictureBoxSquare newPicBoxSqr;
+
             for (int rowIdx = 0; rowIdx < r_FormSetup.BoardSize; rowIdx++)
             {
                 for (int colIdx = 0; colIdx < r_FormSetup.BoardSize; colIdx++)
                 {
-                    /// Init single PictureBox
+                    newPicBoxSqr = new PictureBoxSquare(rowIdx, colIdx);
+                    newPicBoxSqr.SetSquare();
+                    ///newPicBoxSqr.SetLocation();
+
+                    this.Controls.Add(newPicBoxSqr);
                 }
             }
         }
@@ -91,5 +126,6 @@ namespace CheckersUI
             r_FormSetup.ShowDialog();
             this.ShowDialog();
         }
+
     }
 }

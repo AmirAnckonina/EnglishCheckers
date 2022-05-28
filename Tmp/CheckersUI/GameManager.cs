@@ -26,7 +26,7 @@ namespace CheckersUI
         public void Run()
         {
             /// RegisterLogicEvents
-            /// RegisterFormEvents
+            RegisterFormEvents();
             m_FormGame.ShowDialog();
         }
 

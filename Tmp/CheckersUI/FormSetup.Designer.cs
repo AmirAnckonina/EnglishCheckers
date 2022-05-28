@@ -43,7 +43,7 @@ namespace CheckersUI
             // 
             // buttonDone
             // 
-            this.buttonDone.Location = new System.Drawing.Point(130, 210);
+            this.buttonDone.Location = new System.Drawing.Point(152, 199);
             this.buttonDone.Name = "buttonDone";
             this.buttonDone.Size = new System.Drawing.Size(74, 32);
             this.buttonDone.TabIndex = 0;
@@ -63,7 +63,7 @@ namespace CheckersUI
             // labelPlayers
             // 
             this.labelPlayers.AutoSize = true;
-            this.labelPlayers.Location = new System.Drawing.Point(9, 80);
+            this.labelPlayers.Location = new System.Drawing.Point(9, 86);
             this.labelPlayers.Name = "labelPlayers";
             this.labelPlayers.Size = new System.Drawing.Size(59, 17);
             this.labelPlayers.TabIndex = 2;
@@ -72,7 +72,7 @@ namespace CheckersUI
             // labelPlayer1
             // 
             this.labelPlayer1.AutoSize = true;
-            this.labelPlayer1.Location = new System.Drawing.Point(6, 116);
+            this.labelPlayer1.Location = new System.Drawing.Point(30, 115);
             this.labelPlayer1.Name = "labelPlayer1";
             this.labelPlayer1.Size = new System.Drawing.Size(60, 17);
             this.labelPlayer1.TabIndex = 3;
@@ -80,7 +80,7 @@ namespace CheckersUI
             // 
             // textBoxPlayer1Name
             // 
-            this.textBoxPlayer1Name.Location = new System.Drawing.Point(104, 111);
+            this.textBoxPlayer1Name.Location = new System.Drawing.Point(126, 110);
             this.textBoxPlayer1Name.Name = "textBoxPlayer1Name";
             this.textBoxPlayer1Name.Size = new System.Drawing.Size(100, 22);
             this.textBoxPlayer1Name.TabIndex = 5;
@@ -88,7 +88,9 @@ namespace CheckersUI
             // 
             // textBoxPlayer2Name
             // 
-            this.textBoxPlayer2Name.Location = new System.Drawing.Point(104, 152);
+            this.textBoxPlayer2Name.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.textBoxPlayer2Name.Enabled = false;
+            this.textBoxPlayer2Name.Location = new System.Drawing.Point(126, 151);
             this.textBoxPlayer2Name.Name = "textBoxPlayer2Name";
             this.textBoxPlayer2Name.Size = new System.Drawing.Size(100, 22);
             this.textBoxPlayer2Name.TabIndex = 6;
@@ -133,7 +135,7 @@ namespace CheckersUI
             // checkBoxPlayer2
             // 
             this.checkBoxPlayer2.AutoSize = true;
-            this.checkBoxPlayer2.Location = new System.Drawing.Point(9, 152);
+            this.checkBoxPlayer2.Location = new System.Drawing.Point(31, 151);
             this.checkBoxPlayer2.Name = "checkBoxPlayer2";
             this.checkBoxPlayer2.Size = new System.Drawing.Size(86, 21);
             this.checkBoxPlayer2.TabIndex = 10;
@@ -145,7 +147,7 @@ namespace CheckersUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(257, 250);
+            this.ClientSize = new System.Drawing.Size(254, 241);
             this.Controls.Add(this.checkBoxPlayer2);
             this.Controls.Add(this.radioButton10X10);
             this.Controls.Add(this.radioButton8X8);
@@ -158,7 +160,6 @@ namespace CheckersUI
             this.Controls.Add(this.buttonDone);
             this.Name = "FormSetup";
             this.Text = "Game Setup";
-            this.Load += new System.EventHandler(this.FormSetup_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -16,6 +16,7 @@ namespace CheckersUI
         public FormSetup()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterParent;
         }
 
         /// Properties 
@@ -73,11 +74,6 @@ namespace CheckersUI
                     return 10;
                 }
             }
-        }
-
-        private void FormSetup_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void buttonDone_Click(object sender, EventArgs e)
@@ -138,7 +134,27 @@ namespace CheckersUI
 
         private void checkBoxPlayer2_CheckedChanged(object sender, EventArgs e)
         {
+            if(textBoxPlayer2Name.Enabled == true)
+            {
+                textBoxPlayer2Name.Enabled = false;
+            }
 
+            else /// Currently disabled
+            {
+                textBoxPlayer2Name.Enabled = true;
+            }
+
+            if (checkBoxPlayer2.Checked == true)
+            {
+                textBoxPlayer2Name.BackColor = Color.White;
+                textBoxPlayer2Name.Text = null;
+            }
+
+            else /// Unchecked
+            {
+                textBoxPlayer2Name.BackColor = System.Drawing.SystemColors.MenuBar;
+                textBoxPlayer2Name.Text = null;
+            }
         }
 
         private void textBoxPlayer2Name_TextChanged(object sender, EventArgs e)
