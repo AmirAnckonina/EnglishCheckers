@@ -10,11 +10,8 @@ namespace CheckersUI
     public class PictureBoxSquare : PictureBox
     {
         private Point m_PictureBoxSqrIdx;
-        
-        public PictureBoxSquare()
-        {
-            m_PictureBoxSqrIdx = new Point();
-        }
+
+        public event EventHandler PictureBoxSquareClicked;
 
         public PictureBoxSquare(int i_RowIdx, int i_ColIdx)
         {
@@ -61,9 +58,20 @@ namespace CheckersUI
 
             locationToSet.X = m_PictureBoxSqrIdx.X * FormGameSpecs.k_PictureBoxHeight;
             locationToSet.Y = m_PictureBoxSqrIdx.Y * FormGameSpecs.k_PictureBoxWidth;
-
             this.Location = locationToSet;
         }
+
+        /*protected override void OnClick(EventArgs e)
+        {
+            ///PictureBoxClickedEventArgs picBoxEventArgs = new PictureBoxClickedEventArgs(m_PictureBoxSqrIdx);
+            /// Add effect of pressed square
+            /// 
+            //this.BorderStyle = BorderStyle.Fixed3D;
+            if (PictureBoxSquareClicked != null)
+            {
+                PictureBoxSquareClicked.Invoke(this, e);
+            *//*}
+        }*/
 
         private void InitializeComponent()
         {
@@ -75,15 +83,8 @@ namespace CheckersUI
             this.BackgroundImage = global::CheckersUI.Properties.Resources.EmptyInvalidSquare;
             this.InitialImage = null;
             this.Size = new System.Drawing.Size(50, 50);
-            this.Click += new System.EventHandler(this.PictureBoxSquare_Click);
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
-
-        }
-
-        private void PictureBoxSquare_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
