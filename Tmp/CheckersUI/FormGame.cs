@@ -6,33 +6,40 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using CheckersGame; 
 
 namespace CheckersUI
 {
     public partial class FormGame : Form
     {
-        public enum eMoveChoiceStatus
+        public enum ePicBoxClickStage
         {
             NoneClicked,
-            SrcClicked,
-            SrcAndDstClicked
+            OnePicBoxClicked,
+            TwoPicBoxClicked
         }
 
-        public event EventHandler PictureBoxSquareClicked;
+        public event EventHandler MoveEntered;
 
         private PictureBoxSquare[,] m_pictureBoxSquareMatrix;
+        private PictureBoxSquare m_SrcPicBox;
+        private PictureBoxSquare m_DestPicBox;
         private FormSetup r_FormSetup;
         private GameDetailsFilledEventArgs m_GameDetailsEventArgs;
         private Label m_labelPlayer1NameAndScore;
         private Label m_labelPlayer2NameAndScore;
-        private eMoveChoiceStatus m_MoveStatus;
+        private ePicBoxClickStage m_PicBoxClickStage;
+        private MovementEventArgs m_MovementEventArgs;
 
         public event EventHandler GameDetailsFilled;
 
         public FormGame()
         {
             r_FormSetup = new FormSetup();
-            m_MoveStatus = eMoveChoiceStatus.NoneClicked;
+            m_MovementEventArgs = new MovementEventArgs();
+            m_labelPlayer1NameAndScore = new Label();
+            m_labelPlayer2NameAndScore = new Label();
+            m_PicBoxClickStage = ePicBoxClickStage.NoneClicked;
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
         }
@@ -108,18 +115,74 @@ namespace CheckersUI
 
         private void InitPictureBoxSquareMatrix()
         {
-            PictureBoxSquare newPicBoxSqr;
+            PictureBoxSquare currentPictureBoxSquare;
 
             for (int rowIdx = 0; rowIdx < r_FormSetup.BoardSize; rowIdx++)
             {
                 for (int colIdx = 0; colIdx < r_FormSetup.BoardSize; colIdx++)
                 {
-                    newPicBoxSqr = new PictureBoxSquare(rowIdx, colIdx);
-                    newPicBoxSqr.SetSquare();
+                    currentPictureBoxSquare = new PictureBoxSquare(rowIdx, colIdx);
+                    currentPictureBoxSquare.SetSquare();
+                    currentPictureBoxSquare.PictureBoxSquareClicked += PictureBoxSquare_PictureBoxSquareClicked;
                     ///newPicBoxSqr.SetLocation();
 
-                    this.Controls.Add(newPicBoxSqr);
+                    this.Controls.Add(currentPictureBoxSquare);
                 }
+            }
+        }
+
+        private void PictureBoxSquare_PictureBoxSquareClicked(object sender, EventArgs e)
+        {
+            PictureBoxSquare currentPicBoxSqr = sender as PictureBoxSquare;
+
+            if (currentPicBoxSqr != null)
+            {
+                ///Add condition wheteher the DestClick is the same as SrcClick
+                UpdatePicBoxClickStage();
+                if (m_PicBoxClickStage == ePicBoxClickStage.TwoPicBoxClicked)
+                {
+                    if (m_SrcPicBox != m_DestPicBox)
+                    {
+                        UpdateMovement(currentPicBoxSqr);
+                        OnMoveEntered();
+                        m_PicBoxClickStage = ePicBoxClickStage.NoneClicked;
+                    }
+
+                    else /// Not sure if necessary.
+                    {
+
+
+                    }
+                }
+            }
+            
+        }
+
+        protected virtual void OnMoveEntered()
+        {
+            if (MoveEntered != null)
+            {
+                MoveEntered.Invoke(this, m_MovementEventArgs);
+            }
+        }
+
+        private void UpdateMovement(PictureBoxSquare i_CurrPicBoxSqr)
+        {
+            ///PictureBoxClickedEventArgs picBoxEventArgs = i_PicBoxSqrClickedEventArgs as PictureBoxClickedEventArgs;
+            SquareIndex sqrIdx = new SquareIndex(i_CurrPicBoxSqr.PictureBoxSqrIdx.Y, i_CurrPicBoxSqr.PictureBoxSqrIdx.X);
+            
+            if (m_PicBoxClickStage == ePicBoxClickStage.OnePicBoxClicked)
+            {
+                /// Update MovementEventArgs with Src Only
+                m_MovementEventArgs.Movement.SrcIdx = sqrIdx;
+                m_SrcPicBox = i_CurrPicBoxSqr;
+            }
+
+            else if (m_PicBoxClickStage == ePicBoxClickStage.TwoPicBoxClicked)
+            {
+                /// Update MovementEventArgs with Dest Only
+                m_MovementEventArgs.Movement.DestIdx = sqrIdx;
+                m_DestPicBox = i_CurrPicBoxSqr;
             }
         }
 
@@ -131,26 +194,17 @@ namespace CheckersUI
             }
         }
 
-        public void PictureBoxSquare_Clicked(object sender, EventArgs e)
+        private void UpdatePicBoxClickStage()
         {
-            /// Classify according to MoveStatus
-            UpdateMoveArgsAfterPictureBoxSquareClick();
-            if (m_MoveStatus == eMoveChoiceStatus.SrcAndDstClicked)
-            {
-                /// Check Move...
-            }
-        }
 
-        private void UpdateMoveArgsAfterPictureBoxSquareClick()
-        {
-            if (m_MoveStatus == eMoveChoiceStatus.NoneClicked)
+            if (m_PicBoxClickStage == ePicBoxClickStage.OnePicBoxClicked)
             {
-                m_MoveStatus = eMoveChoiceStatus.SrcClicked;
+                m_PicBoxClickStage = ePicBoxClickStage.TwoPicBoxClicked;
             }
 
-            else if (m_MoveStatus == eMoveChoiceStatus.SrcClicked)
+            else /// (m_MoveStatus == eMoveChoiceStatus.NoneClicked || m_MoveStatus == eMoveChoiceStatus.SrcAndDstClickedClicked)
             {
-                m_MoveStatus = eMoveChoiceStatus.SrcAndDstClicked;
+                m_PicBoxClickStage = ePicBoxClickStage.OnePicBoxClicked;
             }
         }
 

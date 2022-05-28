@@ -5,7 +5,7 @@ namespace CheckersGame
 {
     public struct SquareIndex
     {
-        private int m_RowIdx;  
+        private int m_RowIdx;
         private int m_ColumnIdx;
 
         public SquareIndex(int i_RowIdx, int i_ColumnIdx)

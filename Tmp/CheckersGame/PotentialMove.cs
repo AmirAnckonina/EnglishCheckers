@@ -5,10 +5,13 @@ using System.Text;
 
 namespace CheckersGame
 {
-    public struct PotentialMove
+    public class PotentialMove
     {
         private SquareIndex m_SrcIdx;
         private SquareIndex m_DestIdx;
+
+        public PotentialMove()
+        { }
 
         public PotentialMove(SquareIndex i_SrcIdx, SquareIndex i_DestIdx)
         {

@@ -50,6 +50,8 @@
     <Compile Include="FormGame.Designer.cs">
       <DependentUpon>FormGame.cs</DependentUpon>
     </Compile>
+    <Compile Include="MovementEventArgs.cs" />
+    <Compile Include="PictureBoxClickedEventArgs.cs" />
     <Compile Include="PictureBoxSquare.cs">
       <SubType>Component</SubType>
     </Compile>
