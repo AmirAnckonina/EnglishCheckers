@@ -26,7 +26,7 @@ namespace CheckersGame
             Human
         }
 
-        private readonly StringBuilder r_Name;
+        private readonly string r_Name;
         private readonly GameLogic.eDiscType r_DiscType; 
         private readonly GameLogic.eDiscType r_KingDiscType; 
         private readonly Player.ePlayerType r_PlayerType;
@@ -38,7 +38,7 @@ namespace CheckersGame
         /// private List<PotentialMove> m_SimpleMoves;
         /// private List<PotentialMove> m_EatingMoves;
         
-        public Player(StringBuilder i_Name, GameLogic.eDiscType i_DiscType, GameLogic.eDiscType i_KingDiscType, ePlayerType i_PlayerType,
+        public Player(string i_Name, GameLogic.eDiscType i_DiscType, GameLogic.eDiscType i_KingDiscType, ePlayerType i_PlayerType,
                         ePlayerMovingDirection i_PlayerMovingDirection, ePlayerRecognition i_PlayerRecognition)
         {
             r_Name = i_Name;
@@ -54,7 +54,7 @@ namespace CheckersGame
             /// m_EatingMoves = new List<PotentialMove>();
         }
 
-        public StringBuilder Name
+        public string Name
         {
             get 
             {
