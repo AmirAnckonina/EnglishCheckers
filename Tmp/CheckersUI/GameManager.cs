@@ -39,19 +39,16 @@ namespace CheckersUI
 
         private void m_FormGame_GameDetailsFilled(object sender, EventArgs e)
         {
-            /// Send here the relevant params to SetGameObjects under GameLogic
             GameDetailsFilledEventArgs gameDetails = sender as GameDetailsFilledEventArgs;
 
-            if (gameDetails != null)
-            {
-               /// r_GameUnit.SetGameObjects() 
-            }
+            r_GameUnit.SetGameObjects(gameDetails.Player1Name, gameDetails.Player2Name, gameDetails.BoardSize);
         }
 
         private void RegisterLogicEvents()
         {
-            /// BoardUpdated / MoveExecuted
             r_GameUnit.MoveManager.MoveExecuted += MoveManager_MoveExecuted;
+            r_GameUnit.GameOver += GameLogic_GameOver;
+            r_GameUnit.NewGameIsStarted += GameLogic_NewGameIsStarted;
         }
 
         private void MoveManager_MoveExecuted(object sender, EventArgs e)
@@ -59,9 +56,20 @@ namespace CheckersUI
             /// Tell the FormGame MoveExecuted So the Board diaplay should change
             /// SquareIndex to Remove 
             /// SquareIndex to Add
-            /// PictureBox -> remove
-            
+            /// PictureBox -> remove  
+            /// 
+            MoveExecutedEventArgs me = e as MoveExecutedEventArgs;
         }
+
+        private void GameLogic_NewGameIsStarted(object sender, EventArgs e)
+        {
+        }
+
+        private void GameLogic_GameOver(object sender, EventArgs e)
+        {
+            GameOverEventArgs go = e as GameOverEventArgs;  
+        }
+
 
         /* private void GameInitialization()
          {

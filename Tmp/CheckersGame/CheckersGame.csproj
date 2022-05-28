@@ -36,6 +36,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
+    <Compile Include="GameOverEventArgs.cs" />
+    <Compile Include="MoveExecutedEventArgs.cs" />
     <Compile Include="MoveManager.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PotentialMove.cs" />
