@@ -39,6 +39,8 @@ namespace CheckersGame
         private eGameResult m_FinalCheckersSessionResult;
         private bool m_IsRecurringTurn;
 
+        public event EventHandler GameOver;
+
         public GameLogic()
         {
             r_MoveManager = new MoveManager();
@@ -336,7 +338,7 @@ namespace CheckersGame
             }
         }
 
-        public bool GameOver(bool i_IsQPressed)
+        public bool GameOverCheck(bool i_IsQPressed)
         {
             bool isGameOver;
 

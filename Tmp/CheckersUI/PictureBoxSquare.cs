@@ -72,11 +72,17 @@ namespace CheckersUI
             // 
             // PictureBoxSquare
             // 
+            this.BackgroundImage = global::CheckersUI.Properties.Resources.EmptyInvalidSquare;
             this.InitialImage = null;
             this.Size = new System.Drawing.Size(50, 50);
+            this.Click += new System.EventHandler(this.PictureBoxSquare_Click);
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
-            this.BackgroundImage = Properties.Resources.EmptyInvalidSquare;
+
+        }
+
+        private void PictureBoxSquare_Click(object sender, EventArgs e)
+        {
 
         }
     }
