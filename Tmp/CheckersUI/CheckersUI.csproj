@@ -36,6 +36,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="FormGameSpecs.cs" />
+    <Compile Include="FormStart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FormStart.Designer.cs">
+      <DependentUpon>FormStart.cs</DependentUpon>
+    </Compile>
     <Compile Include="GameDetailsFilledEventArgs.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="FormSetup.cs">
@@ -88,6 +94,9 @@
     <EmbeddedResource Include="FormSetup.resx">
       <DependentUpon>FormSetup.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormStart.resx">
+      <DependentUpon>FormStart.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PictureBoxSquare.resx">
       <DependentUpon>PictureBoxSquare.cs</DependentUpon>
     </EmbeddedResource>
@@ -101,6 +110,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\EmptyValidSquare.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackHollowCircleCheckers-cropped.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RedHollowCircle-cropped.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackKing-cropped.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RedKing-cropped.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Start-checkers.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

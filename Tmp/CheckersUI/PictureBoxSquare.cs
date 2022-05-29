@@ -11,13 +11,10 @@ namespace CheckersUI
     {
         private Point m_PictureBoxSqrIdx;
 
-        public event EventHandler PictureBoxSquareClicked;
-
         public PictureBoxSquare(int i_RowIdx, int i_ColIdx)
         {
             InitializeComponent();
             m_PictureBoxSqrIdx = new Point(i_RowIdx, i_ColIdx);
-            /// this.BackgroundImage = Properties.Resources.EmptyInvalidSquare;
         }
 
         public Point PictureBoxSqrIdx
@@ -30,6 +27,7 @@ namespace CheckersUI
 
         public void SetSquare()
         {
+            this.BorderStyle = BorderStyle.None;
             SetEnabledAndBackgroundImage();
             SetLocation();
         }

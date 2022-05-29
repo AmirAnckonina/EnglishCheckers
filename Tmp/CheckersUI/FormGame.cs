@@ -19,7 +19,6 @@ namespace CheckersUI
             TwoPicBoxClicked
         }
 
-        public event EventHandler MoveEntered;
 
         private PictureBoxSquare[,] m_pictureBoxSquareMatrix;
         private PictureBoxSquare m_SrcPicBox;
@@ -29,14 +28,14 @@ namespace CheckersUI
         private Label m_labelPlayer1NameAndScore;
         private Label m_labelPlayer2NameAndScore;
         private ePicBoxClickStage m_PicBoxClickStage;
-        private MovementEventArgs m_MovementEventArgs;
+        /// private MovementEventArgs m_MovementEventArgs;
 
         public event EventHandler GameDetailsFilled;
+        public event EventHandler MoveEntered;
 
         public FormGame()
         {
-            r_FormSetup = new FormSetup();
-            m_MovementEventArgs = new MovementEventArgs();
+            r_FormSetup = new FormSetup();    
             m_labelPlayer1NameAndScore = new Label();
             m_labelPlayer2NameAndScore = new Label();
             m_PicBoxClickStage = ePicBoxClickStage.NoneClicked;
@@ -123,7 +122,7 @@ namespace CheckersUI
                 {
                     currentPictureBoxSquare = new PictureBoxSquare(rowIdx, colIdx);
                     currentPictureBoxSquare.SetSquare();
-                    currentPictureBoxSquare.PictureBoxSquareClicked += PictureBoxSquare_PictureBoxSquareClicked;
+                    currentPictureBoxSquare.Click += CurrentPictureBoxSquare_Click;
                     ///newPicBoxSqr.SetLocation();
 
                     this.Controls.Add(currentPictureBoxSquare);
@@ -131,59 +130,84 @@ namespace CheckersUI
             }
         }
 
-        private void PictureBoxSquare_PictureBoxSquareClicked(object sender, EventArgs e)
+        private void CurrentPictureBoxSquare_Click(object sender, EventArgs e)
         {
             PictureBoxSquare currentPicBoxSqr = sender as PictureBoxSquare;
 
-            if (currentPicBoxSqr != null)
+            if (currentPicBoxSqr != null) /// Valid Object
             {
-                ///Add condition wheteher the DestClick is the same as SrcClick
-                UpdatePicBoxClickStage();
-                if (m_PicBoxClickStage == ePicBoxClickStage.TwoPicBoxClicked)
+                PreMovementReportPicBoxParamsUpdate(currentPicBoxSqr); /// Update Src and Dst PicBox, as well as Movement status
+                if (m_PicBoxClickStage == ePicBoxClickStage.TwoPicBoxClicked) /// A second clicked received
                 {
-                    if (m_SrcPicBox != m_DestPicBox)
+                    if (m_SrcPicBox != m_DestPicBox) /// Not the same square picked.
                     {
-                        UpdateMovement(currentPicBoxSqr);
-                        OnMoveEntered();
+                        ReportNewPotentialMovement();
                         m_PicBoxClickStage = ePicBoxClickStage.NoneClicked;
+
                     }
 
-                    else /// Not sure if necessary.
+                    else /// The sourceIdx clicked twice , Not sure if necessary.
                     {
-
-
+                        m_SrcPicBox.BorderStyle = BorderStyle.None;
                     }
+
+                    PostMovementReportPicBoxParamsUpdate();
+                }
+
+                else /// Only onePicBox Clicked
+                {
+                    m_SrcPicBox.BorderStyle = BorderStyle.Fixed3D;
                 }
             }
-            
         }
 
-        protected virtual void OnMoveEntered()
+        protected virtual void OnMoveEntered(MovementEventArgs i_MovementParams)
         {
             if (MoveEntered != null)
             {
-                MoveEntered.Invoke(this, m_MovementEventArgs);
+                MoveEntered.Invoke(this, i_MovementParams);
             }
         }
 
-        private void UpdateMovement(PictureBoxSquare i_CurrPicBoxSqr)
+        private void ReportNewPotentialMovement()
         {
-            ///PictureBoxClickedEventArgs picBoxEventArgs = i_PicBoxSqrClickedEventArgs as PictureBoxClickedEventArgs;
-            SquareIndex sqrIdx = new SquareIndex(i_CurrPicBoxSqr.PictureBoxSqrIdx.Y, i_CurrPicBoxSqr.PictureBoxSqrIdx.X);
-            
-            if (m_PicBoxClickStage == ePicBoxClickStage.OnePicBoxClicked)
+            MovementEventArgs movementParams = new MovementEventArgs();
+            SquareIndex potentialSrcIdx = new SquareIndex(
+                m_SrcPicBox.PictureBoxSqrIdx.Y,
+                m_SrcPicBox.PictureBoxSqrIdx.X
+                );
+            SquareIndex potentialDestIdx = new SquareIndex(
+                m_DestPicBox.PictureBoxSqrIdx.Y,
+                m_DestPicBox.PictureBoxSqrIdx.X
+                );
+
+            movementParams.Movement.SrcIdx = potentialSrcIdx;
+            movementParams.Movement.DestIdx = potentialDestIdx;
+            OnMoveEntered(movementParams);
+        }
+
+        private void PreMovementReportPicBoxParamsUpdate(PictureBoxSquare i_CurrPicBoxSqr)
+        {
+
+            if (m_PicBoxClickStage == ePicBoxClickStage.NoneClicked)
             {
-                /// Update MovementEventArgs with Src Only
-                m_MovementEventArgs.Movement.SrcIdx = sqrIdx;
+                m_PicBoxClickStage = ePicBoxClickStage.OnePicBoxClicked;
                 m_SrcPicBox = i_CurrPicBoxSqr;
             }
 
-            else if (m_PicBoxClickStage == ePicBoxClickStage.TwoPicBoxClicked)
+            else if (m_PicBoxClickStage == ePicBoxClickStage.OnePicBoxClicked)
             {
-                /// Update MovementEventArgs with Dest Only
-                m_MovementEventArgs.Movement.DestIdx = sqrIdx;
+                m_PicBoxClickStage = ePicBoxClickStage.TwoPicBoxClicked;
                 m_DestPicBox = i_CurrPicBoxSqr;
             }
+        }
+
+        private void PostMovementReportPicBoxParamsUpdate()
+        {
+            /// TwoClicks handles, clear the Src and Dest
+            m_SrcPicBox.BorderStyle = BorderStyle.None;
+            m_PicBoxClickStage = ePicBoxClickStage.NoneClicked;
+            m_SrcPicBox = m_DestPicBox = null;
         }
 
         protected virtual void OnGameDetailsFilled()
@@ -191,20 +215,6 @@ namespace CheckersUI
             if (GameDetailsFilled != null)
             {
                 GameDetailsFilled(this, m_GameDetailsEventArgs);
-            }
-        }
-
-        private void UpdatePicBoxClickStage()
-        {
-
-            if (m_PicBoxClickStage == ePicBoxClickStage.OnePicBoxClicked)
-            {
-                m_PicBoxClickStage = ePicBoxClickStage.TwoPicBoxClicked;
-            }
-
-            else /// (m_MoveStatus == eMoveChoiceStatus.NoneClicked || m_MoveStatus == eMoveChoiceStatus.SrcAndDstClickedClicked)
-            {
-                m_PicBoxClickStage = ePicBoxClickStage.OnePicBoxClicked;
             }
         }
 
