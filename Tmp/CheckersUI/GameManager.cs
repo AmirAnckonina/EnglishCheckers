@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
 using CheckersGame;
+using System.Drawing;
+using System.Collections.Generic;
 
 namespace CheckersUI
 {
@@ -58,7 +60,15 @@ namespace CheckersUI
             /// SquareIndex to Add
             /// PictureBox -> remove  
             /// 
-            MoveExecutedEventArgs me = e as MoveExecutedEventArgs;
+            MoveExecutedEventArgs moveExecuted = e as MoveExecutedEventArgs;
+            List<SquareIndex> pointsToAddOnBoard = new List<SquareIndex>();
+            List<SquareIndex> pointsToEraseOnBoard = new List<SquareIndex>();
+
+            pointsToAddOnBoard.Add(moveExecuted.SrcIdx);
+            pointsToEraseOnBoard.Add(moveExecuted.DestIdx);
+            pointsToEraseOnBoard.Add(moveExecuted.EatedSquareIdx);
+
+
         }
 
         private void GameLogic_NewGameIsStarted(object sender, EventArgs e)
