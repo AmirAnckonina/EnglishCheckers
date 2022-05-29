@@ -7,18 +7,53 @@ namespace CheckersGame
 {
     public class MoveExecutedEventArgs : EventArgs
     {
-        private MoveManager m_LastMove;
+        private SquareIndex m_SrcIdx;
+        private SquareIndex m_DestIdx;
+        private SquareIndex m_EatedSquareIdx;
 
-        public MoveExecutedEventArgs(MoveManager i_LastMove)
+        public MoveExecutedEventArgs(SquareIndex i_ScrIdx, SquareIndex i_DestIdx, SquareIndex i_EatedSquareIdx)
         {
-            m_LastMove = i_LastMove;
+            m_SrcIdx = i_ScrIdx;
+            m_DestIdx = i_DestIdx;
+            m_EatedSquareIdx = i_EatedSquareIdx;
         }
 
-        public MoveManager LastMove
+        public SquareIndex SrcIdx
         {
             get
             {
-                return m_LastMove;
+                return m_SrcIdx;
+            }
+
+            set
+            {
+                m_SrcIdx = value;
+            }
+        }
+
+        public SquareIndex DestIdx
+        {
+            get
+            {
+                return m_DestIdx;
+            }
+
+            set
+            {
+                m_DestIdx = value;
+            }
+        }
+
+        public SquareIndex EatedSquareIdx
+        {
+            get
+            {
+                return m_EatedSquareIdx;
+            }
+
+            set
+            {
+                m_EatedSquareIdx = value;
             }
         }
     }
