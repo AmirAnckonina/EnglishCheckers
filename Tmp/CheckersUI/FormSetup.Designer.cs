@@ -94,6 +94,7 @@ namespace CheckersUI
             this.textBoxPlayer2Name.Name = "textBoxPlayer2Name";
             this.textBoxPlayer2Name.Size = new System.Drawing.Size(100, 22);
             this.textBoxPlayer2Name.TabIndex = 6;
+            this.textBoxPlayer2Name.Text = "[Computer]";
             this.textBoxPlayer2Name.TextChanged += new System.EventHandler(this.textBoxPlayer2Name_TextChanged);
             // 
             // radioButton6X6
