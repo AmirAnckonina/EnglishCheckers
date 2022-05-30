@@ -28,10 +28,10 @@ namespace CheckersUI
         private readonly Label m_LabelPlayer2NameAndScore;
         private ePicBoxClickStage m_PicBoxClickStage;
         private Player.ePlayerRecognition m_CurrentPlayerRecognition;
-        /// private MovementEventArgs m_MovementEventArgs;
 
         public event EventHandler GameDetailsFilled;
         public event EventHandler PotentialMoveEntered;
+        public event EventHandler PlayAnotherGameAnswered;
 
         public FormGame()
         {
@@ -40,13 +40,12 @@ namespace CheckersUI
             InitializeComponent();
             m_LabelPlayer1NameAndScore = new Label();
             m_LabelPlayer2NameAndScore = new Label();
-            m_CurrentPlayerRecognition = Player.ePlayerRecognition.None;
+            m_CurrentPlayerRecognition = Player.ePlayerRecognition.FirstPlayer;
             m_PicBoxClickStage = ePicBoxClickStage.NoneClicked;
             this.StartPosition = FormStartPosition.CenterScreen;
             r_FormSetup.FormClosed += r_FormSetup_FormClosed;
             r_FormStart.FormClosed += r_FormStart_FormClosed;
         }
-
 
         public Player.ePlayerRecognition CurrentPlayerRecognition
         {
@@ -96,8 +95,8 @@ namespace CheckersUI
 
                     m_PicBoxSqrMatrix = new PictureBoxSquare[r_FormSetup.BoardSize, r_FormSetup.BoardSize];
                     SetAdaptableFormGame();
-                    SetPlayersLabels();
                     InitPictureBoxSquareMatrix();
+                    SetPlayersLabels();
                     OnGameDetailsFilled(gameDetailsParams);
             }
 
@@ -105,6 +104,13 @@ namespace CheckersUI
             {
                 this.Close();
             }
+        }
+
+        public void UpdateSpecificPicBoxToKingDisc(Square i_Square)
+        {
+            Point pointToUpdate = SquareIndexPointConverter.SquareIndexToPoint(i_Square.SquareIndex);
+
+            m_PicBoxSqrMatrix[pointToUpdate.Y, pointToUpdate.X].UpdatePicBoxSquare(i_Square);
         }
 
         private void HandleEmptyNames()
@@ -130,27 +136,62 @@ namespace CheckersUI
         private void SetAdaptableFormGame()
         {
             SetFormGameDimensions();
-            SetPlayersLabels();
         }
 
         private void SetPlayersLabels()
         {
-            Point player1Position = new Point(this.Left + 20, this.Bottom - 20);
-            Point player2Position = new Point(this.Right - 20, this.Bottom - 20);
+            SetPlayersLabelLocation();
+            SetPlayersLabelFontAndSize();
+            UpdatePlayersLabelScore(0, 0);
+            
+            this.Controls.Add(m_LabelPlayer1NameAndScore);
+            this.Controls.Add(m_LabelPlayer2NameAndScore);
+        }
+
+        public void UpdatePlayersLabelScore(int i_FirstPlayerScore, int i_SecondPlayerScore)
+        {
+            m_LabelPlayer1NameAndScore.Text = r_FormSetup.Player1Name + string.Format(": {0}", i_FirstPlayerScore);
+            m_LabelPlayer2NameAndScore.Text = r_FormSetup.Player2Name + string.Format(": {0}", i_SecondPlayerScore);
+        }
+
+        private void SetPlayersLabelFontAndSize()
+        {
+            m_LabelPlayer1NameAndScore.Font = new System.Drawing.Font(
+                "Microsoft Sans Serif",
+                13F,
+                System.Drawing.FontStyle.Bold,
+                System.Drawing.GraphicsUnit.Point,
+                ((byte)(0)));
+            m_LabelPlayer2NameAndScore.Font = new System.Drawing.Font(
+                "Microsoft Sans Serif",
+                13F,
+                System.Drawing.FontStyle.Bold,
+                System.Drawing.GraphicsUnit.Point,
+                ((byte)(0)));
+        }
+
+        private void SetPlayersLabelLocation()
+        {
+            Point player1Position = new Point();
+            Point player2Position = new Point();
+            PictureBoxSquare lastLineMiddlePicBox;
+
+            lastLineMiddlePicBox = m_PicBoxSqrMatrix[r_FormSetup.BoardSize - 1, r_FormSetup.BoardSize / 2];
+            player1Position = lastLineMiddlePicBox.Location;
+            player2Position = lastLineMiddlePicBox.Location;
+            player1Position.Offset(-2 * FormGameSpecs.k_PictureBoxWidth, (int)(1.25f * FormGameSpecs.k_PictureBoxHeight));
+            player2Position.Offset(FormGameSpecs.k_PictureBoxWidth, (int)(1.25f * FormGameSpecs.k_PictureBoxHeight));
 
             m_LabelPlayer1NameAndScore.Location = player1Position;
             m_LabelPlayer2NameAndScore.Location = player2Position;
-            m_LabelPlayer1NameAndScore.Text = r_FormSetup.Player1Name;
-            m_LabelPlayer2NameAndScore.Text = r_FormSetup.Player2Name;
-
-            this.Controls.Add(m_LabelPlayer1NameAndScore);
-            this.Controls.Add(m_LabelPlayer2NameAndScore);
+            m_LabelPlayer1NameAndScore.AutoSize = true;
+            m_LabelPlayer2NameAndScore.AutoSize = true;
         }
 
         private void SetFormGameDimensions()
         {
             this.Height = (r_FormSetup.BoardSize * FormGameSpecs.k_PictureBoxHeight) + FormGameSpecs.k_HeightExtention;
-            this.Width = (r_FormSetup.BoardSize * FormGameSpecs.k_PictureBoxWidth) + FormGameSpecs.k_WidthExtention;
+            this.Width = (r_FormSetup.BoardSize * FormGameSpecs.k_PictureBoxWidth);
         }
 
         private void InitPictureBoxSquareMatrix()
@@ -212,18 +253,11 @@ namespace CheckersUI
 
         private void ReportNewPotentialMovement()
         {
-            MovementEventArgs movementParams = new MovementEventArgs();
-            SquareIndex potentialSrcIdx = new SquareIndex(
-                m_SrcPicBox.PictureBoxSqrIdx.Y,
-                m_SrcPicBox.PictureBoxSqrIdx.X
+            MovementEventArgs movementParams = new MovementEventArgs(
+                m_SrcPicBox.PictureBoxSqrIdx,
+                m_DestPicBox.PictureBoxSqrIdx
                 );
-            SquareIndex potentialDestIdx = new SquareIndex(
-                m_DestPicBox.PictureBoxSqrIdx.Y,
-                m_DestPicBox.PictureBoxSqrIdx.X
-                );
-
-            movementParams.Movement.SrcIdx = potentialSrcIdx;
-            movementParams.Movement.DestIdx = potentialDestIdx;
+ 
             OnPotentialMoveEntered(movementParams);
         }
 
@@ -258,30 +292,79 @@ namespace CheckersUI
             }
         }
 
-        public void AddDiscsToPictureBoxSquareMatrix(List<PointAndHolder> i_PointsToAddDiscs)
+        public void AddDiscsToPictureBoxSquareMatrix(List<Square> i_PointsToAddDiscs)
         {
-            foreach(PointAndHolder currPoint in i_PointsToAddDiscs)
+            Point pointToUpdate;
+
+            foreach(Square currSqr in i_PointsToAddDiscs)
             {
-                m_PicBoxSqrMatrix[currPoint.PointOnBoard.Y, currPoint.PointOnBoard.X].UpdatePicBoxSquare(currPoint);
+                pointToUpdate = SquareIndexPointConverter.SquareIndexToPoint(currSqr.SquareIndex);
+                m_PicBoxSqrMatrix[pointToUpdate.Y, pointToUpdate.X].UpdatePicBoxSquare(currSqr);
             }
         }
         
-        public void PostMoveUpdatePicBoxSqrMatrix(List<PointAndHolder> i_NewOccuipiedPoints, List<PointAndHolder> i_NewEmptyPoints)
+        public void PostMoveUpdatePicBoxSqrMatrix(List<Square> i_NewOccuipiedPoints, List<Square> i_NewEmptyPoints)
         {
-            foreach (PointAndHolder newOccuipied in i_NewOccuipiedPoints)
+            Point pointToUpdate;
+
+            foreach (Square newOccuipiedSqr in i_NewOccuipiedPoints)
             {
-                m_PicBoxSqrMatrix[newOccuipied.PointOnBoard.Y, newOccuipied.PointOnBoard.X].UpdatePicBoxSquare(newOccuipied);
+                pointToUpdate = SquareIndexPointConverter.SquareIndexToPoint(newOccuipiedSqr.SquareIndex);
+                m_PicBoxSqrMatrix[pointToUpdate.Y, pointToUpdate.X].UpdatePicBoxSquare(newOccuipiedSqr);
             }
 
-            foreach (PointAndHolder newEmpty in i_NewEmptyPoints)
+            foreach (Square newEmptySqr in i_NewEmptyPoints)
             {
-                m_PicBoxSqrMatrix[newEmpty.PointOnBoard.Y, newEmpty.PointOnBoard.X].UpdatePicBoxSquare(newEmpty);
+                pointToUpdate = SquareIndexPointConverter.SquareIndexToPoint(newEmptySqr.SquareIndex);
+                m_PicBoxSqrMatrix[pointToUpdate.Y, pointToUpdate.X].UpdatePicBoxSquare(newEmptySqr);
             }
+        }
 
-/*            if (m_CurrentPlayerRecognition == Player.ePlayerRecognition.SecondPlayer && !r_FormSetup.Player2IsHuman)
+        public void CreateYesNoMessageBox(string i_GameResultMessage)
+        {
+            DialogResult dialogResult;
+            PlayAnotherGameAnsweredEventArgs playAnotherGameAnsweredParams;
+            string messageBoxContent = i_GameResultMessage + "\nGo for another round?";
+            
+            dialogResult = MessageBox.Show(messageBoxContent, "English Checkers", MessageBoxButtons.YesNo);
+            playAnotherGameAnsweredParams = new PlayAnotherGameAnsweredEventArgs(dialogResult);
+            
+            OnPlayAnotherGameAnswered(playAnotherGameAnsweredParams);
+        }
+
+        public void ShowInvalidMoveMessage()
+        {
+            MessageBox.Show("Invalid Move Choice!\nPlease Try again.");
+        }
+
+        public void MarkCurrentPlayerLabel()
+        {
+            if (m_CurrentPlayerRecognition == Player.ePlayerRecognition.FirstPlayer)
             {
-                System.Threading.Thread.Sleep(2000);
-            }*/
+                m_LabelPlayer1NameAndScore.ForeColor = Color.Green;
+                m_LabelPlayer2NameAndScore.ForeColor = Color.Black;
+            }
+            else /// SecondPlayer
+            {
+                m_LabelPlayer2NameAndScore.ForeColor = Color.Green;
+                m_LabelPlayer1NameAndScore.ForeColor = Color.Black;
+            }
+        }
+
+        private void OnPlayAnotherGameAnswered(PlayAnotherGameAnsweredEventArgs i_PlayAnotherGameAnsweredParams)
+        {
+            if (PlayAnotherGameAnswered != null)
+            {
+                PlayAnotherGameAnswered(this, i_PlayAnotherGameAnsweredParams);
+            }
+        }
+
+        public void ResetPicBoxSqrMatrix()
+        {
+            foreach (PictureBoxSquare picBoxSqr in m_PicBoxSqrMatrix)
+            {
+                picBoxSqr.ResetPicBoxSquare();
+            }
         }
 
         public void RunFormGame()
@@ -289,6 +372,5 @@ namespace CheckersUI
             r_FormSetup.ShowDialog();
             this.ShowDialog();
         }
-
     }
 }

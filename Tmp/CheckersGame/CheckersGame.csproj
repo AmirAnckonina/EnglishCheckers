@@ -43,6 +43,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="PointAndHolder.cs" />
     <Compile Include="PotentialMove.cs" />
+    <Compile Include="ReachedLastLineEventArgs.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="SquareIndex.cs" />
     <Compile Include="GameLogic.cs" />

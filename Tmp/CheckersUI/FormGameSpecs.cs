@@ -12,6 +12,6 @@ namespace CheckersUI
         internal const int k_StartingPictureBoxX = 0;
         internal const int k_StartingPictureBoxY = 40;
         internal const int k_WidthExtention = 20;
-        internal const int k_HeightExtention = 100;
+        internal const int k_HeightExtention = 50;
     }
 }

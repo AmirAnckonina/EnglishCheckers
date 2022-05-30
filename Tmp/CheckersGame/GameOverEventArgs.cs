@@ -7,39 +7,53 @@ namespace CheckersGame
 {
     public class GameOverEventArgs : EventArgs
     {
+        private string m_GameResultMessage;
 
-        GameLogic.eGameResult m_GameResult;
-        int m_WinnerPlayerScore;
-
-        public GameOverEventArgs(GameLogic.eGameResult i_GameResult, int i_WinnerPlayerScore)
+        public GameOverEventArgs(
+            GameLogic.eGameResult i_GameResult,
+            int i_WinnerPlayerScore,
+            string i_FirstPlayerName,
+            string i_SecondPlayerName)
         {
-            m_GameResult = i_GameResult;
-            m_WinnerPlayerScore = i_WinnerPlayerScore;
+            SetGameResultMessage(i_GameResult, i_WinnerPlayerScore, i_FirstPlayerName, i_SecondPlayerName);
         }
 
-        public GameLogic.eGameResult GameResult
+        public string GameResultMessage
         {
             get
             {
-                return m_GameResult;
-            }
-
-            set
-            {
-                m_GameResult = value;
+                return m_GameResultMessage;
             }
         }
 
-        public int WinnerPlayerScore
+        public void SetGameResultMessage(
+            GameLogic.eGameResult i_GameResult,
+            int i_WinnerPlayerScore,
+            string i_FirstPlayerName,
+            string i_SecondPlayerName)
         {
-            get
+            string winnerPlayerName;
+
+            if (i_GameResult != GameLogic.eGameResult.Draw)
             {
-                return m_WinnerPlayerScore;
+                if (i_GameResult == GameLogic.eGameResult.FirstPlayerWon)
+                {
+                    winnerPlayerName = i_FirstPlayerName;
+                }
+
+                else /// (i_GameResult == GameLogic.eGameResult.SecondPlayerWon)
+                {
+                    winnerPlayerName = i_SecondPlayerName;       
+                }
+
+                m_GameResultMessage = string.Format(
+                        "{0} is the winner! \n{0}'s total score: {1}", winnerPlayerName, i_WinnerPlayerScore
+                        );
             }
 
-            set
+            else /// Draw
             {
-                m_WinnerPlayerScore = value;
+                m_GameResultMessage = string.Format("It's a Draw!");
             }
         }
     }

@@ -176,11 +176,11 @@ namespace CheckersGame
             }
         }
 
-        public void SetGameObjects(string i_FirstPlayerName, string i_SecondPlayerName,int i_BoardSize)
+        public void SetGameObjects(string i_FirstPlayerName, string i_SecondPlayerName,int i_BoardSize, bool i_Player2IsHuman)
         {
             Player.ePlayerType secondPlayerType;
 
-            if (m_GameMode == eGameMode.TwoPlayersMode)
+            if (i_Player2IsHuman)
             {
                 secondPlayerType = Player.ePlayerType.Human;
             }
@@ -211,12 +211,31 @@ namespace CheckersGame
             /// Add Initialize to Both players PotentialMoves Lists
             m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
             m_SecondPlayer.InitializeCurrentHoldingIndices(m_Board);
+            TurnsSetup();
+            m_IsRecurringTurn = false;
+            ReportSingleGameInitialized();
+        }
+
+        public void ResetObjectsBetweenSessions()
+        {
+            FirstPlayer.NumOfDiscs = 0;
+            SecondPlayer.NumOfDiscs = 0;
+            FirstPlayer.CurrentHoldingSquareIndices.Clear();
+            SecondPlayer.CurrentHoldingSquareIndices.Clear();
+            m_Board.InitializeBoard(m_FirstPlayer, m_SecondPlayer);
+            m_FirstPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_FirstPlayer.DiscType);
+            m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
+            m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
+            m_SecondPlayer.InitializeCurrentHoldingIndices(m_Board);
+            m_IsRecurringTurn = false;
+            TurnsSetup();
+            ReportSingleGameInitialized();
+        }
+
+        private void TurnsSetup()
+        {
             m_CurrentPlayer = FirstPlayer;
             m_RivalPlayer = SecondPlayer;
-            m_IsRecurringTurn = false;
-
-            /// Event!!!
-            ReportSingleGameInitialized();
         }
 
         private void ReportSingleGameInitialized()
@@ -227,7 +246,7 @@ namespace CheckersGame
             {
                 if (sqr.SquareHolder != Player.ePlayerRecognition.None)
                 {
-                    gameInitializedParams.AddOccuipiedPointToList(sqr.SquareIndex, sqr.SquareHolder);
+                    gameInitializedParams.AddOccuipiedPointToList(sqr);
                 }
             }
 
@@ -264,11 +283,11 @@ namespace CheckersGame
         {
             MoveExecutedEventArgs moveExecutedEventArgs = new MoveExecutedEventArgs();
 
-            moveExecutedEventArgs.AddNewOccuipiedPoint(r_MoveManager.DestIdx, m_CurrentPlayer.PlayerRecognition);
-            moveExecutedEventArgs.AddNewEmptyPoint(r_MoveManager.SrcIdx);
+            moveExecutedEventArgs.AddNewOccuipiedPoint(m_Board[r_MoveManager.DestIdx]);
+            moveExecutedEventArgs.AddNewEmptyPoint(m_Board[r_MoveManager.SrcIdx]);
             if (r_MoveManager.EatingMoveOccurred())
             {
-                moveExecutedEventArgs.AddNewEmptyPoint(r_MoveManager.EatedSquareIdx);
+                moveExecutedEventArgs.AddNewEmptyPoint(m_Board[r_MoveManager.EatedSquareIdx]);
             }
 
             OnMoveExecuted(moveExecutedEventArgs);
@@ -289,6 +308,7 @@ namespace CheckersGame
                 InvalidMoveInserted.Invoke(this, null);
             }
         }
+
         public void LoadSpecificNewPotentialMove(PotentialMove i_PotentialMove)
         {
             r_MoveManager.SrcIdx = i_PotentialMove.SrcIdx;
@@ -377,6 +397,7 @@ namespace CheckersGame
         {
             if (GameOverCheck())
             {
+                ScoreCalculationAndUpdate();
                 ReportGameOver();
             }
 
@@ -409,8 +430,8 @@ namespace CheckersGame
         private void ReportReachedLastLine()
         {
             ReachedLastLineEventArgs reachedLastLineParams = new ReachedLastLineEventArgs(
-                r_MoveManager.DestIdx,
-                m_CurrentPlayer.PlayerRecognition);
+                m_Board[r_MoveManager.DestIdx]
+                );
 
             OnCurrPlayerReachedLastLine(reachedLastLineParams);
         }
@@ -435,7 +456,7 @@ namespace CheckersGame
                 winnerScore = 0;
             }
 
-            gameOverParams = new GameOverEventArgs(m_SingleGameResult, winnerScore);
+            gameOverParams = new GameOverEventArgs(m_SingleGameResult, winnerScore, m_FirstPlayer.Name, m_SecondPlayer.Name);
             OnSingleGameOver(gameOverParams);
         }
 
@@ -504,12 +525,6 @@ namespace CheckersGame
         public bool GameOverCheck()
         {
             bool isGameOver;
-
-/*            if (i_IsQPressed) 
-            {
-                isGameOver = true;
-                SaveSingleGameResult(m_RivalPlayer.PlayerRecognition);
-            }*/
 
             if (m_RivalPlayer.NumOfDiscs == 0)
             {
@@ -624,19 +639,6 @@ namespace CheckersGame
             {
                 m_SecondPlayer.Score += singleGameScore;
             }
-        }
-
-        public void ResetObjectsBetweenSessions()
-        {
-            FirstPlayer.NumOfDiscs = 0;
-            SecondPlayer.NumOfDiscs = 0;
-            FirstPlayer.CurrentHoldingSquareIndices.Clear();
-            SecondPlayer.CurrentHoldingSquareIndices.Clear();
-            m_Board.InitializeBoard(m_FirstPlayer, m_SecondPlayer);
-            m_FirstPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_FirstPlayer.DiscType);
-            m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
-            m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
-            m_SecondPlayer.InitializeCurrentHoldingIndices(m_Board);
         }
 
         public void SaveFinalCheckersGameResult()

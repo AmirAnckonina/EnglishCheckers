@@ -35,6 +35,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="PlayAnotherGameAnsweredEventArgs.cs" />
     <Compile Include="eFormCloseReason.cs" />
     <Compile Include="FormGameSpecs.cs" />
     <Compile Include="FormStart.cs">
@@ -66,9 +67,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="RawMoveInputManager.cs" />
-    <Compile Include="IOManager.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="SquareIndexPointConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CheckersGame\CheckersGame.csproj">

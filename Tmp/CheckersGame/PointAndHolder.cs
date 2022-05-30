@@ -9,12 +9,12 @@ namespace CheckersGame
     public struct PointAndHolder
     {
         private Point m_PointOnBoard;
-        private Player.ePlayerRecognition m_PlayerRecognition;
+        private Square m_Square;
 
-        public PointAndHolder(SquareIndex i_SqrIdx, Player.ePlayerRecognition i_PlayerRecognition)
+        public PointAndHolder(Square i_Sqr)
         {
-            m_PointOnBoard = new Point(i_SqrIdx.ColumnIdx, i_SqrIdx.RowIdx);
-            m_PlayerRecognition = i_PlayerRecognition;
+            m_PointOnBoard = new Point(i_Sqr.SquareIndex.ColumnIdx, i_Sqr.SquareIndex.RowIdx);
+            m_Square = i_Sqr;
         }
 
         public Point PointOnBoard
@@ -30,16 +30,11 @@ namespace CheckersGame
             }
         }
 
-        public Player.ePlayerRecognition PlayerRecognition
+        public Square Sqr
         {
             get
             {
-                return m_PlayerRecognition;
-            }
-
-            set
-            {
-                m_PlayerRecognition = value;
+                return m_Square;
             }
         }
     }

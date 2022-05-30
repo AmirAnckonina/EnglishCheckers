@@ -10,7 +10,7 @@ namespace CheckersUI
         private string m_Player1Name;
         private string m_Player2Name;
         private int m_BoardSize;
-        private readonly bool m_Player2IsHuman;
+        private bool m_Player2IsHuman;
 
         public GameDetailsFilledEventArgs(string i_Player1Name, string i_Player2Name, int i_BoardSize, bool i_Player2IsHuman)
         {

@@ -8,25 +8,23 @@ namespace CheckersGame
 {
     public class GameInitializedEventArgs : EventArgs
     {
-        private readonly List<PointAndHolder> m_AllOccuipiedPoints;
+        private readonly List<Square> m_AllOccuipiedSquares;
 
         public GameInitializedEventArgs()
         {
-            m_AllOccuipiedPoints = new List<PointAndHolder>();
+            m_AllOccuipiedSquares = new List<Square>();
         }
 
-        public void AddOccuipiedPointToList(SquareIndex i_SqrIdx, Player.ePlayerRecognition i_PlayerRecognition)
+        public void AddOccuipiedPointToList(Square i_Sqr)
         {
-            PointAndHolder newOccuipiedPoint = new PointAndHolder(i_SqrIdx, i_PlayerRecognition);
-
-            m_AllOccuipiedPoints.Add(newOccuipiedPoint);
+            m_AllOccuipiedSquares.Add(i_Sqr);
         }
 
-        public List<PointAndHolder> OcciupiedPoints
+        public List<Square> OcciupiedPoints
         {
             get
             {
-                return m_AllOccuipiedPoints;
+                return m_AllOccuipiedSquares;
             }
         }
        

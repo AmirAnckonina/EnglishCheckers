@@ -7,18 +7,18 @@ namespace CheckersGame
 {
     public class ReachedLastLineEventArgs : EventArgs
     {
-        private PointAndHolder m_LastLineIdxAndHolder;
+        private Square m_LastLineSquare;
 
-        public ReachedLastLineEventArgs(SquareIndex i_SqrIdx, Player.ePlayerRecognition i_PlayerRecognition)
+        public ReachedLastLineEventArgs(Square i_LastLineSquare)
         {
-            m_LastLineIdxAndHolder = new PointAndHolder(i_SqrIdx, i_PlayerRecognition);
+            m_LastLineSquare = i_LastLineSquare;
         }
 
-        public PointAndHolder LastLineIdxAndHolder
+        public Square LastLineSquare
         {
             get
             {
-                return m_LastLineIdxAndHolder;
+                return m_LastLineSquare;
             }
         }
     }

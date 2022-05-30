@@ -8,53 +8,49 @@ namespace CheckersGame
 {
     public class MoveExecutedEventArgs : EventArgs
     {
-        private List<PointAndHolder> m_NewOccuipiedPoints;
-        private List<PointAndHolder> m_NewEmptyPoints;
+        private List<Square> m_NewOccuipiedSquares;
+        private List<Square> m_NewEmptySquares;
 
         public MoveExecutedEventArgs()
         {
-            m_NewOccuipiedPoints = new List<PointAndHolder>();
-            m_NewEmptyPoints = new List<PointAndHolder>();
+            m_NewOccuipiedSquares = new List<Square>();
+            m_NewEmptySquares = new List<Square>();
         }
 
-        public List<PointAndHolder> NewOccuipiedPoints
+        public List<Square> NewOccuipiedSquares
         {
             get
             {
-                return m_NewOccuipiedPoints;
+                return m_NewOccuipiedSquares;
             }
 
             set
             {
-                m_NewOccuipiedPoints = value;
+                m_NewOccuipiedSquares = value;
             }
         }
 
-        public List<PointAndHolder> NewEmptyPoints
+        public List<Square> NewEmptySquares
         {
             get
             {
-                return m_NewEmptyPoints;
+                return m_NewEmptySquares;
             }
 
             set
             {
-                m_NewEmptyPoints = value;
+                m_NewEmptySquares = value;
             }
         }
 
-        public void AddNewEmptyPoint(SquareIndex i_SqrIdx)
+        public void AddNewEmptyPoint(Square i_Sqr)
         {
-            PointAndHolder newEmptyPoint = new PointAndHolder(i_SqrIdx, Player.ePlayerRecognition.None);
-
-            m_NewEmptyPoints.Add(newEmptyPoint);
+            m_NewEmptySquares.Add(i_Sqr);
         }
 
-        public void AddNewOccuipiedPoint(SquareIndex i_SqrIdx, Player.ePlayerRecognition i_PlayerRecognition)
+        public void AddNewOccuipiedPoint(Square i_Sqr)
         {
-            PointAndHolder newOccuipiedPoint = new PointAndHolder(i_SqrIdx, i_PlayerRecognition);
-
-            m_NewOccuipiedPoints.Add(newOccuipiedPoint);
+            m_NewOccuipiedSquares.Add(i_Sqr);
         }
     
     }
