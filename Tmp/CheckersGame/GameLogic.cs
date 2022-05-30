@@ -380,10 +380,10 @@ namespace CheckersGame
                 ReportGameOver();
             }
 
-            /*else
+            else
             {
                 SwitchTurn();
-            }*/
+            }
         }
 
         private void PostEatingMoveProcedure()

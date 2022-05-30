@@ -9,21 +9,35 @@ using System.Windows.Forms;
 
 namespace CheckersUI
 {
-    public partial class FormStart : UserControl
+    public partial class FormStart : Form
     {
+        private eFormCloseReason m_FormStartCloseReason;
+
         public FormStart()
         {
             InitializeComponent();
+            m_FormStartCloseReason = eFormCloseReason.Xpressed;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public eFormCloseReason FormStartCloseReason
         {
-
+            get
+            {
+                return m_FormStartCloseReason;
+            }
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void buttonStartGame_Click(object sender, EventArgs e)
         {
+            Button buttonStartGame = sender as Button;
 
+            if (buttonStartGame != null)
+            {
+                /// Report Game Details Filled
+                /// Add condition whether the Names are valid
+                m_FormStartCloseReason = eFormCloseReason.UserProcceed;
+                this.Close();
+            }
         }
     }
 }

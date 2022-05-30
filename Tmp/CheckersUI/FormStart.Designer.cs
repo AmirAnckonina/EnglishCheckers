@@ -3,12 +3,12 @@ namespace CheckersUI
 {
     partial class FormStart
     {
-        /// <summary> 
+        /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -21,60 +21,52 @@ namespace CheckersUI
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
+        #region Windows Form Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
+        /// <summary>
+        /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonStartGame = new System.Windows.Forms.Button();
-            this.buttonExit = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonStartGame = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // buttonStartGame
-            // 
-            this.buttonStartGame.Location = new System.Drawing.Point(213, 436);
-            this.buttonStartGame.Name = "buttonStartGame";
-            this.buttonStartGame.Size = new System.Drawing.Size(143, 67);
-            this.buttonStartGame.TabIndex = 0;
-            this.buttonStartGame.Text = "Start Game";
-            this.buttonStartGame.UseVisualStyleBackColor = true;
-            this.buttonStartGame.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // buttonExit
-            // 
-            this.buttonExit.Location = new System.Drawing.Point(409, 436);
-            this.buttonExit.Name = "buttonExit";
-            this.buttonExit.Size = new System.Drawing.Size(143, 67);
-            this.buttonExit.TabIndex = 1;
-            this.buttonExit.Text = "Exit";
-            this.buttonExit.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(631, 183);
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Microsoft YaHei", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(418, 141);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(117, 17);
-            this.label1.TabIndex = 2;
+            this.label1.Size = new System.Drawing.Size(721, 106);
+            this.label1.TabIndex = 3;
             this.label1.Text = "English Checkers";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // buttonStartGame
+            // 
+            this.buttonStartGame.BackColor = System.Drawing.Color.Beige;
+            this.buttonStartGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonStartGame.Location = new System.Drawing.Point(626, 436);
+            this.buttonStartGame.Name = "buttonStartGame";
+            this.buttonStartGame.Size = new System.Drawing.Size(237, 91);
+            this.buttonStartGame.TabIndex = 0;
+            this.buttonStartGame.Text = "Start Game";
+            this.buttonStartGame.UseVisualStyleBackColor = false;
+            this.buttonStartGame.Click += new System.EventHandler(this.buttonStartGame_Click);
             // 
             // FormStart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.BackgroundImage = global::CheckersUI.Properties.Resources.Start_checkers;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(1151, 705);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.buttonStartGame);
             this.Name = "FormStart";
-            this.Size = new System.Drawing.Size(1005, 616);
+            this.Text = "English Checkers";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -82,8 +74,7 @@ namespace CheckersUI
 
         #endregion
 
-        private System.Windows.Forms.Button buttonStartGame;
-        private System.Windows.Forms.Button buttonExit;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonStartGame;
     }
 }

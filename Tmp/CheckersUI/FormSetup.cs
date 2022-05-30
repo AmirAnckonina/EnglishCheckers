@@ -11,16 +11,25 @@ namespace CheckersUI
 {
     public partial class FormSetup : Form
     {
-        public event EventHandler GameDetailsFilled;
+        private eFormCloseReason m_FormSetupCloseReason;
 
         public FormSetup()
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterParent;
+            m_FormSetupCloseReason = eFormCloseReason.Xpressed;
         }
 
         /// Properties 
-        
+
+        public eFormCloseReason FormSetupCloseReason
+        {
+            get
+            {
+                return m_FormSetupCloseReason;
+            }
+        }
+
         public string Player1Name
         {
             get
@@ -73,18 +82,6 @@ namespace CheckersUI
                 {
                     return 10;
                 }
-            }
-        }
-
-        private void buttonDone_Click(object sender, EventArgs e)
-        {
-            Button buttonDone = sender as Button;
-
-            if (buttonDone != null)
-            {
-                /// Report Game Details Filled
-                /// Add condition whether the Names are valid
-                this.Close();
             }
         }
 
@@ -160,6 +157,19 @@ namespace CheckersUI
         private void textBoxPlayer2Name_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonDone_Click(object sender, EventArgs e)
+        {
+            Button buttonDone = sender as Button;
+
+            if (buttonDone != null)
+            {
+                /// Report Game Details Filled
+                /// Add condition whether the Names are valid
+                m_FormSetupCloseReason = eFormCloseReason.UserProcceed;
+                this.Close();
+            }
         }
     }
 }
