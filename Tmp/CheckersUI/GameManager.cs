@@ -172,7 +172,6 @@ namespace CheckersUI
             {
                 r_GameLogicUnit.ExecuteMoveProcedure();
                 r_GameLogicUnit.PostMoveProcedure();
-                r_GameLogicUnit.SwitchTurn();
             }
         }
 

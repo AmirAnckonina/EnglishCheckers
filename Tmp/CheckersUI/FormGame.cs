@@ -23,6 +23,7 @@ namespace CheckersUI
         private PictureBoxSquare m_SrcPicBox;
         private PictureBoxSquare m_DestPicBox;
         private FormSetup r_FormSetup;
+        private FormStart r_FormStart;
         private Label m_LabelPlayer1NameAndScore;
         private Label m_LabelPlayer2NameAndScore;
         private ePicBoxClickStage m_PicBoxClickStage;
@@ -34,14 +35,18 @@ namespace CheckersUI
 
         public FormGame()
         {
-            r_FormSetup = new FormSetup();    
+            r_FormSetup = new FormSetup();
+            r_FormStart = new FormStart();
             InitializeComponent();
             m_LabelPlayer1NameAndScore = new Label();
             m_LabelPlayer2NameAndScore = new Label();
             m_CurrentPlayerRecognition = Player.ePlayerRecognition.None;
             m_PicBoxClickStage = ePicBoxClickStage.NoneClicked;
             this.StartPosition = FormStartPosition.CenterScreen;
+            r_FormSetup.FormClosed += r_FormSetup_FormClosed;
+            r_FormStart.FormClosed += r_FormStart_FormClosed;
         }
+
 
         public Player.ePlayerRecognition CurrentPlayerRecognition
         {
@@ -58,28 +63,48 @@ namespace CheckersUI
 
         private void FormGame_Load(object sender, EventArgs e)
         {
-            r_FormSetup.FormClosed += r_FormSetup_FormClosed;
-            r_FormSetup.ShowDialog();
+            r_FormStart.ShowDialog();
             /// from here, the GameForm will be loaded...
+        }
+
+        private void r_FormStart_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (r_FormStart.FormStartCloseReason == eFormCloseReason.UserProcceed)
+            {
+                r_FormSetup.ShowDialog();
+            }
+
+            else
+            {
+                this.Close();
+            }
         }
 
         private void r_FormSetup_FormClosed(object sender, FormClosedEventArgs e)
         {
-            GameDetailsFilledEventArgs gameDetailsParams;
+            if (r_FormSetup.FormSetupCloseReason == eFormCloseReason.UserProcceed)
+            {
+                    GameDetailsFilledEventArgs gameDetailsParams;
 
-            HandleEmptyNames();
-            gameDetailsParams = new GameDetailsFilledEventArgs(
-                r_FormSetup.Player1Name,
-                r_FormSetup.Player2Name,
-                r_FormSetup.BoardSize,
-                r_FormSetup.Player2IsHuman
-                );
+                    HandleEmptyNames();
+                    gameDetailsParams = new GameDetailsFilledEventArgs(
+                        r_FormSetup.Player1Name,
+                        r_FormSetup.Player2Name,
+                        r_FormSetup.BoardSize,
+                        r_FormSetup.Player2IsHuman
+                        );
 
-            m_PicBoxSqrMatrix = new PictureBoxSquare[r_FormSetup.BoardSize, r_FormSetup.BoardSize];
-            SetAdaptableFormGame();
-            SetPlayersLabels();
-            InitPictureBoxSquareMatrix();
-            OnGameDetailsFilled(gameDetailsParams);
+                    m_PicBoxSqrMatrix = new PictureBoxSquare[r_FormSetup.BoardSize, r_FormSetup.BoardSize];
+                    SetAdaptableFormGame();
+                    SetPlayersLabels();
+                    InitPictureBoxSquareMatrix();
+                    OnGameDetailsFilled(gameDetailsParams);
+            }
+
+            else
+            {
+                this.Close();
+            }
         }
 
         private void HandleEmptyNames()
@@ -252,6 +277,11 @@ namespace CheckersUI
             {
                 m_PicBoxSqrMatrix[newEmpty.PointOnBoard.Y, newEmpty.PointOnBoard.X].UpdatePicBoxSquare(newEmpty);
             }
+
+/*            if (m_CurrentPlayerRecognition == Player.ePlayerRecognition.SecondPlayer && !r_FormSetup.Player2IsHuman)
+            {
+                System.Threading.Thread.Sleep(2000);
+            }*/
         }
 
         public void RunFormGame()
