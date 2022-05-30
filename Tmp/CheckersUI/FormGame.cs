@@ -22,10 +22,10 @@ namespace CheckersUI
         private PictureBoxSquare[,] m_PicBoxSqrMatrix;
         private PictureBoxSquare m_SrcPicBox;
         private PictureBoxSquare m_DestPicBox;
-        private FormSetup r_FormSetup;
-        private FormStart r_FormStart;
-        private Label m_LabelPlayer1NameAndScore;
-        private Label m_LabelPlayer2NameAndScore;
+        private readonly FormSetup r_FormSetup;
+        private readonly FormStart r_FormStart;
+        private readonly Label m_LabelPlayer1NameAndScore;
+        private readonly Label m_LabelPlayer2NameAndScore;
         private ePicBoxClickStage m_PicBoxClickStage;
         private Player.ePlayerRecognition m_CurrentPlayerRecognition;
         /// private MovementEventArgs m_MovementEventArgs;

@@ -8,7 +8,7 @@ namespace CheckersGame
 {
     public class GameInitializedEventArgs : EventArgs
     {
-        private List<PointAndHolder> m_AllOccuipiedPoints;
+        private readonly List<PointAndHolder> m_AllOccuipiedPoints;
 
         public GameInitializedEventArgs()
         {
