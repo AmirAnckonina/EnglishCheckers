@@ -401,8 +401,18 @@ namespace CheckersGame
 
             if (reachedLastLine)
             {
-                OnCurrPlayerReachedLastLine();
+                ReportReachedLastLine();
+                
             }
+        }
+        
+        private void ReportReachedLastLine()
+        {
+            ReachedLastLineEventArgs reachedLastLineParams = new ReachedLastLineEventArgs(
+                r_MoveManager.DestIdx,
+                m_CurrentPlayer.PlayerRecognition);
+
+            OnCurrPlayerReachedLastLine(reachedLastLineParams);
         }
 
         private void ReportGameOver()
@@ -437,11 +447,11 @@ namespace CheckersGame
             }
         }
 
-        protected virtual void OnCurrPlayerReachedLastLine()
+        protected virtual void OnCurrPlayerReachedLastLine(ReachedLastLineEventArgs i_ReachedLastLineParams)
         {
             if (CurrPlayerReachedLastLine != null)
             {
-                CurrPlayerReachedLastLine.Invoke(this, null);
+                CurrPlayerReachedLastLine.Invoke(this, i_ReachedLastLineParams);
             }
         }
 

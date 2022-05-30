@@ -59,11 +59,11 @@ namespace CheckersUI
 
         private void r_GameLogicUnit_CurrPlayerReachedLastLine(object sender, EventArgs e)
         {
-            GameLogic gameLogicUnitObj = sender as GameLogic;
+            ReachedLastLineEventArgs reachedLastLineParams = e as ReachedLastLineEventArgs;
 
-            if (gameLogicUnitObj != null)
+            if (reachedLastLineParams != null)
             {
-                /// Update the relevant Point in board to KingDisc.
+                /// m_FormGame.UpdateSpecificPicBoxToKingDisc(reachedLastLineParams.LastLineIdxAndHolder);
             }
         }
 
@@ -161,7 +161,9 @@ namespace CheckersUI
 
             if (gameOverParams != null)
             {
-
+                ///m_FormGame.CreateYesNoMessageBox(ge.Message, "Damka");
+                /// MessageBox
+                /// Update m_FormGame Lables
             }
         }
 

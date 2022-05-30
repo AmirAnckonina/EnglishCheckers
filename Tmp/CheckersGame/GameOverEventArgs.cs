@@ -9,12 +9,12 @@ namespace CheckersGame
     {
 
         GameLogic.eGameResult m_GameResult;
-        int m_WinnerScors;
+        int m_WinnerPlayerScore;
 
         public GameOverEventArgs(GameLogic.eGameResult i_GameResult, int i_WinnerPlayerScore)
         {
             m_GameResult = i_GameResult;
-            m_WinnerScors = i_WinnerPlayerScore;
+            m_WinnerPlayerScore = i_WinnerPlayerScore;
         }
 
         public GameLogic.eGameResult GameResult
@@ -34,12 +34,12 @@ namespace CheckersGame
         {
             get
             {
-                return m_WinnerScors;
+                return m_WinnerPlayerScore;
             }
 
             set
             {
-                m_WinnerScors = value;
+                m_WinnerPlayerScore = value;
             }
         }
     }
