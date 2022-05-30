@@ -1,0 +1,3 @@
+Notes:
+
+1. While reseting between sessions remember to clear the list of GameInitilaizedEventArgs!!!

@@ -2,59 +2,60 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace CheckersGame
 {
     public class MoveExecutedEventArgs : EventArgs
     {
-        private SquareIndex m_SrcIdx;
-        private SquareIndex m_DestIdx;
-        private SquareIndex m_EatedSquareIdx;
+        private List<PointAndHolder> m_NewOccuipiedPoints;
+        private List<PointAndHolder> m_NewEmptyPoints;
 
-        public MoveExecutedEventArgs(SquareIndex i_ScrIdx, SquareIndex i_DestIdx, SquareIndex i_EatedSquareIdx)
+        public MoveExecutedEventArgs()
         {
-            m_SrcIdx = i_ScrIdx;
-            m_DestIdx = i_DestIdx;
-            m_EatedSquareIdx = i_EatedSquareIdx;
+            m_NewOccuipiedPoints = new List<PointAndHolder>();
+            m_NewEmptyPoints = new List<PointAndHolder>();
         }
 
-        public SquareIndex SrcIdx
+        public List<PointAndHolder> NewOccuipiedPoints
         {
             get
             {
-                return m_SrcIdx;
+                return m_NewOccuipiedPoints;
             }
 
             set
             {
-                m_SrcIdx = value;
+                m_NewOccuipiedPoints = value;
             }
         }
 
-        public SquareIndex DestIdx
+        public List<PointAndHolder> NewEmptyPoints
         {
             get
             {
-                return m_DestIdx;
+                return m_NewEmptyPoints;
             }
 
             set
             {
-                m_DestIdx = value;
+                m_NewEmptyPoints = value;
             }
         }
 
-        public SquareIndex EatedSquareIdx
+        public void AddNewEmptyPoint(SquareIndex i_SqrIdx)
         {
-            get
-            {
-                return m_EatedSquareIdx;
-            }
+            PointAndHolder newEmptyPoint = new PointAndHolder(i_SqrIdx, Player.ePlayerRecognition.None);
 
-            set
-            {
-                m_EatedSquareIdx = value;
-            }
+            m_NewEmptyPoints.Add(newEmptyPoint);
         }
+
+        public void AddNewOccuipiedPoint(SquareIndex i_SqrIdx, Player.ePlayerRecognition i_PlayerRecognition)
+        {
+            PointAndHolder newOccuipiedPoint = new PointAndHolder(i_SqrIdx, i_PlayerRecognition);
+
+            m_NewOccuipiedPoints.Add(newOccuipiedPoint);
+        }
+    
     }
 }

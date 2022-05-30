@@ -26,8 +26,6 @@ namespace CheckersGame
         private eMoveType m_MoveType;
         private bool m_OnlyEatingMoveIsValid;
 
-        public event EventHandler MoveExecuted;
-
         public MoveManager()
         {
             m_SrcIdx = new SquareIndex();
@@ -619,19 +617,7 @@ namespace CheckersGame
             {
                 EatingMoveProcedure(io_Board);
             }
-
-            /// MoveExecutedEventArgs XXX = 
-            /// OnMoveExecuted(XXX)
-            /// Report BoardUpdated.
         }
-
-      /*  protected virtual void OnMoveExecuted(MoveExecutedEventArgs i_MUEventArgs)
-        {
-            if (!=null)
-            {
-                MoveExecuted.Invoke(this, i_MUEventArgs);
-            }
-        }*/
 
         public bool EatingMoveOccurred()
         {
@@ -697,8 +683,9 @@ namespace CheckersGame
             }
         }
 
-        public void ReachedLastLineValidationAndUpdate(Board io_Board, Player i_CurrPlayer)
+        public bool ReachedLastLineValidationAndUpdate(Board io_Board, Player i_CurrPlayer)
         {
+            bool anyReachedLastLine;
             bool firstPlayerReachedLastLine;
             bool secondPlayerReachedLastLine;
 
@@ -706,8 +693,17 @@ namespace CheckersGame
             secondPlayerReachedLastLine = SecondPlayerReachedLastLineValidation(i_CurrPlayer);
             if (firstPlayerReachedLastLine || secondPlayerReachedLastLine)
             {
+                anyReachedLastLine = true;
                 io_Board[m_DestIdx].DiscType = i_CurrPlayer.KingDiscType;
             }
+
+            else
+            {
+                anyReachedLastLine = false;
+            }
+
+            return anyReachedLastLine;
+
         }
 
         public bool FirstPlayerReachedLastLineValidation(Player i_CurrPlayer, Board i_Board)

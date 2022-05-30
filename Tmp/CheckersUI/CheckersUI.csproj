@@ -57,7 +57,6 @@
       <DependentUpon>FormGame.cs</DependentUpon>
     </Compile>
     <Compile Include="MovementEventArgs.cs" />
-    <Compile Include="PictureBoxClickedEventArgs.cs" />
     <Compile Include="PictureBoxSquare.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -68,7 +67,6 @@
     </Compile>
     <Compile Include="RawMoveInputManager.cs" />
     <Compile Include="IOManager.cs" />
-    <Compile Include="GameDetails.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +123,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Start-checkers.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackPiece.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RedPiece.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

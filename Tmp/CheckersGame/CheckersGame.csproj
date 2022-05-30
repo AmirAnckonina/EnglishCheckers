@@ -36,14 +36,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
+    <Compile Include="GameInitializedEventArgs.cs" />
     <Compile Include="GameOverEventArgs.cs" />
     <Compile Include="MoveExecutedEventArgs.cs" />
     <Compile Include="MoveManager.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PointAndHolder.cs" />
     <Compile Include="PotentialMove.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="SquareIndex.cs" />
     <Compile Include="GameLogic.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

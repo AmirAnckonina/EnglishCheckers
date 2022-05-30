@@ -11,7 +11,7 @@ namespace CheckersUI
     public class Program
     {
         public static void Main()
-        {
+       {
             GameManager gameConsoleUI = new GameManager();
 
             gameConsoleUI.Run();

@@ -4,17 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
+using CheckersGame;
 
 namespace CheckersUI
 {
     public class PictureBoxSquare : PictureBox
     {
         private Point m_PictureBoxSqrIdx;
+        private Player.ePlayerRecognition m_SquareHolder;
 
         public PictureBoxSquare(int i_RowIdx, int i_ColIdx)
         {
             InitializeComponent();
-            m_PictureBoxSqrIdx = new Point(i_RowIdx, i_ColIdx);
+            m_PictureBoxSqrIdx = new Point(i_ColIdx, i_RowIdx);
+            m_SquareHolder = Player.ePlayerRecognition.None;
+            this.SizeMode = PictureBoxSizeMode.StretchImage;
+        }
+
+        public bool IsOccuipied
+        {
+            get
+            {
+                return this.Image != null;
+            }
+        }
+
+        public Player.ePlayerRecognition SquareHolder
+        {
+            get
+            {
+                return m_SquareHolder;
+            }
         }
 
         public Point PictureBoxSqrIdx
@@ -59,17 +79,26 @@ namespace CheckersUI
             this.Location = locationToSet;
         }
 
-        /*protected override void OnClick(EventArgs e)
+        public void UpdatePicBoxSquare(PointAndHolder i_PointAndHolder)
         {
-            ///PictureBoxClickedEventArgs picBoxEventArgs = new PictureBoxClickedEventArgs(m_PictureBoxSqrIdx);
-            /// Add effect of pressed square
-            /// 
-            //this.BorderStyle = BorderStyle.Fixed3D;
-            if (PictureBoxSquareClicked != null)
+            if (i_PointAndHolder.PlayerRecognition == Player.ePlayerRecognition.FirstPlayer)
             {
-                PictureBoxSquareClicked.Invoke(this, e);
-            *//*}
-        }*/
+                this.Image = Properties.Resources.BlackPiece;
+            }
+
+            else if (i_PointAndHolder.PlayerRecognition == Player.ePlayerRecognition.SecondPlayer)
+            {
+                this.Image = Properties.Resources.RedPiece;
+            }
+
+            else /// == None
+            {
+                this.Image = null;
+            }
+
+            m_SquareHolder = i_PointAndHolder.PlayerRecognition;
+            /// this.SizeMode = PictureBoxSizeMode.StretchImage; 
+        }
 
         private void InitializeComponent()
         {
@@ -80,7 +109,7 @@ namespace CheckersUI
             // 
             this.BackgroundImage = global::CheckersUI.Properties.Resources.EmptyInvalidSquare;
             this.InitialImage = null;
-            this.Size = new System.Drawing.Size(50, 50);
+            this.Size = new System.Drawing.Size(60, 60);
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
         }
