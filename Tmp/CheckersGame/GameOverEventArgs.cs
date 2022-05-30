@@ -10,13 +10,11 @@ namespace CheckersGame
 
         GameLogic.eGameResult m_GameResult;
         int m_WinnerScors;
-        bool m_AnotherGame;
 
-        public GameOverEventArgs(GameLogic.eGameResult i_GameResult,int i_WinnerScors,bool i_AnotherGame)
+        public GameOverEventArgs(GameLogic.eGameResult i_GameResult, int i_WinnerPlayerScore)
         {
             m_GameResult = i_GameResult;
-            m_WinnerScors = i_WinnerScors;
-            m_AnotherGame = i_AnotherGame;
+            m_WinnerScors = i_WinnerPlayerScore;
         }
 
         public GameLogic.eGameResult GameResult
@@ -32,7 +30,7 @@ namespace CheckersGame
             }
         }
 
-        public int WinnerScors
+        public int WinnerPlayerScore
         {
             get
             {
@@ -44,19 +42,5 @@ namespace CheckersGame
                 m_WinnerScors = value;
             }
         }
-
-        public bool AnotherGame
-        {
-            get
-            {
-                return m_AnotherGame;
-            }
-
-            set
-            {
-                m_AnotherGame = value;
-            }
-        }
-
     }
 }

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing;
 using CheckersGame; 
 
 namespace CheckersUI
@@ -19,28 +19,41 @@ namespace CheckersUI
             TwoPicBoxClicked
         }
 
-
-        private PictureBoxSquare[,] m_pictureBoxSquareMatrix;
+        private PictureBoxSquare[,] m_PicBoxSqrMatrix;
         private PictureBoxSquare m_SrcPicBox;
         private PictureBoxSquare m_DestPicBox;
         private FormSetup r_FormSetup;
-        private GameDetailsFilledEventArgs m_GameDetailsEventArgs;
-        private Label m_labelPlayer1NameAndScore;
-        private Label m_labelPlayer2NameAndScore;
+        private Label m_LabelPlayer1NameAndScore;
+        private Label m_LabelPlayer2NameAndScore;
         private ePicBoxClickStage m_PicBoxClickStage;
+        private Player.ePlayerRecognition m_CurrentPlayerRecognition;
         /// private MovementEventArgs m_MovementEventArgs;
 
         public event EventHandler GameDetailsFilled;
-        public event EventHandler MoveEntered;
+        public event EventHandler PotentialMoveEntered;
 
         public FormGame()
         {
             r_FormSetup = new FormSetup();    
-            m_labelPlayer1NameAndScore = new Label();
-            m_labelPlayer2NameAndScore = new Label();
-            m_PicBoxClickStage = ePicBoxClickStage.NoneClicked;
             InitializeComponent();
+            m_LabelPlayer1NameAndScore = new Label();
+            m_LabelPlayer2NameAndScore = new Label();
+            m_CurrentPlayerRecognition = Player.ePlayerRecognition.None;
+            m_PicBoxClickStage = ePicBoxClickStage.NoneClicked;
             this.StartPosition = FormStartPosition.CenterScreen;
+        }
+
+        public Player.ePlayerRecognition CurrentPlayerRecognition
+        {
+            get
+            {
+                return m_CurrentPlayerRecognition;
+            }
+
+            set
+            {
+                m_CurrentPlayerRecognition = value;
+            }
         }
 
         private void FormGame_Load(object sender, EventArgs e)
@@ -52,15 +65,32 @@ namespace CheckersUI
 
         private void r_FormSetup_FormClosed(object sender, FormClosedEventArgs e)
         {
-            /// Retrieve / Set Game Details.
-            /// 
+            GameDetailsFilledEventArgs gameDetailsParams;
+
+            HandleEmptyNames();
+            gameDetailsParams = new GameDetailsFilledEventArgs(
+                r_FormSetup.Player1Name,
+                r_FormSetup.Player2Name,
+                r_FormSetup.BoardSize,
+                r_FormSetup.Player2IsHuman
+                );
+
+            m_PicBoxSqrMatrix = new PictureBoxSquare[r_FormSetup.BoardSize, r_FormSetup.BoardSize];
+            SetAdaptableFormGame();
+            SetPlayersLabels();
+            InitPictureBoxSquareMatrix();
+            OnGameDetailsFilled(gameDetailsParams);
+        }
+
+        private void HandleEmptyNames()
+        {
             if (string.IsNullOrEmpty(r_FormSetup.Player1Name))
             {
                 r_FormSetup.Player1Name = "Player 1";
             }
 
             /// <----------------------------------------------------------->
-           
+
             if (!r_FormSetup.Player2IsHuman)
             {
                 r_FormSetup.Player2Name = "Computer";
@@ -70,22 +100,6 @@ namespace CheckersUI
             {
                 r_FormSetup.Player2Name = "Player 2";
             }
-
-            /// <----------------------------------------------------------->
-            
-
-            m_GameDetailsEventArgs = new GameDetailsFilledEventArgs(
-                r_FormSetup.Player1Name,
-                r_FormSetup.Player2Name,
-                r_FormSetup.BoardSize,
-                r_FormSetup.Player2IsHuman
-                );
-
-            
-            m_pictureBoxSquareMatrix = new PictureBoxSquare[r_FormSetup.BoardSize, r_FormSetup.BoardSize];
-            SetAdaptableFormGame();        
-            InitPictureBoxSquareMatrix();
-            OnGameDetailsFilled();
         }
 
         private void SetAdaptableFormGame()
@@ -96,14 +110,16 @@ namespace CheckersUI
 
         private void SetPlayersLabels()
         {
-            Point player1Position = new Point(this.Bottom - 20, this.Left + 20);
-            Point player2Position = new Point(this.Bottom - 20, this.Right - 20);
+            Point player1Position = new Point(this.Left + 20, this.Bottom - 20);
+            Point player2Position = new Point(this.Right - 20, this.Bottom - 20);
 
-            m_labelPlayer1NameAndScore.Location = player1Position;
-            m_labelPlayer2NameAndScore.Location = player2Position;
-            m_labelPlayer1NameAndScore.Text = r_FormSetup.Player1Name;
-            m_labelPlayer2NameAndScore.Text = r_FormSetup.Player2Name;
+            m_LabelPlayer1NameAndScore.Location = player1Position;
+            m_LabelPlayer2NameAndScore.Location = player2Position;
+            m_LabelPlayer1NameAndScore.Text = r_FormSetup.Player1Name;
+            m_LabelPlayer2NameAndScore.Text = r_FormSetup.Player2Name;
 
+            this.Controls.Add(m_LabelPlayer1NameAndScore);
+            this.Controls.Add(m_LabelPlayer2NameAndScore);
         }
 
         private void SetFormGameDimensions()
@@ -123,8 +139,8 @@ namespace CheckersUI
                     currentPictureBoxSquare = new PictureBoxSquare(rowIdx, colIdx);
                     currentPictureBoxSquare.SetSquare();
                     currentPictureBoxSquare.Click += CurrentPictureBoxSquare_Click;
-                    ///newPicBoxSqr.SetLocation();
 
+                    m_PicBoxSqrMatrix[rowIdx, colIdx] = currentPictureBoxSquare;
                     this.Controls.Add(currentPictureBoxSquare);
                 }
             }
@@ -134,7 +150,7 @@ namespace CheckersUI
         {
             PictureBoxSquare currentPicBoxSqr = sender as PictureBoxSquare;
 
-            if (currentPicBoxSqr != null) /// Valid Object
+            if (currentPicBoxSqr != null) /// Valid and OccuipiedObject
             {
                 PreMovementReportPicBoxParamsUpdate(currentPicBoxSqr); /// Update Src and Dst PicBox, as well as Movement status
                 if (m_PicBoxClickStage == ePicBoxClickStage.TwoPicBoxClicked) /// A second clicked received
@@ -154,18 +170,18 @@ namespace CheckersUI
                     PostMovementReportPicBoxParamsUpdate();
                 }
 
-                else /// Only onePicBox Clicked
+                else if (m_PicBoxClickStage == ePicBoxClickStage.OnePicBoxClicked && currentPicBoxSqr.SquareHolder == m_CurrentPlayerRecognition)
                 {
                     m_SrcPicBox.BorderStyle = BorderStyle.Fixed3D;
                 }
             }
         }
 
-        protected virtual void OnMoveEntered(MovementEventArgs i_MovementParams)
+        protected virtual void OnPotentialMoveEntered(MovementEventArgs i_MovementParams)
         {
-            if (MoveEntered != null)
+            if (PotentialMoveEntered != null)
             {
-                MoveEntered.Invoke(this, i_MovementParams);
+                PotentialMoveEntered.Invoke(this, i_MovementParams);
             }
         }
 
@@ -183,13 +199,12 @@ namespace CheckersUI
 
             movementParams.Movement.SrcIdx = potentialSrcIdx;
             movementParams.Movement.DestIdx = potentialDestIdx;
-            OnMoveEntered(movementParams);
+            OnPotentialMoveEntered(movementParams);
         }
 
         private void PreMovementReportPicBoxParamsUpdate(PictureBoxSquare i_CurrPicBoxSqr)
         {
-
-            if (m_PicBoxClickStage == ePicBoxClickStage.NoneClicked)
+            if (m_PicBoxClickStage == ePicBoxClickStage.NoneClicked && i_CurrPicBoxSqr.SquareHolder == m_CurrentPlayerRecognition)
             {
                 m_PicBoxClickStage = ePicBoxClickStage.OnePicBoxClicked;
                 m_SrcPicBox = i_CurrPicBoxSqr;
@@ -210,11 +225,32 @@ namespace CheckersUI
             m_SrcPicBox = m_DestPicBox = null;
         }
 
-        protected virtual void OnGameDetailsFilled()
+        protected virtual void OnGameDetailsFilled(GameDetailsFilledEventArgs i_GDEventArgs)
         {
             if (GameDetailsFilled != null)
             {
-                GameDetailsFilled(this, m_GameDetailsEventArgs);
+                GameDetailsFilled(this, i_GDEventArgs);
+            }
+        }
+
+        public void AddDiscsToPictureBoxSquareMatrix(List<PointAndHolder> i_PointsToAddDiscs)
+        {
+            foreach(PointAndHolder currPoint in i_PointsToAddDiscs)
+            {
+                m_PicBoxSqrMatrix[currPoint.PointOnBoard.Y, currPoint.PointOnBoard.X].UpdatePicBoxSquare(currPoint);
+            }
+        }
+        
+        public void PostMoveUpdatePicBoxSqrMatrix(List<PointAndHolder> i_NewOccuipiedPoints, List<PointAndHolder> i_NewEmptyPoints)
+        {
+            foreach (PointAndHolder newOccuipied in i_NewOccuipiedPoints)
+            {
+                m_PicBoxSqrMatrix[newOccuipied.PointOnBoard.Y, newOccuipied.PointOnBoard.X].UpdatePicBoxSquare(newOccuipied);
+            }
+
+            foreach (PointAndHolder newEmpty in i_NewEmptyPoints)
+            {
+                m_PicBoxSqrMatrix[newEmpty.PointOnBoard.Y, newEmpty.PointOnBoard.X].UpdatePicBoxSquare(newEmpty);
             }
         }
 
