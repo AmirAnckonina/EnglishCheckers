@@ -745,7 +745,8 @@ namespace CheckersGame
             bool simpleMoveIsPossible;
             bool simpleMoveForwardIsPossible;
 
-            m_SrcIdx.CopySquareIndices(i_SquareIndex);
+            m_SrcIdx = i_SquareIndex;
+            ///m_SrcIdx.CopySquareIndices(i_SquareIndex);
             simpleMoveForwardIsPossible = AnySimpleForwardMovePossibilityCheck(i_Board, i_CurrPlayer);
             if (simpleMoveForwardIsPossible)
             {
@@ -884,7 +885,8 @@ namespace CheckersGame
             bool eatingMoveIsPossible;
             bool eatingMoveForwardIsPossible;
 
-            m_SrcIdx.CopySquareIndices(i_PotentialSourceSquareIndex);
+            m_SrcIdx = i_PotentialSourceSquareIndex;
+           /// m_SrcIdx.CopySquareIndices(i_PotentialSourceSquareIndex);
             eatingMoveForwardIsPossible = AnyEatingForwardMovePossibilityCheck(i_Board, i_CurrPlayer);
             if (eatingMoveForwardIsPossible)
             {
