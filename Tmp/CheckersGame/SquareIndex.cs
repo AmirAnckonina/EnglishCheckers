@@ -52,10 +52,10 @@ namespace CheckersGame
             m_ColumnIdx = i_NewColumnIndex;
         }
 
-        public void CopySquareIndices(SquareIndex i_OtherSquareIndex)
-        {
-            m_RowIdx = i_OtherSquareIndex.RowIdx;
-            m_ColumnIdx = i_OtherSquareIndex.ColumnIdx;
-        }
+        //public void CopySquareIndices(SquareIndex i_OtherSquareIndex)
+        //{
+        //    m_RowIdx = i_OtherSquareIndex.RowIdx;
+        //    m_ColumnIdx = i_OtherSquareIndex.ColumnIdx;
+        //}
     }
 }

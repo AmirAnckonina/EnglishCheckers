@@ -342,7 +342,7 @@ namespace CheckersGame
             }
         }
 
-        public void GenerateAndLoadNewRandomEatingMove()
+        private void GenerateAndLoadNewRandomEatingMove()
         {
             bool isValidEatingMove;
             int generatedIndexFromList;
@@ -362,7 +362,7 @@ namespace CheckersGame
             }
         }
 
-        public void GenerateAndLoadNewRandomSimpleMove()
+        private void GenerateAndLoadNewRandomSimpleMove()
         {
             bool isValidEatingMove;
             int generatedIndexFromList;
@@ -476,13 +476,14 @@ namespace CheckersGame
             }
         }
 
-        public bool RecurringTurnPossibilityValidation() 
+        private bool RecurringTurnPossibilityValidation() 
         {
             bool recurringTurnIsPossible;
 
             if (r_MoveManager.EatingMoveOccurred() && r_MoveManager.RecurringTurnPossibiltyCheck(r_MoveManager.DestIdx ,m_Board, m_CurrentPlayer))
             {
-                r_MoveManager.RecurringTurnNewSrcIdx.CopySquareIndices(r_MoveManager.SrcIdx);
+                r_MoveManager.RecurringTurnNewSrcIdx = r_MoveManager.SrcIdx;
+                ///r_MoveManager.RecurringTurnNewSrcIdx.CopySquareIndices(r_MoveManager.SrcIdx);
                 recurringTurnIsPossible = true;
                 m_IsRecurringTurn = true;
                 /// OnRecurringTurn();
@@ -497,7 +498,7 @@ namespace CheckersGame
             return recurringTurnIsPossible;
         }
 
-        public void SwitchTurn()
+        private void SwitchTurn()
         {
             if (FirstPlayer == CurrentPlayer) 
             {
@@ -522,7 +523,7 @@ namespace CheckersGame
             }
         }
 
-        public bool GameOverCheck()
+        private bool GameOverCheck()
         {
             bool isGameOver;
 
@@ -554,7 +555,7 @@ namespace CheckersGame
             return isGameOver;
         }
 
-        public void SaveSingleGameResult(Player.ePlayerRecognition i_WinnerPlayerRecognition)
+        private void SaveSingleGameResult(Player.ePlayerRecognition i_WinnerPlayerRecognition)
         {
             if (i_WinnerPlayerRecognition == Player.ePlayerRecognition.FirstPlayer)
             {
@@ -572,7 +573,7 @@ namespace CheckersGame
             }
         }
 
-        public bool PlayerMovementPossibilityCheck(Player i_Player)
+        private bool PlayerMovementPossibilityCheck(Player i_Player)
         {
             bool playerAbleToMove; 
 
@@ -621,7 +622,7 @@ namespace CheckersGame
             return playerCanMakeEatingMove;
         }
 
-        public void ScoreCalculationAndUpdate()
+        private void ScoreCalculationAndUpdate()
         {
             int singleGameScore;
             int firstPlayerTotalDiscValues;
