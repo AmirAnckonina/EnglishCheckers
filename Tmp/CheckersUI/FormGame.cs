@@ -111,6 +111,7 @@ namespace CheckersUI
             Point pointToUpdate = SquareIndexPointConverter.SquareIndexToPoint(i_Square.SquareIndex);
 
             m_PicBoxSqrMatrix[pointToUpdate.Y, pointToUpdate.X].UpdatePicBoxSquare(i_Square);
+            this.Update();
         }
 
         private void HandleEmptyNames()
@@ -301,9 +302,11 @@ namespace CheckersUI
                 pointToUpdate = SquareIndexPointConverter.SquareIndexToPoint(currSqr.SquareIndex);
                 m_PicBoxSqrMatrix[pointToUpdate.Y, pointToUpdate.X].UpdatePicBoxSquare(currSqr);
             }
+
+            this.Update();
         }
         
-        public void PostMoveUpdatePicBoxSqrMatrix(List<Square> i_NewOccuipiedPoints, List<Square> i_NewEmptyPoints)
+        public void PostGameLogicMoveUpdatePicBoxSqrMatrix(List<Square> i_NewOccuipiedPoints, List<Square> i_NewEmptyPoints)
         {
             Point pointToUpdate;
 
@@ -318,6 +321,18 @@ namespace CheckersUI
                 pointToUpdate = SquareIndexPointConverter.SquareIndexToPoint(newEmptySqr.SquareIndex);
                 m_PicBoxSqrMatrix[pointToUpdate.Y, pointToUpdate.X].UpdatePicBoxSquare(newEmptySqr);
             }
+
+            UpdatePicBoxMatrixDisplay();
+        }
+
+        private void UpdatePicBoxMatrixDisplay()
+        {
+            if (m_CurrentPlayerRecognition == Player.ePlayerRecognition.SecondPlayer && !r_FormSetup.Player2IsHuman)
+            {
+                System.Threading.Thread.Sleep(600);
+            }
+
+            this.Update();
         }
 
         public void CreateYesNoMessageBox(string i_GameResultMessage)

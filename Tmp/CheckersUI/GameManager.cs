@@ -31,6 +31,16 @@ namespace CheckersUI
             m_FormGame.PlayAnotherGameAnswered += m_FormGame_PlayAnotherGameAnswered;
         }
 
+        private void RegisterLogicEvents()
+        {
+            r_GameLogicUnit.MoveExecuted += r_GameLogicUnit_MoveExecuted;
+            r_GameLogicUnit.SingleGameInitialized += r_GameLogicUnit_SingleGameInitialized;
+            r_GameLogicUnit.TurnSwitched += r_GameLogicUnit_TurnSwitched;
+            r_GameLogicUnit.SingleGameOver += r_GameLogicUnit_SingleGameOver;
+            r_GameLogicUnit.InvalidMoveInserted += r_GameLogicUnit_InvalidMoveInserted;
+            r_GameLogicUnit.CurrPlayerReachedLastLine += r_GameLogicUnit_CurrPlayerReachedLastLine;
+        }
+
         private void m_FormGame_PlayAnotherGameAnswered(object sender, EventArgs e)
         {
             PlayAnotherGameAnsweredEventArgs playAnotherGameAnsweredParams = e as PlayAnotherGameAnsweredEventArgs;
@@ -43,16 +53,6 @@ namespace CheckersUI
                     r_GameLogicUnit.ResetObjectsBetweenSessions();
                 }
             }
-        }
-
-        private void RegisterLogicEvents()
-        {
-            r_GameLogicUnit.MoveExecuted += r_GameLogicUnit_MoveExecuted;
-            r_GameLogicUnit.SingleGameInitialized += r_GameLogicUnit_SingleGameInitialized;
-            r_GameLogicUnit.TurnSwitched += r_GameLogicUnit_TurnSwitched;
-            r_GameLogicUnit.SingleGameOver += r_GameLogicUnit_SingleGameOver;
-            r_GameLogicUnit.InvalidMoveInserted += r_GameLogicUnit_InvalidMoveInserted;
-            r_GameLogicUnit.CurrPlayerReachedLastLine += r_GameLogicUnit_CurrPlayerReachedLastLine;
         }
 
         private void r_GameLogicUnit_CurrPlayerReachedLastLine(object sender, EventArgs e)
@@ -71,7 +71,7 @@ namespace CheckersUI
 
             if (moveExecutedParams != null)
             { 
-                m_FormGame.PostMoveUpdatePicBoxSqrMatrix(
+                m_FormGame.PostGameLogicMoveUpdatePicBoxSqrMatrix(
                     moveExecutedParams.NewOccuipiedSquares,
                     moveExecutedParams.NewEmptySquares
                     );
@@ -83,16 +83,6 @@ namespace CheckersUI
             m_FormGame.ShowInvalidMoveMessage();
         }
 
-        private void r_GameLogicUnit_RecurringTurn(object sender, EventArgs e)
-        {
-            GameLogic gameLogicUnitObj = sender as GameLogic;
-
-            if (gameLogicUnitObj != null)
-            {
-                /// CurrentPlayerMoveProcedure();
-            }
-        }
-
         private void r_GameLogicUnit_TurnSwitched(object sender, EventArgs e)
         {
             GameLogic gameLogicUnitObj = sender as GameLogic;
@@ -101,25 +91,7 @@ namespace CheckersUI
             {
                 m_FormGame.CurrentPlayerRecognition = gameLogicUnitObj.CurrentPlayer.PlayerRecognition;
                 m_FormGame.MarkCurrentPlayerLabel();
-                if (gameLogicUnitObj.CurrentPlayer.PlayerType == Player.ePlayerType.Computer)
-                {
-                    ComputerPlayerMoveProcedure();
-                    /// System.Threading.Thread.Sleep(2000);
-                }
             }
-        }
-
-        private void ComputerPlayerMoveProcedure()
-        {
-            PotentialMove newComputerMove;
-
-            r_GameLogicUnit.CurrentPlayerAnyEatingMovePossibilityCheck();
-            r_GameLogicUnit.GenerateAndLoadNewPotentialMove();
-            newComputerMove = new PotentialMove(
-                r_GameLogicUnit.MoveManager.SrcIdx,
-                r_GameLogicUnit.MoveManager.DestIdx
-                ); 
-            CurrentPlayerMoveProcedure(newComputerMove);
         }
 
         private void m_FormGame_PotentialMoveEntered(object sender, EventArgs e)
@@ -128,9 +100,7 @@ namespace CheckersUI
 
             if (movementParams != null)
             {
-                /// In this stage should be recurring turn == false
-                r_GameLogicUnit.CurrentPlayerAnyEatingMovePossibilityCheck();
-                CurrentPlayerMoveProcedure(movementParams.Movement);
+                r_GameLogicUnit.MoveProcedure(movementParams.Movement);
             }
         }
 
@@ -162,18 +132,7 @@ namespace CheckersUI
             if (gameOverParams != null)
             {
                 m_FormGame.CreateYesNoMessageBox(gameOverParams.GameResultMessage);
-                /// MessageBox
                 /// Update m_FormGame Lables
-            }
-        }
-
-        private void CurrentPlayerMoveProcedure(PotentialMove i_PotentialMove)
-        {
-            r_GameLogicUnit.LoadSpecificNewPotentialMove(i_PotentialMove);
-            if (r_GameLogicUnit.MoveValidationProcedure()) // If and only if is valid
-            {
-                r_GameLogicUnit.ExecuteMoveProcedure();
-                r_GameLogicUnit.PostMoveProcedure();
             }
         }
     }

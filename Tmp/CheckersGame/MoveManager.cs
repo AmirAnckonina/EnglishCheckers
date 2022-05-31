@@ -1020,7 +1020,7 @@ namespace CheckersGame
             return eatingSouthWestIsPossible;
         }
 
-        private bool RecurringTurnMoveValidation(Board i_Board, Player i_CurrPlayer)
+        public bool RecurringTurnMoveValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool recurringTurnMoveIsValid;
             bool srcAndDestBasicallyValid;

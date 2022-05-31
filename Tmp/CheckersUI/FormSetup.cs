@@ -150,7 +150,7 @@ namespace CheckersUI
             else /// Unchecked
             {
                 textBoxPlayer2Name.BackColor = System.Drawing.SystemColors.MenuBar;
-                textBoxPlayer2Name.Text = null;
+                textBoxPlayer2Name.Text = "[Computer]";
             }
         }
 

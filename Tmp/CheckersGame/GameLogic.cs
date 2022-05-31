@@ -261,13 +261,49 @@ namespace CheckersGame
             }
         }
 
-        public bool MoveValidationProcedure()
+        public void MoveProcedure(PotentialMove i_PotentialMove)
         {
-            bool validMove = r_MoveManager.MoveValidation(m_Board, m_CurrentPlayer);
+            CurrentPlayerAnyEatingMovePossibilityCheck();
+            LoadSpecificNewPotentialMove(i_PotentialMove);
+            CompleteMoveProcedure();
+        }
 
-            if (!validMove)
+        public void ComputerPlayerMoveProcedure()
+        {
+            CurrentPlayerAnyEatingMovePossibilityCheck();
+            GenerateAndLoadNewPotentialMove();
+            CompleteMoveProcedure();
+        }
+
+        private void CompleteMoveProcedure()
+        {
+            bool validMove;
+
+            validMove = MoveValidationProcedure();
+            if (validMove) // If and only if is valid
+            {
+                ExecuteMoveProcedure();
+                PostMoveProcedure();
+            }
+
+            else
             {
                 OnInvalidMoveInserted();
+            }
+        }
+
+        public bool MoveValidationProcedure()
+        {
+            bool validMove;
+            
+            if (!m_IsRecurringTurn)
+            {
+                validMove = r_MoveManager.MoveValidation(m_Board, m_CurrentPlayer);
+            }
+
+            else
+            {
+                validMove = r_MoveManager.RecurringTurnMoveValidation(m_Board, m_CurrentPlayer);
             }
 
             return validMove;
@@ -387,10 +423,18 @@ namespace CheckersGame
             ReachedLastLineProcedure();
             PostEatingMoveProcedure();
             m_CurrentPlayer.UpdateCurrentHoldingSquareIndices(r_MoveManager.SrcIdx, r_MoveManager.DestIdx);
-            if (!RecurringTurnPossibilityValidation())
+            if (!RecurringTurnPossibilityValidationAndUpdate())
             {
                 NonRecurringTurnProcedure();
             }
+
+            if (m_CurrentPlayer.PlayerType == Player.ePlayerType.Computer)
+            {
+                ComputerPlayerMoveProcedure();
+            }
+
+            /// else, we are waiting for an input, but the params are update in MoveManager.
+
         }
 
         private void NonRecurringTurnProcedure()
@@ -476,14 +520,13 @@ namespace CheckersGame
             }
         }
 
-        private bool RecurringTurnPossibilityValidation() 
+        private bool RecurringTurnPossibilityValidationAndUpdate() 
         {
             bool recurringTurnIsPossible;
 
             if (r_MoveManager.EatingMoveOccurred() && r_MoveManager.RecurringTurnPossibiltyCheck(r_MoveManager.DestIdx ,m_Board, m_CurrentPlayer))
             {
                 r_MoveManager.RecurringTurnNewSrcIdx = r_MoveManager.SrcIdx;
-                ///r_MoveManager.RecurringTurnNewSrcIdx.CopySquareIndices(r_MoveManager.SrcIdx);
                 recurringTurnIsPossible = true;
                 m_IsRecurringTurn = true;
                 /// OnRecurringTurn();
