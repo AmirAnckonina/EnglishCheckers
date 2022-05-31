@@ -57,7 +57,7 @@ namespace CheckersGame
             }
         }
 
-        public void AssignSquareObjectsInBoard()
+        private void AssignSquareObjectsInBoard()
         {
             int rowIndex, columnIndex;
 
@@ -90,7 +90,7 @@ namespace CheckersGame
             }
         }
 
-        public void InitializeLineInBoard(int i_RowIndex, GameLogic.eDiscType i_DiscType, Player.ePlayerRecognition i_CurrLineSquaresHolder)
+        private void InitializeLineInBoard(int i_RowIndex, GameLogic.eDiscType i_DiscType, Player.ePlayerRecognition i_CurrLineSquaresHolder)
         {
            int squareIndicesParityCalculationResult;
 
@@ -168,7 +168,7 @@ namespace CheckersGame
             return isSquareExist;
         }
 
-        public bool RowIndexExistenceValidation(int i_RowIndex)
+        private bool RowIndexExistenceValidation(int i_RowIndex)
         {
             bool isRowIndexExist;
 
@@ -185,7 +185,7 @@ namespace CheckersGame
             return isRowIndexExist;
         }
 
-        public bool ColumnIndexExistenceValidation(int i_ColumnIndex)
+        private bool ColumnIndexExistenceValidation(int i_ColumnIndex)
         {
             bool isColumnIndexExist;
 

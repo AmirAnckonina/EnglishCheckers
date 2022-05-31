@@ -23,7 +23,6 @@ namespace CheckersUI
             m_Movement = new PotentialMove(srcSqrIdx, destSqrIdx);
         }
 
-
         public PotentialMove Movement
         {
             get

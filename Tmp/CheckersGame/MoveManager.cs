@@ -152,7 +152,7 @@ namespace CheckersGame
             return moveIsValid;
         }
 
-        public bool IndicesDifferencesValidationAndSetup(out int o_IndicesDifference)
+        private bool IndicesDifferencesValidationAndSetup(out int o_IndicesDifference)
         {
             bool indicesDifferencesAreValid;
             int rowIndicesDifference;
@@ -175,7 +175,7 @@ namespace CheckersGame
             return indicesDifferencesAreValid;
         }
 
-        public int CalculateRowIndicesDifference()
+        private int CalculateRowIndicesDifference()
         {
             int rowIndicesDifferenceResult;
 
@@ -184,7 +184,7 @@ namespace CheckersGame
             return rowIndicesDifferenceResult;
         }
 
-        public int CalculateColumnIndicesDifference()
+        private int CalculateColumnIndicesDifference()
         {
             int columnIndicesDifferenceResult;
 
@@ -193,7 +193,7 @@ namespace CheckersGame
             return columnIndicesDifferenceResult;
         }
 
-        public bool SimpleMoveValidation(Board i_Board, Player i_CurrPlayer)
+        private bool SimpleMoveValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool simpleMoveIsValid;
             bool simpleMoveForwardIsValid;
@@ -219,7 +219,7 @@ namespace CheckersGame
             return simpleMoveIsValid;
         }
 
-        public bool SimpleForwardMoveValidation(Player i_CurrPlayer)
+        private bool SimpleForwardMoveValidation(Player i_CurrPlayer)
         {
             bool simpleMoveForwardIsValid;
 
@@ -236,7 +236,7 @@ namespace CheckersGame
             return simpleMoveForwardIsValid;
         }
 
-        public bool SimpleBackwardsMoveValidation(Player i_CurrPlayer)
+        private bool SimpleBackwardsMoveValidation(Player i_CurrPlayer)
         {
             bool simpleMoveBackwardsIsValid;
 
@@ -253,7 +253,7 @@ namespace CheckersGame
             return simpleMoveBackwardsIsValid;
         }
 
-        public bool SimpleNorthEastMoveValidation()
+        private bool SimpleNorthEastMoveValidation()
         {
             bool simpleNorthEastMoveIsValid;
             SquareIndex northEastSquareIndex = new SquareIndex(m_SrcIdx.RowIdx - 1, m_SrcIdx.ColumnIdx + 1);
@@ -273,7 +273,7 @@ namespace CheckersGame
             return simpleNorthEastMoveIsValid;
         }
 
-        public bool SimpleNorthWestMoveValidation()
+        private bool SimpleNorthWestMoveValidation()
         {
             bool simpleNorthWestMoveIsValid;
             SquareIndex northWestSquareIndex = new SquareIndex(m_SrcIdx.RowIdx - 1, m_SrcIdx.ColumnIdx - 1);
@@ -293,7 +293,7 @@ namespace CheckersGame
             return simpleNorthWestMoveIsValid;
         }
 
-        public bool SimpleSouthEastMoveValidation()
+        private bool SimpleSouthEastMoveValidation()
         {
             bool simpleSouthEastMoveIsValid;
             SquareIndex southEastSquareIndex = new SquareIndex(m_SrcIdx.RowIdx + 1, m_SrcIdx.ColumnIdx + 1);
@@ -313,7 +313,7 @@ namespace CheckersGame
             return simpleSouthEastMoveIsValid;
         }
 
-        public bool SimpleSouthWestMoveValidation()
+        private bool SimpleSouthWestMoveValidation()
         {
             bool simpleSouthWestMoveIsValid;
             SquareIndex southWestSquareIndex = new SquareIndex(m_SrcIdx.RowIdx + 1, m_SrcIdx.ColumnIdx - 1);
@@ -333,7 +333,7 @@ namespace CheckersGame
             return simpleSouthWestMoveIsValid;
         }
 
-        public bool EatingMoveValidation(Board i_Board, Player i_CurrPlayer)
+        private bool EatingMoveValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingMoveIsValid;
             bool eatingMoveForwardIsValid;
@@ -358,7 +358,7 @@ namespace CheckersGame
             return eatingMoveIsValid;
         }
 
-        public bool EatingForwardMoveValidation(Board i_Board, Player i_CurrPlayer)
+        private bool EatingForwardMoveValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingMoveForwardIsValid;
 
@@ -375,7 +375,7 @@ namespace CheckersGame
             return eatingMoveForwardIsValid;
         }
 
-        public bool EatingBackwardsMoveValidation(Board i_Board, Player i_CurrPlayer)
+        private bool EatingBackwardsMoveValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingMoveBackwardsIsValid;
 
@@ -392,7 +392,7 @@ namespace CheckersGame
             return eatingMoveBackwardsIsValid;
         }
 
-        public bool EatingNorthEastMoveValidation(Board i_Board, Player i_CurrPlayer)
+        private bool EatingNorthEastMoveValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingNorthEastMoveIsValid;
             SquareIndex northEastSquareIndex = new SquareIndex(m_SrcIdx.RowIdx - 2, m_SrcIdx.ColumnIdx + 2);
@@ -423,7 +423,7 @@ namespace CheckersGame
             return eatingNorthEastMoveIsValid;
         }
 
-        public bool EatingNorthWestMoveValidation(Board i_Board, Player i_CurrPlayer)
+        private bool EatingNorthWestMoveValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingNorthWestMoveIsValid;
             SquareIndex northWestSquareIndex = new SquareIndex(m_SrcIdx.RowIdx - 2, m_SrcIdx.ColumnIdx - 2);
@@ -455,7 +455,7 @@ namespace CheckersGame
             return eatingNorthWestMoveIsValid;
         }
 
-        public bool EatingSouthEastMoveValidation(Board i_Board, Player i_CurrPlayer)
+        private bool EatingSouthEastMoveValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingSouthEastMoveIsValid;
             SquareIndex southEastSquareIndex = new SquareIndex(m_SrcIdx.RowIdx + 2, m_SrcIdx.ColumnIdx + 2);
@@ -486,7 +486,7 @@ namespace CheckersGame
             return eatingSouthEastMoveIsValid;
         }
 
-        public bool EatingSouthWestMoveValidation(Board i_Board, Player i_CurrPlayer)
+        private bool EatingSouthWestMoveValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingSouthWestMoveIsValid;
             SquareIndex southWestSquareIndex = new SquareIndex(m_SrcIdx.RowIdx + 2, m_SrcIdx.ColumnIdx - 2);
@@ -517,7 +517,7 @@ namespace CheckersGame
             return eatingSouthWestMoveIsValid;
         }
 
-        public bool SourceAndDestinationBasicValidation(Board i_Board, Player i_CurrPlayer)
+        private bool SourceAndDestinationBasicValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool srcAndDestBasicallyValid;
             bool sourceIsValid;
@@ -550,7 +550,7 @@ namespace CheckersGame
             return srcAndDestBasicallyValid;
         }
 
-        public bool IndiciesInBoardValidation(Board i_Board)
+        private bool IndiciesInBoardValidation(Board i_Board)
         {
             bool indiciesInBoard;
             bool sourceIsExist;
@@ -571,7 +571,7 @@ namespace CheckersGame
             return indiciesInBoard;
         }
 
-        public bool DestinationVacancyAndLegalityValidation(Square i_DestinationSquare)
+        private bool DestinationVacancyAndLegalityValidation(Square i_DestinationSquare)
         {
             bool destinationIsVacant;
             GameLogic.eDiscType currDestinationDiscType;
@@ -592,7 +592,7 @@ namespace CheckersGame
             return destinationIsVacant;
         }
 
-        public bool SourceValidation(Square i_SourceSquare, Player i_CurrPlayer)
+        private bool SourceValidation(Square i_SourceSquare, Player i_CurrPlayer)
         {
             bool sourceIsValid;
 
@@ -641,16 +641,16 @@ namespace CheckersGame
         }
 
         // $G$ CSS-013 (-3) Input parameters names should start with i_. why using here io_ ?
-        public void BasicMoveProcedure(Board io_Board, Player i_CurrPlayer)
+        private void BasicMoveProcedure(Board io_Board, Player i_CurrPlayer)
         {
             io_Board[m_DestIdx].DiscType = io_Board[m_SrcIdx].DiscType;
             io_Board[m_DestIdx].SquareHolder = i_CurrPlayer.PlayerRecognition;
             io_Board[m_SrcIdx].DiscType = GameLogic.eDiscType.None;
             io_Board[m_SrcIdx].SquareHolder = Player.ePlayerRecognition.None;
         }
-        
+
         // $G$ CSS-013 (-3) Input parameters names should start with i_. why using here io_ ?
-        public void EatingMoveProcedure(Board io_Board)
+        private void EatingMoveProcedure(Board io_Board)
         {
             switch (m_MoveType)
             {
@@ -706,7 +706,7 @@ namespace CheckersGame
 
         }
 
-        public bool FirstPlayerReachedLastLineValidation(Player i_CurrPlayer, Board i_Board)
+        private bool FirstPlayerReachedLastLineValidation(Player i_CurrPlayer, Board i_Board)
         {
             bool firstPlayerReachedLastLine;
 
@@ -723,7 +723,7 @@ namespace CheckersGame
             return firstPlayerReachedLastLine;
         }
 
-        public bool SecondPlayerReachedLastLineValidation(Player i_CurrPlayer)
+        private bool SecondPlayerReachedLastLineValidation(Player i_CurrPlayer)
         {
             bool secondPlayerReachedLastLine;
 
@@ -766,7 +766,7 @@ namespace CheckersGame
             return simpleMoveIsPossible;
         }
 
-        public bool AnySimpleForwardMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
+        private bool AnySimpleForwardMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
         {
             bool simpleMoveForwardIsPossible;
 
@@ -783,7 +783,7 @@ namespace CheckersGame
             return simpleMoveForwardIsPossible;
         }
 
-        public bool AnySimpleBackwardsMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
+        private bool AnySimpleBackwardsMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
         {
             bool simpleMoveBackwardsIsPossible;
 
@@ -800,7 +800,7 @@ namespace CheckersGame
             return simpleMoveBackwardsIsPossible;
         }
 
-        public bool SimpleNorthEastMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
+        private bool SimpleNorthEastMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
         {
             bool simpleNorthEastMoveIsPossible;
             bool srcAndDestAreBasicallyValid;
@@ -820,7 +820,7 @@ namespace CheckersGame
             return simpleNorthEastMoveIsPossible;
         }
 
-        public bool SimpleNorthWestMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
+        private bool SimpleNorthWestMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
         {
             bool simpleNorthWestMoveIsPossible;
             bool srcAndDestAreBasicallyValid;
@@ -840,7 +840,7 @@ namespace CheckersGame
             return simpleNorthWestMoveIsPossible;
         }
 
-        public bool SimpleSouthEastMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
+        private bool SimpleSouthEastMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
         {
             bool simpleSouthEastMoveIsPossible;
             bool srcAndDestAreBasicallyValid;
@@ -923,7 +923,7 @@ namespace CheckersGame
             return eatingMoveForwardIsPossible;
         }
 
-        public bool AnyEatingBackwardsMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
+        private bool AnyEatingBackwardsMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingMoveBackwardsIsPossible;
             if (i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Up)
@@ -939,7 +939,7 @@ namespace CheckersGame
             return eatingMoveBackwardsIsPossible;
         }
 
-        public bool EatingNorthEastMovePossibiltyCheck(Board i_Board, Player i_CurrPlayer)
+        private bool EatingNorthEastMovePossibiltyCheck(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingNorthEastIsPossible;
             bool srcAndDestAreBasicallyValid;
@@ -959,7 +959,7 @@ namespace CheckersGame
             return eatingNorthEastIsPossible;
         }
 
-        public bool EatingNorthWestMovePossibiltyCheck(Board i_Board, Player i_CurrPlayer)
+        private bool EatingNorthWestMovePossibiltyCheck(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingNorthWestIsPossible;
             bool srcAndDestAreBasicallyValid;
@@ -980,7 +980,7 @@ namespace CheckersGame
             return eatingNorthWestIsPossible;
         }
 
-        public bool EatingSouthEastMovePossibiltyCheck(Board i_Board, Player i_CurrPlayer)
+        private bool EatingSouthEastMovePossibiltyCheck(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingSouthEastIsPossible;
             bool srcAndDestAreBasicallyValid;
@@ -1000,7 +1000,7 @@ namespace CheckersGame
             return eatingSouthEastIsPossible;
         }
 
-        public bool EatingSouthWestMovePossibiltyCheck(Board i_Board, Player i_CurrPlayer)
+        private bool EatingSouthWestMovePossibiltyCheck(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingSouthWestIsPossible;
             bool srcAndDestAreBasicallyValid;
@@ -1020,7 +1020,7 @@ namespace CheckersGame
             return eatingSouthWestIsPossible;
         }
 
-        public bool RecurringTurnMoveValidation(Board i_Board, Player i_CurrPlayer)
+        private bool RecurringTurnMoveValidation(Board i_Board, Player i_CurrPlayer)
         {
             bool recurringTurnMoveIsValid;
             bool srcAndDestBasicallyValid;
