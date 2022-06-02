@@ -364,6 +364,7 @@ namespace CheckersUI
                 m_LabelPlayer2NameAndScore.ForeColor = Color.Green;
                 m_LabelPlayer1NameAndScore.ForeColor = Color.Black;
             }
+            this.Update();
         }
 
         private void OnPlayAnotherGameAnswered(PlayAnotherGameAnsweredEventArgs i_PlayAnotherGameAnsweredParams)
