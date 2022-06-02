@@ -7,7 +7,7 @@ namespace CheckersGame
 {
     public class ReachedLastLineEventArgs : EventArgs
     {
-        private Square m_LastLineSquare;
+        private readonly Square m_LastLineSquare;
 
         public ReachedLastLineEventArgs(Square i_LastLineSquare)
         {

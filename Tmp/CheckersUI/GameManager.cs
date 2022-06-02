@@ -9,7 +9,7 @@ namespace CheckersUI
     public class GameManager
     {
         private readonly GameLogic r_GameLogicUnit;
-        private FormGame m_FormGame;
+        private readonly FormGame m_FormGame;
 
         public GameManager()
         {
