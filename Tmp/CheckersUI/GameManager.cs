@@ -52,6 +52,11 @@ namespace CheckersUI
                     m_FormGame.ResetPicBoxSqrMatrix();
                     r_GameLogicUnit.ResetObjectsBetweenSessions();
                 }
+
+                else
+                {
+                    m_FormGame.Close();
+                }
             }
         }
 
@@ -91,6 +96,11 @@ namespace CheckersUI
             {
                 m_FormGame.CurrentPlayerRecognition = gameLogicUnitObj.CurrentPlayer.PlayerRecognition;
                 m_FormGame.MarkCurrentPlayerLabel();
+            }
+
+            if (r_GameLogicUnit.CurrentPlayer.PlayerType == Player.ePlayerType.Computer)
+            {
+                r_GameLogicUnit.MoveProcedure();
             }
         }
 
