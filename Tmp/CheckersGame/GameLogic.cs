@@ -527,7 +527,10 @@ namespace CheckersGame
                 r_MoveManager.RecurringTurnNewSrcIdx = r_MoveManager.SrcIdx;
                 recurringTurnIsPossible = true;
                 m_IsRecurringTurn = true;
-                /// OnRecurringTurn();
+                if (m_CurrentPlayer.PlayerType == Player.ePlayerType.Computer)
+                {
+                    MoveProcedure();
+                }
             }
 
             else
