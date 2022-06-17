@@ -34,7 +34,6 @@ namespace CheckersUI
             if (buttonStartGame != null)
             {
                 /// Report Game Details Filled
-                /// Add condition whether the Names are valid
                 m_FormStartCloseReason = eFormCloseReason.UserProcceed;
                 this.Close();
             }

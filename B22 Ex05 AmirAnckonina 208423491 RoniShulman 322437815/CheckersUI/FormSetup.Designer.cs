@@ -89,7 +89,6 @@ namespace CheckersUI
             this.textBoxPlayer1Name.Name = "textBoxPlayer1Name";
             this.textBoxPlayer1Name.Size = new System.Drawing.Size(105, 22);
             this.textBoxPlayer1Name.TabIndex = 5;
-            this.textBoxPlayer1Name.TextChanged += new System.EventHandler(this.textBoxPlayer1Name_TextChanged);
             // 
             // textBoxPlayer2Name
             // 
@@ -101,7 +100,6 @@ namespace CheckersUI
             this.textBoxPlayer2Name.Size = new System.Drawing.Size(105, 22);
             this.textBoxPlayer2Name.TabIndex = 6;
             this.textBoxPlayer2Name.Text = "[Computer]";
-            this.textBoxPlayer2Name.TextChanged += new System.EventHandler(this.textBoxPlayer2Name_TextChanged);
             // 
             // radioButton6X6
             // 
@@ -115,7 +113,6 @@ namespace CheckersUI
             this.radioButton6X6.TabStop = true;
             this.radioButton6X6.Text = "6 X 6";
             this.radioButton6X6.UseVisualStyleBackColor = true;
-            this.radioButton6X6.CheckedChanged += new System.EventHandler(this.radioButton6X6_CheckedChanged);
             // 
             // radioButton8X8
             // 
@@ -127,7 +124,6 @@ namespace CheckersUI
             this.radioButton8X8.TabIndex = 8;
             this.radioButton8X8.Text = "8 X 8";
             this.radioButton8X8.UseVisualStyleBackColor = true;
-            this.radioButton8X8.CheckedChanged += new System.EventHandler(this.radioButton8X8_CheckedChanged);
             // 
             // radioButton10X10
             // 
@@ -139,7 +135,6 @@ namespace CheckersUI
             this.radioButton10X10.TabIndex = 9;
             this.radioButton10X10.Text = "10 X 10";
             this.radioButton10X10.UseVisualStyleBackColor = true;
-            this.radioButton10X10.CheckedChanged += new System.EventHandler(this.radioButton10X10_CheckedChanged);
             // 
             // checkBoxPlayer2
             // 
@@ -170,8 +165,9 @@ namespace CheckersUI
             this.Controls.Add(this.labelBoardSize);
             this.Controls.Add(this.buttonDone);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "FormSetup";
-            this.Text = "Game Setup";
+            this.Text = "Setup";
             this.ResumeLayout(false);
             this.PerformLayout();
 

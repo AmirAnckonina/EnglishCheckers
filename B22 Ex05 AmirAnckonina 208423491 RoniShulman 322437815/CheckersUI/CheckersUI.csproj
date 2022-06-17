@@ -62,12 +62,12 @@
     <Compile Include="PictureBoxSquare.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
     <Compile Include="SquareIndexPointConverter.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -101,6 +101,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
@@ -109,12 +110,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\EmptyValidSquare.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\BlackHollowCircleCheckers-cropped.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\RedHollowCircle-cropped.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\BlackKing-cropped.png" />

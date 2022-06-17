@@ -39,6 +39,7 @@ namespace CheckersUI
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 48F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label1.Location = new System.Drawing.Point(28, 469);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(721, 106);
@@ -51,9 +52,9 @@ namespace CheckersUI
             this.buttonStartGame.AutoSize = true;
             this.buttonStartGame.BackColor = System.Drawing.Color.Beige;
             this.buttonStartGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonStartGame.Location = new System.Drawing.Point(598, 596);
+            this.buttonStartGame.Location = new System.Drawing.Point(898, 595);
             this.buttonStartGame.Name = "buttonStartGame";
-            this.buttonStartGame.Size = new System.Drawing.Size(151, 64);
+            this.buttonStartGame.Size = new System.Drawing.Size(197, 81);
             this.buttonStartGame.TabIndex = 0;
             this.buttonStartGame.Text = "Start Game";
             this.buttonStartGame.UseVisualStyleBackColor = false;

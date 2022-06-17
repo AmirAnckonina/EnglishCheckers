@@ -52,6 +52,5 @@ namespace CheckersGame
         {
             m_NewOccuipiedSquares.Add(i_Sqr);
         }
-    
     }
 }

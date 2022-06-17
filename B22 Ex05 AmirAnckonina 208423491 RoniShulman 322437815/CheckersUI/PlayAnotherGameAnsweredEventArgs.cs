@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -8,7 +6,7 @@ namespace CheckersUI
 {
     public class PlayAnotherGameAnsweredEventArgs : EventArgs
     {
-        bool m_PlayAnotherGame;
+        private bool m_PlayAnotherGame;
 
         public PlayAnotherGameAnsweredEventArgs(DialogResult i_DialogResult)
         {
@@ -36,6 +34,5 @@ namespace CheckersUI
                 m_PlayAnotherGame = false;
             }
         }
-
     }
 }

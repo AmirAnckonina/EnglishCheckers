@@ -11,6 +11,7 @@ namespace CheckersUI
 {
     public partial class FormSetup : Form
     {
+        private const int k_MaxNameLength = 30;
         private eFormCloseReason m_FormSetupCloseReason;
 
         public FormSetup()
@@ -85,50 +86,6 @@ namespace CheckersUI
             }
         }
 
-        private void radioButton6X6_CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton radioButton6X6 = sender as RadioButton;
-
-            if (radioButton6X6 != null)
-            {
-                if (radioButton6X6.Checked)
-                {
-                    /// Update game details to 6X6 Board
-                }
-            }
-        }
-
-        private void radioButton8X8_CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton radioButton8X8 = sender as RadioButton;
-
-            if (radioButton8X8 != null)
-            {
-                if (radioButton8X8.Checked)
-                {
-                    /// Update game details to 6X6 Board
-                }
-            }
-        }
-
-        private void radioButton10X10_CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton radioButton10X10 = sender as RadioButton;
-
-            if (radioButton10X10 != null)
-            {
-                if (radioButton10X10.Checked)
-                {
-                    /// Update game details to 6X6 Board
-                }
-            }
-        }
-
-        private void textBoxPlayer1Name_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void checkBoxPlayer2_CheckedChanged(object sender, EventArgs e)
         {
             if(textBoxPlayer2Name.Enabled == true)
@@ -154,22 +111,43 @@ namespace CheckersUI
             }
         }
 
-        private void textBoxPlayer2Name_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonDone_Click(object sender, EventArgs e)
         {
             Button buttonDone = sender as Button;
+            string invalidNameMessage = null;
 
             if (buttonDone != null)
             {
-                /// Report Game Details Filled
-                /// Add condition whether the Names are valid
-                m_FormSetupCloseReason = eFormCloseReason.UserProcceed;
-                this.Close();
+                if (!PlayersNameValidation(textBoxPlayer1Name.Text, ref invalidNameMessage) || !PlayersNameValidation(textBoxPlayer2Name.Text, ref invalidNameMessage))
+                {
+                    MessageBox.Show(invalidNameMessage);
+                }
+
+                else
+                {
+                    m_FormSetupCloseReason = eFormCloseReason.UserProcceed;
+                    this.Close();
+                }
             }
+        }
+
+        private bool PlayersNameValidation(string i_PlayerName, ref string o_ErrorPlayerNameMessage)
+        {
+            bool validName = true;
+
+            if (string.IsNullOrEmpty(i_PlayerName))
+            {
+                validName = false;
+                o_ErrorPlayerNameMessage = "Player's name is empty! Please enter a valid name.";
+            }
+
+            else if (i_PlayerName.Length > k_MaxNameLength)
+            {
+                validName = false;
+                o_ErrorPlayerNameMessage = "Player's name is too long! The maximum name length is 30.";
+            }
+
+            return validName;
         }
     }
 }

@@ -27,6 +27,5 @@ namespace CheckersGame
                 return m_AllOccuipiedSquares;
             }
         }
-       
     } 
 }

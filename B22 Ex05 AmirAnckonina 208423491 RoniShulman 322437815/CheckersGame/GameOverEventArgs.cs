@@ -30,7 +30,8 @@ namespace CheckersGame
             GameLogic.eGameResult i_GameResult,
             int i_WinnerPlayerScore,
             string i_FirstPlayerName,
-            string i_SecondPlayerName)
+            string i_SecondPlayerName
+            )
         {
             string winnerPlayerName;
 
@@ -41,13 +42,15 @@ namespace CheckersGame
                     winnerPlayerName = i_FirstPlayerName;
                 }
 
-                else /// (i_GameResult == GameLogic.eGameResult.SecondPlayerWon)
+                else ///(i_GameResult == GameLogic.eGameResult.SecondPlayerWon)
                 {
                     winnerPlayerName = i_SecondPlayerName;       
                 }
 
                 m_GameResultMessage = string.Format(
-                        "{0} is the winner! \n{0}'s total score: {1}", winnerPlayerName, i_WinnerPlayerScore
+                        "{0} is the winner! \n{0}'s total score: {1}",
+                        winnerPlayerName,
+                        i_WinnerPlayerScore
                         );
             }
 

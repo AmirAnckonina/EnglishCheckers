@@ -367,7 +367,7 @@ namespace CheckersGame
                 eatingMoveForwardIsValid = EatingNorthEastMoveValidation(i_Board, i_CurrPlayer) || EatingNorthWestMoveValidation(i_Board, i_CurrPlayer);
             }
 
-            else //(i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Down)
+            else /// (i_CurrPlayer.MovingDirection == Player.ePlayerMovingDirection.Down)
             {
                 eatingMoveForwardIsValid = EatingSouthEastMoveValidation(i_Board, i_CurrPlayer) || EatingSouthWestMoveValidation(i_Board, i_CurrPlayer);
             }
@@ -640,7 +640,6 @@ namespace CheckersGame
             return eatingMoveOccurred;
         }
 
-        // $G$ CSS-013 (-3) Input parameters names should start with i_. why using here io_ ?
         private void BasicMoveProcedure(Board io_Board, Player i_CurrPlayer)
         {
             io_Board[m_DestIdx].DiscType = io_Board[m_SrcIdx].DiscType;
@@ -649,7 +648,6 @@ namespace CheckersGame
             io_Board[m_SrcIdx].SquareHolder = Player.ePlayerRecognition.None;
         }
 
-        // $G$ CSS-013 (-3) Input parameters names should start with i_. why using here io_ ?
         private void EatingMoveProcedure(Board io_Board)
         {
             switch (m_MoveType)
@@ -746,7 +744,6 @@ namespace CheckersGame
             bool simpleMoveForwardIsPossible;
 
             m_SrcIdx = i_SquareIndex;
-            ///m_SrcIdx.CopySquareIndices(i_SquareIndex);
             simpleMoveForwardIsPossible = AnySimpleForwardMovePossibilityCheck(i_Board, i_CurrPlayer);
             if (simpleMoveForwardIsPossible)
             {
@@ -860,7 +857,7 @@ namespace CheckersGame
             return simpleSouthEastMoveIsPossible;
         }
 
-        public bool SimpleSouthWestMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
+        private bool SimpleSouthWestMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
         {
             bool simpleSouthWestMoveIsPossible;
             bool srcAndDestAreBasicallyValid;
@@ -886,7 +883,6 @@ namespace CheckersGame
             bool eatingMoveForwardIsPossible;
 
             m_SrcIdx = i_PotentialSourceSquareIndex;
-           /// m_SrcIdx.CopySquareIndices(i_PotentialSourceSquareIndex);
             eatingMoveForwardIsPossible = AnyEatingForwardMovePossibilityCheck(i_Board, i_CurrPlayer);
             if (eatingMoveForwardIsPossible)
             {
@@ -906,7 +902,7 @@ namespace CheckersGame
             return eatingMoveIsPossible;
         }
 
-        public bool AnyEatingForwardMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
+        private bool AnyEatingForwardMovePossibilityCheck(Board i_Board, Player i_CurrPlayer)
         {
             bool eatingMoveForwardIsPossible;
 
