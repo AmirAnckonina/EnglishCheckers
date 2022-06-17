@@ -110,8 +110,7 @@ namespace CheckersUI
                 else /// So it's a king
                 {
                     this.Image = Properties.Resources.RedKing_cropped;
-                }
-                
+                } 
             }
 
             else /// == None
@@ -120,7 +119,6 @@ namespace CheckersUI
             }
 
             m_SquareHolder = i_Square.SquareHolder;
-            /// this.SizeMode = PictureBoxSizeMode.StretchImage; 
         }
 
         private void InitializeComponent()

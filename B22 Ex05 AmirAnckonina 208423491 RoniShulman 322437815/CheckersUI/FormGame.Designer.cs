@@ -41,7 +41,7 @@ namespace CheckersUI
             this.MaximizeBox = false;
             this.Name = "FormGame";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Checkers";
+            this.Text = "English Checkers";
             this.Load += new System.EventHandler(this.FormGame_Load);
             this.ResumeLayout(false);
 

@@ -92,21 +92,20 @@ namespace CheckersGame
 
         private void InitializeLineInBoard(int i_RowIndex, GameLogic.eDiscType i_DiscType, Player.ePlayerRecognition i_CurrLineSquaresHolder)
         {
-           int squareIndicesParityCalculationResult;
+            int squareIndicesParityCalculationResult;
 
-           // $G$ CSS-001 (-3) Local variable name shouldn't start with i_.
-            for (int i_ColumnIndex = 0; i_ColumnIndex < r_BoardSize; i_ColumnIndex++)
+            for (int columnIdx = 0; columnIdx < r_BoardSize; columnIdx++)
             {
-                squareIndicesParityCalculationResult = (i_RowIndex + i_ColumnIndex) % 2;
+                squareIndicesParityCalculationResult = (i_RowIndex + columnIdx) % 2;
                 if (squareIndicesParityCalculationResult == 1)
                 {
-                    r_GameBoard[i_RowIndex, i_ColumnIndex].SetSquare(true, i_DiscType, i_CurrLineSquaresHolder, i_RowIndex, i_ColumnIndex);
+                    r_GameBoard[i_RowIndex, columnIdx].SetSquare(true, i_DiscType, i_CurrLineSquaresHolder, i_RowIndex, columnIdx);
 
                 }
 
                 else //(squareIndicesParityCalculationResult == 0)
                 {
-                    r_GameBoard[i_RowIndex, i_ColumnIndex].SetSquare(false, GameLogic.eDiscType.None, Player.ePlayerRecognition.None, i_RowIndex, i_ColumnIndex);
+                    r_GameBoard[i_RowIndex, columnIdx].SetSquare(false, GameLogic.eDiscType.None, Player.ePlayerRecognition.None, i_RowIndex, columnIdx);
                 }
             }
         }

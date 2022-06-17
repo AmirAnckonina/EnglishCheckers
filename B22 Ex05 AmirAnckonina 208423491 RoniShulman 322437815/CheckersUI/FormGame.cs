@@ -37,9 +37,9 @@ namespace CheckersUI
         {
             r_FormSetup = new FormSetup();
             r_FormStart = new FormStart();
-            InitializeComponent();
             m_LabelPlayer1NameAndScore = new Label();
             m_LabelPlayer2NameAndScore = new Label();
+            InitializeComponent();
             m_CurrentPlayerRecognition = Player.ePlayerRecognition.FirstPlayer;
             m_PicBoxClickStage = ePicBoxClickStage.NoneClicked;
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -173,8 +173,8 @@ namespace CheckersUI
 
         private void SetPlayersLabelLocation()
         {
-            Point player1Position = new Point();
-            Point player2Position = new Point();
+            Point player1Position;
+            Point player2Position;
             PictureBoxSquare lastLineMiddlePicBox;
 
             lastLineMiddlePicBox = m_PicBoxSqrMatrix[r_FormSetup.BoardSize - 1, r_FormSetup.BoardSize / 2];
@@ -381,12 +381,6 @@ namespace CheckersUI
             {
                 picBoxSqr.ResetPicBoxSquare();
             }
-        }
-
-        public void RunFormGame()
-        {
-            r_FormSetup.ShowDialog();
-            this.ShowDialog();
         }
     }
 }

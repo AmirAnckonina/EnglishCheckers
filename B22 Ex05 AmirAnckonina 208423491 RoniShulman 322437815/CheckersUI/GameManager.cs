@@ -9,26 +9,26 @@ namespace CheckersUI
     public class GameManager
     {
         private readonly GameLogic r_GameLogicUnit;
-        private readonly FormGame m_FormGame;
+        private readonly FormGame r_FormGame;
 
         public GameManager()
         {
             r_GameLogicUnit = new GameLogic();
-            m_FormGame = new FormGame();
+            r_FormGame = new FormGame();
         }
 
         public void Run()
         {
             RegisterFormEvents();
             RegisterLogicEvents();
-            m_FormGame.ShowDialog();
+            r_FormGame.ShowDialog();
         }
 
         private void RegisterFormEvents()
         {
-            m_FormGame.GameDetailsFilled += m_FormGame_GameDetailsFilled;
-            m_FormGame.PotentialMoveEntered += m_FormGame_PotentialMoveEntered;
-            m_FormGame.PlayAnotherGameAnswered += m_FormGame_PlayAnotherGameAnswered;
+            r_FormGame.GameDetailsFilled += r_FormGame_GameDetailsFilled;
+            r_FormGame.PotentialMoveEntered += r_FormGame_PotentialMoveEntered;
+            r_FormGame.PlayAnotherGameAnswered += r_FormGame_PlayAnotherGameAnswered;
         }
 
         private void RegisterLogicEvents()
@@ -41,7 +41,7 @@ namespace CheckersUI
             r_GameLogicUnit.CurrPlayerReachedLastLine += r_GameLogicUnit_CurrPlayerReachedLastLine;
         }
 
-        private void m_FormGame_PlayAnotherGameAnswered(object sender, EventArgs e)
+        private void r_FormGame_PlayAnotherGameAnswered(object sender, EventArgs e)
         {
             PlayAnotherGameAnsweredEventArgs playAnotherGameAnsweredParams = e as PlayAnotherGameAnsweredEventArgs;
 
@@ -49,13 +49,13 @@ namespace CheckersUI
             {
                 if (playAnotherGameAnsweredParams.PlayAnotherGame == true)
                 {
-                    m_FormGame.ResetPicBoxSqrMatrix();
+                    r_FormGame.ResetPicBoxSqrMatrix();
                     r_GameLogicUnit.ResetObjectsBetweenSessions();
                 }
 
                 else
                 {
-                    m_FormGame.Close();
+                    r_FormGame.Close();
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace CheckersUI
 
             if (reachedLastLineParams != null)
             {
-                m_FormGame.UpdateSpecificPicBoxToKingDisc(reachedLastLineParams.LastLineSquare);
+                r_FormGame.UpdateSpecificPicBoxToKingDisc(reachedLastLineParams.LastLineSquare);
             }
         }
 
@@ -76,7 +76,7 @@ namespace CheckersUI
 
             if (moveExecutedParams != null)
             { 
-                m_FormGame.PostGameLogicMoveUpdatePicBoxSqrMatrix(
+                r_FormGame.PostGameLogicMoveUpdatePicBoxSqrMatrix(
                     moveExecutedParams.NewOccuipiedSquares,
                     moveExecutedParams.NewEmptySquares
                     );
@@ -85,7 +85,7 @@ namespace CheckersUI
 
         private void r_GameLogicUnit_InvalidMoveInserted(object sender, EventArgs e)
         {
-            m_FormGame.ShowInvalidMoveMessage();
+            r_FormGame.ShowInvalidMoveMessage();
         }
 
         private void r_GameLogicUnit_TurnSwitched(object sender, EventArgs e)
@@ -94,8 +94,8 @@ namespace CheckersUI
 
             if (gameLogicUnitObj != null)
             {
-                m_FormGame.CurrentPlayerRecognition = gameLogicUnitObj.CurrentPlayer.PlayerRecognition;
-                m_FormGame.MarkCurrentPlayerLabel();
+                r_FormGame.CurrentPlayerRecognition = gameLogicUnitObj.CurrentPlayer.PlayerRecognition;
+                r_FormGame.MarkCurrentPlayerLabel();
             }
 
             if (r_GameLogicUnit.CurrentPlayer.PlayerType == Player.ePlayerType.Computer)
@@ -104,7 +104,7 @@ namespace CheckersUI
             }
         }
 
-        private void m_FormGame_PotentialMoveEntered(object sender, EventArgs e)
+        private void r_FormGame_PotentialMoveEntered(object sender, EventArgs e)
         {
             MovementEventArgs movementParams = e as MovementEventArgs;
 
@@ -114,11 +114,16 @@ namespace CheckersUI
             }
         }
 
-        private void m_FormGame_GameDetailsFilled(object sender, EventArgs e)
+        private void r_FormGame_GameDetailsFilled(object sender, EventArgs e)
         {
             GameDetailsFilledEventArgs gameDetails = e as GameDetailsFilledEventArgs;
 
-            r_GameLogicUnit.SetGameObjects(gameDetails.Player1Name, gameDetails.Player2Name, gameDetails.BoardSize, gameDetails.Player2IsHuman);
+            r_GameLogicUnit.SetGameObjects(
+                gameDetails.Player1Name,
+                gameDetails.Player2Name,
+                gameDetails.BoardSize,
+                gameDetails.Player2IsHuman
+                );
         }
 
         private void r_GameLogicUnit_SingleGameInitialized(object sender, EventArgs e)
@@ -128,10 +133,10 @@ namespace CheckersUI
 
             if (gameLogicUnitObj != null && gameInitializedParams != null)
             {
-                m_FormGame.UpdatePlayersLabelScore(gameLogicUnitObj.FirstPlayer.Score, gameLogicUnitObj.SecondPlayer.Score);
-                m_FormGame.AddDiscsToPictureBoxSquareMatrix(gameInitializedParams.OcciupiedPoints);
-                m_FormGame.CurrentPlayerRecognition = gameLogicUnitObj.CurrentPlayer.PlayerRecognition;
-                m_FormGame.MarkCurrentPlayerLabel();
+                r_FormGame.UpdatePlayersLabelScore(gameLogicUnitObj.FirstPlayer.Score, gameLogicUnitObj.SecondPlayer.Score);
+                r_FormGame.AddDiscsToPictureBoxSquareMatrix(gameInitializedParams.OcciupiedPoints);
+                r_FormGame.CurrentPlayerRecognition = gameLogicUnitObj.CurrentPlayer.PlayerRecognition;
+                r_FormGame.MarkCurrentPlayerLabel();
             }
         }
 
@@ -141,8 +146,7 @@ namespace CheckersUI
 
             if (gameOverParams != null)
             {
-                m_FormGame.CreateYesNoMessageBox(gameOverParams.GameResultMessage);
-                /// Update m_FormGame Lables
+                r_FormGame.CreateYesNoMessageBox(gameOverParams.GameResultMessage);
             }
         }
     }

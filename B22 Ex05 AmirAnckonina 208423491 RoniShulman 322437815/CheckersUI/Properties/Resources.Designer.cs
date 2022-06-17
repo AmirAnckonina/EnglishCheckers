@@ -63,16 +63,6 @@ namespace CheckersUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap BlackHollowCircleCheckers_cropped {
-            get {
-                object obj = ResourceManager.GetObject("BlackHollowCircleCheckers_cropped", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap BlackKing_cropped {
             get {
                 object obj = ResourceManager.GetObject("BlackKing_cropped", resourceCulture);
@@ -106,16 +96,6 @@ namespace CheckersUI.Properties {
         internal static System.Drawing.Bitmap EmptyValidSquare {
             get {
                 object obj = ResourceManager.GetObject("EmptyValidSquare", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap RedHollowCircle_cropped {
-            get {
-                object obj = ResourceManager.GetObject("RedHollowCircle_cropped", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

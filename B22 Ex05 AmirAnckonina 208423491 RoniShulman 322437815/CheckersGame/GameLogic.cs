@@ -160,7 +160,6 @@ namespace CheckersGame
             {
                 m_FinalCheckersSessionResult = value;
             }
-
         }
 
         public bool IsRecurringTurn
@@ -208,7 +207,6 @@ namespace CheckersGame
             m_Board.InitializeBoard(m_FirstPlayer , m_SecondPlayer);
             m_FirstPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_FirstPlayer.DiscType);
             m_SecondPlayer.NumOfDiscs = m_Board.GetDiscOccurences(m_SecondPlayer.DiscType);
-            /// Add Initialize to Both players PotentialMoves Lists
             m_FirstPlayer.InitializeCurrentHoldingIndices(m_Board);
             m_SecondPlayer.InitializeCurrentHoldingIndices(m_Board);
             TurnsSetup();
@@ -275,10 +273,6 @@ namespace CheckersGame
             }
 
             CompleteMoveProcedure();
-            /*if (m_CurrentPlayer.PlayerType == Player.ePlayerType.Computer)
-            {
-                MoveProcedure();
-            }*/
         }
 
         private void CompleteMoveProcedure()
@@ -298,7 +292,7 @@ namespace CheckersGame
             }
         }
 
-        public bool MoveValidationProcedure()
+        private bool MoveValidationProcedure()
         {
             bool validMove;
             
@@ -315,7 +309,7 @@ namespace CheckersGame
             return validMove;
         }
 
-        public void ExecuteMoveProcedure()
+        private void ExecuteMoveProcedure()
         {
             r_MoveManager.ExecuteMove(m_Board, m_CurrentPlayer);
             ReportMoveExecuted();
@@ -351,21 +345,20 @@ namespace CheckersGame
             }
         }
 
-        public void LoadSpecificNewPotentialMove(PotentialMove i_PotentialMove)
+        private void LoadSpecificNewPotentialMove(PotentialMove i_PotentialMove)
         {
             r_MoveManager.SrcIdx = i_PotentialMove.SrcIdx;
             r_MoveManager.DestIdx = i_PotentialMove.DestIdx;
         }
 
-        public void GenerateAndLoadNewPotentialMove()
+        private void GenerateAndLoadNewPotentialMove()
         {
             PotentialMove newPotentialMove;
 
             if (m_IsRecurringTurn)
             {
-                newPotentialMove = new PotentialMove();
-                newPotentialMove.SrcIdx = r_MoveManager.RecurringTurnNewSrcIdx;
-                newPotentialMove.DestIdx = r_MoveManager.DestIdx;
+                newPotentialMove = new PotentialMove(r_MoveManager.RecurringTurnNewSrcIdx, r_MoveManager.DestIdx);
+
                 /// immediately load the SquareIndex we reached in the last move.
                 LoadSpecificNewPotentialMove(newPotentialMove);
             }
@@ -373,13 +366,11 @@ namespace CheckersGame
             else if (r_MoveManager.OnlyEatingIsValid)
             {
                 /// In case there is an option to eat
-                /// Generate one fromCurrPlayer EatingMovesList
                 GenerateAndLoadNewRandomEatingMove();
             }
 
             else
             {
-                /// Generate from CurrPlayer SimpleMovesList
                 GenerateAndLoadNewRandomSimpleMove();
             }
         }
@@ -424,7 +415,7 @@ namespace CheckersGame
             }
         }
 
-        public void PostMoveProcedure()
+        private void PostMoveProcedure()
         {
             ReachedLastLineProcedure();
             PostEatingMoveProcedure();
@@ -465,15 +456,12 @@ namespace CheckersGame
             if (reachedLastLine)
             {
                 ReportReachedLastLine();
-                
             }
         }
         
         private void ReportReachedLastLine()
         {
-            ReachedLastLineEventArgs reachedLastLineParams = new ReachedLastLineEventArgs(
-                m_Board[r_MoveManager.DestIdx]
-                );
+            ReachedLastLineEventArgs reachedLastLineParams = new ReachedLastLineEventArgs(m_Board[r_MoveManager.DestIdx]);
 
             OnCurrPlayerReachedLastLine(reachedLastLineParams);
         }
@@ -636,7 +624,7 @@ namespace CheckersGame
             return playerAbleToMove;
         }
 
-        public bool CurrentPlayerAnyEatingMovePossibilityCheck()
+        private bool CurrentPlayerAnyEatingMovePossibilityCheck()
         {
             bool playerCanMakeEatingMove;
 
@@ -675,56 +663,7 @@ namespace CheckersGame
             {
                 m_SecondPlayer.Score += singleGameScore;
             }
-        }
-
-        public void SaveFinalCheckersGameResult()
-        {
-            if (m_FirstPlayer.Score > m_SecondPlayer.Score)
-            {
-                m_FinalCheckersSessionResult = eGameResult.FirstPlayerWon;
-            }
-
-            else if (m_SecondPlayer.Score > m_FirstPlayer.Score)
-            {
-                m_FinalCheckersSessionResult = eGameResult.SecondPlayerWon;
-            }
-
-            else 
-            {
-                m_FinalCheckersSessionResult = eGameResult.Draw;
-            }
-        }
-
-        /*private void UpdatePlayerPotentialMovesLists(Player io_Player)
-        {
-            /// Run on board Matrix,
-            /// Each square that in player's holding check 4 SimpleMoves Options, 4 EatingMovesOption
-            /// Using Propeties Clear both Lists
-            foreach (Square sqr in m_Board.GameBoard)
-            {
-                if (sqr.SquareHolder == io_Player.PlayerRecognition)
-                {
-                    AddAllEatingPotentialMovesToThisSrcIdx(io_Player, sqr);
-                    AddAllSimplePotentialMovesToThisSrcIdx(io_Player, sqr);
-                }
-            }
-        }
-
-        private void AddAllEatingPotentialMovesToThisSrcIdx(Player io_Player, Square i_Sqr)
-        {
-            *//* PotentialMove newPotentialMove(i_Sqr.); /// = new PotentialMove();
-
-            newPotentialMove.SrcIdx = i_Sqr.SquareIndex;
-
-            newPotentialMove.DestIdx.RowIdx = i_Sqr.SquareIndex.RowIdx - 1;
-            newPotentialMove.DestIdx.ColumnIdx = i_Sqr.SquareIndex.ColumnIdx - 1;*//*
-          }
-
-          private void AddAllSimplePotentialMovesToThisSrcIdx(Player io_Player, Square i_Sqr)
-          {
-
-          }*/
+        } 
     }
-
 }
 
