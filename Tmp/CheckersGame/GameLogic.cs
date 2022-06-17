@@ -275,6 +275,10 @@ namespace CheckersGame
             }
 
             CompleteMoveProcedure();
+            /*if (m_CurrentPlayer.PlayerType == Player.ePlayerType.Computer)
+            {
+                MoveProcedure();
+            }*/
         }
 
         private void CompleteMoveProcedure()
@@ -429,14 +433,6 @@ namespace CheckersGame
             {
                 NonRecurringTurnProcedure();
             }
-
-            if (m_CurrentPlayer.PlayerType == Player.ePlayerType.Computer)
-            {
-                MoveProcedure();
-            }
-
-            /// else, we are waiting for an input, but the params are update in MoveManager.
-
         }
 
         private void NonRecurringTurnProcedure()
