@@ -261,17 +261,19 @@ namespace CheckersGame
             }
         }
 
-        public void MoveProcedure(PotentialMove i_PotentialMove)
+        public void MoveProcedure(PotentialMove i_PotentialMove = null)
         {
             CurrentPlayerAnyEatingMovePossibilityCheck();
-            LoadSpecificNewPotentialMove(i_PotentialMove);
-            CompleteMoveProcedure();
-        }
+            if (CurrentPlayer.PlayerType == Player.ePlayerType.Human)
+            {
+                LoadSpecificNewPotentialMove(i_PotentialMove);
+            }
 
-        public void ComputerPlayerMoveProcedure()
-        {
-            CurrentPlayerAnyEatingMovePossibilityCheck();
-            GenerateAndLoadNewPotentialMove();
+            else /// Computer's turn
+            {
+                GenerateAndLoadNewPotentialMove();
+            }
+
             CompleteMoveProcedure();
         }
 
@@ -430,7 +432,7 @@ namespace CheckersGame
 
             if (m_CurrentPlayer.PlayerType == Player.ePlayerType.Computer)
             {
-                ComputerPlayerMoveProcedure();
+                MoveProcedure();
             }
 
             /// else, we are waiting for an input, but the params are update in MoveManager.
@@ -642,6 +644,7 @@ namespace CheckersGame
             /// Set first to false so if "true" will be returned from a single SquareIndex check,
             /// we will go out from the loop via break.
             playerCanMakeEatingMove = false;
+            r_MoveManager.OnlyEatingIsValid = false;
             foreach (SquareIndex currSquareIndex in m_CurrentPlayer.CurrentHoldingSquareIndices)
             {
                 playerCanMakeEatingMove = r_MoveManager.AnyEatingMovePossibiltyCheckByIndex(currSquareIndex, m_Board, m_CurrentPlayer);
@@ -650,16 +653,6 @@ namespace CheckersGame
                     r_MoveManager.OnlyEatingIsValid = true;
                     break;
                 }
-            }
-
-            if (playerCanMakeEatingMove)
-            {
-                r_MoveManager.OnlyEatingIsValid = true;
-            }
-
-            else
-            {
-                r_MoveManager.OnlyEatingIsValid = false;
             }
 
             return playerCanMakeEatingMove;
