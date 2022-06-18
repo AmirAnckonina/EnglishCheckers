@@ -1,8 +1,6 @@
 
 # English Checkers
 
-![App Screenshot](https://github.com/AmirAnckonina/EnglishCheckers/blob/4d492cc79ecbf3243040dc1aeeffd46aeb9bf0ff/AdditionalPictures/reSizedGif.gif)
-
 ## Table of Contents
 * [General info](#general-info)
 * [Technologies](#technologies)
@@ -53,6 +51,9 @@ Run Executable ->
 
 
 ![App Screenshot](https://github.com/AmirAnckonina/EnglishCheckers/blob/4d492cc79ecbf3243040dc1aeeffd46aeb9bf0ff/AdditionalPictures/FormSetup.jpg)
+
+
+![App Screenshot](https://github.com/AmirAnckonina/EnglishCheckers/blob/4d492cc79ecbf3243040dc1aeeffd46aeb9bf0ff/AdditionalPictures/reSizedGif.gif)
 
 
 ![App Screenshot](https://github.com/AmirAnckonina/EnglishCheckers/blob/4d492cc79ecbf3243040dc1aeeffd46aeb9bf0ff/AdditionalPictures/FormGame.jpg)
