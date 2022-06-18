@@ -53,7 +53,7 @@ Run Executable ->
 ![App Screenshot](https://github.com/AmirAnckonina/EnglishCheckers/blob/4d492cc79ecbf3243040dc1aeeffd46aeb9bf0ff/AdditionalPictures/FormSetup.jpg)
 
 
-![App Screenshot](https://github.com/AmirAnckonina/EnglishCheckers/blob/4d492cc79ecbf3243040dc1aeeffd46aeb9bf0ff/AdditionalPictures/reSizedGif.gif)
+![App Screenshot](https://github.com/AmirAnckonina/EnglishCheckers/blob/def8e50239d342138047c6cbd77c1a0249a2d3ce/AdditionalPictures/20220618_235931.gif)
 
 
 ![App Screenshot](https://github.com/AmirAnckonina/EnglishCheckers/blob/4d492cc79ecbf3243040dc1aeeffd46aeb9bf0ff/AdditionalPictures/FormGame.jpg)
